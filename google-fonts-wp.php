@@ -29,7 +29,6 @@ class Google_Fonts_WP {
 		$this->includes();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
-		add_action( 'customize_preview_init', array( $this, 'customizer_preview' ) );
 
 	}
 
