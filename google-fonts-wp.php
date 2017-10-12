@@ -39,7 +39,7 @@ class Google_Fonts_WP {
 	public function includes() {
 
 		// Required files for building the Google Fonts URL.
-		require plugin_dir_path( __FILE__ ) . 'includes/fonts-array.php';
+		require plugin_dir_path( __FILE__ ) . 'includes/functions.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/class-google-url.php';
 
 		// Required files for the customizer settings.
@@ -71,17 +71,6 @@ class Google_Fonts_WP {
 		if ( $url->has_custom_fonts() ) {
 			wp_enqueue_style( 'gfwp-google-fonts',  $url->build() , false );
 		}
-
-	}
-
-	/**
-	 * Enqeue the Google Fonts URL.
-	 *
-	 * @since 1.0.0
-	 */
-	public function customizer_preview() {
-
-		wp_enqueue_script( 'ot_apollo_customizer', dirname( plugin_basename( __FILE__ ) ) . '/assets/js/customizer.js', array( 'customize-preview' ), '20171010', true );
 
 	}
 

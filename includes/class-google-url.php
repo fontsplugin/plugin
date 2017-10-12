@@ -15,21 +15,21 @@ class GFWP_Google_URL {
 	/**
 	 * All Google Fonts start with this URL
 	 *
-	 * @access  public
+	 * @var string
 	 */
 	public $url_base = 'https://fonts.googleapis.com/css?family=';
 
 	/**
 	 * All Google Fonts start with this URL
 	 *
-	 * @access  public
+	 * @var array
 	 */
 	public $google_fonts = array();
 
 	/**
 	 * All Google Fonts start with this URL
 	 *
-	 * @access  public
+	 * @var array
 	 */
 	public $choices = array();
 
@@ -45,7 +45,7 @@ class GFWP_Google_URL {
 	 * Load the Google fonts array.
 	 */
 	public function get_fonts() {
-		$this->google_fonts = GFWP_fonts_array();
+		$this->google_fonts = gfwp_fonts_array();
 	}
 
 	/**
@@ -56,22 +56,7 @@ class GFWP_Google_URL {
 		$this->choices[] = get_theme_mod( 'gfwp_body_font', 'open sans' );
 
 		// Remove the defaults.
-		$this->choices = array_diff( $this->choices, ['default'] );
-
-	}
-
-	/**
-	 * Build a font stack using the users font choice.
-	 *
-	 * @param $font The users font choice.
-	 * @return string The built font stack.
-	 */
-	public function get_font_stack( $font ) {
-
-		$sans = '"Helvetica Neue", Helvetica, Arial, sans-serif';
-		$serif = 'Georgia, Times, "Times New Roman", serif';
-
-		return $stack;
+		unset( $this->choices['default'] );
 
 	}
 
@@ -95,12 +80,7 @@ class GFWP_Google_URL {
 	 */
 	public function get_font_id( $font ) {
 
-		return
-		trim(
-			strtolower(
-				str_replace( ' ', '+', $font )
-			)
-		);
+		return str_replace( ' ', '+', $font );
 	}
 
 	/**
@@ -118,7 +98,7 @@ class GFWP_Google_URL {
 				// Check the users choice is a real font.
 				if ( array_key_exists( $font, $this->google_fonts ) ) {
 
-					$id = $this->get_font_id( $font );
+					$id = $this->get_font_id( $this->google_fonts[ $font ]['family'] );
 
 					$families[] = $id . ':' . implode( ',', $this->google_fonts[ $font ]['variants'] );
 
@@ -130,19 +110,14 @@ class GFWP_Google_URL {
 						if ( ! in_array( $subset, $subsets, true ) ) {
 							$subsets[] = $subset;
 						}
-
 					}
-
 				}
-
-
 			}
 
+			$families_output = implode( '|', $families );
+			$subset_output = implode( ',', $subsets );
 
-										$families_output = implode( '|', $families );
-										$subset_output = implode( ',', $subsets );
-
-										return $this->url_base . $families_output . '&amp;' . $subset_output;
+			return $this->url_base . $families_output . '&amp;' . $subset_output;
 
 		}
 

@@ -10,28 +10,11 @@
 /**
  * @todo
  */
-function mytheme_customize_register( $wp_customize ) {
+function gfwp_customize_register( $wp_customize ) {
 
 	$wp_customize->add_section( 'google-fonts-wp' , array(
-		'title'      => esc_html__( 'Google Fonts for WP', 'google-fonts-wp' ),
+		'title'      => esc_html__( 'Google Fonts', 'google-fonts-wp' ),
 		'priority'   => 30,
-	) );
-
-	$wp_customize->add_setting( 'gfwp_header_font' , array(
-		'default'   => 'right',
-		'transport' => 'refresh',
-	) );
-
-	$wp_customize->add_control( 'header_font', array(
-		'label'      => esc_html__( 'Header Font', 'mytheme' ),
-		'section'    => 'google-fonts-wp',
-		'settings'   => 'gfwp_header_font',
-		'type'   => 'select',
-		'choices'  => array(
-			'default'  => 'Default',
-			'left'  => 'left',
-			'right' => 'right',
-		),
 	) );
 
 	$wp_customize->add_setting( 'gfwp_body_font' , array(
@@ -40,21 +23,56 @@ function mytheme_customize_register( $wp_customize ) {
 	) );
 
 	$wp_customize->add_control( 'body_font', array(
-		'label'      => esc_html__( 'Body Font', 'mytheme' ),
+		'label'      => esc_html__( 'Body Font', 'google-fonts-wp' ),
 		'section'    => 'google-fonts-wp',
 		'settings'   => 'gfwp_body_font',
 		'type'   => 'select',
-		'choices'  => array(
-			'default'  => 'Default',
-			'Lato'  => 'Lato',
-			'Open Sans' => 'Open Sans',
-		),
+		'choices'  => gfwp_font_choices_for_select(),
+	) );
+
+	$wp_customize->add_setting( 'gfwp_headings_font' , array(
+		'default'   => 'default',
+		'transport' => 'refresh',
+	) );
+
+	$wp_customize->add_control( 'headings_font', array(
+		'label'      => esc_html__( 'Headings Font', 'google-fonts-wp' ),
+		'section'    => 'google-fonts-wp',
+		'settings'   => 'gfwp_headings_font',
+		'type'   => 'select',
+		'choices'  => gfwp_font_choices_for_select(),
+	) );
+
+	$wp_customize->add_setting( 'gfwp_inputs_font' , array(
+		'default'   => 'default',
+		'transport' => 'refresh',
+	) );
+
+	$wp_customize->add_control( 'inputs_font', array(
+		'label'      => esc_html__( 'Buttons and Inputs Font', 'google-fonts-wp' ),
+		'section'    => 'google-fonts-wp',
+		'settings'   => 'gfwp_inputs_font',
+		'type'   => 'select',
+		'choices'  => gfwp_font_choices_for_select(),
 	) );
 
 }
-add_action( 'customize_register', 'mytheme_customize_register' );
+add_action( 'customize_register', 'gfwp_customize_register' );
 
+/**
+ * Build the array for the select choices setting.
+ */
+function gfwp_font_choices_for_select() {
+	$fonts_array = gfwp_fonts_array();
 
-$object = wp_remote_get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyArY-5QrrBm_ZotJXZQKTOzZ8GgGTTTSn4');
-$body = json_decode( wp_remote_retrieve_body($object), true);
-// var_export($body['items']);
+	$fonts = array(
+		'default' => '- Default -',
+	);
+
+	foreach ( $fonts_array as $key => $value ) {
+		$fonts[ $key ] = $value['family'];
+	}
+
+	return $fonts;
+
+}
