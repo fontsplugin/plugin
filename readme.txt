@@ -11,7 +11,7 @@ Quickly and easily customize your website using Google Fonts.
 == Description ==
 The Google Fonts library currently contains 846 unique fonts. This plugin allows you to easily use any of them on your website.
 
-You're not stuck with one font for the entire website, you can choose one font for headings and another for your content.
+You're not stuck with one font for the entire website, you can easily choose one font for headings and another for your content.
 
 It's hard to know which font will look good on your website when browsing https://fonts.google.com, that's why we've included a live preview. That means you can test each font on your website and see how it looks with your content. Once you've found a combination you love, you can press save and make the changes publicly visible.
 
@@ -40,6 +40,13 @@ Navigate to wp-admin -> Appearance -> Customize and you will see a new tab named
 2. Articles Widget
 
 == Changelog ==
+
+= 1.0.1 =
+*Release Date - 12th October 2017*
+
+* Fix bug in class-google-url.php
+* Add missing translation
+* Add .pot file for translators
 
 = 1.0.0 =
 *Release Date - 12th October 2017*

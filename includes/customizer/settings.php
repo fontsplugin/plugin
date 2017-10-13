@@ -8,7 +8,9 @@
  */
 
 /**
- * @todo
+ * An array containing the customizer sections, settings and controls.
+ *
+ * @param object Access to the $wp_customize object.
  */
 function gfwp_customize_register( $wp_customize ) {
 
@@ -66,7 +68,7 @@ function gfwp_font_choices_for_select() {
 	$fonts_array = gfwp_fonts_array();
 
 	$fonts = array(
-		'default' => '- Default -',
+		'default' => __esc_html( '- Default -', 'google-fonts-wp' ),
 	);
 
 	foreach ( $fonts_array as $key => $value ) {

@@ -52,8 +52,9 @@ class GFWP_Google_URL {
 	 * Get the users font choices.
 	 */
 	public function get_choices() {
-		$this->choices[] = get_theme_mod( 'gfwp_header_font', 'lato' );
-		$this->choices[] = get_theme_mod( 'gfwp_body_font', 'open sans' );
+		$this->choices[] = get_theme_mod( 'gfwp_body_font' );
+		$this->choices[] = get_theme_mod( 'gfwp_headings_font' );
+		$this->choices[] = get_theme_mod( 'gfwp_inputs_font' );
 
 		// Remove the defaults.
 		unset( $this->choices['default'] );

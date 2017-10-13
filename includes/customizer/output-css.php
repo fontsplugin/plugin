@@ -8,7 +8,7 @@
  */
 
 /**
- * @todo
+ * Output the font CSS to wp_head.
  */
 function gfwp_output_css() {
 	?>
@@ -29,7 +29,10 @@ function gfwp_output_css() {
 add_action( 'wp_head' , 'gfwp_output_css' );
 
 /**
- * @TODO
+ * Helper function to build the CSS styles.
+ *
+ * @param string $selector The CSS selector to apply the styles to.
+ * @param string $option_name The option name to pull from the database.
  */
 function gfwp_generate_css( $selector, $option_name ) {
 	$return = '';
