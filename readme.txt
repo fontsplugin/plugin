@@ -41,6 +41,11 @@ Navigate to wp-admin -> Appearance -> Customize and you will see a new tab named
 
 == Changelog ==
 
+= 1.0.2 =
+*Release Date - 13th October 2017*
+
+* Refactor get_choices in class-google-url.php
+
 = 1.0.1 =
 *Release Date - 12th October 2017*
 

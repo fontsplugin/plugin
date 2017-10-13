@@ -68,7 +68,7 @@ function gfwp_font_choices_for_select() {
 	$fonts_array = gfwp_fonts_array();
 
 	$fonts = array(
-		'default' => __esc_html( '- Default -', 'google-fonts-wp' ),
+		'default' => esc_html__( '- Default -', 'google-fonts-wp' ),
 	);
 
 	foreach ( $fonts_array as $key => $value ) {

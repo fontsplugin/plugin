@@ -52,12 +52,18 @@ class GFWP_Google_URL {
 	 * Get the users font choices.
 	 */
 	public function get_choices() {
-		$this->choices[] = get_theme_mod( 'gfwp_body_font' );
-		$this->choices[] = get_theme_mod( 'gfwp_headings_font' );
-		$this->choices[] = get_theme_mod( 'gfwp_inputs_font' );
 
-		// Remove the defaults.
-		unset( $this->choices['default'] );
+		$options = array(
+			'gfwp_body_font',
+			'gfwp_headings_font',
+			'gfwp_inputs_font',
+		);
+
+		foreach ( $options as $option ) {
+			if ( get_theme_mod( $option ) && get_theme_mod( $option ) !== 'default' ) {
+				$this->choices[] = get_theme_mod( $option );
+			}
+		}
 
 	}
 
