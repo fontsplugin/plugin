@@ -2,7 +2,7 @@
 /**
  * Build the URL to load the chosen Google Fonts.
  *
- * @package     google-fonts-wp
+ * @package     olympus-google-fonts
  * @copyright   Copyright (c) 2017, Danny Cooper
  * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
@@ -10,7 +10,7 @@
 /**
  * This class builds the Google Fonts URL.
  */
-class GFWP_Google_URL {
+class OGF_Google_URL {
 
 	/**
 	 * All Google Fonts start with this URL
@@ -45,7 +45,7 @@ class GFWP_Google_URL {
 	 * Load the Google fonts array.
 	 */
 	public function get_fonts() {
-		$this->google_fonts = gfwp_fonts_array();
+		$this->google_fonts = ogf_fonts_array();
 	}
 
 	/**
@@ -54,9 +54,9 @@ class GFWP_Google_URL {
 	public function get_choices() {
 
 		$options = array(
-			'gfwp_body_font',
-			'gfwp_headings_font',
-			'gfwp_inputs_font',
+			'ogf_body_font',
+			'ogf_headings_font',
+			'ogf_inputs_font',
 		);
 
 		foreach ( $options as $option ) {

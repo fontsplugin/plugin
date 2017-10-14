@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: Google Fonts for WordPress\n"
+"Project-Id-Version: Olympus Google Fonts\n"
 "POT-Creation-Date: 2017-10-13 10:10+0100\n"
 "PO-Revision-Date: 2017-10-13 10:10+0100\n"
 "Last-Translator: \n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.12\n"
 "X-Poedit-Basepath: ..\n"
-"X-Poedit-WPHeader: google-fonts-wp.php\n"
+"X-Poedit-WPHeader: olympus-google-fonts.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
@@ -37,11 +37,11 @@ msgid "Buttons and Inputs Font"
 msgstr ""
 
 #. Plugin Name of the plugin/theme
-msgid "Google Fonts for WordPress"
+msgid "Olympus Google Fonts"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
-msgid "https://wordpress.org/plugins/google-fonts-wp/"
+msgid "https://wordpress.org/plugins/olympus-google-fonts/"
 msgstr ""
 
 #. Description of the plugin/theme

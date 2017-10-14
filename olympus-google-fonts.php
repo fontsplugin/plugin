@@ -2,24 +2,24 @@
 /**
  * Google Fonts WordPress
  *
- * Plugin Name: Google Fonts for WordPress
- * Plugin URI:  https://wordpress.org/plugins/google-fonts-wp/
+ * Plugin Name: Olympus Google Fonts
+ * Plugin URI:  https://wordpress.org/plugins/olympus-google-fonts/
  * Description: Add Google Fonts functionality to your theme in minutes without any coding.
- * Version:     1.0.2
+ * Version:     1.0.3
  * Author:      Danny Cooper
  * Author URI:  https://olympusthemes.com/
- * Text Domain: google-fonts-wp
+ * Text Domain: olympus-google-fonts
  * License:     GPL-2.0+
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Domain Path: /languages
  *
- * @package google-fonts-wp
+ * @package olympus-google-fonts
  */
 
 /**
- * Main Google_Fonts_for_WP Class
+ * Main Olympus_Google_Fonts Class
  */
-class Google_Fonts_WP {
+class Olympus_Google_Fonts {
 
 	/**
 	 * Initialize plugin.
@@ -54,7 +54,7 @@ class Google_Fonts_WP {
 	 */
 	public function load_textdomain() {
 
-		load_plugin_textdomain( 'google-fonts-wp', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+		load_plugin_textdomain( 'olympus-google-fonts', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 
 	}
 
@@ -65,14 +65,14 @@ class Google_Fonts_WP {
 	 */
 	public function enqueue() {
 
-		$url = new GFWP_Google_URL();
+		$url = new OGF_Google_URL();
 
 		if ( $url->has_custom_fonts() ) {
-			wp_enqueue_style( 'gfwp-google-fonts',  $url->build() , false );
+			wp_enqueue_style( 'olympus-google-fonts',  $url->build() , false );
 		}
 
 	}
 
 }
 
-$gfwp = new Google_Fonts_WP();
+$gfwp = new Olympus_Google_Fonts();

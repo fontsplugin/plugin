@@ -1,5 +1,5 @@
 <?php
-if ( ! function_exists( 'gfwp_fonts_array' ) ) :
+if ( ! function_exists( 'ogf_fonts_array' ) ) :
 	/**
 	 * Return an array of all available Google Fonts.
 	 *
@@ -7,7 +7,7 @@ if ( ! function_exists( 'gfwp_fonts_array' ) ) :
 	 *
 	 * @return array    All Google Fonts.
 	 */
-	function gfwp_fonts_array() {
+	function ogf_fonts_array() {
 
 		$fonts_json = file_get_contents( plugin_dir_path( __FILE__ ) . 'fonts.json' );
 
@@ -33,9 +33,9 @@ endif;
  * @param string $font_id The users font choice.
  * @return string The built font stack.
  */
-function gfwp_build_font_stack( $font_id ) {
+function ogf_build_font_stack( $font_id ) {
 
-	$google_fonts = gfwp_fonts_array();
+	$google_fonts = ogf_fonts_array();
 
 	$sans = '"Helvetica Neue", Helvetica, Arial, sans-serif';
 	$serif = 'Georgia, Times, "Times New Roman", serif';
