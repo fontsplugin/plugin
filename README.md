@@ -7,7 +7,11 @@ The Google Fonts library currently contains 846 unique fonts. This plugin allows
 
 You're not stuck with one font for the entire website, you can easily choose one font for headings and another for your content.
 
-It's hard to know which font will look good on your website when browsing https://fonts.google.com, that's why we've included a live preview. That means you can test each font on your website in. Once you've found a combination you love, you can press save and make the changes publicly visible.
+It's hard to know which font will look good on your website, that's why we've included a live preview feature. That means you can test each font and see a live preview of how it will look with your content instantly.
+
+Once you've found a combination you love, you can press save and make the changes publicly visible.
+
+The full Google Fonts library can be found here - https://fonts.google.com
 
 Getting Started
 ---------------
