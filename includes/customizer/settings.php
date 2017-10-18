@@ -58,6 +58,20 @@ function ogf_customize_register( $wp_customize ) {
 		'choices'  => ogf_font_choices_for_select(),
 	) );
 
+	$wp_customize->add_setting( 'ogf_force_styles' , array(
+		'default'   => '',
+		'transport' => 'refresh',
+		'sanitize_callback' => 'ogf_sanitize_checkbox',
+	) );
+
+	$wp_customize->add_control( 'force_styles', array(
+		'label'      => esc_html__( 'Force Styles?', 'olympus-google-fonts' ),
+		'section'    => 'olympus-google-fonts',
+		'settings'   => 'ogf_force_styles',
+		'type'   => 'checkbox',
+		'description' => esc_html__( 'If your choices are not displaying correctly, check this box.', 'olympus-google-fonts' ),
+	) );
+
 }
 add_action( 'customize_register', 'ogf_customize_register' );
 
@@ -77,4 +91,17 @@ function ogf_font_choices_for_select() {
 
 	return $fonts;
 
+}
+
+/**
+ * Sanitize the checbox value.
+ *
+ * @param int $input the input to sanitize.
+ * @return int 1 if checked, 0 if not.
+ */
+function ogf_sanitize_checkbox( $input ) {
+	if ( true === $input || '1' === $input ) {
+		return '1';
+	}
+	return '0';
 }
