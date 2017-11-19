@@ -2,7 +2,7 @@
 Contributors: DannyCooper
 Tags: google fonts, google fonts for wordpress, fonts, live preview, custom fonts
 Requires at least: 4.0
-Tested up to: 4.8
+Tested up to: 4.9
 License: GPLv2 or later
 Stable tag: trunk
 

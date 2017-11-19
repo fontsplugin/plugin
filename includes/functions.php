@@ -1,4 +1,12 @@
 <?php
+/**
+ * Helper functions.
+ *
+ * @package     olympus-google-fonts
+ * @copyright   Copyright (c) 2017, Danny Cooper
+ * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ */
+
 if ( ! function_exists( 'ogf_fonts_array' ) ) :
 	/**
 	 * Return an array of all available Google Fonts.
@@ -41,7 +49,7 @@ function ogf_build_font_stack( $font_id ) {
 	$serif = 'Georgia, Times, "Times New Roman", serif';
 	$monospace = '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;';
 
-	if( array_key_exists( $font_id, $google_fonts ) ) {
+	if ( array_key_exists( $font_id, $google_fonts ) ) {
 
 		if ( 'monospace' === $google_fonts[ $font_id ]['category'] ) {
 			$stack = $monospace;
