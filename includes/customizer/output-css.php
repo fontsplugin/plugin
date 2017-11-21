@@ -48,7 +48,7 @@ add_action( 'wp_head' , 'ogf_output_css' );
 function ogf_generate_css( $selector, $option_name ) {
 	$return = '';
 
-	if ( ! empty( get_theme_mod( $option_name ) ) ) {
+	if ( false !== get_theme_mod( $option_name ) ) {
 
 		$stack = ogf_build_font_stack( get_theme_mod( $option_name ) );
 
