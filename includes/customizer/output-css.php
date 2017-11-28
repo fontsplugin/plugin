@@ -12,7 +12,7 @@
  */
 function ogf_output_css() {
 	?>
-	<!-- Olympus Google Fonts CSS-->
+	<!-- Olympus Google Fonts CSS -->
 	<style type="text/css">
 
 		<?php ogf_generate_css( 'body', 'ogf_body_font' ); ?>
@@ -32,7 +32,7 @@ function ogf_output_css() {
 		<?php ogf_generate_css( 'footer', 'ogf_footer_content_font' ); ?>
 
 	</style>
-	<!--/Customizer CSS-->
+	<!--/ Olympus Google Fonts CSS -->
 	<?php
 }
 
