@@ -18,8 +18,7 @@ function ogf_customize_register( $wp_customize ) {
 		'priority' => 10,
 		'capability' => 'edit_theme_options',
 		'theme_supports' => '',
-		'title' => esc_html__( 'Google Fonts', 'textdomain' ),
-		'description' => esc_html__( 'Description of what this panel does.', 'textdomain' ),
+		'title' => esc_html__( 'Google Fonts', 'olympus-google-fonts' ),
 	) );
 
 	$wp_customize->add_section( 'olympus-google-fonts' , array(
