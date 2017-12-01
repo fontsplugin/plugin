@@ -71,4 +71,4 @@ class Olympus_Google_Fonts {
 
 }
 
-$gfwp = new Olympus_Google_Fonts();
+$ogf = new Olympus_Google_Fonts();

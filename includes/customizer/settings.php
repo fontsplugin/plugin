@@ -223,23 +223,25 @@ function ogf_customize_register( $wp_customize ) {
 }
 add_action( 'customize_register', 'ogf_customize_register' );
 
-/**
- * Build the array for the select choices setting.
- */
-function ogf_font_choices_for_select() {
-	$fonts_array = ogf_fonts_array();
+if ( ! function_exists( 'ogf_font_choices_for_select' ) ) :
+	/**
+	 * Build the array for the select choices setting.
+	 */
+	function ogf_font_choices_for_select() {
+		$fonts_array = ogf_fonts_array();
 
-	$fonts = array(
-		'default' => esc_html__( '- Default -', 'olympus-google-fonts' ),
-	);
+		$fonts = array(
+			'default' => esc_html__( '- Default -', 'olympus-google-fonts' ),
+		);
 
-	foreach ( $fonts_array as $key => $value ) {
-		$fonts[ $key ] = $value['family'];
+		foreach ( $fonts_array as $key => $value ) {
+			$fonts[ $key ] = $value['family'];
+		}
+
+		return $fonts;
+
 	}
-
-	return $fonts;
-
-}
+endif;
 
 /**
  * Sanitize the checbox value.
