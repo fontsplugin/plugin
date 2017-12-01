@@ -58,6 +58,16 @@ We are 99.99% certain it will, if it doesn't and you have tried the 'Force Style
 
 == Changelog ==
 
+= 1.0.7 =
+*Release Date - 19th Nov 2017*
+
+* Add advanced settings
+
+= 1.0.6 =
+*Release Date - 15th Nov 2017*
+
+* Minor code improvements
+
 = 1.0.5 =
 *Release Date - 14th October 2017*
 
