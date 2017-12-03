@@ -24,7 +24,7 @@ if ( ! function_exists( 'ogf_output_css' ) ) :
 
 			<?php ogf_generate_css( '.site-title', 'ogf_site_title_font' ); ?>
 			<?php ogf_generate_css( '.site-description', 'ogf_site_description_font' ); ?>
-			<?php ogf_generate_css( '.menu', 'ogf_navigation_font' ); ?>
+			<?php ogf_generate_css( '.menu, .menu-item, .page_item', 'ogf_navigation_font' ); ?>
 			<?php ogf_generate_css( 'article h1, article h2, article h3, article h4, article h5, article h6', 'ogf_post_page_headings_font' ); ?>
 			<?php ogf_generate_css( 'article', 'ogf_post_page_content_font' ); ?>
 			<?php ogf_generate_css( '.widget-area h1, .widget-area h2, .widget-area h3, .widget-area h4, .widgets-area h5, .widget-area h6', 'ogf_sidebar_headings_font' ); ?>
