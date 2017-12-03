@@ -58,6 +58,11 @@ We are 99.99% certain it will, if it doesn't and you have tried the 'Force Style
 
 == Changelog ==
 
+= 1.0.8 =
+*Release Date - 3rd Dec 2017*
+
+* Add more selectors for the navigation open
+
 = 1.0.7 =
 *Release Date - 19th Nov 2017*
 
