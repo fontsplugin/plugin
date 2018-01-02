@@ -58,10 +58,20 @@ We are 99.99% certain it will, if it doesn't and you have tried the 'Force Style
 
 == Changelog ==
 
-= 1.0.8 =
-*Release Date - 3rd Dec 2017*
+= 1.1.0 =
+*Release Date - Dec 30 2017*
 
-* Add more selectors for the navigation open
+* Improve outputting of Google stylesheet
+
+= 1.0.9 =
+*Release Date - Dec 3 2017*
+
+* Fix navigation font setting
+
+= 1.0.8 =
+*Release Date - Nov 22 2017*
+
+* Fix compatibility issue with PHP 5.2
 
 = 1.0.7 =
 *Release Date - 19th Nov 2017*

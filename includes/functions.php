@@ -13,7 +13,7 @@ if ( ! function_exists( 'ogf_fonts_array' ) ) :
 	 *
 	 * @since  1.0.0.
 	 *
-	 * @return array All Google Fonts.
+	 * @return array    All Google Fonts.
 	 */
 	function ogf_fonts_array() {
 
@@ -35,36 +35,34 @@ if ( ! function_exists( 'ogf_fonts_array' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'ogf_build_font_stack' ) ) :
-	/**
-	 * Build a font stack using the users font choice.
-	 *
-	 * @param string $font_id The users font choice.
-	 * @return string The built font stack.
-	 */
-	function ogf_build_font_stack( $font_id ) {
+/**
+ * Build a font stack using the users font choice.
+ *
+ * @param string $font_id The users font choice.
+ * @return string The built font stack.
+ */
+function ogf_build_font_stack( $font_id ) {
 
-		$google_fonts = ogf_fonts_array();
+	$google_fonts = ogf_fonts_array();
 
-		$sans = '"Helvetica Neue", Helvetica, Arial, sans-serif';
-		$serif = 'Georgia, Times, "Times New Roman", serif';
-		$monospace = '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;';
+	$sans      = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+	$serif     = 'Georgia, Times, "Times New Roman", serif';
+	$monospace = '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;';
 
-		if ( array_key_exists( $font_id, $google_fonts ) ) {
+	if ( array_key_exists( $font_id, $google_fonts ) ) {
 
-			if ( 'monospace' === $google_fonts[ $font_id ]['category'] ) {
-				$stack = $monospace;
-			} elseif ( 'serif' === $google_fonts[ $font_id ]['category'] ) {
-				$stack = $serif;
-			} else {
-				$stack = $sans;
-			}
-
-			$stack = '"' . $google_fonts[ $font_id ]['family'] . '", ' . $stack;
-
-			return $stack;
-
+		if ( 'monospace' === $google_fonts[ $font_id ]['category'] ) {
+			$stack = $monospace;
+		} elseif ( 'serif' === $google_fonts[ $font_id ]['category'] ) {
+			$stack = $serif;
+		} else {
+			$stack = $sans;
 		}
 
+		$stack = '"' . $google_fonts[ $font_id ]['family'] . '", ' . $stack;
+
+		return $stack;
+
 	}
-endif;
+
+}

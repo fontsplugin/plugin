@@ -15,13 +15,6 @@ class OGF_Google_URL {
 	/**
 	 * All Google Fonts start with this URL
 	 *
-	 * @var string
-	 */
-	public $url_base = 'https://fonts.googleapis.com/css?family=';
-
-	/**
-	 * All Google Fonts start with this URL
-	 *
 	 * @var array
 	 */
 	public $google_fonts = array();
@@ -57,6 +50,15 @@ class OGF_Google_URL {
 			'ogf_body_font',
 			'ogf_headings_font',
 			'ogf_inputs_font',
+			'ogf_site_title_font',
+			'ogf_site_description_font',
+			'ogf_navigation_font',
+			'ogf_post_page_headings_font',
+			'ogf_post_page_content_font',
+			'ogf_sidebar_headings_font',
+			'ogf_sidebar_content_font',
+			'ogf_footer_headings_font',
+			'ogf_footer_content_font',
 		);
 
 		foreach ( $options as $option ) {
@@ -96,11 +98,11 @@ class OGF_Google_URL {
 	public function build() {
 
 		$families = array();
-		$subsets = array();
+		$subsets  = array();
 
 		if ( ! empty( $this->choices ) ) {
 
-			foreach ( $this->choices as $font ) {
+			foreach ( array_unique( $this->choices ) as $font ) {
 
 				// Check the users choice is a real font.
 				if ( array_key_exists( $font, $this->google_fonts ) ) {
@@ -121,10 +123,12 @@ class OGF_Google_URL {
 				}
 			}
 
-			$families_output = implode( '|', $families );
-			$subset_output = implode( ',', $subsets );
+			$query_args = array(
+				'family' => implode( '|', $families ),
+				'subset' => implode( ',', $subsets ),
+			);
 
-			return $this->url_base . $families_output . '&amp;' . $subset_output;
+			return add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
 
 		}
 
