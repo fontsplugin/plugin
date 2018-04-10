@@ -36,6 +36,9 @@ class Olympus_Google_Fonts {
 		require plugin_dir_path( __FILE__ ) . 'includes/customizer/settings.php';
 		require plugin_dir_path( __FILE__ ) . 'includes/customizer/output-css.php';
 
+		// Feedback request class.
+		require plugin_dir_path( __FILE__ ) . 'includes/class-ogf-feedback.php';
+
 	}
 
 	/**

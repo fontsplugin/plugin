@@ -19,6 +19,19 @@ Once you've found a combination you love, you can press save and make the change
 
 The full Google Fonts library can be found here - [Google Fonts](https://fonts.google.com)
 
+= Plugin Features =
+
+* **Live Customizer Preview:** Choose and preview fonts in real time using the WordPress Customizer.
+* **Over 840+ Google Fonts** to choose from.
+* Works with any WordPress Theme. No coding required.
+* Easy One-Click Updates.
+* Translation Ready.
+* SSL and HTTPS compatible.
+* Efficient Font Loading using a single request.
+* **SEO-Friendly** (Search Engine Optimization).
+* Tested with **PHP7**
+
+
 The Google Fonts for WordPress plugin will work with all WordPress themes and has been specifically tested with the following:
 
 * All OlympusThemes
@@ -57,6 +70,16 @@ We are 99.99% certain it will, if it doesn't and you have tried the 'Force Style
 1. Customizer Settings - Google Fonts for WordPress
 
 == Changelog ==
+
+= 1.1.2 =
+*Release Date - April 10 2018*
+
+* Add feedback request
+
+= 1.1.1 =
+*Release Date - Feb 3 2018*
+
+* Add new fonts
 
 = 1.1.0 =
 *Release Date - Dec 30 2017*
