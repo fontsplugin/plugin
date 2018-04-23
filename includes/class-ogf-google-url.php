@@ -109,7 +109,7 @@ class OGF_Google_URL {
 
 					$id = $this->get_font_id( $this->google_fonts[ $font ]['family'] );
 
-					$families[] = $id . ':' . implode( ',', $this->google_fonts[ $font ]['variants'] );
+					$families[] = $id . ':' . implode( ',', array_keys( $this->google_fonts[ $font ]['variants'] ) );
 
 					$subsets_array = $this->google_fonts[ $font ]['subsets'];
 

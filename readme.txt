@@ -63,13 +63,24 @@ Navigate to wp-admin -> Appearance -> Customize and you will see a new tab named
 
 = Will my theme work with Google Fonts for WordPress? =
 
-We are 99.99% certain it will, if it doesn't and you have tried the 'Force Styles' option then please create a [support ticket](https://wordpress.org/support/plugin/olympus-google-fonts).
+We are 99.99% certain it will, if it doesn't then please create a [support ticket](https://wordpress.org/support/plugin/olympus-google-fonts).
 
 == Screenshots ==
 
 1. Customizer Settings - Google Fonts for WordPress
 
 == Changelog ==
+
+= 1.2.0 =
+*Release Date - April 17 2018*
+
+* Add new fonts
+* Add font-weight option
+* Add font-style option
+* Improve live preview
+* Add settings link to plugins page
+* Add searchable text field to font-family setting
+* Remove 'force styles' setting
 
 = 1.1.2 =
 *Release Date - April 10 2018*

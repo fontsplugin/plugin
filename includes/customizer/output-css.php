@@ -44,18 +44,45 @@ add_action( 'wp_head', 'ogf_output_css' );
  * @param string $option_name The option name to pull from the database.
  */
 function ogf_generate_css( $selector, $option_name ) {
+
+	$family = get_theme_mod( $option_name, false );
+	$weight = get_theme_mod( $option_name . '_weight', false );
+	$style  = get_theme_mod( $option_name . '_style', false );
+
 	$return = '';
 
-	if ( false !== get_theme_mod( $option_name ) ) {
+	if ( $family || $weight || $style ) {
 
-		$stack = ogf_build_font_stack( get_theme_mod( $option_name ) );
+		$return .= $selector . ' {' . PHP_EOL;
 
-		if ( ! empty( $stack ) && 'default' !== $stack ) {
-			$return = sprintf('%s { font-family: %s; }' . PHP_EOL,
-				$selector,
-				$stack . ogf_is_forced()
-			);
+		// Return font-family CSS.
+		if ( false !== $family && 'default' !== $family ) {
+
+			$stack = ogf_build_font_stack( $family );
+
+			if ( ! empty( $stack ) ) {
+				$return .= sprintf('font-family: %s;' . PHP_EOL,
+					$stack . ogf_is_forced()
+				);
+			}
 		}
+
+		// Return font-weight CSS.
+		if ( false !== $weight && '0' !== $weight ) {
+				$return .= sprintf('font-weight: %s;' . PHP_EOL,
+					absint( $weight ) . ogf_is_forced()
+				);
+		}
+
+		// Return font-style CSS.
+		if ( false !== $style && 'normal' !== $style ) {
+				$return .= sprintf('font-style: %s;' . PHP_EOL,
+					esc_attr( $style ) . ogf_is_forced()
+				);
+		}
+
+		$return .= ' }' . PHP_EOL;
+
 		echo wp_kses_post( $return );
 
 	}

@@ -14,6 +14,10 @@
  */
 function ogf_customize_register( $wp_customize ) {
 
+	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-wp-customize-typography-control.php';
+
+	$wp_customize->register_control_type( 'WP_Customize_Typography_Control' );
+
 	$wp_customize->add_panel( 'olympus_google_fonts', array(
 		'priority'       => 10,
 		'capability'     => 'edit_theme_options',
@@ -29,56 +33,102 @@ function ogf_customize_register( $wp_customize ) {
 
 	$wp_customize->add_setting( 'ogf_body_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'body_font', array(
-		'label'    => esc_html__( 'Body Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts',
-		'settings' => 'ogf_body_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_body_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_body_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_body_typography',
+			array(
+				'label'       => esc_html__( 'Base Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your content.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_body_font',
+					'weight' => 'ogf_body_font_weight',
+					'style'  => 'ogf_body_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_headings_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'headings_font', array(
-		'label'    => esc_html__( 'Headings Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts',
-		'settings' => 'ogf_headings_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_headings_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_headings_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_heading_typography',
+			array(
+				'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your headings.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_headings_font',
+					'weight' => 'ogf_headings_font_weight',
+					'style'  => 'ogf_headings_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_inputs_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'inputs_font', array(
-		'label'    => esc_html__( 'Buttons and Inputs Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts',
-		'settings' => 'ogf_inputs_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_inputs_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_setting( 'ogf_force_styles', array(
-		'default'           => '',
-		'transport'         => 'refresh',
-		'sanitize_callback' => 'ogf_sanitize_checkbox',
+	$wp_customize->add_setting( 'ogf_inputs_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'force_styles', array(
-		'label'       => esc_html__( 'Force Styles?', 'olympus-google-fonts' ),
-		'section'     => 'olympus-google-fonts',
-		'settings'    => 'ogf_force_styles',
-		'type'        => 'checkbox',
-		'description' => esc_html__( 'If your choices are not displaying correctly, check this box.', 'olympus-google-fonts' ),
-	) );
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_input_typography',
+			array(
+				'label'       => esc_html__( 'Buttons and Inputs Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your input fields and buttons.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_inputs_font',
+					'weight' => 'ogf_inputs_font_weight',
+					'style'  => 'ogf_inputs_font_style',
+				),
+			)
+		)
+	);
 
 	/* Advanced Settings */
 
@@ -91,134 +141,300 @@ function ogf_customize_register( $wp_customize ) {
 
 	$wp_customize->add_setting( 'ogf_site_title_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'site_title_font', array(
-		'label'    => esc_html__( 'Site Title Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_site_title_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_site_title_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_site_title_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_site_title_typography',
+			array(
+				'label'       => esc_html__( 'Site Title Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your site title.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_site_title_font',
+					'weight' => 'ogf_site_title_font_weight',
+					'style'  => 'ogf_site_title_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_site_description_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'site_description_font', array(
-		'label'    => esc_html__( 'Site Description Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_site_description_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_site_description_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_site_description_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_site_description_typography',
+			array(
+				'label'       => esc_html__( 'Site Description Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your site description.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_site_description_font',
+					'weight' => 'ogf_site_description_font_weight',
+					'style'  => 'ogf_site_description_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_navigation_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'navigation_font', array(
-		'label'    => esc_html__( 'Navigation Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_navigation_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_navigation_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_navigation_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_navigation_typography',
+			array(
+				'label'       => esc_html__( 'Navigation Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your site navigation.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_navigation_font',
+					'weight' => 'ogf_navigation_font_weight',
+					'style'  => 'ogf_navigation_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_post_page_headings_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'post_page_headings_font', array(
-		'label'    => esc_html__( 'Post/Page Headings Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_post_page_headings_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_post_page_headings_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_post_page_headings_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_post_page_headings_typography',
+			array(
+				'label'       => esc_html__( 'Post/Page Headings Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your post and page headings.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_post_page_headings_font',
+					'weight' => 'ogf_post_page_headings_font_weight',
+					'style'  => 'ogf_post_page_headings_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_post_page_content_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'post_page_content_font', array(
-		'label'    => esc_html__( 'Post/Page Content Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_post_page_content_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_post_page_content_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_post_page_content_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_post_page_content_typography',
+			array(
+				'label'       => esc_html__( 'Post/Page Content Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your post and page content.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_post_page_content_font',
+					'weight' => 'ogf_post_page_content_font_weight',
+					'style'  => 'ogf_post_page_content_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_sidebar_headings_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'sidebar_headings_font', array(
-		'label'    => esc_html__( 'Sidebar Headings Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_sidebar_headings_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_sidebar_headings_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_sidebar_headings_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_sidebar_headings_typography',
+			array(
+				'label'       => esc_html__( 'Sidebar Headings Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your sidebar headings.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_sidebar_headings_font',
+					'weight' => 'ogf_sidebar_headings_font_weight',
+					'style'  => 'ogf_sidebar_headings_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_sidebar_content_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'sidebar_content_font', array(
-		'label'    => esc_html__( 'Sidebar Content Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_sidebar_content_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_sidebar_content_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_sidebar_content_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_sidebar_content_typography',
+			array(
+				'label'       => esc_html__( 'Sidebar Content Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your sidebar content.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_sidebar_content_font',
+					'weight' => 'ogf_sidebar_content_font_weight',
+					'style'  => 'ogf_sidebar_content_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_footer_headings_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'footer_headings_font', array(
-		'label'    => esc_html__( 'Footer Headings Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_footer_headings_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_footer_headings_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
+
+	$wp_customize->add_setting( 'ogf_footer_headings_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
+	) );
+
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_footer_headings_typography',
+			array(
+				'label'       => esc_html__( 'Footer Headings Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your footer headings.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_footer_headings_font',
+					'weight' => 'ogf_footer_headings_font_weight',
+					'style'  => 'ogf_footer_headings_font_style',
+				),
+			)
+		)
+	);
 
 	$wp_customize->add_setting( 'ogf_footer_content_font', array(
 		'default'   => 'default',
-		'transport' => 'refresh',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'footer_content_font', array(
-		'label'    => esc_html__( 'Footer Content Font', 'olympus-google-fonts' ),
-		'section'  => 'olympus-google-fonts-advanced',
-		'settings' => 'ogf_footer_content_font',
-		'type'     => 'select',
-		'choices'  => ogf_font_choices_for_select(),
+	$wp_customize->add_setting( 'ogf_footer_content_font_weight', array(
+		'default'   => '0',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_setting( 'ogf_force_advanced_styles', array(
-		'default'           => '',
-		'transport'         => 'refresh',
-		'sanitize_callback' => 'ogf_sanitize_checkbox',
+	$wp_customize->add_setting( 'ogf_footer_content_font_style', array(
+		'default'   => 'normal',
+		'transport' => 'postMessage',
 	) );
 
-	$wp_customize->add_control( 'force_advanced_styles', array(
-		'label'       => esc_html__( 'Force Advanced Styles?', 'olympus-google-fonts' ),
-		'section'     => 'olympus-google-fonts-advanced',
-		'settings'    => 'ogf_force_advanced_styles',
-		'type'        => 'checkbox',
-		'description' => esc_html__( 'If your choices are not displaying correctly, check this box.', 'olympus-google-fonts' ),
-	) );
+	$wp_customize->add_control(
+		new WP_Customize_Typography_Control(
+			$wp_customize,
+			'ogf_footer_content_typography',
+			array(
+				'label'       => esc_html__( 'Footer Content Typography', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Select and configure the font for your footer content.', 'olympus-google-fonts' ),
+				'section'     => 'olympus-google-fonts-advanced',
+				// Tie a setting (defined via `$wp_customize->add_setting()`) to the control.
+				'settings'    => array(
+					'family' => 'ogf_footer_content_font',
+					'weight' => 'ogf_footer_content_font_weight',
+					'style'  => 'ogf_footer_content_font_style',
+				),
+			)
+		)
+	);
 
 }
 add_action( 'customize_register', 'ogf_customize_register' );
