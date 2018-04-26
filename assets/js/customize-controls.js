@@ -33,30 +33,6 @@
 				}
 			);
 
-			control.container.on( 'change', '.typography-font-weight select',
-				function() {
-					control.settings['weight'].set( jQuery( this ).val() );
-				}
-			);
-
-			control.container.on( 'change', '.typography-font-style select',
-				function() {
-					control.settings['style'].set( jQuery( this ).val() );
-				}
-			);
-
-			control.container.on( 'change', '.typography-font-size input',
-				function() {
-					control.settings['size'].set( jQuery( this ).val() );
-				}
-			);
-
-			control.container.on( 'change', '.typography-line-height input',
-				function() {
-					control.settings['line_height'].set( jQuery( this ).val() );
-				}
-			);
-
 			control.container.on( 'click', '.advanced-button',
 				function() {
 					jQuery( this ).toggleClass('open');
