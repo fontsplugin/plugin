@@ -6,10 +6,10 @@ Tested up to: 4.9
 License: GPLv2 or later
 Stable tag: trunk
 
-Quickly and easily customize your website using Google Fonts.
+The easiest to use Google Fonts plugin. No coding required. 870+ font choices.
 
 == Description ==
-The Google Fonts library currently contains 846 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
+The Google Fonts library currently contains 877 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
 
 You're not stuck with one font for the entire website, you can easily choose one font for headings and another for your content.
 
@@ -22,7 +22,7 @@ The full Google Fonts library can be found here - [Google Fonts](https://fonts.g
 = Plugin Features =
 
 * **Live Customizer Preview:** Choose and preview fonts in real time using the WordPress Customizer.
-* **Over 840+ Google Fonts** to choose from.
+* **Over 870+ Google Fonts** to choose from.
 * Works with any WordPress Theme. No coding required.
 * Easy One-Click Updates.
 * Translation Ready.
