@@ -67,9 +67,16 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 == Screenshots ==
 
-1. Customizer Settings - Google Fonts for WordPress
+1. Instant Live Preview - Google Fonts for WordPress
+1. Customizer Settings Search - Google Fonts for WordPress
+1. Customizer Settings Font Weight and Style - Google Fonts for WordPress
 
 == Changelog ==
+
+= 1.2.1 =
+*Release Date - June 15 2018*
+
+* Remove unused code
 
 = 1.2.0 =
 *Release Date - April 17 2018*
