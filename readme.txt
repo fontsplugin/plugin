@@ -1,8 +1,8 @@
 === Google Fonts for WordPress ===
-Contributors: DannyCooper
-Tags: google fonts, google fonts for wordpress, fonts, live preview, custom fonts
+Contributors: DannyCooper, googlefonts
+Tags: google fonts, google fonts for wordpress, fonts, live preview, google-fonts
 Requires at least: 4.0
-Tested up to: 4.9
+Tested up to: 4.9.7
 License: GPLv2 or later
 Stable tag: trunk
 
@@ -68,10 +68,15 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 == Screenshots ==
 
 1. Instant Live Preview - Google Fonts for WordPress
-1. Customizer Settings Search - Google Fonts for WordPress
-1. Customizer Settings Font Weight and Style - Google Fonts for WordPress
+2. Customizer Settings Search - Google Fonts for WordPress
+3. Customizer Settings Font Weight and Style - Google Fonts for WordPress
 
 == Changelog ==
+
+= 1.2.2 =
+*Release Date - July 12 2018*
+
+* Minor updates
 
 = 1.2.1 =
 *Release Date - June 15 2018*
@@ -154,4 +159,4 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 = 1.0.0 =
 *Release Date - 12th October 2017*
 
-* Initial release
+* Initial release of Google Fonts for WordPress
