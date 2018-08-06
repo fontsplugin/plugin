@@ -12,7 +12,7 @@
  */
 function ogf_output_css() {
 	?>
-	<!-- Olympus Google Fonts CSS -->
+	<!-- Olympus Google Fonts CSS - https://wordpress.org/plugins/olympus-google-fonts/ -->
 	<style>
 		<?php ogf_generate_css( 'body', 'ogf_body_font' ); ?>
 		<?php ogf_generate_css( '.site-title, h1, h2, h3, h4, h5, h6', 'ogf_headings_font' ); ?>
@@ -23,8 +23,8 @@ function ogf_output_css() {
 		<?php ogf_generate_css( '.site-title', 'ogf_site_title_font' ); ?>
 		<?php ogf_generate_css( '.site-description', 'ogf_site_description_font' ); ?>
 		<?php ogf_generate_css( '.menu, .page_item, .menu-item', 'ogf_navigation_font' ); ?>
-		<?php ogf_generate_css( 'article h1, article h2, article h3, article h4, article h5, article h6', 'ogf_post_page_headings_font' ); ?>
-		<?php ogf_generate_css( 'article', 'ogf_post_page_content_font' ); ?>
+		<?php ogf_generate_css( '.entry-title, .entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6', 'ogf_post_page_headings_font' ); ?>
+		<?php ogf_generate_css( '.entry-content', 'ogf_post_page_content_font' ); ?>
 		<?php ogf_generate_css( '.widget-area h1, .widget-area h2, .widget-area h3, .widget-area h4, .widgets-area h5, .widget-area h6', 'ogf_sidebar_headings_font' ); ?>
 		<?php ogf_generate_css( '.widget-area', 'ogf_sidebar_content_font' ); ?>
 		<?php ogf_generate_css( 'footer h1, footer h2, footer h3, footer h4, .widgets-area h5, footer h6', 'ogf_footer_headings_font' ); ?>
