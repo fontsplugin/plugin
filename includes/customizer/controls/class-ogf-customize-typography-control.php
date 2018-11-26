@@ -2,9 +2,9 @@
 /**
  * Typography Custom Control
  *
- * @package     olympus-google-fonts
- * @copyright   Copyright (c) 2017, Danny Cooper
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @package   olympus-google-fonts
+ * @copyright Copyright (c) 2018, Danny Cooper
+ * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
 /**
@@ -13,7 +13,7 @@
  * @since  1.0.0
  * @access public
  */
-class WP_Customize_Typography_Control extends WP_Customize_Control {
+class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 	/**
 	 * The type of customize control being rendered.
@@ -39,8 +39,8 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 	 * @since  1.0.0
 	 * @access public
 	 * @param  object $manager Customizer manager.
-	 * @param  string $id Control ID.
-	 * @param  array  $args Arguments to override class property defaults.
+	 * @param  string $id      Control ID.
+	 * @param  array  $args    Arguments to override class property defaults.
 	 * @return void
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
@@ -51,9 +51,9 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 			$this->l10n,
 			array(
 				'family'      => esc_html__( 'Font Family', 'olympus-google-fonts' ),
-				'size'        => esc_html__( 'Font Size', 'olympus-google-fonts' ),
 				'weight'      => esc_html__( 'Font Weight', 'olympus-google-fonts' ),
 				'style'       => esc_html__( 'Font Style', 'olympus-google-fonts' ),
+				'size'        => esc_html__( 'Font Size (px)', 'olympus-google-fonts' ),
 				'line_height' => esc_html__( 'Line Height', 'olympus-google-fonts' ),
 				'color'       => esc_html__( 'Color', 'olympus-google-fonts' ),
 			)
@@ -67,7 +67,7 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 	public function enqueue() {
 		wp_enqueue_script( 'wp-color-picker' );
 		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'selectize', esc_url( OGF_DIR_URL . 'assets/js/selectize.js' ), array( 'jquery' ) );
+		wp_enqueue_script( 'chosen', esc_url( OGF_DIR_URL . 'assets/js/chosen.min.js' ), array( 'jquery' ), OGF_VERSION, true );
 	}
 
 	/**
@@ -83,14 +83,11 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 				'label' => isset( $this->l10n[ $setting_key ] ) ? $this->l10n[ $setting_key ] : '',
 			);
 
-			if ( 'family' === $setting_key ) {
-				$this->json[ $setting_key ]['choices'] = $this->get_font_families();
-			} elseif ( 'weight' === $setting_key ) {
+			if ( 'weight' === $setting_key ) {
 				$this->json[ $setting_key ]['choices'] = $this->get_font_weight_choices( $this->value( 'family' ) );
 			} elseif ( 'style' === $setting_key ) {
 				$this->json[ $setting_key ]['choices'] = $this->get_font_style_choices();
 			}
-			$this->json['ogf_fonts'] = $this->get_font_array();
 		}
 	}
 	/**
@@ -109,7 +106,7 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 
 		<ul>
 
-		<# if ( data.family && data.family.choices ) { #>
+		<# if ( data.family && ogf_font_choices ) { #>
 
 			<li class="typography-font-family">
 
@@ -119,8 +116,8 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 
 				<select class="ogf-select" {{{ data.family.link }}}>
 
-					<# _.each( data.family.choices, function( label, choice ) { #>
-						<option value="{{ choice }}" <# if ( choice === data.family.value ) { #> selected="selected" <# } #>>{{ label }}</option>
+					<# _.each( ogf_font_choices, function( label, font_id ) { #>
+						<option value="{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ label }}</option>
 					<# } ) #>
 
 				</select>
@@ -178,11 +175,17 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 
 				<li class="typography-font-size">
 
-					<# if ( data.size.label ) { #>
-						<span class="customize-control-title">{{ data.size.label }}</span>
-					<# } #>
+					<div class="slider-custom-control">
 
-					<input type="range" min="25" max="300" {{{ data.size.link }}} value="{{ data.size.value }}" />
+							<# if ( data.size.label ) { #>
+								<span class="customize-control-title">{{ data.size.label }}</span>
+							<# } #>
+							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.size.value }}"></span>
+
+							<div class="slider" slider-max-value="72" slider-step-value="1"></div>
+							<input class="customize-control-slider-value" {{{ data.size.link }}} type="number" value="{{ data.size.value }}">
+
+					</div>
 
 				</li>
 			<# } #>
@@ -191,11 +194,17 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 
 				<li class="typography-line-height">
 
-					<# if ( data.line_height.label ) { #>
-						<span class="customize-control-title">{{ data.line_height.label }}</span>
-					<# } #>
+					<div class="slider-custom-control">
 
-					<input type="range" min="1" max="2" step="0.1" {{{ data.line_height.link }}} value="{{ data.line_height.value }}" />
+							<# if ( data.line_height.label ) { #>
+								<span class="customize-control-title">{{ data.line_height.label }}</span>
+							<# } #>
+							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.line_height.value }}"></span>
+
+							<div class="slider" slider-max-value="3" slider-step-value=".1"></div>
+							<input class="customize-control-slider-value" {{{ data.line_height.link }}} type="number" value="{{ data.line_height.value }}">
+
+					</div>
 
 				</li>
 			<# } #>
@@ -216,31 +225,7 @@ class WP_Customize_Typography_Control extends WP_Customize_Control {
 		</div>
 
 		</ul>
-	<?php
-	}
-
-	/**
-	 * Returns the available font families.
-	 */
-	public function get_font_families() {
-		return ogf_font_choices_for_select();
-	}
-
-	/**
-	 * Returns the available font families.
-	 */
-	public function get_font_array() {
-
-		// Only pass the data needed to JSON.
-		$fonts_slim = array();
-
-		$fonts = ogf_fonts_array();
-
-		foreach ( $fonts as $key => $font ) {
-			$fonts_slim[ $key ]['variants'] = $font['variants'];
-		}
-
-		return $fonts;
+		<?php
 	}
 
 	/**

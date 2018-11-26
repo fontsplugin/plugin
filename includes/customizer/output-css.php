@@ -2,9 +2,9 @@
 /**
  * Output the Google Fonts CSS.
  *
- * @package     olympus-google-fonts
- * @copyright   Copyright (c) 2017, Danny Cooper
- * @license     http://opensource.org/licenses/gpl-2.0.php GNU Public License
+ * @package   olympus-google-fonts
+ * @copyright Copyright (c) 2018, Danny Cooper
+ * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
 /**
@@ -12,25 +12,18 @@
  */
 function ogf_output_css() {
 	?>
-	<!-- Olympus Google Fonts CSS - https://wordpress.org/plugins/olympus-google-fonts/ -->
+	<!-- Fonts Plugin CSS - https://fontsplugin.com/ -->
 	<style>
-		<?php ogf_generate_css( 'body', 'ogf_body_font' ); ?>
-		<?php ogf_generate_css( '.site-title, h1, h2, h3, h4, h5, h6', 'ogf_headings_font' ); ?>
-		<?php ogf_generate_css( 'button, input, select, textarea', 'ogf_inputs_font' ); ?>
-
-		/* Advanced Settings */
-
-		<?php ogf_generate_css( '.site-title', 'ogf_site_title_font' ); ?>
-		<?php ogf_generate_css( '.site-description', 'ogf_site_description_font' ); ?>
-		<?php ogf_generate_css( '.menu, .page_item, .menu-item', 'ogf_navigation_font' ); ?>
-		<?php ogf_generate_css( '.entry-title, .entry-content h1, .entry-content h2, .entry-content h3, .entry-content h4, .entry-content h5, .entry-content h6', 'ogf_post_page_headings_font' ); ?>
-		<?php ogf_generate_css( '.entry-content', 'ogf_post_page_content_font' ); ?>
-		<?php ogf_generate_css( '.widget-area h1, .widget-area h2, .widget-area h3, .widget-area h4, .widgets-area h5, .widget-area h6', 'ogf_sidebar_headings_font' ); ?>
-		<?php ogf_generate_css( '.widget-area', 'ogf_sidebar_content_font' ); ?>
-		<?php ogf_generate_css( 'footer h1, footer h2, footer h3, footer h4, .widgets-area h5, footer h6', 'ogf_footer_headings_font' ); ?>
-		<?php ogf_generate_css( 'footer', 'ogf_footer_content_font' ); ?>
+		<?php
+		foreach ( ogf_get_elements() as $id => $values ) {
+			ogf_generate_css( $values['selectors'], $id );
+		}
+		foreach ( ogf_get_custom_elements() as $id => $values ) {
+			ogf_generate_css( $values['selectors'], $id );
+		}
+		?>
 	</style>
-	<!-- Olympus Google Fonts CSS -->
+	<!-- Fonts Plugin CSS -->
 	<?php
 }
 
@@ -40,18 +33,20 @@ add_action( 'wp_head', 'ogf_output_css' );
 /**
  * Helper function to build the CSS styles.
  *
- * @param string $selector The CSS selector to apply the styles to.
+ * @param string $selector    The CSS selector to apply the styles to.
  * @param string $option_name The option name to pull from the database.
  */
 function ogf_generate_css( $selector, $option_name ) {
-
-	$family = get_theme_mod( $option_name, false );
-	$weight = get_theme_mod( $option_name . '_weight', false );
-	$style  = get_theme_mod( $option_name . '_style', false );
+	$family      = get_theme_mod( $option_name . '_font', false );
+	$font_size   = get_theme_mod( $option_name . '_font_size', false );
+	$line_height = get_theme_mod( $option_name . '_line_height', false );
+	$weight      = get_theme_mod( $option_name . '_font_weight', false );
+	$style       = get_theme_mod( $option_name . '_font_style', false );
+	$color       = get_theme_mod( $option_name . '_font_color', false );
 
 	$return = '';
 
-	if ( $family || $weight || $style ) {
+	if ( $family || $font_size || $line_height || $weight || $style || $color ) {
 
 		$return .= $selector . ' {' . PHP_EOL;
 
@@ -61,24 +56,51 @@ function ogf_generate_css( $selector, $option_name ) {
 			$stack = ogf_build_font_stack( $family );
 
 			if ( ! empty( $stack ) ) {
-				$return .= sprintf('font-family: %s;' . PHP_EOL,
+				$return .= sprintf(
+					'font-family: %s;' . PHP_EOL,
 					$stack . ogf_is_forced()
 				);
 			}
 		}
 
-		// Return font-weight CSS.
-		if ( false !== $weight && '0' !== $weight ) {
-				$return .= sprintf('font-weight: %s;' . PHP_EOL,
-					absint( $weight ) . ogf_is_forced()
-				);
+		// Return font-size CSS.
+		if ( $font_size ) {
+			$return .= sprintf(
+				'font-size: %s;' . PHP_EOL,
+				absint( $font_size ) . 'px' . ogf_is_forced()
+			);
+		}
+
+		// Return font line-height CSS.
+		if ( $line_height && '0' !== $line_height ) {
+			$return .= sprintf(
+				'line-height: %s;' . PHP_EOL,
+				absint( $line_height ) . ogf_is_forced()
+			);
 		}
 
 		// Return font-style CSS.
-		if ( false !== $style && 'normal' !== $style ) {
-				$return .= sprintf('font-style: %s;' . PHP_EOL,
-					esc_attr( $style ) . ogf_is_forced()
-				);
+		if ( $style && 'normal' !== $style ) {
+			$return .= sprintf(
+				'font-style: %s;' . PHP_EOL,
+				esc_attr( $style ) . ogf_is_forced()
+			);
+		}
+
+		// Return font-weight CSS.
+		if ( $weight && '0' !== $weight ) {
+			$return .= sprintf(
+				'font-weight: %s;' . PHP_EOL,
+				absint( $weight ) . ogf_is_forced()
+			);
+		}
+
+		// Return font-color CSS.
+		if ( $color ) {
+			$return .= sprintf(
+				'color: %s;' . PHP_EOL,
+				esc_attr( $color ) . ogf_is_forced()
+			);
 		}
 
 		$return .= ' }' . PHP_EOL;
@@ -89,11 +111,41 @@ function ogf_generate_css( $selector, $option_name ) {
 }
 
 /**
+ * Build a font stack using the users font choice.
+ *
+ * @param  string $font_id The users font choice.
+ * @return string The built font stack.
+ */
+function ogf_build_font_stack( $font_id ) {
+	$google_fonts = ogf_fonts_array();
+
+	$sans      = '"Helvetica Neue", Helvetica, Arial, sans-serif';
+	$serif     = 'Georgia, Times, "Times New Roman", serif';
+	$monospace = '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;';
+
+	if ( array_key_exists( $font_id, $google_fonts ) ) {
+
+		if ( 'monospace' === $google_fonts[ $font_id ]['category'] ) {
+			$stack = $monospace;
+		} elseif ( 'serif' === $google_fonts[ $font_id ]['category'] ) {
+			$stack = $serif;
+		} else {
+			$stack = $sans;
+		}
+
+		$stack = '"' . $google_fonts[ $font_id ]['family'] . '", ' . $stack;
+
+		return $stack;
+
+	}
+
+}
+
+/**
  * Check if the styles should be forced.
  */
 function ogf_is_forced() {
-
-	if ( '1' === get_theme_mod( 'ogf_force_styles' ) ) {
+	if ( 1 === (int) get_theme_mod( 'ogf_force_styles' ) ) {
 		return ' !important';
 	}
 
