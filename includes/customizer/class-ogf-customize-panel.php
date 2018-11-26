@@ -18,7 +18,7 @@ add_action( 'customize_controls_enqueue_scripts', 'ogf_panels_customize_controls
 /**
  * Register the multi-level panels.
  *
- * @param object Access to the $wp_customize object.
+ * @param object $wp_customize Access to the $wp_customize object.
  */
 function ogf_panels_customize_register( $wp_customize ) {
 

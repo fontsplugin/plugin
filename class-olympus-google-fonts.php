@@ -130,7 +130,7 @@ class Olympus_Google_Fonts {
 	/**
 	 * Remove pro sections from basic version.
 	 *
-	 * @param object Access to the $wp_customize object.
+	 * @param object $wp_customize Access to the $wp_customize object.
 	 */
 	public function remove_pro_sections( $wp_customize ) {
 		$wp_customize->remove_section( 'ogf_custom' );

@@ -10,7 +10,7 @@
 /**
  * An array containing the customizer sections, settings and controls.
  *
- * @param object Access to the $wp_customize object.
+ * @param object $wp_customize Access to the $wp_customize object.
  */
 function ogf_customize_register( $wp_customize ) {
 	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-typography-control.php';
