@@ -73,63 +73,56 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 == Changelog ==
 
+= 1.4.2 =
+
+* Improve feedback mechanism
+
 = 1.4.1 =
-*Release Date - December 4 2018*
 
 * Fix previewer not showing fonts
 * Add new fonts
 
 = 1.4.0 =
-*Release Date - November 26 2018*
 
 * Substantial performance improvements
 * Improved organization of settings
 
 = 1.3.2 =
-*Release Date - October 30 2018*
 
 * Add welcome notice.
 
 = 1.3.1 =
-*Release Date - October 29 2018*
 
 * Update font list.
 * Add version strings to resources.
 * Add deactivation survey.
 
 = 1.3.0 =
-*Release Date - October 18 2018*
 
 * Add 'Force Styles' setting to the bottom of 'Advanced Settings'.
 
 = 1.2.5 =
-*Release Date - October 5 2018*
 
 * Improve theme compatibility.
 
 = 1.2.4 =
-*Release Date - August 14 2018*
 
 * Improve customizer CSS.
 * Improve Javascript code.
 
 = 1.2.3 =
-*Release Date - August 6 2018*
 
 * Improve CSS for post/page headings and content.
 
 = 1.2.2 =
-*Release Date - July 12 2018*
 
 * Minor updates
 
 = 1.2.1 =
-*Release Date - June 15 2018*
 
 * Remove unused code
 
 = 1.2.0 =
-*Release Date - April 17 2018*
 
 * Add new fonts
 * Add font-weight option
@@ -140,68 +133,55 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 * Remove 'force styles' setting
 
 = 1.1.2 =
-*Release Date - April 10 2018*
 
 * Add feedback request
 
 = 1.1.1 =
-*Release Date - Feb 3 2018*
 
 * Add new fonts
 
 = 1.1.0 =
-*Release Date - Dec 30 2017*
 
 * Improve outputting of Google stylesheet
 
 = 1.0.9 =
-*Release Date - Dec 3 2017*
 
 * Fix navigation font setting
 
 = 1.0.8 =
-*Release Date - Nov 22 2017*
 
 * Fix compatibility issue with PHP 5.2
 
 = 1.0.7 =
-*Release Date - 19th Nov 2017*
 
 * Add advanced settings
 
 = 1.0.6 =
-*Release Date - 15th Nov 2017*
 
 * Minor code improvements
 
 = 1.0.5 =
-*Release Date - 14th October 2017*
 
 * Add force styles option
 
 = 1.0.3 =
-*Release Date - 14th October 2017*
 
 * Rewrite readme
 
 = 1.0.3 =
-*Release Date - 14th October 2017*
 
 * Rename to adhere to guidelines
 
 = 1.0.2 =
-*Release Date - 13th October 2017*
 
 * Refactor get_choices in class-google-url.php
 
 = 1.0.1 =
-*Release Date - 12th October 2017*
 
 * Fix bug in class-google-url.php
 * Add missing translation
 * Add .pot file for translators
 
 = 1.0.0 =
-*Release Date - 12th October 2017*
 
 * Initial release of Google Fonts for WordPress

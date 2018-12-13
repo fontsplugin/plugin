@@ -69,6 +69,10 @@ class OGF_Deactivation {
 		$explanation  = ( isset( $_POST['explanation'] ) ? wp_unslash( $_POST['explanation'] ) : '' );
 		$anon         = ( isset( $_POST['anon'] ) ? wp_unslash( $_POST['anon'] ) : '' );
 
+		if ( ! $explanation ) {
+			return;
+		}
+
 		add_filter( 'wp_mail_from_name', array( $this, 'ogf_mail_from_name' ) );
 		add_filter( 'wp_mail_from', array( $this, 'ogf_mail_from_email' ) );
 
