@@ -4,7 +4,7 @@ Tags: google, fonts, google fonts, google fonts for wordpress, google-fonts
 Requires at least: 4.0
 Tested up to: 5.0
 License: GPLv2 or later
-Stable tag: trunk
+Stable tag: 1.4.2
 
 The easiest to use Google Fonts plugin. No coding required. 870+ font choices.
 
