@@ -2,7 +2,7 @@
 Contributors: DannyCooper, googlefonts
 Tags: google, fonts, google fonts, google fonts for wordpress, google-fonts
 Requires at least: 4.0
-Tested up to: 4.9.8
+Tested up to: 5.0
 License: GPLv2 or later
 Stable tag: trunk
 
@@ -72,6 +72,12 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 3. Customizer Settings Font Weight and Style - Google Fonts for WordPress
 
 == Changelog ==
+
+= 1.4.1 =
+*Release Date - December 4 2018*
+
+* Fix previewer not showing fonts
+* Add new fonts
 
 = 1.4.0 =
 *Release Date - November 26 2018*

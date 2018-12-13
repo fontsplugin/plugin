@@ -1,19 +1,14 @@
 jQuery( document ).ready(
 	function () {
 
-		wp.customize.bind(
-			'preview-ready',
-			function () {
-
-				// Retrieve the Google Fonts url from the Customizer and append it to head.
-				wp.customize.preview.bind(
-					'olympusFontURL',
-					function ( url ) {
-						jQuery( "head" ).append( url );
-					}
-				);
+		// Retrieve the Google Fonts url from the Customizer and append it to head.
+		wp.customize.preview.bind(
+			'olympusFontURL',
+			function ( url ) {
+				jQuery( "head" ).append( url );
 			}
 		);
+
 
 		// Update the font family for this element.
 		function fontFamilyChange( selector, value ) {
@@ -26,8 +21,6 @@ jQuery( document ).ready(
 				});
 			}
 		}
-
-		console.log(ogf_elements);
 
 		// Loop through the elements and bind the controls.
 		$.map( ogf_elements, function( val, id ) {

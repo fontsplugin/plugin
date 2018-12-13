@@ -16,7 +16,7 @@
 						}
 					);
 					var weightsURL = weights.join( ',' );
-					var fontURL    = font.family.replace( ' ','+' ) + ':' + weightsURL;
+					var fontURL    = font.family.replace( / /g, '+' ) + ':' + weightsURL;
 					wp.customize.previewer.send( 'olympusFontURL', "<link href='https://fonts.googleapis.com/css?family=" + fontURL + "' rel='stylesheet' type='text/css'>" );
 				}
 
@@ -142,6 +142,7 @@
 
 /* === Checkbox Multiple Control === */
 jQuery(document).ready(function () {
+
 	jQuery( '.customize-multiple-checkbox-control input[type="checkbox"]' ).on( 'change',
 		function() {
 
