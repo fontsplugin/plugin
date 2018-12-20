@@ -23,6 +23,6 @@ Navigate to wp-admin -> Appearance -> Customize and you will see a new tab named
 Gutenberg Block
 ---------------
 
-Use Google Fonts within your content with our new Gutenberg Block.
+Our new Gutenberg Block allows you to use Google Fonts within your content.
 
 ![](google-fonts-block-gutenberg.gif)
