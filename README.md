@@ -19,3 +19,10 @@ Getting Started
 Upload 'Olympus Google Fonts', activate it, and you're done!
 
 Navigate to wp-admin -> Appearance -> Customize and you will see a new tab named 'Google Fonts'
+
+Gutenberg Block
+---------------
+
+Use Google Fonts withiin your content with our new Gutenberg Block.
+
+![](google-fonts-block-gutenberg.gif)
