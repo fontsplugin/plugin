@@ -25,4 +25,4 @@ Gutenberg Block
 
 Our new Gutenberg Block allows you to use Google Fonts within your content.
 
-![](google-fonts-block-gutenberg.gif)
+![](.github/google-fonts-block-gutenberg.gif)
