@@ -144,7 +144,7 @@ function ogf_get_elements() {
  */
 function ogf_fonts_array() {
 
-	$fonts_json = file_get_contents( plugin_dir_path( __FILE__ ) . 'fonts.json' );
+	$fonts_json = file_get_contents( OGF_DIR_PATH . '/blocks/src/google-fonts/fonts.json' );
 
 	// Change the object to a multidimensional array.
 	$fonts_array = json_decode( $fonts_json, true );

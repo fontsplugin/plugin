@@ -4,7 +4,7 @@ Tags: google, fonts, google fonts, google fonts for wordpress, gutenberg
 Requires at least: 4.0
 Tested up to: 5.0
 License: GPLv2 or later
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 
 The easiest to use Google Fonts plugin. No coding required. 870+ font choices. Now includes Gutenberg Block!
 
@@ -79,6 +79,10 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 3. Customizer Settings Font Weight and Style - Google Fonts for WordPress
 
 == Changelog ==
+
+= 1.4.5 =
+
+* Fix subset issue in 1.4.4
 
 = 1.4.4 =
 

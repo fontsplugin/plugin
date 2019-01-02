@@ -119,21 +119,9 @@ function ogf_generate_css( $selector, $option_name ) {
 function ogf_build_font_stack( $font_id ) {
 	$google_fonts = ogf_fonts_array();
 
-	$sans      = '"Helvetica Neue", Helvetica, Arial, sans-serif';
-	$serif     = 'Georgia, Times, "Times New Roman", serif';
-	$monospace = '"Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;';
-
 	if ( array_key_exists( $font_id, $google_fonts ) ) {
 
-		if ( 'monospace' === $google_fonts[ $font_id ]['category'] ) {
-			$stack = $monospace;
-		} elseif ( 'serif' === $google_fonts[ $font_id ]['category'] ) {
-			$stack = $serif;
-		} else {
-			$stack = $sans;
-		}
-
-		$stack = '"' . $google_fonts[ $font_id ]['family'] . '", ' . $stack;
+		$stack = '"' . $google_fonts[ $font_id ]['family'] . '"';
 
 		return $stack;
 
