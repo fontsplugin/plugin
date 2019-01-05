@@ -17,10 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function olympus_google_fonts_block_js() {
 	wp_enqueue_script(
-		'olympus_google_fonts-block-js',
+		'olympus-google-fonts-block-js',
 		plugins_url( '/dist/blocks.build.js', __FILE__ ),
 		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
-		OGF_VERSION
+		OGF_VERSION,
+		false
 	);
 }
 
@@ -38,24 +39,24 @@ function olympus_google_fonts_register_block() {
 		'olympus-google-fonts/google-fonts',
 		array(
 			'attributes'      => array(
-				'fontID' => array(
+				'fontID'     => array(
 					'type'    => 'string',
 					'default' => '',
 				),
-				'variant' => array(
+				'variant'    => array(
 					'type'    => 'string',
 					'default' => 'regular',
 				),
-				'fontSize' => array(
+				'fontSize'   => array(
 					'type' => 'number',
 				),
 				'lineHeight' => array(
 					'type' => 'number',
 				),
-				'align' => array(
+				'align'      => array(
 					'type' => 'string',
 				),
-				'content' => array(
+				'content'    => array(
 					'type' => 'string',
 				),
 			),
