@@ -76,9 +76,9 @@ class GoogleFontsBlock extends Component {
 		}
 
 		// iterate over each element in the array
-		for ( var i = 0; i < fontsJson.items.length; i++ ) {
+		for ( let i = 0; i < fontsJson.items.length; i++ ) {
 			// look for the entry with a matching `code` value
-			if ( fontsJson.items[ i ].family == fontFamily ) {
+			if ( fontsJson.items[ i ].family === fontFamily ) {
 				return fontsJson.items[ i ];
 			}
 		}
@@ -135,7 +135,7 @@ class GoogleFontsBlock extends Component {
 								onChange={ ( value ) => setAttributes( { variant: value } ) }
 							/>
 							<RangeControl
-								label="Font Size"
+								label={ __( 'Font Size', 'olympus-google-fonts' ) }
 								value={ fontSize }
 								onChange={ ( value ) => setAttributes( { fontSize: value } ) }
 								allowReset={ true }
@@ -143,7 +143,7 @@ class GoogleFontsBlock extends Component {
 								max="50"
 							/>
 							<RangeControl
-								label="Line Height"
+								label={ __( 'Line Height', 'olympus-google-fonts' ) }
 								value={ lineHeight }
 								onChange={ ( value ) => setAttributes( { lineHeight: value } ) }
 								allowReset={ true }
@@ -177,8 +177,8 @@ class GoogleFontsBlock extends Component {
 						fontWeight: variant,
 						lineHeight: lineHeight,
 					} }
-					placeholder={ __( 'Add some content…', 'olympus-google-fonts' ) }
-					formattingControls={ [ 'italic', 'strikethrough', 'link' ] }
+					placeholder={ __( 'Add some content...', 'olympus-google-fonts' ) }
+					formattingControls={ [ 'italic', 'link' ] }
 				/>
 			</Fragment>
 		);
