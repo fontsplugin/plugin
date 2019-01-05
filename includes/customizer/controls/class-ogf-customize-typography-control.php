@@ -9,39 +9,29 @@
 
 /**
  * Typography control class.
- *
- * @since  1.0.0
- * @access public
  */
 class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 	/**
 	 * The type of customize control being rendered.
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    string
+	 * @var string
 	 */
 	public $type = 'typography';
 
 	/**
 	 * Array
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @var    string
+	 * @var string
 	 */
 	public $l10n = array();
 
 	/**
 	 * Set up our control.
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  object $manager Customizer manager.
-	 * @param  string $id      Control ID.
-	 * @param  array  $args    Arguments to override class property defaults.
-	 * @return void
+	 * @param object $manager Customizer manager.
+	 * @param string $id      Control ID.
+	 * @param array  $args    Arguments to override class property defaults.
 	 */
 	public function __construct( $manager, $id, $args = array() ) {
 		// Let the parent class do its thing.

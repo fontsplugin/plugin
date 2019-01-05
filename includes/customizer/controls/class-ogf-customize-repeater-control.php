@@ -1,6 +1,6 @@
 <?php
 /**
- * Multiple Checkbox Custom Control
+ * Customize Repeater Custom Control
  *
  * @package   olympus-google-fonts
  * @copyright Copyright (c) 2018, Danny Cooper
@@ -23,7 +23,6 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 	 * @var string
 	 */
 	public $type = 'repeater';
-
 
 	/**
 	 * Enqueue scripts/styles for the control.
@@ -111,9 +110,6 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 		} else {
 			?>
 			<div class="customizer-repeater-general-control-repeater-container">
-				<div class="customizer-repeater-customize-control-title">
-					<?php echo esc_html( $this->label ); ?>
-				</div>
 				<?php $this->input_control(); ?>
 			</div>
 			<?php

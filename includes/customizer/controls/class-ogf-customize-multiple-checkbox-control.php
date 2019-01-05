@@ -18,7 +18,6 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 	/**
 	 * The control type.
 	 *
-	 * @access public
 	 * @var string
 	 */
 	public $type = 'multiple-checkbox';
@@ -58,8 +57,6 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 	 * export custom variables by overriding {@see WP_Customize_Control::to_json()}.
 	 *
 	 * @see WP_Customize_Control::print_template()
-	 *
-	 * @access protected
 	 */
 	protected function content_template() {
 		?>
@@ -77,7 +74,9 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 			<# for ( key in data.choices ) { #>
 				<li>
 					<label>
-						<input {{{ data.inputAttrs }}} type="checkbox" value="{{ key }}"<# if ( _.contains( data.value, key ) ) { #> checked<# } #> />
+						<input {{{ data.inputAttrs }}} type="checkbox" value="{{ key }}"
+							<# if ( _.contains( data.value, key ) ) { #> checked<# } #>
+						/>
 						{{ data.choices[ key ] }}
 					</label>
 				</li>

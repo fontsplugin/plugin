@@ -1,6 +1,6 @@
 <?php
 /**
- * Build the URL to load the chosen Google Fonts.
+ * Register the customizer settings.
  *
  * @package   olympus-google-fonts
  * @copyright Copyright (c) 2018, Danny Cooper
@@ -15,7 +15,10 @@
 function ogf_customize_register( $wp_customize ) {
 	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-typography-control.php';
 	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-repeater-control.php';
+	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-upsell-control.php';
+	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-checkbox-control.php';
 
+	$wp_customize->register_control_type( 'OGF_Customize_Multiple_Checkbox_Control' );
 	$wp_customize->register_control_type( 'OGF_Customize_Typography_Control' );
 
 	$wp_customize->add_setting(
@@ -136,6 +139,79 @@ function ogf_customize_register( $wp_customize ) {
 			'description' => esc_html__( 'If your choices are not displaying correctly, check this box.', 'olympus-google-fonts' ),
 		)
 	);
+
+	$fonts = new OGF_Fonts();
+
+	$choices = $fonts->choices;
+
+	// Build the selective font loading controls.
+	foreach ( $choices as $font_id ) {
+
+		$weights = $fonts->get_font_weights( $font_id );
+		$name    = $fonts->get_font_name( $font_id );
+		unset( $weights[0] );
+		$wp_customize->add_setting(
+			$font_id . '_weights',
+			array(
+				'default'   => array( '100', '200', '300', '400', '500', '600', '700', '800', '900' ),
+				'transport' => 'refresh',
+			)
+		);
+
+		$input_attrs = array();
+
+		if ( ! defined( 'OGF_PRO' ) ) {
+			$input_attrs = array(
+				'disabled' => false,
+			);
+		}
+
+		$wp_customize->add_control(
+			new OGF_Customize_Multiple_Checkbox_Control(
+				$wp_customize,
+				$font_id . '_weights',
+				array(
+					'label'       => $name,
+					'section'     => 'ogf_font_loading',
+					'choices'     => $weights,
+					'input_attrs' => $input_attrs,
+				)
+			)
+		);
+
+	}
+
+	$upsell_locations = array(
+		'ogf_basic',
+		'ogf_advanced',
+		'ogf_advanced__branding',
+		'ogf_advanced__navigation',
+		'ogf_advanced__content',
+		'ogf_advanced__sidebar',
+		'ogf_advanced__footer',
+		'ogf_font_loading',
+		'ogf_debugging',
+	);
+
+	foreach ( $upsell_locations as $loc ) {
+
+		if ( defined( 'OGF_PRO' ) ) {
+			return;
+		}
+
+		$wp_customize->add_setting( 'ogf_upsell_' . $loc );
+
+		$wp_customize->add_control(
+			new OGF_Customize_Upsell_Control(
+				$wp_customize,
+				'ogf_upsell_' . $loc,
+				array(
+					'section' => $loc,
+				)
+			)
+		);
+
+	}
 
 }
 add_action( 'customize_register', 'ogf_customize_register' );
