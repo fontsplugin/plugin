@@ -1,6 +1,7 @@
 === Google Fonts for WordPress ===
 Contributors: DannyCooper, googlefonts
 Tags: google, fonts, google fonts, google fonts for wordpress, gutenberg
+Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.0
 License: GPLv2 or later
@@ -82,7 +83,7 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 = 1.4.6 =
 
-* Improve theme compatability
+* Improve theme compatibility
 * Optimize block code
 * Update translation files
 

@@ -17,6 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class OGF_Customize_Panel extends WP_Customize_Panel {
 
+	/**
+	 * The parent panel ID.
+	 *
+	 * @var string
+	 */
 	public $panel;
 
 	/**

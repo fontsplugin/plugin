@@ -249,7 +249,7 @@ if ( ! class_exists( 'OGF_Feedback' ) ) :
 						</p>
 					</div>
 					<div class="ogf-install-now">
-			<?php printf( '<a href="%1$s" class="button button-primary ogf-install-button" target="_blank">%2$s</a>', esc_url( 'https://wordpress.org/support/view/plugin-reviews/olympus-google-fonts#new-post' ), esc_html__( 'Leave a Review', 'olympus-google-fonts' ) ); ?>
+						<?php printf( '<a href="%1$s" class="button button-primary ogf-install-button" target="_blank">%2$s</a>', esc_url( 'https://wordpress.org/support/view/plugin-reviews/olympus-google-fonts#new-post' ), esc_html__( 'Leave a Review', 'olympus-google-fonts' ) ); ?>
 						<a href="<?php echo esc_url( $no_bug_url ); ?>" class="no-thanks"><?php echo esc_html__( 'No thanks / I already have', 'olympus-google-fonts' ); ?></a>
 					</div>
 				</div>

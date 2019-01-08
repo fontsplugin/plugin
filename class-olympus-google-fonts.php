@@ -112,7 +112,7 @@ class Olympus_Google_Fonts {
 	public function links( $links ) {
 
 		// Customizer Settings Link.
-		$customizer_url = admin_url( 'customize.php?autofocus[panel]=olympus_google_fonts' );
+		$customizer_url = admin_url( 'customize.php?autofocus[panel]=ogf_google_fonts' );
 
 		$settings_link = '<a href="' . esc_url( $customizer_url ) . '">' . esc_html__( 'Settings', 'olympus-google-fonts' ) . '</a>';
 

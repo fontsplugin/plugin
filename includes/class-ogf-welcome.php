@@ -98,7 +98,7 @@ endif;
 $message = sprintf(
 	// translators: %s Link to Google Fonts customizer panel.
 	__( 'Thank you for installing <strong>Google Fonts for WordPress</strong>! Configure your fonts here: <a href="%s">WordPress Customizer</a>', 'olympus-google-fonts' ),
-	esc_url( admin_url( '/customize.php?autofocus[panel]=olympus_google_fonts' ) )
+	esc_url( admin_url( '/customize.php?autofocus[panel]=ogf_google_fonts' ) )
 );
 
 /*
