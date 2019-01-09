@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Google Fonts for WordPress plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Fonts for WordPress 1.4.6\n"
+"Project-Id-Version: Google Fonts for WordPress 1.4.8\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/olympus-google-fonts\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-01-05T19:08:24+00:00\n"
+"POT-Creation-Date: 2019-01-09T13:32:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: olympus-google-fonts\n"
@@ -245,6 +245,10 @@ msgstr ""
 msgid "Advanced Settings"
 msgstr ""
 
+#: includes/customizer/panels.php:60
+msgid "Theme Settings"
+msgstr ""
+
 #: includes/customizer/panels.php:68
 #: includes/customizer/panels.php:95
 msgid "Custom Elements"
@@ -282,6 +286,10 @@ msgstr ""
 
 #: includes/customizer/panels.php:129
 msgid "Content"
+msgstr ""
+
+#: includes/customizer/panels.php:137
+msgid "Sidebar"
 msgstr ""
 
 #: includes/customizer/panels.php:145

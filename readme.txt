@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.0
 License: GPLv2 or later
-Stable tag: 1.4.6
+Stable tag: 1.4.8
 
 The easiest to use Google Fonts plugin. No coding required. 870+ font choices.
 
@@ -80,6 +80,15 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 3. Customizer Settings Font Weight and Style - Google Fonts for WordPress
 
 == Changelog ==
+
+= 1.4.8 =
+
+* Improve theme compatibility
+* Update .pot
+
+= 1.4.7 =
+
+* Fix conflict with Kirki
 
 = 1.4.6 =
 

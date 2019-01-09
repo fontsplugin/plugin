@@ -51,7 +51,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Site Title Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your site title.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__branding',
-			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a',
+			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, #logo, #logo a, .logo, .logo a',
 		),
 		'ogf_site_description'  => array(
 			'label'       => esc_html__( 'Site Description Typography', 'olympus-google-fonts' ),
