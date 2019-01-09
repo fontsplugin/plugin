@@ -57,7 +57,7 @@ function ogf_panels_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'ogf_theme',
 		array(
-			'title' => 'Theme Settings',
+			'title' => esc_html__( 'Theme Settings', 'olympus-google-fonts' ),
 			'panel' => 'ogf_google_fonts',
 		)
 	);
@@ -134,7 +134,7 @@ function ogf_panels_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'ogf_advanced__sidebar',
 		array(
-			'title' => 'Sidebar',
+			'title' => esc_html__( 'Sidebar', 'olympus-google-fonts' ),
 			'panel' => 'ogf_advanced',
 		)
 	);

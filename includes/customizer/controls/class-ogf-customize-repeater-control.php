@@ -22,7 +22,7 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 	 *
 	 * @var string
 	 */
-	public $type = 'repeater';
+	public $type = 'ogf-repeater';
 
 	/**
 	 * Enqueue scripts/styles for the control.
