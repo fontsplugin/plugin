@@ -3,7 +3,7 @@
  * Deactivation Feedback Class.
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2018, Danny Cooper
+ * @copyright Copyright (c) 2019, Danny Cooper
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -45,7 +45,7 @@ class OGF_Deactivation {
 	 * @param  $string $email WordPress email address.
 	 */
 	public function ogf_mail_from_email( $email ) {
-		return 'feedback@olympusthemes.com';
+		return 'hello@fontsplugin.com';
 	}
 
 	/**
@@ -81,7 +81,7 @@ class OGF_Deactivation {
 			$user = 'anon@anonymous.com';
 		}
 
-		$to      = 'support@olympusthemes.com';
+		$to      = 'hello@fontsplugin.com';
 		$subject = 'Deactivation Survey';
 		$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 

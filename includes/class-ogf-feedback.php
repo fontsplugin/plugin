@@ -7,7 +7,7 @@
  * https://winwar.co.uk/2014/10/ask-wordpress-plugin-reviews-week/
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2018, Danny Cooper
+ * @copyright Copyright (c) 2019, Danny Cooper
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -101,30 +101,6 @@ if ( ! class_exists( 'OGF_Feedback' ) ) :
 				return sprintf( __( '%s days', 'olympus-google-fonts' ), $days );
 			} elseif ( $days > 0 ) {
 				return __( 'a day', 'olympus-google-fonts' );
-			}
-			// Get the hours.
-			$hours = ( intval( $seconds ) / HOUR_IN_SECONDS ) % 24;
-			if ( $hours > 1 ) {
-				/* translators: Number of hours */
-				return sprintf( __( '%s hours', 'olympus-google-fonts' ), $hours );
-			} elseif ( $hours > 0 ) {
-				return __( 'an hour', 'olympus-google-fonts' );
-			}
-			// Get the minutes.
-			$minutes = ( intval( $seconds ) / MINUTE_IN_SECONDS ) % 60;
-			if ( $minutes > 1 ) {
-				/* translators: Number of minutes */
-				return sprintf( __( '%s minutes', 'olympus-google-fonts' ), $minutes );
-			} elseif ( $minutes > 0 ) {
-				return __( 'a minute', 'olympus-google-fonts' );
-			}
-			// Get the seconds.
-			$seconds = intval( $seconds ) % 60;
-			if ( $seconds > 1 ) {
-				/* translators: Number of seconds */
-				return sprintf( __( '%s seconds', 'olympus-google-fonts' ), $seconds );
-			} elseif ( $seconds > 0 ) {
-				return __( 'a second', 'olympus-google-fonts' );
 			}
 		}
 
@@ -237,7 +213,7 @@ if ( ! class_exists( 'OGF_Feedback' ) ) :
 			<div class="notice updated ogf-notice">
 				<div class="ogf-notice-inner">
 					<div class="ogf-notice-icon">
-						<img src="https://ps.w.org/olympus-google-fonts/assets/icon-256x256.jpg" alt="<?php echo esc_attr__( 'Olympus Google Fonts WordPress Plugin', 'olympus-google-fonts' ); ?>" />
+						<img src="https://ps.w.org/olympus-google-fonts/assets/icon-256x256.jpg" alt="<?php echo esc_attr__( 'Google Fonts WordPress Plugin', 'olympus-google-fonts' ); ?>" />
 					</div>
 					<div class="ogf-notice-content">
 						<h3><?php echo esc_html__( 'Are you enjoying using Google Fonts?', 'olympus-google-fonts' ); ?></h3>

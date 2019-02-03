@@ -3,7 +3,7 @@
  * Register the customizer settings.
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2018, Danny Cooper
+ * @copyright Copyright (c) 2019, Danny Cooper
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -153,7 +153,7 @@ function ogf_customize_register( $wp_customize ) {
 		$wp_customize->add_setting(
 			$font_id . '_weights',
 			array(
-				'default'   => array( '100', '200', '300', '400', '500', '600', '700', '800', '900' ),
+				'default'   => array( '100', '200', '300', '400', '500', '600', '700', '800', '900', '100i', '200i', '300i', '400i', '500i', '600i', '700i', '800i', '900i' ),
 				'transport' => 'refresh',
 			)
 		);

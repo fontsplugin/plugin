@@ -3,7 +3,7 @@
  * Welcome Notice Class.
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2018, Danny Cooper
+ * @copyright Copyright (c) 2019, Danny Cooper
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -66,18 +66,21 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 		 * AJAX handler to store the state of dismissible notices.
 		 */
 		public function dismiss_notice() {
+
 			if ( isset( $_POST['type'] ) ) {
 				// Pick up the notice "type" - passed via jQuery (the "data-notice" attribute on the notice).
 				$type = sanitize_text_field( wp_unslash( $_POST['type'] ) );
 				// Store it in the options table.
 				update_option( 'dismissed-' . $type, true );
 			}
+
 		}
 
 		/**
 		 * Display the admin notice.
 		 */
 		public function display_admin_notice() {
+
 			if ( get_option( 'dismissed-' . $this->slug, false ) ) {
 				return;
 			}
@@ -92,6 +95,7 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 			</div>
 			<?php
 		}
+
 	}
 endif;
 

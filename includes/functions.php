@@ -3,7 +3,7 @@
  * Helper functions.
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2018, Danny Cooper
+ * @copyright Copyright (c) 2019, Danny Cooper
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -11,16 +11,21 @@
  * An array of user-defined elements that can be customized using the plugin.
  */
 function ogf_get_custom_elements() {
+
 	$theme_mod = get_theme_mod( 'ogf_custom_selectors', false );
+
 	if ( ! $theme_mod ) {
 		return array();
 	}
+
 	$custom_selectors = json_decode( $theme_mod, true );
 
 	foreach ( $custom_selectors as &$selector ) {
 		$selector['section'] = 'ogf_advanced__custom';
 	}
+
 	return $custom_selectors;
+
 }
 
 /**
@@ -202,12 +207,14 @@ function ogf_fonts_array() {
 	}
 
 	return $fonts;
+
 }
 
 /**
  * Build the array for the select choices setting.
  */
 function ogf_font_choices_for_select() {
+
 	$fonts_array = ogf_fonts_array();
 
 	$fonts = array(

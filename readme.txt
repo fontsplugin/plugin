@@ -5,9 +5,9 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.0
 License: GPLv2 or later
-Stable tag: 1.4.8
+Stable tag: 1.5.0
 
-The easiest to use Google Fonts plugin. No coding required. 870+ font choices.
+The easiest to use [Google Fonts Plugin](https://fontsplugin.com/?utm_source=wporg&utm_campaign=intro). No coding required. 870+ font choices.
 
 == Description ==
 The Google Fonts library currently contains 877 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
@@ -31,7 +31,11 @@ The full Google Fonts library can be found here - [Google Fonts](https://fonts.g
 * Efficient Font Loading using a single request.
 * **SEO-Friendly** (Search Engine Optimization).
 * Tested with **PHP7**
+* Selective Font Loading
 
+> Note: some features are Premium. Which means you need to upgrade to unlock those features. You can upgrade here: [Google Fonts Pro](https://fontsplugin.com/upgrade/?utm_source=wporg&utm_campaign=upgrade)
+
+= Plugin Compatibility =
 
 The Google Fonts for WordPress plugin will work with all WordPress themes and has been specifically tested with the following:
 
@@ -41,9 +45,16 @@ The Google Fonts for WordPress plugin will work with all WordPress themes and ha
 * TwentySixteen
 * TwentySeventeen
 
+### Further Reading
+
+For more info on search engine optimization, check out the following:
+
+* [Documentation](https://fontsplugin.com/docs/)
+* [Font Combinations](https://fontsplugin.com/font-combinations/)
+* [How to Use Google Fonts in WordPress](https://fontsplugin.com/wordpress-google-fonts/)
+
 = Bugs =
 If you find an issue with Google Fonts for WordPress, let us know [here](https://github.com/DannyCooper/olympus-google-fonts/issues)!
-
 
 = Google Fonts Gutenberg Block =
 Add some flair to your content with our new Gutenberg block.
@@ -81,6 +92,10 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 == Changelog ==
 
+= 1.5.0 =
+
+* Fix problem with italics not being loaded.
+
 = 1.4.8 =
 
 * Improve theme compatibility
@@ -116,107 +131,3 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 * Fix previewer not showing fonts
 * Add new fonts
-
-= 1.4.0 =
-
-* Substantial performance improvements
-* Improved organization of settings
-
-= 1.3.2 =
-
-* Add welcome notice.
-
-= 1.3.1 =
-
-* Update font list.
-* Add version strings to resources.
-* Add deactivation survey.
-
-= 1.3.0 =
-
-* Add 'Force Styles' setting to the bottom of 'Advanced Settings'.
-
-= 1.2.5 =
-
-* Improve theme compatibility.
-
-= 1.2.4 =
-
-* Improve customizer CSS.
-* Improve Javascript code.
-
-= 1.2.3 =
-
-* Improve CSS for post/page headings and content.
-
-= 1.2.2 =
-
-* Minor updates
-
-= 1.2.1 =
-
-* Remove unused code
-
-= 1.2.0 =
-
-* Add new fonts
-* Add font-weight option
-* Add font-style option
-* Improve live preview
-* Add settings link to plugins page
-* Add searchable text field to font-family setting
-* Remove 'force styles' setting
-
-= 1.1.2 =
-
-* Add feedback request
-
-= 1.1.1 =
-
-* Add new fonts
-
-= 1.1.0 =
-
-* Improve outputting of Google stylesheet
-
-= 1.0.9 =
-
-* Fix navigation font setting
-
-= 1.0.8 =
-
-* Fix compatibility issue with PHP 5.2
-
-= 1.0.7 =
-
-* Add advanced settings
-
-= 1.0.6 =
-
-* Minor code improvements
-
-= 1.0.5 =
-
-* Add force styles option
-
-= 1.0.3 =
-
-* Rewrite readme
-
-= 1.0.3 =
-
-* Rename to adhere to guidelines
-
-= 1.0.2 =
-
-* Refactor get_choices in class-google-url.php
-
-= 1.0.1 =
-
-* Fix bug in class-google-url.php
-* Add missing translation
-* Add .pot file for translators
-
-= 1.0.0 =
-
-* Initial release of Google Fonts for WordPress

@@ -3,7 +3,7 @@
  * Output the Google Fonts CSS.
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2018, Danny Cooper
+ * @copyright Copyright (c) 2019, Danny Cooper
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -37,6 +37,7 @@ add_action( 'wp_head', 'ogf_output_css' );
  * @param string $option_name The option name to pull from the database.
  */
 function ogf_generate_css( $selector, $option_name ) {
+
 	$family      = get_theme_mod( $option_name . '_font', false );
 	$font_size   = get_theme_mod( $option_name . '_font_size', false );
 	$line_height = get_theme_mod( $option_name . '_line_height', false );
@@ -108,6 +109,7 @@ function ogf_generate_css( $selector, $option_name ) {
 		echo wp_kses_post( $return );
 
 	}
+
 }
 
 /**
@@ -117,6 +119,7 @@ function ogf_generate_css( $selector, $option_name ) {
  * @return string The built font stack.
  */
 function ogf_build_font_stack( $font_id ) {
+
 	$google_fonts = ogf_fonts_array();
 
 	if ( array_key_exists( $font_id, $google_fonts ) ) {
@@ -133,6 +136,7 @@ function ogf_build_font_stack( $font_id ) {
  * Check if the styles should be forced.
  */
 function ogf_is_forced() {
+
 	if ( 1 === (int) get_theme_mod( 'ogf_force_styles' ) ) {
 		return ' !important';
 	}

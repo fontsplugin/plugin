@@ -3,7 +3,7 @@
  * Build the URL to load the chosen Google Fonts.
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2018, Danny Cooper
+ * @copyright Copyright (c) 2019, Danny Cooper
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
@@ -30,8 +30,10 @@ class OGF_Fonts {
 	 * Let's get started.
 	 */
 	public function __construct() {
+
 		$this->google_fonts = ogf_fonts_array();
 		$this->get_choices();
+
 	}
 
 	/**
@@ -65,6 +67,7 @@ class OGF_Fonts {
 	public function get_font_id( $font ) {
 
 		return str_replace( ' ', '+', $font );
+
 	}
 
 	/**
@@ -74,7 +77,15 @@ class OGF_Fonts {
 	 */
 	public function get_font_weights( $font_id ) {
 
-		return $this->google_fonts[ $font_id ]['variants'];
+		$weights = $this->google_fonts[ $font_id ]['variants'];
+
+		unset( $weights['0'] );
+
+		foreach ( $weights as $key => $value ) {
+			$weights[ $key . 'i' ] = $value . ' Italic';
+		}
+
+		return $weights;
 
 	}
 
@@ -110,12 +121,19 @@ class OGF_Fonts {
 	 */
 	public function filter_selected_weights( $font_id, $weights ) {
 
+		unset( $weights['0'] );
+
+		foreach ( $weights as $key => $value ) {
+			$weights[ $key . 'i' ] = $value . ' Italic';
+		}
+
 		$selected_weights = get_theme_mod( $font_id . '_weights', false );
 
 		if ( ! $selected_weights ) {
 			return $weights;
 		}
 		return array_intersect_key( $weights, array_flip( $selected_weights ) );
+
 	}
 
 	/**
