@@ -7,10 +7,10 @@ Tested up to: 5.0
 License: GPLv2 or later
 Stable tag: 1.5.0
 
-The easiest to use [Google Fonts Plugin](https://fontsplugin.com/?utm_source=wporg&utm_campaign=intro). No coding required. 870+ font choices.
+The easiest to use Google Fonts Plugin. No coding required. 870+ font choices.
 
 == Description ==
-The Google Fonts library currently contains 877 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
+The [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_campaign=intro) library currently contains 877 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
 
 You're not stuck with one font for the entire website, you can easily choose one font for headings and another for your content.
 
