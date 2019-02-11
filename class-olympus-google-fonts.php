@@ -20,6 +20,7 @@ class Olympus_Google_Fonts {
 		$this->includes();
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ), 1000 ); // ensure our Google Font styles load last.
+		add_filter( 'wp_resource_hints', array( $this, 'resource_hints' ), 10, 2 );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue' ) );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_enqueue' ) );
 
@@ -75,6 +76,25 @@ class Olympus_Google_Fonts {
 		if ( $fonts->has_custom_fonts() ) {
 			wp_enqueue_style( 'olympus-google-fonts', $fonts->build_url(), array(), OGF_VERSION );
 		}
+
+	}
+
+	/**
+	 * Add preconnect for Google Fonts.
+	 *
+	 * @param array  $urls           URLs to print for resource hints.
+	 * @param string $relation_type  The relation type the URLs are printed.
+	 * @return array $urls           URLs to print for resource hints.
+	 */
+	public function resource_hints( $urls, $relation_type ) {
+
+		if ( wp_style_is( 'olympus-google-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
+			$urls[] = array(
+				'href' => 'https://fonts.gstatic.com',
+				'crossorigin',
+			);
+		}
+		return $urls;
 
 	}
 
