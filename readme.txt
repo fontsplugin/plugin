@@ -3,9 +3,9 @@ Contributors: DannyCooper, googlefonts
 Tags: google, fonts, google fonts, google fonts for wordpress, gutenberg
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
-Tested up to: 5.0
+Tested up to: 5.1
 License: GPLv2 or later
-Stable tag: 1.5.0
+Stable tag: 1.5.1
 
 The easiest to use Google Fonts Plugin. No coding required. 870+ font choices.
 
@@ -73,6 +73,8 @@ There are various ways you can contribute:
 3. Translate the Google Fonts for WordPress plugin into [different languages](https://translate.wordpress.org/projects/wp-plugins/olympus-google-fonts/)
 4. Provide feedback and suggestions on [enhancements](https://github.com/DannyCooper/olympus-google-fonts/issues?direction=desc&labels=Enhancement&page=1&sort=created&state=open)
 
+[](http://coderisk.com/wp/plugin/olympus-google-fonts/RIPS-X52CjZr45t)
+
 == Installation ==
 Upload 'Google Fonts for WordPress', activate it, and you're done!
 
@@ -92,42 +94,10 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 == Changelog ==
 
+= 1.5.1 =
+
+* Speed up load times using preconnect.
+
 = 1.5.0 =
 
 * Fix problem with italics not being loaded.
-
-= 1.4.8 =
-
-* Improve theme compatibility
-* Update .pot
-
-= 1.4.7 =
-
-* Fix conflict with Kirki
-
-= 1.4.6 =
-
-* Improve theme compatibility
-* Optimize block code
-* Update translation files
-
-= 1.4.5 =
-
-* Fix subset issue in 1.4.4
-
-= 1.4.4 =
-
-* Update fonts
-
-= 1.4.3 =
-
-* Add Gutenberg block
-
-= 1.4.2 =
-
-* Improve feedback mechanism
-
-= 1.4.1 =
-
-* Fix previewer not showing fonts
-* Add new fonts
