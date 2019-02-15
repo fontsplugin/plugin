@@ -32,6 +32,7 @@ The full Google Fonts library can be found here - [Google Fonts](https://fonts.g
 * **SEO-Friendly** (Search Engine Optimization).
 * Tested with **PHP7**
 * Selective Font Loading
+* Preconnect Resource Hints
 
 > Note: some features are Premium. Which means you need to upgrade to unlock those features. You can upgrade here: [Google Fonts Pro](https://fontsplugin.com/upgrade/?utm_source=wporg&utm_campaign=upgrade)
 
@@ -47,7 +48,7 @@ The Google Fonts for WordPress plugin will work with all WordPress themes and ha
 
 ### Further Reading
 
-For more info on search engine optimization, check out the following:
+For more info on Google Fonts for Wordpress, check out the following:
 
 * [Documentation](https://fontsplugin.com/docs/)
 * [Font Combinations](https://fontsplugin.com/font-combinations/)
@@ -96,7 +97,7 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 = 1.5.1 =
 
-* Speed up load times using preconnect.
+* Speed up load times using preconnect resource hint.
 
 = 1.5.0 =
 
