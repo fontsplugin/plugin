@@ -81,7 +81,7 @@ function ogf_generate_css( $selector, $option_name ) {
 		}
 
 		// Return font-style CSS.
-		if ( $style && 'normal' !== $style ) {
+		if ( $style && 'default' !== $style ) {
 			$return .= sprintf(
 				'font-style: %s;' . PHP_EOL,
 				esc_attr( $style ) . ogf_is_forced()

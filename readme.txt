@@ -95,10 +95,4 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 == Changelog ==
 
-= 1.5.1 =
-
-* Speed up load times using preconnect resource hint.
-
-= 1.5.0 =
-
-* Fix problem with italics not being loaded.
+See changelog.txt

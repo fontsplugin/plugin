@@ -69,7 +69,7 @@ function ogf_customize_register( $wp_customize ) {
 			$wp_customize->add_setting(
 				$id . '_font_style',
 				array(
-					'default'   => 'normal',
+					'default'   => 'default',
 					'transport' => 'postMessage',
 				)
 			);
