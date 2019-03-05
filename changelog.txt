@@ -1,7 +1,11 @@
+= 1.5.3 =
+
+* Update icon.
+* Move changelog to changelog.txt
+
 = 1.5.2 =
 
 * Improve Font Style setting.
-* Update icon.
 
 = 1.5.1 =
 
