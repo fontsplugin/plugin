@@ -74,7 +74,8 @@ class Olympus_Google_Fonts {
 		$fonts = new OGF_Fonts();
 
 		if ( $fonts->has_custom_fonts() ) {
-			wp_enqueue_style( 'olympus-google-fonts', $fonts->build_url(), array(), OGF_VERSION );
+			$url = $fonts->build_url();
+			wp_enqueue_style( 'olympus-google-fonts', $url, array(), OGF_VERSION );
 		}
 
 	}

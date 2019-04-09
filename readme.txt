@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.1
 License: GPLv2 or later
-Stable tag: 1.5.3
+Stable tag: 1.6.0
 
 The easiest to use Google Fonts Plugin. No coding required. 870+ font choices.
 
@@ -73,8 +73,6 @@ There are various ways you can contribute:
 2. Send us a Pull Request with your bug fixes and/or new features
 3. Translate the Google Fonts for WordPress plugin into [different languages](https://translate.wordpress.org/projects/wp-plugins/olympus-google-fonts/)
 4. Provide feedback and suggestions on [enhancements](https://github.com/DannyCooper/olympus-google-fonts/issues?direction=desc&labels=Enhancement&page=1&sort=created&state=open)
-
-[](http://coderisk.com/wp/plugin/olympus-google-fonts/RIPS-X52CjZr45t)
 
 == Installation ==
 Upload 'Google Fonts for WordPress', activate it, and you're done!

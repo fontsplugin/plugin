@@ -1,3 +1,8 @@
+= 1.6.0 =
+
+* Add hook to CSS output
+* Optimize CSS output
+
 = 1.5.3 =
 
 * Update icon.

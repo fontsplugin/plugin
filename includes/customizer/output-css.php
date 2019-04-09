@@ -15,6 +15,9 @@ function ogf_output_css() {
 	<!-- Fonts Plugin CSS - https://fontsplugin.com/ -->
 	<style>
 		<?php
+
+		do_action( 'ogf_inline_styles' );
+
 		foreach ( ogf_get_elements() as $id => $values ) {
 			ogf_generate_css( $values['selectors'], $id );
 		}
@@ -47,7 +50,12 @@ function ogf_generate_css( $selector, $option_name ) {
 
 	$return = '';
 
-	if ( $family || $font_size || $line_height || $weight || $style || $color ) {
+	if ( ( $family !== 'default' && $family ) ||
+			 ( $line_height !== '0' && $line_height ) ||
+			 ( $weight !== '0' && $weight ) ||
+			 ( $style !== 'default' && $style ) ||
+			   $font_size ||
+			   $color ) {
 
 		$return .= $selector . ' {' . PHP_EOL;
 
