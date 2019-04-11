@@ -1,21 +1,18 @@
 <?php
 /**
- * Plugin review class.
+ * Notification class.
  * Prompts users to give a review of the plugin on WordPress.org after a period of usage.
- *
- * Heavily based on code by Rhys Wynne
- * https://winwar.co.uk/2014/10/ask-wordpress-plugin-reviews-week/
  *
  * @package   olympus-google-fonts
  * @copyright Copyright (c) 2019, Danny Cooper
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
-if ( ! class_exists( 'OGF_Feedback' ) ) :
+if ( ! class_exists( 'OGF_Notifications' ) ) :
 	/**
 	 * The feedback.
 	 */
-	class OGF_Feedback {
+	class OGF_Notifications {
 
 		/**
 		 * Slug.
@@ -60,7 +57,8 @@ if ( ! class_exists( 'OGF_Feedback' ) ) :
 		public function __construct( $args ) {
 			$this->slug         = $args['slug'];
 			$this->name         = $args['name'];
-			$this->date_option  = $this->slug . '_activation_date';
+			$this->type         = $args['type'];
+			$this->date_option  = 'ogf_activation_date';
 			$this->nobug_option = $this->slug . '_no_bug';
 			if ( isset( $args['time_limit'] ) ) {
 				$this->time_limit = $args['time_limit'];
@@ -123,9 +121,6 @@ if ( ! class_exists( 'OGF_Feedback' ) ) :
 		 * Display the admin notice.
 		 */
 		public function display_admin_notice() {
-
-			$no_bug_url = wp_nonce_url( admin_url( '?' . $this->nobug_option . '=true' ), 'ogf-feedback-nounce' );
-			$time       = $this->seconds_to_words( time() - get_site_option( $this->date_option ) );
 			?>
 
 			<style>
@@ -210,6 +205,21 @@ if ( ! class_exists( 'OGF_Feedback' ) ) :
 				}
 			}
 			</style>
+			<?php
+			if ( $this->type === 'review' ) {
+				$this->review();
+			} elseif( $this->type === 'addon' ) {
+				$this->addon();
+			}
+		}
+
+		/**
+		 * Output review content.
+		 */
+		public function review() {
+			$no_bug_url = wp_nonce_url( admin_url( '?' . $this->nobug_option . '=true' ), 'ogf-notification-nounce' );
+			$time = $this->seconds_to_words( time() - get_site_option( $this->date_option ) );
+			?>
 			<div class="notice updated ogf-notice">
 				<div class="ogf-notice-inner">
 					<div class="ogf-notice-icon">
@@ -234,11 +244,43 @@ if ( ! class_exists( 'OGF_Feedback' ) ) :
 		}
 
 		/**
+		 * Output review content.
+		 */
+		public function addon() {
+			if ( is_plugin_active( 'host-google-fonts-locally/host-google-fonts-locally.php' ) ) {
+				return;
+			}
+			$no_bug_url = wp_nonce_url( admin_url( '?' . $this->nobug_option . '=true' ), 'ogf-notification-nounce' );
+			?>
+			<div class="notice updated ogf-notice">
+				<div class="ogf-notice-inner">
+					<div class="ogf-notice-icon">
+						<img src="https://ps.w.org/host-google-fonts-locally/assets/icon-256x256.jpg" alt="<?php echo esc_attr__( 'Host Google Fonts Locally', 'olympus-google-fonts' ); ?>" />
+					</div>
+					<div class="ogf-notice-content">
+						<h3><?php echo esc_html__( 'Speed Up Your Website!', 'olympus-google-fonts' ); ?></h3>
+						<p>
+							<?php
+							/* translators: 1. Name, 2. Time */
+							printf( __( 'Our latest <strong>free</strong> addon allows you to host Google Fonts locally.<br>This removes the requests to Google\'s servers and can equal faster load times.', 'olympus-google-fonts' ), esc_html( $this->name ), esc_html( $time ) );
+							?>
+						</p>
+					</div>
+					<div class="ogf-install-now">
+						<?php printf( '<a href="%1$s" class="button button-primary ogf-install-button" target="_blank">%2$s</a>', esc_url( admin_url( 'plugin-install.php?s=local+google+fonts&tab=search&type=tag' ) ), esc_html__( 'Install Now', 'olympus-google-fonts' ) ); ?>
+						<a href="<?php echo esc_url( $no_bug_url ); ?>" class="no-thanks"><?php echo esc_html__( 'No thank you.', 'olympus-google-fonts' ); ?></a>
+					</div>
+				</div>
+			</div>
+			<?php
+		}
+
+		/**
 		 * Set the plugin to no longer bug users if user asks not to be.
 		 */
 		public function set_no_bug() {
 			// Bail out if not on correct page.
-			if ( ! isset( $_GET['_wpnonce'] ) || ( ! wp_verify_nonce( $_GET['_wpnonce'], 'ogf-feedback-nounce' ) || ! is_admin() || ! isset( $_GET[ $this->nobug_option ] ) || ! current_user_can( 'manage_options' ) ) ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ( ! wp_verify_nonce( $_GET['_wpnonce'], 'ogf-notification-nounce' ) || ! is_admin() || ! isset( $_GET[ $this->nobug_option ] ) || ! current_user_can( 'manage_options' ) ) ) {
 				return;
 			}
 			add_site_option( $this->nobug_option, true );
@@ -246,13 +288,24 @@ if ( ! class_exists( 'OGF_Feedback' ) ) :
 	}
 endif;
 
+
 /*
-* Instantiate the OGF_Feedback class.
+* Instantiate the OGF_Notifications class.
 */
-new OGF_Feedback(
+new OGF_Notifications(
 	array(
 		'slug'       => 'ogf',
 		'name'       => __( 'Google Fonts for WordPress', 'olympus-google-fonts' ),
 		'time_limit' => WEEK_IN_SECONDS,
+		'type'       => 'review',
+	)
+);
+
+new OGF_Notifications(
+	array(
+		'slug'       => 'ogf_addon',
+		'name'       => __( 'Host Google Fonts Locally', 'olympus-google-fonts' ),
+		'time_limit' => DAY_IN_SECONDS,
+		'type'       => 'addon',
 	)
 );

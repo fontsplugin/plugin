@@ -46,8 +46,8 @@ class Olympus_Google_Fonts {
 		include OGF_DIR_PATH . 'includes/customizer/settings.php';
 		include OGF_DIR_PATH . 'includes/customizer/output-css.php';
 
-		// Feedback request class.
-		include OGF_DIR_PATH . 'includes/class-ogf-feedback.php';
+		// Notifications class.
+		include OGF_DIR_PATH . 'includes/class-ogf-notifications.php';
 
 		// Welcome notice class.
 		include OGF_DIR_PATH . 'includes/class-ogf-welcome.php';

@@ -1,3 +1,7 @@
+= 1.6.1 =
+
+* Improve notifications class
+
 = 1.6.0 =
 
 * Add hook to CSS output
