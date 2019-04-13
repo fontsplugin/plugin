@@ -69,7 +69,7 @@ Anyone is welcome to contribute to the 'Google Fonts for WordPress' plugin.
 
 There are various ways you can contribute:
 
-1. Raise an [Issue](https://wordpress.org/support/plugin/olympus-google-fonts#new-post) on GitHub
+1. Raise an [Issue](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)
 2. Translate the Google Fonts for WordPress plugin into [different languages](https://translate.wordpress.org/projects/wp-plugins/olympus-google-fonts/)
 3. Provide feedback and suggestions on [enhancements](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)
 
