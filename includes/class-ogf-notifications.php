@@ -121,6 +121,9 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		 * Display the admin notice.
 		 */
 		public function display_admin_notice() {
+			if ( is_plugin_active( 'google-fonts-pro/google-fonts-pro.php' ) ) {
+				return;
+			}
 			?>
 
 			<style>

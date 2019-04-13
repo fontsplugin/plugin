@@ -140,7 +140,7 @@ class Olympus_Google_Fonts {
 		array_push( $links, $settings_link );
 
 		// Upgrade Link.
-		$pro_link = '<a href="https://fontsplugin.com?utm_source=wpadmin-settings">' . esc_html__( 'Upgrade to Pro', 'olympus-google-fonts' ) . '</a>';
+		$pro_link = '<a href="https://fontsplugin.com/pro-upgrade?utm_source=wpadmin-settings">' . esc_html__( 'Upgrade to Pro', 'olympus-google-fonts' ) . '</a>';
 
 		array_push( $links, $pro_link );
 

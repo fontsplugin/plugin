@@ -1,3 +1,7 @@
+= 1.6.2 =
+
+* Remove plugin recommendation for pro users as they already have the functionality
+
 = 1.6.1 =
 
 * Improve notifications class

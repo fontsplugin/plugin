@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.1
 License: GPLv2 or later
-Stable tag: 1.6.1
+Stable tag: 1.6.2
 
 The easiest to use Google Fonts Plugin. No coding required. 870+ font choices.
 
@@ -55,7 +55,7 @@ For more info on Google Fonts for Wordpress, check out the following:
 * [How to Use Google Fonts in WordPress](https://fontsplugin.com/wordpress-google-fonts/)
 
 = Bugs =
-If you find an issue with Google Fonts for WordPress, let us know [here](https://github.com/DannyCooper/olympus-google-fonts/issues)!
+If you find an issue with Google Fonts for WordPress, let us know [here](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)!
 
 = Google Fonts Gutenberg Block =
 Add some flair to your content with our new Gutenberg block.
@@ -69,10 +69,9 @@ Anyone is welcome to contribute to the 'Google Fonts for WordPress' plugin.
 
 There are various ways you can contribute:
 
-1. Raise an [Issue](https://github.com/DannyCooper/olympus-google-fonts/issues) on GitHub
-2. Send us a Pull Request with your bug fixes and/or new features
-3. Translate the Google Fonts for WordPress plugin into [different languages](https://translate.wordpress.org/projects/wp-plugins/olympus-google-fonts/)
-4. Provide feedback and suggestions on [enhancements](https://github.com/DannyCooper/olympus-google-fonts/issues?direction=desc&labels=Enhancement&page=1&sort=created&state=open)
+1. Raise an [Issue](https://wordpress.org/support/plugin/olympus-google-fonts#new-post) on GitHub
+2. Translate the Google Fonts for WordPress plugin into [different languages](https://translate.wordpress.org/projects/wp-plugins/olympus-google-fonts/)
+3. Provide feedback and suggestions on [enhancements](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)
 
 == Installation ==
 Upload 'Google Fonts for WordPress', activate it, and you're done!
@@ -83,7 +82,7 @@ Navigate to wp-admin -> Appearance -> Customize and you will see a new tab named
 
 = Will my theme work with Google Fonts for WordPress? =
 
-We are 99.99% certain it will, if it doesn't then please create a [support ticket](https://wordpress.org/support/plugin/olympus-google-fonts).
+We are 99.99% certain it will, if it doesn't then please create a [support ticket](https://wordpress.org/support/plugin/olympus-google-fonts#new-post).
 
 == Screenshots ==
 
