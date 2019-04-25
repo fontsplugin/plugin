@@ -19,6 +19,8 @@ class Olympus_Google_Fonts {
 
 		$this->includes();
 
+		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ), 1000 ); // ensure our Google Font styles load last.
 		add_filter( 'wp_resource_hints', array( $this, 'resource_hints' ), 10, 2 );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue' ) );
