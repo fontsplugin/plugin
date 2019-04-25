@@ -252,7 +252,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 */
 	public function get_font_style_choices() {
 		return array(
-			'default'  => esc_html__( '- Default -', 'olympus-google-fonts' ),
+			'default' => esc_html__( '- Default -', 'olympus-google-fonts' ),
 			'normal'  => esc_html__( 'Normal', 'olympus-google-fonts' ),
 			'italic'  => esc_html__( 'Italic', 'olympus-google-fonts' ),
 			'oblique' => esc_html__( 'Oblique', 'olympus-google-fonts' ),

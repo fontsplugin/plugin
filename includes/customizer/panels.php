@@ -36,10 +36,20 @@ function ogf_panels_customize_register( $wp_customize ) {
 	$wp_customize->add_panel( $ogf_panel );
 
 	$wp_customize->add_section(
+		'ogf_theme',
+		array(
+			'title'    => esc_html__( 'Theme Settings', 'olympus-google-fonts' ),
+			'priority' => '1',
+			'panel'    => 'ogf_google_fonts',
+		)
+	);
+
+	$wp_customize->add_section(
 		'ogf_basic',
 		array(
-			'title' => __( 'Basic Settings', 'olympus-google-fonts' ),
-			'panel' => 'ogf_google_fonts',
+			'title'    => __( 'Basic Settings', 'olympus-google-fonts' ),
+			'priority' => '2',
+			'panel'    => 'ogf_google_fonts',
 		)
 	);
 
@@ -47,25 +57,19 @@ function ogf_panels_customize_register( $wp_customize ) {
 		$wp_customize,
 		'ogf_advanced',
 		array(
-			'title' => __( 'Advanced Settings', 'olympus-google-fonts' ),
-			'panel' => 'ogf_google_fonts',
+			'title'    => __( 'Advanced Settings', 'olympus-google-fonts' ),
+			'priority' => '3',
+			'panel'    => 'ogf_google_fonts',
 		)
 	);
 
 	$wp_customize->add_panel( $ogf_advanced_panel );
 
 	$wp_customize->add_section(
-		'ogf_theme',
-		array(
-			'title' => esc_html__( 'Theme Settings', 'olympus-google-fonts' ),
-			'panel' => 'ogf_google_fonts',
-		)
-	);
-
-	$wp_customize->add_section(
 		'ogf_custom',
 		array(
 			'title'       => esc_html__( 'Custom Elements', 'olympus-google-fonts' ),
+			'priority'    => '5',
 			/* Translators: %s Custom Elements Customizer Panel URL */
 			'description' => sprintf( __( 'Define your Custom Elements here and then customize them under <a href="%s">Advanced Settings &rarr; Custom Elements</a>.', 'olympus-google-fonts' ), esc_url( admin_url( '/customize.php?autofocus[section]=ogf_advanced__custom' ) ) ),
 			'panel'       => 'ogf_google_fonts',
@@ -76,6 +80,7 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_font_loading',
 		array(
 			'title'       => esc_html__( 'Font Loading', 'olympus-google-fonts' ),
+			'priority'    => '6',
 			'description' => 'Optimize your site\'s performance by unchecking any font weights you don\'t need.',
 			'panel'       => 'ogf_google_fonts',
 		)
@@ -84,8 +89,9 @@ function ogf_panels_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'ogf_debugging',
 		array(
-			'title' => esc_html__( 'Debugging', 'olympus-google-fonts' ),
-			'panel' => 'ogf_google_fonts',
+			'title'    => esc_html__( 'Debugging', 'olympus-google-fonts' ),
+			'priority' => '7',
+			'panel'    => 'ogf_google_fonts',
 		)
 	);
 

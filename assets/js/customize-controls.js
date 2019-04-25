@@ -1,3 +1,5 @@
+'use strict';
+
 /* global ogf_font_array */
 ( function( api ) {
 	api.controlConstructor.typography = api.Control.extend(

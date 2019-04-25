@@ -1,3 +1,5 @@
+'use strict';
+
 /* global ogf_elements */
 jQuery( document ).ready(
 	function() {

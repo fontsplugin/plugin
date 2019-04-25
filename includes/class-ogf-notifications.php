@@ -211,7 +211,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 			<?php
 			if ( $this->type === 'review' ) {
 				$this->review();
-			} elseif( $this->type === 'addon' ) {
+			} elseif ( $this->type === 'addon' ) {
 				$this->addon();
 			}
 		}
@@ -264,8 +264,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 						<h3><?php echo esc_html__( 'Speed Up Your Website!', 'olympus-google-fonts' ); ?></h3>
 						<p>
 							<?php
-							/* translators: 1. Name, 2. Time */
-							printf( __( 'Our latest <strong>free</strong> addon allows you to host Google Fonts locally.<br>This removes the requests to Google\'s servers and can equal faster load times.', 'olympus-google-fonts' ), esc_html( $this->name ), esc_html( $time ) );
+							_e( 'Our latest <strong>free</strong> addon allows you to host Google Fonts locally.<br>This removes the requests to Google\'s servers and can improve page speed.', 'olympus-google-fonts' );
 							?>
 						</p>
 					</div>

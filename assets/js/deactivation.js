@@ -1,3 +1,5 @@
+'use strict';
+
 /* global ajaxurl */
 jQuery( document ).ready(
 	function() {
