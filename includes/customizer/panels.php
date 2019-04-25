@@ -3,7 +3,7 @@
  * Add multi-level panel functionality.
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2019, Danny Cooper
+ * @copyright Copyright (c) 2019, Fonts Plugin
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
