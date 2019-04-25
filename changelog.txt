@@ -1,3 +1,9 @@
+= 1.6.3 =
+
+* Fix $time Undefined variable.
+* Update .pot file
+* Update premium messaging
+
 = 1.6.2 =
 
 * Remove plugin recommendation for pro users as they already have the functionality
