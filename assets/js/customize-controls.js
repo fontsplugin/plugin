@@ -80,10 +80,6 @@
 				// Initialize chosen.js
 				jQuery( '.ogf-select' ).chosen( { width: '85%' } );
 
-				/**
-				 * Slider Custom Control
-				 */
-
 				// Set our slider defaults and initialise the slider
 				jQuery( '.slider-custom-control' ).each( function() {
 					const sliderValue = jQuery( this ).find( '.customize-control-slider-value' ).val();
@@ -133,6 +129,42 @@
 					}
 					jQuery( this ).parent().find( '.slider' ).slider( 'value', resetValue );
 				} );
+			},
+			/**
+			 * Embed the control in the document.
+			 *
+			 * Override the embed() method to do nothing,
+			 * so that the control isn't embedded on load,
+			 * unless the containing section is already expanded.
+			 *
+			 */
+			embed: function() {
+				const control = this;
+				const sectionId = control.section();
+				if ( ! sectionId ) {
+					return;
+				}
+				wp.customize.section( sectionId, function( section ) {
+					section.expanded.bind( function( expanded ) {
+						if ( expanded ) {
+							control.actuallyEmbed();
+						}
+					} );
+				} );
+			},
+			/**
+			 * Deferred embedding of control when actually
+			 *
+			 * This function is called in Section.onChangeExpanded() so the control
+			 * will only get embedded when the Section is first expanded.
+			 */
+			actuallyEmbed: function() {
+				const control = this;
+				if ( 'resolved' === control.deferred.embedded.state() ) {
+					return;
+				}
+				control.renderContent();
+				control.deferred.embedded.resolve(); // This triggers control.ready().
 			},
 		}
 	);

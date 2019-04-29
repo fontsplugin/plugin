@@ -1,3 +1,7 @@
+= 1.7.0 =
+
+* Reduce the load time impact on the customizer by ~1/3rd. Credits @aristath
+
 = 1.6.3 =
 
 * Fix $time Undefined variable.

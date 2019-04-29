@@ -3,9 +3,9 @@ Contributors: DannyCooper, googlefonts
 Tags: google, fonts, google fonts, google fonts for wordpress, typography
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
-Tested up to: 5.1
+Tested up to: 5.2
 License: GPLv2 or later
-Stable tag: 1.6.3
+Stable tag: 1.7.0
 
 The easiest to use Google Fonts Plugin. No coding required. 870+ font choices.
 
