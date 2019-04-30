@@ -122,7 +122,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Content Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your sidebar content.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__sidebar',
-			'selectors'   => '.widget-area',
+			'selectors'   => '.widget-area, .widget, .sidebar, #sidebar',
 		),
 		'ogf_footer_headings'   => array(
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
