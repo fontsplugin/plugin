@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.2
 License: GPLv2 or later
-Stable tag: 1.7.0
+Stable tag: 1.7.1
 
 The easiest to use Google Fonts Plugin. No coding required. 870+ font choices.
 
@@ -94,4 +94,4 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 == Changelog ==
 
-[See changelog.txt for the complete changelog.](https://raw.githubusercontent.com/dannycooper/olympus-google-fonts/master/changelog.txt).
+[See changelog.txt for the complete changelog.](https://raw.githubusercontent.com/dannycooper/olympus-google-fonts/master/changelog.txt)
