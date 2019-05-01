@@ -94,4 +94,4 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 == Changelog ==
 
-See changelog.txt
+[See changelog.txt for the complete changelog.](https://raw.githubusercontent.com/dannycooper/olympus-google-fonts/master/changelog.txt).
