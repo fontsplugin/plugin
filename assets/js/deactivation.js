@@ -10,6 +10,7 @@ jQuery( document ).ready(
 		'<p>We\'re sorry our Google Fonts plugin didn\'t work for you. Would you mind letting us know where we went wrong so we can fix it?</p>' +
 		'<ul class="reasons" style="padding: 0">' +
 		'<p><strong>Why you are deactivating this plugin?</strong></p>' +
+		'	<li><label class="reason expand"><input type="radio" name="reason" value="missing-font" /> The font I need is missing</label><textarea placeholder="Which font do you need?"></textarea></li>' +
 		'	<li><label class="reason expand"><input type="radio" name="reason" value="missing-feature" /> The plugin is great, but I need specific feature that you don\'t support</label><textarea placeholder="Which feature do you need?"></textarea></li>' +
 		'<li><label class="reason expand"><input type="radio" name="reason" value="not-working"> The plugin is not working</label><textarea placeholder="Please clarify which part of the plugin isn\'t working so we can try and fix it..."></textarea></li>' +
 		'<li><label class="reason expand"><input type="radio" name="reason" value="other-plugin"> I found a better plugin</label><textarea placeholder="What\'s the plugin name?"></textarea></li>' +
