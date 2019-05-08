@@ -2,6 +2,7 @@
 
 * Add system fonts to the available choices.
 * Remove font_choices_for_select() to reduce the amount of code output in the customizer.
+* Fix issue where line-height is always 1.
 
 = 1.7.1 =
 

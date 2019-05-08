@@ -76,7 +76,7 @@ function ogf_generate_css( $selector, $option_name ) {
 		if ( $font_size ) {
 			$return .= sprintf(
 				'font-size: %s;' . PHP_EOL,
-				absint( $font_size ) . 'px' . ogf_is_forced()
+				floatval( $font_size ) . 'px' . ogf_is_forced()
 			);
 		}
 
@@ -84,7 +84,7 @@ function ogf_generate_css( $selector, $option_name ) {
 		if ( $line_height && '0' !== $line_height ) {
 			$return .= sprintf(
 				'line-height: %s;' . PHP_EOL,
-				absint( $line_height ) . ogf_is_forced()
+				floatval( $line_height ) . ogf_is_forced()
 			);
 		}
 
