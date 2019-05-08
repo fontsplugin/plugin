@@ -144,9 +144,7 @@ function ogf_build_font_stack( $font_id ) {
 
 	if ( array_key_exists( $font_id, $system_fonts ) ) {
 
-		$stack = '"' . $system_fonts[ $font_id ]['stack'] . '"';
-
-		return $stack;
+		return $system_fonts[ $font_id ]['stack'];
 
 	}
 

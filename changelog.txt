@@ -1,3 +1,7 @@
+= 1.7.3 =
+
+* Compatibility fix for 'Local Hosting' addon.
+
 = 1.7.2 =
 
 * Add system fonts to the available choices.

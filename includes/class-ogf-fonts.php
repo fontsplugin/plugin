@@ -105,11 +105,17 @@ class OGF_Fonts {
 	 */
 	public function has_custom_fonts() {
 
-		if ( ! empty( $this->choices ) ) {
-			return true;
-		} else {
+		if ( empty( $this->choices ) ) {
 			return false;
 		}
+
+		foreach ( $this->choices as $choice ) {
+			if ( ! ogf_is_system_font( $choice ) ) {
+				return true;
+			}
+		}
+
+		return false;
 
 	}
 
