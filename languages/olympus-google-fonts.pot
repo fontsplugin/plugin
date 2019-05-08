@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Google Fonts for WordPress plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Fonts for WordPress 1.6.3\n"
+"Project-Id-Version: Google Fonts for WordPress 1.7.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/olympus-google-fonts\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-04-25T09:07:31+00:00\n"
+"POT-Creation-Date: 2019-05-08T16:48:48+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: olympus-google-fonts\n"
@@ -35,11 +35,11 @@ msgstr ""
 msgid "https://fontsplugin.com/?utm_source=wporg&utm_campaign=heading"
 msgstr ""
 
-#: class-olympus-google-fonts.php:138
+#: class-olympus-google-fonts.php:141
 msgid "Settings"
 msgstr ""
 
-#: class-olympus-google-fonts.php:143
+#: class-olympus-google-fonts.php:146
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -168,56 +168,106 @@ msgid "Select and configure the font for your footer content."
 msgstr ""
 
 #: includes/functions.php:182
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:231
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:239
 msgid "Thin"
 msgstr ""
 
 #: includes/functions.php:183
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:232
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:240
 msgid "Extra Light"
 msgstr ""
 
 #: includes/functions.php:184
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:233
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:241
 msgid "Light"
 msgstr ""
 
 #: includes/functions.php:185
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:234
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:256
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:242
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:254
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:272
 msgid "Normal"
 msgstr ""
 
 #: includes/functions.php:186
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:235
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:243
 msgid "Medium"
 msgstr ""
 
 #: includes/functions.php:187
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:236
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:244
 msgid "Semi Bold"
 msgstr ""
 
 #: includes/functions.php:188
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:237
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:245
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:255
 msgid "Bold"
 msgstr ""
 
 #: includes/functions.php:189
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:238
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:246
 msgid "Extra Bold"
 msgstr ""
 
 #: includes/functions.php:190
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:239
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:247
 msgid "Ultra Bold"
 msgstr ""
 
 #: includes/functions.php:197
-#: includes/functions.php:221
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:230
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:255
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:238
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:253
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:271
 msgid "- Default -"
+msgstr ""
+
+#: includes/functions.php:219
+msgid "Arial"
+msgstr ""
+
+#: includes/functions.php:224
+msgid "Calibri"
+msgstr ""
+
+#: includes/functions.php:229
+msgid "Consolas"
+msgstr ""
+
+#: includes/functions.php:234
+msgid "Courier New"
+msgstr ""
+
+#: includes/functions.php:239
+msgid "Helvetica"
+msgstr ""
+
+#: includes/functions.php:244
+msgid "Georgia"
+msgstr ""
+
+#: includes/functions.php:249
+msgid "Lucida Grande"
+msgstr ""
+
+#: includes/functions.php:254
+msgid "Tahoma"
+msgstr ""
+
+#: includes/functions.php:259
+msgid "Times New Roman"
+msgstr ""
+
+#: includes/functions.php:264
+msgid "Trebuchet MS"
+msgstr ""
+
+#: includes/functions.php:269
+msgid "Palatino"
+msgstr ""
+
+#: includes/functions.php:274
+msgid "Verdana"
 msgstr ""
 
 #. translators: %s Link to Google Fonts customizer panel.
@@ -421,11 +471,27 @@ msgstr ""
 msgid "Color"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:257
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:109
+msgid "Default Font"
+msgstr ""
+
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:110
+msgid "- System Fonts -"
+msgstr ""
+
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:115
+msgid "- Google Fonts -"
+msgstr ""
+
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:124
+msgid "Advanced"
+msgstr ""
+
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:273
 msgid "Italic"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:258
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:274
 msgid "Oblique"
 msgstr ""
 
