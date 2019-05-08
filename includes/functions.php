@@ -34,37 +34,37 @@ function ogf_get_custom_elements() {
 function ogf_get_elements() {
 
 	$elements = array(
-		'ogf_body'              => array(
+		'ogf_body' => array(
 			'label'       => esc_html__( 'Base Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your content.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_basic',
 			'selectors'   => 'body',
 		),
-		'ogf_headings'          => array(
+		'ogf_headings' => array(
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_basic',
 			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, .entry-title, .entry-title a, h1, h2, h3, h4, h5, h6',
 		),
-		'ogf_inputs'            => array(
+		'ogf_inputs' => array(
 			'label'       => esc_html__( 'Buttons and Inputs Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your input fields and buttons.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_basic',
 			'selectors'   => 'button, input, select, textarea',
 		),
-		'ogf_site_title'        => array(
+		'ogf_site_title' => array(
 			'label'       => esc_html__( 'Site Title Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your site title.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__branding',
 			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, #logo, #logo a, .logo, .logo a',
 		),
-		'ogf_site_description'  => array(
+		'ogf_site_description' => array(
 			'label'       => esc_html__( 'Site Description Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your site description.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__branding',
 			'selectors'   => '#site-description, .site-description',
 		),
-		'ogf_site_navigation'   => array(
+		'ogf_site_navigation' => array(
 			'label'       => esc_html__( 'Navigation Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your site navigation.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__navigation',
@@ -76,55 +76,55 @@ function ogf_get_elements() {
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-content, .post-content, .page-content, .post-excerpt, .entry-summary, .entry-excerpt',
 		),
-		'ogf_post_page_h1'      => array(
+		'ogf_post_page_h1' => array(
 			'label'       => esc_html__( 'Title and H1 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your title and H1 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-title, .entry-title a, .post-title, .post-title a, .page-title, .entry-content h1',
 		),
-		'ogf_post_page_h2'      => array(
+		'ogf_post_page_h2' => array(
 			'label'       => esc_html__( 'H2 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H2 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-content h2, .post-content h2, .page-content h2',
 		),
-		'ogf_post_page_h3'      => array(
+		'ogf_post_page_h3' => array(
 			'label'       => esc_html__( 'H3 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H3 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-content h3, .post-content h3, .page-content h3',
 		),
-		'ogf_post_page_h4'      => array(
+		'ogf_post_page_h4' => array(
 			'label'       => esc_html__( 'H4 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H4 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-content h4, .post-content h4, .page-content h4',
 		),
-		'ogf_post_page_h5'      => array(
+		'ogf_post_page_h5' => array(
 			'label'       => esc_html__( 'H5 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H5 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-content h5, .post-content h5, .page-content h5',
 		),
-		'ogf_post_page_h6'      => array(
+		'ogf_post_page_h6' => array(
 			'label'       => esc_html__( 'H6 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H6 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-content h6, .post-content h6, .page-content h6',
 		),
-		'ogf_sidebar_headings'  => array(
+		'ogf_sidebar_headings' => array(
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your sidebar headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__sidebar',
 			'selectors'   => '.widget-title, .widget-area h1, .widget-area h2, .widget-area h3, .widget-area h4, .widgets-area h5, .widget-area h6',
 		),
-		'ogf_sidebar_content'   => array(
+		'ogf_sidebar_content' => array(
 			'label'       => esc_html__( 'Content Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your sidebar content.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__sidebar',
 			'selectors'   => '.widget-area, .widget, .sidebar, #sidebar',
 		),
-		'ogf_footer_headings'   => array(
+		'ogf_footer_headings' => array(
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your footer headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__footer',
@@ -132,7 +132,7 @@ function ogf_get_elements() {
 												.footer h1, .footer h2, .footer h3, .footer h4, .footer h5, .footer h6
 												#footer h1, #footer h2, #footer h3, #footer h4, #footer h5, #footer h6',
 		),
-		'ogf_footer_content'    => array(
+		'ogf_footer_content' => array(
 			'label'       => esc_html__( 'Content Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your footer content.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__footer',
@@ -207,24 +207,89 @@ function ogf_fonts_array() {
 	}
 
 	return $fonts;
+}
+
+/**
+ * Return a array of system fonts.
+ */
+function ogf_system_fonts() {
+	$system_fonts = array(
+		'arial' => array(
+			'id'    => 'arial',
+			'label' => esc_html__( 'Arial', 'olympus-google-fonts' ),
+			'stack' => 'Arial, Helvetica Neue, Helvetica, sans-serif',
+		),
+		'calibri' => array(
+			'id'    => 'calibri',
+			'label' => esc_html__( 'Calibri', 'olympus-google-fonts' ),
+			'stack' => 'Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;',
+		),
+		'consolas' => array(
+			'id'    => 'consolas',
+			'label' => esc_html__( 'Consolas', 'olympus-google-fonts' ),
+			'stack' => 'Consolas, monaco, monospace',
+		),
+		'courier-new' => array(
+			'id'    => 'courier-new',
+			'label' => esc_html__( 'Courier New', 'olympus-google-fonts' ),
+			'stack' => 'Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace',
+		),
+		'helvetica' => array(
+			'id'    => 'helvetica',
+			'label' => esc_html__( 'Helvetica', 'olympus-google-fonts' ),
+			'stack' => 'Helvetica Neue, Helvetica, Arial, sans-serif',
+		),
+		'georgia' => array(
+			'id'    => 'georgia',
+			'label' => esc_html__( 'Georgia', 'olympus-google-fonts' ),
+			'stack' => 'Georgia, Times, Times New Roman, serif',
+		),
+		'lucida-grande' => array(
+			'id'    => 'lucida-grande',
+			'label' => esc_html__( 'Lucida Grande', 'olympus-google-fonts' ),
+			'stack' => 'Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana, sans-serif',
+		),
+		'tahoma' => array(
+			'id'    => 'tahoma',
+			'label' => esc_html__( 'Tahoma', 'olympus-google-fonts' ),
+			'stack' => 'Tahoma, Verdana, Segoe, sans-serif',
+		),
+		'times-new-roman' => array(
+			'id'    => 'times-new-roman',
+			'label' => esc_html__( 'Times New Roman', 'olympus-google-fonts' ),
+			'stack' => 'TimesNewRoman, Times New Roman, Times, Baskerville, Georgia, serif',
+		),
+		'trebuchet' => array(
+			'id'    => 'trebuchet',
+			'label' => esc_html__( 'Trebuchet MS', 'olympus-google-fonts' ),
+			'stack' => 'Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif',
+		),
+		'palatino' => array(
+			'id'    => 'palatino',
+			'label' => esc_html__( 'Palatino', 'olympus-google-fonts' ),
+			'stack' => 'Palatino, Palatino Linotype, Palatino LT STD, Book Antiqua, Georgia, serif',
+		),
+		'verdana' => array(
+			'id'    => 'verdana',
+			'label' => esc_html__( 'Verdana', 'olympus-google-fonts' ),
+			'stack' => 'Verdana, Geneva, sans-serif;',
+		),
+	);
+
+	$filtered_system_fonts = apply_filters( 'ogf_system_fonts', $system_fonts );
+
+	return $filtered_system_fonts;
 
 }
 
 /**
- * Build the array for the select choices setting.
+ * Check if a font is a system font (not Google Font).
+ *
+ * @param string $font_id The ID of the font to check.
  */
-function ogf_font_choices_for_select() {
-
-	$fonts_array = ogf_fonts_array();
-
-	$fonts = array(
-		'default' => esc_html__( '- Default -', 'olympus-google-fonts' ),
-	);
-
-	foreach ( $fonts_array as $key => $value ) {
-		$fonts[ $key ] = $value['family'];
+function ogf_is_system_font( $font_id ) {
+	if ( strpos( $font_id, 'sf-' ) === 0 ) {
+		return true;
 	}
-
-	return $fonts;
-
+	return false;
 }

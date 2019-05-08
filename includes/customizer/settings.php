@@ -147,6 +147,10 @@ function ogf_customize_register( $wp_customize ) {
 	// Build the selective font loading controls.
 	foreach ( $choices as $font_id ) {
 
+		if ( ogf_is_system_font( $font_id ) ) {
+			return;
+		}
+
 		$weights = $fonts->get_font_weights( $font_id );
 		$name    = $fonts->get_font_name( $font_id );
 		unset( $weights[0] );

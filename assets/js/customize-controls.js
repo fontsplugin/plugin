@@ -21,6 +21,13 @@
 					wp.customize.previewer.send( 'olympusFontURL', '<link href=\'https://fonts.googleapis.com/css?family=' + fontURL + '\' rel=\'stylesheet\' type=\'text/css\'>' );
 				}
 
+				function isSystemFont( fontID ) {
+					if ( fontID.indexOf( 'sf-' ) !== -1 ) {
+						return true;
+					}
+					return false;
+				}
+
 				// Load the font-weights for the newly selected font.
 				control.container.on(
 					'change',
@@ -28,7 +35,7 @@
 					function() {
 						const value = jQuery( this ).val();
 						control.settings.family.set( value );
-						if ( value !== 'default' ) {
+						if ( value !== 'default' && ! isSystemFont( value ) ) {
 							addGoogleFont( value );
 
 							const font = ogf_font_array[ value ];

@@ -138,6 +138,18 @@ function ogf_build_font_stack( $font_id ) {
 
 	}
 
+	$system_fonts = ogf_system_fonts();
+
+	$font_id = str_replace( 'sf-', '', $font_id );
+
+	if ( array_key_exists( $font_id, $system_fonts ) ) {
+
+		$stack = '"' . $system_fonts[ $font_id ]['stack'] . '"';
+
+		return $stack;
+
+	}
+
 }
 
 /**

@@ -96,7 +96,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 		<ul>
 
-		<# if ( data.family && ogf_font_choices ) { #>
+		<# if ( data.family && ogf_font_array ) { #>
 
 			<li class="typography-font-family">
 
@@ -106,14 +106,22 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 				<select class="ogf-select" {{{ data.family.link }}}>
 
-					<# _.each( ogf_font_choices, function( label, font_id ) { #>
-						<option value="{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ label }}</option>
+					<option value="default"><?php esc_html_e( 'Default Font', 'olympus-google-fonts' ); ?></option>
+					<option disabled><?php esc_html_e( '- System Fonts -', 'olympus-google-fonts' ); ?></option>
+					<# _.each( ogf_system_fonts, function( font_data, font_id ) { #>
+						<option value="sf-{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.label }}</option>
+					<# } ) #>
+
+					<option disabled><?php esc_html_e( '- Google Fonts -', 'olympus-google-fonts' ); ?></option>
+
+					<# _.each( ogf_font_array, function( font_data, font_id ) { #>
+						<option value="{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.family }}</option>
 					<# } ) #>
 
 				</select>
 
 				<button type="button" class="advanced-button">
-					<span class="screen-reader-text">Advanced</span>
+					<span class="screen-reader-text"><?php esc_html_e( 'Advanced', 'olympus-google-fonts' ); ?></span>
 				</button>
 			</li>
 		<# } #>
@@ -240,6 +248,14 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			);
 		}
 
+		if ( ogf_is_system_font( $font ) ) {
+			return array(
+				'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
+				'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
+				'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
+			);
+		}
+
 		$fonts = ogf_fonts_array();
 
 		$variants = $fonts[ $font ]['variants'];
@@ -258,4 +274,5 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			'oblique' => esc_html__( 'Oblique', 'olympus-google-fonts' ),
 		);
 	}
+
 }

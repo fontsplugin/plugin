@@ -1,3 +1,8 @@
+= 1.7.2 =
+
+* Add system fonts to the available choices.
+* Remove font_choices_for_select() to reduce the amount of code output in the customizer.
+
 = 1.7.1 =
 
 * Fix changelog.txt link and include file in package.

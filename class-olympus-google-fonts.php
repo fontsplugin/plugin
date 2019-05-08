@@ -110,7 +110,7 @@ class Olympus_Google_Fonts {
 		wp_enqueue_style( 'ogf-customize-controls', esc_url( OGF_DIR_URL . 'assets/css/customize-controls.css' ), array(), OGF_VERSION );
 
 		wp_localize_script( 'ogf-customize-controls', 'ogf_font_array', ogf_fonts_array() );
-		wp_localize_script( 'ogf-customize-controls', 'ogf_font_choices', ogf_font_choices_for_select() );
+		wp_localize_script( 'ogf-customize-controls', 'ogf_system_fonts', ogf_system_fonts() );
 
 	}
 
@@ -124,6 +124,7 @@ class Olympus_Google_Fonts {
 		$elements = array_merge( ogf_get_elements(), ogf_get_custom_elements() );
 
 		wp_localize_script( 'ogf-customize-preview', 'ogf_elements', $elements );
+		wp_localize_script( 'ogf-customize-preview', 'ogf_system_fonts', ogf_system_fonts() );
 
 	}
 
