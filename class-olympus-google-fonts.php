@@ -23,7 +23,7 @@ class Olympus_Google_Fonts {
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ), 1000 ); // ensure our Google Font styles load last.
 		add_filter( 'wp_resource_hints', array( $this, 'resource_hints' ), 10, 2 );
-		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue' ) );
+		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue' ), 100 );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_enqueue' ) );
 
 		add_filter( 'plugin_action_links_' . plugin_basename( OGF_DIR_PATH . 'olympus-google-fonts.php' ), array( $this, 'links' ) );
