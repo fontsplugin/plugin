@@ -39,6 +39,10 @@ function olympus_google_fonts_register_block() {
 		'olympus-google-fonts/google-fonts',
 		array(
 			'attributes'      => array(
+				'blockType'  => array(
+					'type'    => 'string',
+					'default' => 'p',
+				),
 				'fontID'     => array(
 					'type'    => 'string',
 					'default' => '',
@@ -59,6 +63,9 @@ function olympus_google_fonts_register_block() {
 				'content'    => array(
 					'type' => 'string',
 				),
+				'color'      => array(
+					'type' => 'string',
+				),
 			),
 			'render_callback' => 'olympus_google_fonts_block_render',
 		)
@@ -73,12 +80,14 @@ add_action( 'init', 'olympus_google_fonts_register_block' );
  */
 function olympus_google_fonts_block_render( $attributes ) {
 
+	$blockType   = isset( $attributes['blockType'] ) ? esc_attr( $attributes['blockType'] ) : 'p';
 	$font_id     = isset( $attributes['fontID'] ) ? sanitize_text_field( $attributes['fontID'] ) : '';
 	$variant     = isset( $attributes['variant'] ) ? sanitize_text_field( $attributes['variant'] ) : '';
 	$font_size   = isset( $attributes['fontSize'] ) ? intval( $attributes['fontSize'] ) : '';
 	$line_height = isset( $attributes['lineHeight'] ) ? floatval( $attributes['lineHeight'] ) : '';
 	$align       = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
-	$content     = isset( $attributes['content'] ) ? sanitize_text_field( $attributes['content'] ) : '';
+	$content     = isset( $attributes['content'] ) ? wp_kses_post( $attributes['content'] ) : '';
+	$color       = isset( $attributes['color'] ) ? sanitize_text_field( $attributes['color'] ) : '';
 	$output      = '';
 	$style       = '';
 
@@ -92,30 +101,34 @@ function olympus_google_fonts_block_render( $attributes ) {
 		unset( $variants[0] );
 		$variants_for_url = join( array_keys( $variants ), ',' );
 
-		wp_enqueue_style( 'google-font-' . $font_id, esc_url( 'https://fonts.googleapis.com/css?family=' . $font_family . ':' . $variants_for_url ), array(), OGF_VERSION );
+		wp_enqueue_style( 'google-font-' . $font_id, esc_url( 'https://fonts.googleapis.com/css?display=swap&family=' . $font_family . ':' . $variants_for_url ), array(), OGF_VERSION );
 
 		$style = "font-family: {$font_family};";
-
-		if ( $variant && 'regular' !== $variant ) {
-			$style .= "font-weight: {$variant};";
-		}
-
-		if ( $font_size ) {
-			$style .= "font-size: {$font_size}px;";
-		}
-
-		if ( $line_height ) {
-			$style .= "line-height: {$line_height};";
-		}
-
-		if ( $align ) {
-			$style .= "text-align: {$align};";
-		}
 	}
 
-	$output .= '<p class="google-fonts-blocks" style="' . $style . '">';
+	if ( $variant && 'regular' !== $variant ) {
+		$style .= "font-weight: {$variant};";
+	}
+
+	if ( $font_size ) {
+		$style .= "font-size: {$font_size}px;";
+	}
+
+	if ( $line_height ) {
+		$style .= "line-height: {$line_height};";
+	}
+
+	if ( $align ) {
+		$style .= "text-align: {$align};";
+	}
+
+	if ( $color ) {
+		$style .= "color: {$color};";
+	}
+
+	$output .= '<' . $blockType . ' class="google-fonts-blocks" style="' . $style . '">';
 	$output .= $content;
-	$output .= '</p>';
+	$output .= '</' . $blockType . '>';
 
 	return $output;
 }

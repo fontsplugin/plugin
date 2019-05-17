@@ -5,7 +5,7 @@ import fontsJson from './fonts.json';
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { SelectControl, RangeControl, PanelBody } = wp.components;
-const { RichText, InspectorControls, BlockControls, AlignmentToolbar } = wp.editor;
+const { RichText, InspectorControls, BlockControls, AlignmentToolbar, PanelColorSettings } = wp.editor;
 
 class GoogleFontsBlock extends Component {
 
@@ -107,7 +107,7 @@ class GoogleFontsBlock extends Component {
 
 	render() {
 		const { attributes, setAttributes } = this.props;
-		const { fontID, content, align, variant, fontSize, lineHeight } = attributes;
+		const { fontID, content, align, variant, fontSize, lineHeight, color, blockType } = attributes;
 
 		const fontOptions = this.getFontsForSelect();
 		fontOptions.unshift( { label: '- Select Font -', value: '' } );
@@ -119,40 +119,63 @@ class GoogleFontsBlock extends Component {
 			<InspectorControls>
 				<PanelBody title={ __( 'Font Settings', 'olympus-google-fonts' ) }>
 					<SelectControl
+						label={ __( 'Block Type', 'olympus-google-fonts' ) }
+						type="string"
+						value={ blockType }
+						options={ [
+							{ label: 'Paragraph', value: 'p' },
+							{ label: 'H1', value: 'h1' },
+							{ label: 'H2', value: 'h2' },
+							{ label: 'H3', value: 'h3' },
+							{ label: 'H4', value: 'h4' },
+							{ label: 'H5', value: 'h5' },
+							{ label: 'H6', value: 'h6' },
+							{ label: 'Span', value: 'span' },
+						] }
+						onChange={ ( value ) => setAttributes( { blockType: value } ) }
+					/>
+					<SelectControl
 						label={ __( 'Font', 'olympus-google-fonts' ) }
 						type="string"
 						value={ fontID }
 						options={ fontOptions }
 						onChange={ ( value ) => setAttributes( { fontID: value } ) }
 					/>
-					{ fontID && (
-						<Fragment>
-							<SelectControl
-								label={ __( 'Font Variant', 'olympus-google-fonts' ) }
-								type="string"
-								value={ variant }
-								options={ variantOptions }
-								onChange={ ( value ) => setAttributes( { variant: value } ) }
-							/>
-							<RangeControl
-								label={ __( 'Font Size', 'olympus-google-fonts' ) }
-								value={ fontSize }
-								onChange={ ( value ) => setAttributes( { fontSize: value } ) }
-								allowReset={ true }
-								min="10"
-								max="50"
-							/>
-							<RangeControl
-								label={ __( 'Line Height', 'olympus-google-fonts' ) }
-								value={ lineHeight }
-								onChange={ ( value ) => setAttributes( { lineHeight: value } ) }
-								allowReset={ true }
-								min="1"
-								max="3"
-								step="0.1"
-							/>
-						</Fragment>
-					) }
+					<SelectControl
+						label={ __( 'Font Variant', 'olympus-google-fonts' ) }
+						type="string"
+						value={ variant }
+						options={ variantOptions }
+						onChange={ ( value ) => setAttributes( { variant: value } ) }
+					/>
+					<RangeControl
+						label={ __( 'Font Size', 'olympus-google-fonts' ) }
+						value={ fontSize }
+						onChange={ ( value ) => setAttributes( { fontSize: value } ) }
+						allowReset={ true }
+						min="10"
+						max="50"
+					/>
+					<RangeControl
+						label={ __( 'Line Height', 'olympus-google-fonts' ) }
+						value={ lineHeight }
+						onChange={ ( value ) => setAttributes( { lineHeight: value } ) }
+						allowReset={ true }
+						min="1"
+						max="3"
+						step="0.1"
+					/>
+					<PanelColorSettings
+						title={ __( 'Color Settings', 'olympus-google-fonts' ) }
+						colorSettings={ [
+							{
+								value: attributes.color,
+								onChange: ( value ) => setAttributes( { color: value } ),
+								label: __( 'Text Color', 'olympus-google-fonts' ),
+							},
+						] }
+					>
+					</PanelColorSettings>
 				</PanelBody>
 			</InspectorControls>
 		);
@@ -167,7 +190,7 @@ class GoogleFontsBlock extends Component {
 					/>
 				</BlockControls>
 				<RichText
-					tagName="p"
+					tagName={ blockType || 'p' }
 					value={ content }
 					onChange={ ( value ) => setAttributes( { content: value } ) }
 					style={ {
@@ -176,6 +199,7 @@ class GoogleFontsBlock extends Component {
 						fontFamily: fontID.replace( /\+/g, ' ' ),
 						fontWeight: variant,
 						lineHeight: lineHeight,
+						color: color
 					} }
 					placeholder={ __( 'Add some content...', 'olympus-google-fonts' ) }
 					formattingControls={ [ 'italic', 'link' ] }

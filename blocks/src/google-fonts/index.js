@@ -3,6 +3,7 @@
  */
 
 import edit from './edit';
+import transforms from './transforms';
 
 const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
@@ -15,7 +16,7 @@ registerBlockType( 'olympus-google-fonts/google-fonts', {
 		__( 'Fonts', 'olympus-google-fonts' ),
 		__( 'Heading', 'olympus-google-fonts' ),
 	],
-
+	transforms,
 	edit,
 
 	save: function() {
