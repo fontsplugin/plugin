@@ -302,12 +302,3 @@ new OGF_Notifications(
 		'type'       => 'review',
 	)
 );
-
-new OGF_Notifications(
-	array(
-		'slug'       => 'ogf_addon',
-		'name'       => __( 'Host Google Fonts Locally', 'olympus-google-fonts' ),
-		'time_limit' => DAY_IN_SECONDS,
-		'type'       => 'addon',
-	)
-);

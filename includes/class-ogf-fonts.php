@@ -182,6 +182,7 @@ class OGF_Fonts {
 			$query_args = array(
 				'family' => implode( '|', $families ),
 				'subset' => implode( ',', $subsets ),
+				'display' => 'swap',
 			);
 
 			return add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );

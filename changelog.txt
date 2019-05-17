@@ -1,3 +1,10 @@
+= 1.7.4 =
+
+* Transform core paragraph and heading blocks into "Google Fonts Blocks".
+* Add color option to "Google Fonts Block".
+* Add Block Type option to "Google Fonts Block".
+* Allow text customization in blocks even when a font is not selected.
+
 = 1.7.3 =
 
 * Compatibility fix for 'Local Hosting' addon.
