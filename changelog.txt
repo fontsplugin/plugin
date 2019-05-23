@@ -1,5 +1,10 @@
 = 1.7.4 =
 
+* Fix font-display: swap in Gutenberg Block.
+* Improve compatibility with MailOptin.
+
+= 1.7.4 =
+
 * Transform core paragraph and heading blocks into "Google Fonts Blocks".
 * Add color option to "Google Fonts Block".
 * Add Block Type option to "Google Fonts Block".

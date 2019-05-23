@@ -180,8 +180,8 @@ class OGF_Fonts {
 		}
 
 			$query_args = array(
-				'family' => implode( '|', $families ),
-				'subset' => implode( ',', $subsets ),
+				'family'  => implode( '|', $families ),
+				'subset'  => implode( ',', $subsets ),
 				'display' => 'swap',
 			);
 

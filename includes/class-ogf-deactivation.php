@@ -45,7 +45,7 @@ class OGF_Deactivation {
 	 * @param  $string $email WordPress email address.
 	 */
 	public function ogf_mail_from_email( $email ) {
-		return 'hello@fontsplugin.com';
+		return 'team@fontsplugin.com';
 	}
 
 	/**
@@ -65,6 +65,7 @@ class OGF_Deactivation {
 		$current_user = wp_get_current_user();
 		$url          = site_url();
 		$user         = $current_user->user_email;
+		$theme        = wp_get_theme();
 		$reason       = ( isset( $_POST['reason'] ) ? wp_unslash( $_POST['reason'] ) : '' );
 		$explanation  = ( isset( $_POST['explanation'] ) ? wp_unslash( $_POST['explanation'] ) : '' );
 		$anon         = ( isset( $_POST['anon'] ) ? wp_unslash( $_POST['anon'] ) : '' );
@@ -89,6 +90,7 @@ class OGF_Deactivation {
 						'<p>Version: ' . OGF_VERSION . '</p>' .
 						'<p>URL: ' . esc_url( $url ) . '</p>' .
 						'<p>User: ' . sanitize_email( $user ) . '</p>' .
+						'<p>Theme: ' . esc_attr( $theme->get( 'Name' ) ) . '</p>' .
 						'<p>Reason: ' . esc_html( $reason ) . '</p>' .
 						'<p>Explanation: ' . esc_html( $explanation ) . '</p>' .
 						'</html></body>';

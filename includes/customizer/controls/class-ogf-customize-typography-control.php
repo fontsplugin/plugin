@@ -96,7 +96,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 		<ul>
 
-		<# if ( data.family && ogf_font_array ) { #>
+		<# if ( data.family && typeof ogf_font_array != 'undefined' ) { #>
 
 			<li class="typography-font-family">
 
