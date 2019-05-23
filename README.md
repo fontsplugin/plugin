@@ -13,6 +13,8 @@ Once you've found a combination you love, press save and make the changes public
 
 The full Google Fonts library can be found here - https://fonts.google.com
 
+The premium version of this plugin can be found here - https://fontsplugin.com
+
 Getting Started
 ---------------
 
