@@ -95,11 +95,11 @@ function olympus_google_fonts_block_render( $attributes ) {
 
 		$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
 		$font_id     = str_replace( '+', '-', strtolower( $font_id ) );
-
-		$fonts    = ogf_fonts_array();
-		$variants = $fonts[ $font_id ]['variants'];
+		$fonts       = ogf_fonts_array();
+		$variants    = $fonts[ $font_id ]['variants'];
 		unset( $variants[0] );
-		$variants_for_url = join( array_keys( esc_attr( $variants ) ), ',' );
+
+		$variants_for_url = join( array_keys( $variants ), ',' );
 
 		wp_enqueue_style( 'google-font-' . $font_id, 'https://fonts.googleapis.com/css?family=' . $font_family . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
 

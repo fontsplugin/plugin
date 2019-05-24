@@ -1,4 +1,8 @@
-= 1.7.4 =
+= 1.7.6 =
+
+* Fix error in Gutenberg block.
+
+= 1.7.6 =
 
 * Fix font-display: swap in Gutenberg Block.
 * Improve compatibility with MailOptin.
