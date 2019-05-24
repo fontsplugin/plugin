@@ -1,8 +1,9 @@
 = 1.7.6 =
 
+* Add global font choices to block editor.
 * Fix error in Gutenberg block.
 
-= 1.7.6 =
+= 1.7.5 =
 
 * Fix font-display: swap in Gutenberg Block.
 * Improve compatibility with MailOptin.

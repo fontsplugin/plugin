@@ -48,6 +48,9 @@ class Olympus_Google_Fonts {
 		include OGF_DIR_PATH . 'includes/customizer/settings.php';
 		include OGF_DIR_PATH . 'includes/customizer/output-css.php';
 
+		// Required files for the Gutenberg editor.
+		include OGF_DIR_PATH . 'includes/gutenberg/output-css.php';
+
 		// Notifications class.
 		include OGF_DIR_PATH . 'includes/class-ogf-notifications.php';
 
