@@ -1,4 +1,4 @@
-=== Google Fonts for WordPress ===
+=== Google Fonts Typography ===
 Contributors: DannyCooper, googlefonts
 Tags: google, fonts, google fonts, google fonts for wordpress, typography
 Donate link: https://fontsplugin.com/#pricing
@@ -7,7 +7,7 @@ Tested up to: 5.2
 License: GPLv2 or later
 Stable tag: 1.7.6
 
-The easiest to use Google Fonts Plugin. No coding required. 870+ font choices.
+The easiest to use Google Fonts Typography Plugin. No coding required. 870+ font choices.
 
 == Description ==
 The [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_campaign=intro) library currently contains 877 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
