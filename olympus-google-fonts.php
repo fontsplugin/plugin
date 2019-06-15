@@ -2,7 +2,7 @@
 /**
  * Google Fonts Typography
  *
- * Plugin Name: Google Fonts for WordPress
+ * Plugin Name: Google Fonts Typography
  * Plugin URI:  https://wordpress.org/plugins/olympus-google-fonts/
  * Description: The easiest to use Google Fonts typography plugin. No coding required. 870+ font choices.
  * Version:     1.8.0
