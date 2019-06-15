@@ -90,7 +90,7 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_debugging',
 		array(
 			'title'    => esc_html__( 'Debugging', 'olympus-google-fonts' ),
-			'priority' => '7',
+			'priority' => '8',
 			'panel'    => 'ogf_google_fonts',
 		)
 	);

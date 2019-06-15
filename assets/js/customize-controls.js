@@ -2,7 +2,7 @@
 
 /* global ogf_font_array */
 ( function( api ) {
-	api.controlConstructor.typography = api.Control.extend(
+	api.controlConstructor[ 'typography' ] = api.Control.extend(
 		{
 			ready: function() {
 				const control = this;
@@ -191,3 +191,19 @@ jQuery( document ).ready( function() {
 		}
 	);
 } );
+
+/* === Multiple Fonts Control === */
+( function( api ) {
+	api.controlConstructor[ 'typography-multiselect' ] = api.Control.extend( {
+		ready: function() {
+			const control = this;
+			jQuery( 'select', control.container ).change(
+				function() {
+					let selectValue = jQuery( this ).val();
+					selectValue = ( null === selectValue ) ? [] : selectValue;
+					control.setting.set( selectValue );
+				}
+			);
+		},
+	} );
+}( wp.customize ) );

@@ -57,6 +57,12 @@ class OGF_Fonts {
 			}
 		}
 
+		$load_fonts_css = get_theme_mod( 'ogf_load_fonts', array() );
+
+		foreach ( $load_fonts_css as $key => $value ) {
+			$this->choices[] = $value;
+		}
+
 	}
 
 	/**

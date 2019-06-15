@@ -108,7 +108,6 @@ class Olympus_Google_Fonts {
 	 * Register control scripts/styles.
 	 */
 	public function customize_controls_enqueue() {
-
 		wp_enqueue_script( 'ogf-customize-controls', esc_url( OGF_DIR_URL . 'assets/js/customize-controls.js' ), array( 'customize-controls' ), OGF_VERSION, true );
 		wp_enqueue_style( 'ogf-customize-controls', esc_url( OGF_DIR_URL . 'assets/css/customize-controls.css' ), array(), OGF_VERSION );
 
