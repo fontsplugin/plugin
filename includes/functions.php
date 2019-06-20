@@ -38,13 +38,13 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Base Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your content.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_basic',
-			'selectors'   => 'body',
+			'selectors'   => 'body, #content, .entry-content, .post-content, .page-content, .post-excerpt, .entry-summary, .entry-excerpt, .widget-area, .widget, .sidebar, #sidebar, footer, .footer, #footer, .site-footer',
 		),
 		'ogf_headings' => array(
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_basic',
-			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, .entry-title, .entry-title a, h1, h2, h3, h4, h5, h6',
+			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, .entry-title, .entry-title a, h1, h2, h3, h4, h5, h6, .widget-title',
 		),
 		'ogf_inputs' => array(
 			'label'       => esc_html__( 'Buttons and Inputs Typography', 'olympus-google-fonts' ),

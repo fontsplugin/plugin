@@ -1,5 +1,9 @@
 = 1.8.1 =
 
+* Further improve theme compatibility for basic settings
+
+= 1.8.1 =
+
 * Fix for "Invalid argument supplied for foreach()" error
 
 = 1.8.0 =
