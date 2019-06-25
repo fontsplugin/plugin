@@ -6,7 +6,8 @@
 #customize-theme-controls #sub-accordion-section-ogf_advanced__content,
 #customize-theme-controls #sub-accordion-section-ogf_advanced__sidebar,
 #customize-theme-controls #sub-accordion-section-ogf_advanced__footer,
-#customize-theme-controls #sub-accordion-section-ogf_advanced__custom {
+#customize-theme-controls #sub-accordion-section-ogf_advanced__custom,
+#customize-theme-controls #sub-accordion-section-ogf_advanced__css {
 	overflow: visible;
 }
 

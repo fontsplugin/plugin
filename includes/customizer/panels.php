@@ -153,5 +153,13 @@ function ogf_panels_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_section(
+		'ogf_advanced__css',
+		array(
+			'title' => esc_html__( 'Load Fonts for CSS', 'olympus-google-fonts' ),
+			'panel' => 'ogf_advanced',
+		)
+	);
+
 }
 add_action( 'customize_register', 'ogf_panels_customize_register' );

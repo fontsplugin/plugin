@@ -55,8 +55,7 @@ function ogf_customize_register( $wp_customize ) {
 			array(
 				'label'       => esc_html__( 'Load Fonts for CSS', 'olympus-google-fonts' ),
 				'description' => esc_html__( 'Load fonts but don\'t automatically assign them to an element.', 'olympus-google-fonts' ),
-				'section'     => 'ogf_basic',
-				'priority'    => '90',
+				'section'     => 'ogf_advanced__css',
 			)
 		)
 	);
