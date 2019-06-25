@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.2
 License: GPLv2 or later
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 
 The easiest to use Google Fonts Typography Plugin. No coding required. 870+ font choices.
 
@@ -47,6 +47,7 @@ The Google Fonts for WordPress plugin will work with all WordPress themes and ha
 * TwentyFifteen
 * TwentySixteen
 * TwentySeventeen
+* ThemeGrill
 
 ### Further Reading
 
