@@ -28,7 +28,7 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 		private $message;
 
 		/**
-		 * Tyle.
+		 * Type.
 		 *
 		 * @var string $type
 		 */
@@ -106,6 +106,6 @@ $message = sprintf(
 );
 
 /*
-* Instantiate the OGF_Welcome class.
-*/
+ * Instantiate the OGF_Welcome class.
+ */
 new OGF_Welcome( 'ogf-welcome', $message, 'success' );

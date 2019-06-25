@@ -1,6 +1,6 @@
 'use strict';
 
-/* global ogf_font_array */
+/* global ogf_font_array, ajaxurl, fontsReset, location */
 ( function( api ) {
 	api.controlConstructor[ 'typography' ] = api.Control.extend(
 		{
@@ -175,6 +175,31 @@
 			},
 		}
 	);
+
+	wp.customize.control( 'ogf_reset_fonts', function( control ) {
+		control.container.find( '.button' ).on( 'click', function( event ) {
+			event.preventDefault();
+
+			const data = {
+				wp_customize: 'on',
+				action: 'customizer_reset',
+				security: fontsReset.nonce,
+			};
+
+			const confirmReset = confirm( fontsReset.confirm );
+
+			if ( ! confirmReset ) {
+				return;
+			}
+
+			jQuery( this ).attr( 'disabled', 'disabled' );
+
+			jQuery.post( ajaxurl, data, function( result ) {
+				wp.customize.state( 'saved' ).set( true );
+				location.reload();
+			} );
+		} );
+	} );
 }( wp.customize ) );
 
 /* === Checkbox Multiple Control === */

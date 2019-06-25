@@ -60,6 +60,9 @@ class Olympus_Google_Fonts {
 		// Deactivation class.
 		require OGF_DIR_PATH . 'includes/class-ogf-deactivation.php';
 
+		// Reset class.
+		require OGF_DIR_PATH . 'includes/class-ogf-reset.php';
+
 	}
 
 	/**
@@ -113,7 +116,6 @@ class Olympus_Google_Fonts {
 
 		wp_localize_script( 'ogf-customize-controls', 'ogf_font_array', ogf_fonts_array() );
 		wp_localize_script( 'ogf-customize-controls', 'ogf_system_fonts', ogf_system_fonts() );
-
 	}
 
 	/**
