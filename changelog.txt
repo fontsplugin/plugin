@@ -1,3 +1,7 @@
+= 1.8.4 =
+
+* Add compatibility pack for ThemeIsle themes.
+
 = 1.8.3 =
 
 * Move 'CSS' setting to 'Advanced' panel

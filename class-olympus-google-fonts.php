@@ -63,6 +63,9 @@ class Olympus_Google_Fonts {
 		// Reset class.
 		require OGF_DIR_PATH . 'includes/class-ogf-reset.php';
 
+		// Classic Editor class.
+		require OGF_DIR_PATH . 'includes/class-ogf-classic-editor.php';
+
 	}
 
 	/**
