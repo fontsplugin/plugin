@@ -247,7 +247,7 @@ function ogf_system_fonts() {
 		'futura' => array(
 			'id'    => 'futura',
 			'label' => esc_html__( 'Futura', 'olympus-google-fonts' ),
-			'stack' => 'Futura, Trebuchet MS, Arial, sans-serif; ',
+			'stack' => 'Futura, Trebuchet MS, Arial, sans-serif',
 		),
 		'lucida-grande' => array(
 			'id'    => 'lucida-grande',
