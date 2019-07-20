@@ -244,6 +244,11 @@ function ogf_system_fonts() {
 			'label' => esc_html__( 'Georgia', 'olympus-google-fonts' ),
 			'stack' => 'Georgia, Times, Times New Roman, serif',
 		),
+		'futura' => array(
+			'id'    => 'futura',
+			'label' => esc_html__( 'Futura', 'olympus-google-fonts' ),
+			'stack' => 'Futura, Trebuchet MS, Arial, sans-serif; ',
+		),
 		'lucida-grande' => array(
 			'id'    => 'lucida-grande',
 			'label' => esc_html__( 'Lucida Grande', 'olympus-google-fonts' ),
