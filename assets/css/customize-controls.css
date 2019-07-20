@@ -11,6 +11,10 @@
 	overflow: visible;
 }
 
+#accordion-panel-ogf_google_fonts .accordion-section-title {
+	padding-left: 42px;
+}
+
 #customize-control-ogf_headings_typography .typography-font-size,
 #customize-control-ogf_headings_typography .typography-line-height {
 	display: none;
@@ -649,6 +653,9 @@
   -ms-transform: translateX(-100%);
   transform: translateX(-100%);
 }
+
+/** Repeater Control **/
+
 .repeater-item {
 	background: #ffffff;
 	padding: 20px;
@@ -677,9 +684,8 @@
 	float: right
 }
 
-/* ==========================================================================
-   Slider
-   ========================================================================== */
+/** Range Slider **/
+
 .slider-custom-control {
 	margin-bottom: 30px;
 }
@@ -788,6 +794,8 @@
 	color: #a7a7a7;
 }
 
+/** Upsell Button **/
+
 .ogf-upsell {
 	background: white;
 	padding: 25px;
@@ -803,4 +811,14 @@
 
 .upsell__button {
 	margin-top: 1em !important
+}
+
+/** Customizer Icon **/
+
+#accordion-panel-ogf_google_fonts .accordion-section-title,
+#accordion-panel-ogf_google_fonts .accordion-section-title:hover {
+	background-image: url('../images/fontsplugin-icon.png') !important;
+	background-repeat: no-repeat !important;
+	background-size: 16px !important;
+	background-position: 15px 50% !important;
 }

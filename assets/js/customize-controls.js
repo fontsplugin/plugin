@@ -85,7 +85,7 @@
 				);
 
 				// Initialize chosen.js
-				jQuery( '.ogf-select' ).chosen( { width: '85%' } );
+				jQuery( '.ogf-select', control.container ).chosen( { width: '85%' } );
 
 				// Set our slider defaults and initialise the slider
 				jQuery( '.slider-custom-control' ).each( function() {
@@ -222,6 +222,8 @@ jQuery( document ).ready( function() {
 	api.controlConstructor[ 'typography-multiselect' ] = api.Control.extend( {
 		ready: function() {
 			const control = this;
+			// Initialize chosen.js
+			jQuery( '.ogf-select', control.container ).chosen( { width: '85%' } );
 			jQuery( 'select', control.container ).change(
 				function() {
 					let selectValue = jQuery( this ).val();

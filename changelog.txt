@@ -1,3 +1,9 @@
+= 1.9.0 =
+
+ * Update available fonts list
+ * Add 'Classic Editor' support
+ * Add Futura font
+
 = 1.8.4 =
 
  * Add compatibility pack for ThemeIsle themes.
