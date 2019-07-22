@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Google Fonts Typography plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Fonts Typography 1.8.3\n"
+"Project-Id-Version: Google Fonts Typography 1.9.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/olympus-google-fonts\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-06-25T16:30:10+00:00\n"
+"POT-Creation-Date: 2019-07-22T09:15:54+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: olympus-google-fonts\n"
@@ -34,11 +34,11 @@ msgstr ""
 msgid "https://fontsplugin.com/?utm_source=wporg&utm_campaign=heading"
 msgstr ""
 
-#: class-olympus-google-fonts.php:145
+#: class-olympus-google-fonts.php:148
 msgid "Settings"
 msgstr ""
 
-#: class-olympus-google-fonts.php:150
+#: class-olympus-google-fonts.php:153
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -246,26 +246,30 @@ msgid "Georgia"
 msgstr ""
 
 #: includes/functions.php:249
-msgid "Lucida Grande"
+msgid "Futura"
 msgstr ""
 
 #: includes/functions.php:254
-msgid "Tahoma"
+msgid "Lucida Grande"
 msgstr ""
 
 #: includes/functions.php:259
-msgid "Times New Roman"
+msgid "Tahoma"
 msgstr ""
 
 #: includes/functions.php:264
-msgid "Trebuchet MS"
+msgid "Times New Roman"
 msgstr ""
 
 #: includes/functions.php:269
-msgid "Palatino"
+msgid "Trebuchet MS"
 msgstr ""
 
 #: includes/functions.php:274
+msgid "Palatino"
+msgstr ""
+
+#: includes/functions.php:279
 msgid "Verdana"
 msgstr ""
 
