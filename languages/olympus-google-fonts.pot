@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Google Fonts Typography plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Fonts Typography 1.9.0\n"
+"Project-Id-Version: Google Fonts Typography 1.9.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/olympus-google-fonts\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-07-22T09:15:54+00:00\n"
+"POT-Creation-Date: 2019-07-23T19:35:15+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: olympus-google-fonts\n"
@@ -365,8 +365,7 @@ msgid "Custom Elements"
 msgstr ""
 
 #: includes/customizer/settings.php:56
-#: includes/customizer/panels.php:159
-msgid "Load Fonts for CSS"
+msgid "Load Fonts Only"
 msgstr ""
 
 #: includes/customizer/settings.php:57
@@ -438,6 +437,10 @@ msgstr ""
 
 #: includes/customizer/panels.php:151
 msgid "Footer"
+msgstr ""
+
+#: includes/customizer/panels.php:159
+msgid "Load Fonts for CSS"
 msgstr ""
 
 #: includes/customizer/controls/class-ogf-customize-repeater-control.php:83

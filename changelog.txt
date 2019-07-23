@@ -1,3 +1,7 @@
+= 1.9.1 =
+
+ * Fix conflict with TinyMCE Advanced plugin
+
 = 1.9.0 =
 
  * Update available fonts list

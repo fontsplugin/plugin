@@ -53,7 +53,7 @@ function ogf_customize_register( $wp_customize ) {
 			$wp_customize,
 			'ogf_load_fonts',
 			array(
-				'label'       => esc_html__( 'Load Fonts for CSS', 'olympus-google-fonts' ),
+				'label'       => esc_html__( 'Load Fonts Only', 'olympus-google-fonts' ),
 				'description' => esc_html__( 'Load fonts but don\'t automatically assign them to an element.', 'olympus-google-fonts' ),
 				'section'     => 'ogf_advanced__css',
 			)
