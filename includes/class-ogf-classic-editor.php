@@ -71,17 +71,18 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		/**
 		 * Add fonts to the classic editor list.
 		 *
-		 * @param array $default The default fonts.
+		 * @param array $old_default The default fonts.
 		 */
-		public function tinymce_add_fonts( $default ) {
-			$default = '';
+		public function tinymce_add_fonts( $old_default ) {
+			$new_default = '';
 			$choices = $this->ogf_fonts->choices;
 			foreach ( $choices as $font ) {
 				if ( ! ogf_is_system_font( $font ) ) {
-					$default .= $this->ogf_fonts->get_font_name( $font ) . '=' . $this->ogf_fonts->get_font_name( $font ) . ';';
+					$new_default .= $this->ogf_fonts->get_font_name( $font ) . '=' . $this->ogf_fonts->get_font_name( $font ) . ';';
 				}
 			}
-			return $default;
+			$new_default .= $old_default;
+			return $new_default;
 		}
 
 		/**

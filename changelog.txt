@@ -1,12 +1,16 @@
+= 1.9.2 =
+
+ * Add system fonts to Classic Editor interface.
+
 = 1.9.1 =
 
- * Fix conflict with TinyMCE Advanced plugin
+ * Fix conflict with TinyMCE Advanced plugin.
 
 = 1.9.0 =
 
- * Update available fonts list
- * Add 'Classic Editor' support
- * Add Futura font
+ * Update available fonts list.
+ * Add 'Classic Editor' support.
+ * Add Futura font.
 
 = 1.8.4 =
 
@@ -14,21 +18,21 @@
 
 = 1.8.3 =
 
-* Move 'CSS' setting to 'Advanced' panel
-* Add 'Reset' option to 'Debugging' section
+* Move 'CSS' setting to 'Advanced' panel.
+* Add 'Reset' option to 'Debugging' section.
 
 = 1.8.2 =
 
-* Further improve theme compatibility for basic settings
+* Further improve theme compatibility for basic settings.
 
 = 1.8.1 =
 
-* Fix for "Invalid argument supplied for foreach()" error
+* Fix for "Invalid argument supplied for foreach()" error.
 
 = 1.8.0 =
 
 * Add 'Load Fonts for CSS' option.
-* Add first implementation of compatibility filter (ThemeGrill)
+* Add first implementation of compatibility filter (ThemeGrill).
 
 = 1.7.6 =
 
