@@ -1,13 +1,13 @@
 === Google Fonts Typography ===
 Contributors: DannyCooper, googlefonts
-Tags: google, fonts, google fonts, google fonts for wordpress, typography
+Tags: google, fonts, google fonts, typography, elementor, beaver builder
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.2
 License: GPLv2 or later
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 
-The easiest to use Google Fonts Typography Plugin. No coding required. 870+ font choices.
+The easiest to use Google Fonts Typography Plugin. No coding required. 900+ font choices.
 
 == Description ==
 The [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_campaign=intro) library currently contains 877 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
@@ -23,7 +23,7 @@ The full Google Fonts library can be found here - [Google Fonts](https://fonts.g
 = Plugin Features =
 
 * **Live Customizer Preview:** Choose and preview fonts in real time using the WordPress Customizer.
-* **Over 870+ Google Fonts** to choose from.
+* **Over 900+ Google Fonts** to choose from.
 * Works with any WordPress Theme. No coding required.
 * Easy One-Click Updates.
 * Translation Ready.
@@ -57,6 +57,9 @@ For more info on Google Fonts for Wordpress, check out the following:
 * [Documentation](https://fontsplugin.com/docs/?utm_source=wporg)
 * [Font Combinations](https://fontsplugin.com/font-combinations/?utm_source=wporg)
 * [How to Use Google Fonts in WordPress](https://fontsplugin.com/wordpress-google-fonts/?utm_source=wporg)
+* [Google Fonts in Beaver Builder](https://docs.fontsplugin.com/integrations/beaver-builder)
+* [Google Fonts in Elementor](https://docs.fontsplugin.com/integrations/elementor)
+* [Google Fonts in WPBakery](https://docs.fontsplugin.com/integrations/wpbakery)
 
 = Bugs =
 If you find an issue with Google Fonts for WordPress, let us know [here](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)!
@@ -64,7 +67,7 @@ If you find an issue with Google Fonts for WordPress, let us know [here](https:/
 = Google Fonts Gutenberg Block =
 Add some flair to your content with our new Gutenberg block.
 
-* All 870+ fonts available in the editor
+* All 900+ fonts available in the editor
 * Font size, variant and line-height settings
 * Text-align: left, right or center.
 

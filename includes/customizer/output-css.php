@@ -31,7 +31,7 @@ function ogf_output_css() {
 }
 
 // Output custom CSS to live site.
-add_action( 'wp_head', 'ogf_output_css' );
+add_action( 'wp_head', 'ogf_output_css', 1000 );
 
 /**
  * Helper function to build the CSS styles.

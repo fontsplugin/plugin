@@ -1,3 +1,7 @@
+= 1.9.3 =
+
+ * Add custom CSS later in wp_head.
+
 = 1.9.2 =
 
  * Add system fonts to Classic Editor interface.
