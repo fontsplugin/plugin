@@ -57,7 +57,6 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		public function __construct( $args ) {
 			$this->slug         = $args['slug'];
 			$this->name         = $args['name'];
-			$this->type         = $args['type'];
 			$this->date_option  = 'ogf_activation_date';
 			$this->nobug_option = $this->slug . '_no_bug';
 			if ( isset( $args['time_limit'] ) ) {
@@ -78,27 +77,21 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		public function seconds_to_words( $seconds ) {
 			// Get the years.
 			$years = ( intval( $seconds ) / YEAR_IN_SECONDS ) % 100;
-			if ( $years > 1 ) {
+			if ( $years > 0 ) {
 				/* translators: Number of years */
-				return sprintf( __( '%s years', 'olympus-google-fonts' ), $years );
-			} elseif ( $years > 0 ) {
-				return __( 'a year', 'olympus-google-fonts' );
+				return sprintf( _n( 'a year', '%d years', $years, 'olympus-google-fonts' ), $years );
 			}
 			// Get the weeks.
 			$weeks = ( intval( $seconds ) / WEEK_IN_SECONDS ) % 52;
-			if ( $weeks > 1 ) {
+			if ( $weeks > 0 ) {
 				/* translators: Number of weeks */
-				return sprintf( __( '%s weeks', 'olympus-google-fonts' ), $weeks );
-			} elseif ( $weeks > 0 ) {
-				return __( 'a week', 'olympus-google-fonts' );
+				return sprintf( _n( 'a week', '%d weeks', $weeks, 'olympus-google-fonts' ), $weeks );
 			}
 			// Get the days.
 			$days = ( intval( $seconds ) / DAY_IN_SECONDS ) % 7;
-			if ( $days > 1 ) {
+			if ( $days > 0 ) {
 				/* translators: Number of days */
-				return sprintf( __( '%s days', 'olympus-google-fonts' ), $days );
-			} elseif ( $days > 0 ) {
-				return __( 'a day', 'olympus-google-fonts' );
+				return sprintf( _n( 'a day', '%d days', $days, 'olympus-google-fonts' ), $days );
 			}
 		}
 
@@ -209,11 +202,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 			}
 			</style>
 			<?php
-			if ( $this->type === 'review' ) {
-				$this->review();
-			} elseif ( $this->type === 'addon' ) {
-				$this->addon();
-			}
+			$this->review();
 		}
 
 		/**
@@ -247,37 +236,6 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		}
 
 		/**
-		 * Output review content.
-		 */
-		public function addon() {
-			if ( is_plugin_active( 'host-google-fonts-locally/host-google-fonts-locally.php' ) ) {
-				return;
-			}
-			$no_bug_url = wp_nonce_url( admin_url( '?' . $this->nobug_option . '=true' ), 'ogf-notification-nounce' );
-			?>
-			<div class="notice updated ogf-notice">
-				<div class="ogf-notice-inner">
-					<div class="ogf-notice-icon">
-						<img src="https://ps.w.org/host-google-fonts-locally/assets/icon-256x256.jpg" alt="<?php echo esc_attr__( 'Host Google Fonts Locally', 'olympus-google-fonts' ); ?>" />
-					</div>
-					<div class="ogf-notice-content">
-						<h3><?php echo esc_html__( 'Speed Up Your Website!', 'olympus-google-fonts' ); ?></h3>
-						<p>
-							<?php
-							_e( 'Our latest <strong>free</strong> addon allows you to host Google Fonts locally.<br>This removes the requests to Google\'s servers and can improve page speed.', 'olympus-google-fonts' );
-							?>
-						</p>
-					</div>
-					<div class="ogf-install-now">
-						<?php printf( '<a href="%1$s" class="button button-primary ogf-install-button" target="_blank">%2$s</a>', esc_url( admin_url( 'plugin-install.php?s=local+google+fonts&tab=search&type=tag' ) ), esc_html__( 'Install Now', 'olympus-google-fonts' ) ); ?>
-						<a href="<?php echo esc_url( $no_bug_url ); ?>" class="no-thanks"><?php echo esc_html__( 'No thank you.', 'olympus-google-fonts' ); ?></a>
-					</div>
-				</div>
-			</div>
-			<?php
-		}
-
-		/**
 		 * Set the plugin to no longer bug users if user asks not to be.
 		 */
 		public function set_no_bug() {
@@ -299,6 +257,5 @@ new OGF_Notifications(
 		'slug'       => 'ogf',
 		'name'       => __( 'Google Fonts for WordPress', 'olympus-google-fonts' ),
 		'time_limit' => WEEK_IN_SECONDS,
-		'type'       => 'review',
 	)
 );
