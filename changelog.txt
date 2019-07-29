@@ -1,3 +1,7 @@
+= 1.9.4 =
+
+ * Improve i18n strings.
+
 = 1.9.3 =
 
  * Add custom CSS later in wp_head.
