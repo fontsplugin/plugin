@@ -1,3 +1,7 @@
+= 1.9.5 =
+
+ * Fix problem where font styles were overwriting the Gutenberg interface.
+
 = 1.9.4 =
 
  * Improve i18n strings.

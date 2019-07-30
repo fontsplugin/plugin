@@ -43,13 +43,10 @@ function ogf_gutenberg_output_css() {
 
 		$elements = array(
 			'ogf_body' => array(
-				'selectors' => '.editor-writing-flow, .editor-styles-wrapper p, .editor-styles-wrapper h3, #editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input',
+				'selectors' => '.editor-styles-wrapper p, .editor-styles-wrapper h3, #editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input',
 			),
 			'ogf_headings' => array(
 				'selectors' => '#editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input, .editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6',
-			),
-			'ogf_inputs' => array(
-				'selectors' => 'button, input, select, textarea',
 			),
 			'ogf_post_page_content' => array(
 				'selectors' => '.editor-styles-wrapper p',
