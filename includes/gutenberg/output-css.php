@@ -74,7 +74,7 @@ function ogf_gutenberg_output_css() {
 		$elements = apply_filters( 'ogf_gutenberg_elements', $elements );
 
 		foreach ( $elements as $id => $values ) {
-			ogf_generate_css( $values['selectors'], $id );
+			ogf_generate_css_gutenberg( $values['selectors'], $id );
 		}
 		?>
 	</style>
@@ -84,3 +84,90 @@ function ogf_gutenberg_output_css() {
 
 // Output custom CSS to live site.
 add_action( 'admin_head', 'ogf_gutenberg_output_css' );
+
+/**
+ * Helper function to build the CSS styles.
+ *
+ * @param string $selector    The CSS selector to apply the styles to.
+ * @param string $option_name The option name to pull from the database.
+ */
+function ogf_generate_css_gutenberg( $selector, $option_name ) {
+
+	$family      = get_theme_mod( $option_name . '_font', false );
+	$font_size   = get_theme_mod( $option_name . '_font_size', false );
+	$line_height = get_theme_mod( $option_name . '_line_height', false );
+	$weight      = get_theme_mod( $option_name . '_font_weight', false );
+	$style       = get_theme_mod( $option_name . '_font_style', false );
+	$color       = get_theme_mod( $option_name . '_font_color', false );
+
+	$return = '';
+
+	if ( ( $family !== 'default' && $family ) ||
+			 ( $line_height !== '0' && $line_height ) ||
+			 ( $weight !== '0' && $weight ) ||
+			 ( $style !== 'default' && $style ) ||
+			   $font_size ||
+			   $color ) {
+
+		$return .= $selector . ' {' . PHP_EOL;
+
+		// Return font-family CSS.
+		if ( false !== $family && 'default' !== $family ) {
+
+			$stack = ogf_build_font_stack( $family );
+
+			if ( ! empty( $stack ) ) {
+				$return .= sprintf(
+					'font-family: %s;' . PHP_EOL,
+					$stack
+				);
+			}
+		}
+
+		// Return font-size CSS.
+		if ( $font_size ) {
+			$return .= sprintf(
+				'font-size: %s;' . PHP_EOL,
+				floatval( $font_size ) . 'px'
+			);
+		}
+
+		// Return font line-height CSS.
+		if ( $line_height && '0' !== $line_height ) {
+			$return .= sprintf(
+				'line-height: %s;' . PHP_EOL,
+				floatval( $line_height )
+			);
+		}
+
+		// Return font-style CSS.
+		if ( $style && 'default' !== $style ) {
+			$return .= sprintf(
+				'font-style: %s;' . PHP_EOL,
+				esc_attr( $style )
+			);
+		}
+
+		// Return font-weight CSS.
+		if ( $weight && '0' !== $weight ) {
+			$return .= sprintf(
+				'font-weight: %s;' . PHP_EOL,
+				absint( $weight )
+			);
+		}
+
+		// Return font-color CSS.
+		if ( $color ) {
+			$return .= sprintf(
+				'color: %s;' . PHP_EOL,
+				esc_attr( $color )
+			);
+		}
+
+		$return .= ' }' . PHP_EOL;
+
+		echo wp_kses_post( $return );
+
+	}
+
+}
