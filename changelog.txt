@@ -1,6 +1,11 @@
+= 1.9.7 =
+
+ * Update Google Fonts list.
+ * Add dashboard news widget.
+
 = 1.9.6 =
 
-Add new fonts to Gutenberg.
+ * Add new fonts to Gutenberg.
 
 = 1.9.5 =
 

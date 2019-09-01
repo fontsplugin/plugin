@@ -66,6 +66,9 @@ class Olympus_Google_Fonts {
 		// Classic Editor class.
 		require OGF_DIR_PATH . 'includes/class-ogf-classic-editor.php';
 
+		// News widget.
+		require OGF_DIR_PATH . 'includes/class-ogf-dashboard-widget.php';
+
 	}
 
 	/**
