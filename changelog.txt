@@ -1,3 +1,7 @@
+= 1.9.8 =
+
+ * Add new selector for 'Advanced Settings' → 'Content Typography'
+
 = 1.9.7 =
 
  * Update Google Fonts list.
