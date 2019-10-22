@@ -5,7 +5,7 @@ jQuery( document ).ready(
 	function() {
 		'use strict';
 		const form =
-		'<form id="deactivation-form" method="post">' +
+		'<form id="ogf-deactivation-form" method="post">' +
 		'<h1>Help Us Do Better</h1>' +
 		'<p>We\'re sorry our Google Fonts plugin didn\'t work for you. Would you mind letting us know where we went wrong so we can fix it?</p>' +
 		'<ul class="reasons" style="padding: 0">' +
@@ -26,30 +26,30 @@ jQuery( document ).ready(
 		jQuery( form ).appendTo( jQuery( 'body' ) );
 		const deactivateLink = jQuery( '#the-list [data-slug="olympus-google-fonts"] .deactivate a' );
 
-		jQuery( '.reason' ).click(
+		jQuery( '#ogf-deactivation-form .reason' ).click(
 			function() {
-				jQuery( '.reasons textarea' ).hide();
+				jQuery( '#ogf-deactivation-form .reasons textarea' ).hide();
 				jQuery( this ).next( 'textarea' ).css( 'display', 'block' );
-				jQuery( '.button-deactivate' ).val( 'Submit & Deactivate' );
+				jQuery( '#ogf-deactivation-form .button-deactivate' ).val( 'Submit & Deactivate' );
 			}
 		);
 
 		deactivateLink.click(
 			function( e ) {
 				e.preventDefault();
-				jQuery( '.reasons textarea' ).hide();
-				jQuery.featherlight( '#deactivation-form' );
+				jQuery( '#ogf-deactivation-form .reasons textarea' ).hide();
+				jQuery.featherlight( '#ogf-deactivation-form' );
 			}
 		);
 
-		jQuery( '#deactivation-form .button-close' ).click(
+		jQuery( '#ogf-deactivation-form .button-close' ).click(
 			function( e ) {
 				e.preventDefault();
 				jQuery.featherlight.current().close();
 			}
 		);
 
-		jQuery( '.button-deactivate' ).click(
+		jQuery( '#ogf-deactivation-form .button-deactivate' ).click(
 			function() {
 				const anon = jQuery( '#deactivation-form .anonymous-feedback' ).is( ':checked' );
 				const reason = jQuery( '.reason input[type=radio]:checked' ).first();

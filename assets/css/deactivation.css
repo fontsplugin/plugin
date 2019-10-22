@@ -1,31 +1,31 @@
-#deactivation-form {
+#ogf-deactivation-form {
 	display: none
 }
 
-#deactivation-form textarea {
+#ogf-deactivation-form textarea {
 	display: block;
 	padding: 10px;
 	margin: 16px 25px 8px;
 	width: 75%;
 }
 
-#deactivation-form h1 {
+#ogf-deactivation-form h1 {
 	margin-top: 0;
 	font-size: 1.5em
 }
 
-#deactivation-form .bottom-row {
+#ogf-deactivation-form .bottom-row {
 	border-top: 1px solid #f1f1f1;
 	padding-top: 2em;
 	margin-top: 2em;
 }
 
-#deactivation-form .buttons {
+#ogf-deactivation-form .buttons {
 	display: inline-block;
 	float: right;
 }
 
-#deactivation-form .button-deactivate {
+#ogf-deactivation-form .button-deactivate {
 	margin-left: 1em
 }
 
