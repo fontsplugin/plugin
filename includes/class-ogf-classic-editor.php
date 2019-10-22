@@ -63,8 +63,6 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 
 				$opt['font_formats'] = apply_filters( 'ogf_classic_font_formats', 'Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;' );
 
-				// $opt['fontsize_formats'] = apply_filters( 'ogf_classic_font_sizes', '8px 10px 12px 14px 16px 18px 24px 30px 36px 48px 60px 72px' );
-
 				return $opt;
 		}
 
@@ -75,8 +73,8 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 */
 		public function tinymce_add_fonts( $old_default ) {
 			$new_default = '';
-			$choices = $this->ogf_fonts->choices;
-			foreach ( $choices as $font ) {
+			$choices     = $this->ogf_fonts->choices;
+			foreach ( array_unique( $choices ) as $font ) {
 				if ( ! ogf_is_system_font( $font ) ) {
 					$new_default .= $this->ogf_fonts->get_font_name( $font ) . '=' . $this->ogf_fonts->get_font_name( $font ) . ';';
 				}
