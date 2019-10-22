@@ -121,6 +121,7 @@ function ogf_customize_register( $wp_customize ) {
 					$wp_customize,
 					$id . '_typography',
 					array(
+						'priority'  =>  ( isset( $values['priority'] ) ? absint( $values['priority'] ) : 10 ),
 						'label'       => esc_attr( $values['label'] ),
 						'description' => esc_attr( $values['description'] ),
 						'section'     => esc_attr( $values['section'] ),

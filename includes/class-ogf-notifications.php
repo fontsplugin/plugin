@@ -79,19 +79,19 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 			$years = ( intval( $seconds ) / YEAR_IN_SECONDS ) % 100;
 			if ( $years > 0 ) {
 				/* translators: Number of years */
-				return sprintf( _n( 'a year', '%d years', $years, 'olympus-google-fonts' ), $years );
+				return sprintf( _n( 'a year', '%s years', $years, 'olympus-google-fonts' ), $years );
 			}
 			// Get the weeks.
 			$weeks = ( intval( $seconds ) / WEEK_IN_SECONDS ) % 52;
-			if ( $weeks > 0 ) {
+			if ( $weeks > 1 ) {
 				/* translators: Number of weeks */
-				return sprintf( _n( 'a week', '%d weeks', $weeks, 'olympus-google-fonts' ), $weeks );
+				return sprintf( __( 'a week', '%s weeks', $weeks, 'olympus-google-fonts' ), $weeks );
 			}
 			// Get the days.
 			$days = ( intval( $seconds ) / DAY_IN_SECONDS ) % 7;
-			if ( $days > 0 ) {
+			if ( $days > 1 ) {
 				/* translators: Number of days */
-				return sprintf( _n( 'a day', '%d days', $days, 'olympus-google-fonts' ), $days );
+				return sprintf( __( '%s days', 'olympus-google-fonts' ), $days );
 			}
 		}
 

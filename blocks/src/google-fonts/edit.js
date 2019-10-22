@@ -2,6 +2,7 @@
  * External dependencies
  */
 import fontsJson from './fonts.json';
+import systemFontsJson from './systemFonts.json';
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { SelectControl, RangeControl, PanelBody } = wp.components;
@@ -21,7 +22,17 @@ class GoogleFontsBlock extends Component {
 	 * @returns {Object}  value/label pair.
 	 */
 	getFontsForSelect() {
-		return fontsJson.items.map( ( font ) => {
+		const systemFonts = systemFontsJson.items.map( ( font ) => {
+			const label = font.label;
+			const value = font.id;
+
+			return {
+				value: value,
+				label: label,
+			};
+		} );
+
+		const googleFonts = fontsJson.items.map( ( font ) => {
 			const label = font.family;
 			const value = label.replace( /\s+/g, '+' );
 
@@ -30,6 +41,27 @@ class GoogleFontsBlock extends Component {
 				label: label,
 			};
 		} );
+
+		return systemFonts.concat( googleFonts );
+	}
+
+	searchFonts( nameKey, myArray ){
+    for (var i=0; i < myArray.length; i++) {
+      if (myArray[i].id === nameKey) {
+        return myArray[i];
+      }
+    }
+	}
+
+	isSystemFont( fontID ) {
+		const searchResults = this.searchFonts( fontID, systemFontsJson.items );
+
+		if ( typeof searchResults === 'object' ) {
+			return true;
+		}
+
+		return false;
+
 	}
 
 	/**
@@ -91,7 +123,7 @@ class GoogleFontsBlock extends Component {
 	 * @param {Object} fontObject The font object.
 	 */
 	addGoogleFontToHead( fontFamily, fontObject ) {
-		if ( ! fontFamily || ! fontObject ) {
+		if ( ! fontFamily || ! fontObject || this.isSystemFont() ) {
 			return;
 		}
 
@@ -112,9 +144,25 @@ class GoogleFontsBlock extends Component {
 		const fontOptions = this.getFontsForSelect();
 		fontOptions.unshift( { label: '- Select Font -', value: '' } );
 
-		const fontObject = this.getFontObject( fontID.replace( /\+/g, ' ' ) );
-		const variantOptions = this.getVariantsForSelect( fontObject );
-		this.addGoogleFontToHead( fontID, fontObject );
+		let variantOptions = [
+			{
+				value: '400',
+				label: 'Regular',
+			},
+			{
+				value: '700',
+				label: 'Bold',
+			},
+		];
+
+		if ( ! this.isSystemFont( fontID ) ) {
+			const fontObject = this.getFontObject( fontID.replace( /\+/g, ' ' ) );
+			variantOptions = this.getVariantsForSelect( fontObject );
+			this.addGoogleFontToHead( fontID, fontObject );
+		}
+
+		console.log()
+
 		const controls = (
 			<InspectorControls>
 				<PanelBody title={ __( 'Font Settings', 'olympus-google-fonts' ) }>
@@ -199,7 +247,7 @@ class GoogleFontsBlock extends Component {
 						fontFamily: fontID.replace( /\+/g, ' ' ),
 						fontWeight: variant,
 						lineHeight: lineHeight,
-						color: color
+						color: color,
 					} }
 					placeholder={ __( 'Add some content...', 'olympus-google-fonts' ) }
 					formattingControls={ [ 'italic', 'link' ] }

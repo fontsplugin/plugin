@@ -1,3 +1,8 @@
+= 1.9.9 =
+
+ * Add system fonts to Gutenberg Block
+ * Fix conflict with Freemius
+
 = 1.9.8 =
 
  * Add new selector for 'Advanced Settings' → 'Content Typography'

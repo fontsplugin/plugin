@@ -93,15 +93,25 @@ function olympus_google_fonts_block_render( $attributes ) {
 
 	if ( $font_id ) {
 
-		$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
-		$font_id     = str_replace( '+', '-', strtolower( $font_id ) );
-		$fonts       = ogf_fonts_array();
-		$variants    = $fonts[ $font_id ]['variants'];
-		unset( $variants[0] );
+		$system_fonts = ogf_system_fonts();
 
-		$variants_for_url = join( array_keys( $variants ), ',' );
+		if ( array_key_exists( $font_id, $system_fonts ) ) {
 
-		wp_enqueue_style( 'google-font-' . $font_id, 'https://fonts.googleapis.com/css?family=' . $font_family . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
+			$font_family = $system_fonts[ $font_id ]['stack'];
+
+		} else {
+
+			$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
+			$font_id     = str_replace( '+', '-', strtolower( $font_id ) );
+			$fonts       = ogf_fonts_array();
+			$variants    = $fonts[ $font_id ]['variants'];
+			unset( $variants[0] );
+
+			$variants_for_url = join( array_keys( $variants ), ',' );
+
+			wp_enqueue_style( 'google-font-' . $font_id, 'https://fonts.googleapis.com/css?family=' . $font_family . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
+
+		}
 
 		$style = "font-family: {$font_family};";
 	}
