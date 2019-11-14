@@ -3,9 +3,9 @@ Contributors: DannyCooper, googlefonts
 Tags: google, fonts, google fonts, typography, elementor, beaver builder
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
-Tested up to: 5.2
+Tested up to: 5.3
 License: GPLv2 or later
-Stable tag: 1.9.91
+Stable tag: 1.9.92
 
 The easiest to use Google Fonts Typography Plugin. No coding required. 900+ font choices.
 

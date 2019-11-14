@@ -1,3 +1,7 @@
+= 1.9.92 =
+
+ * Tested with WP5.3
+
 = 1.9.91 =
 
  * Fix duplicates in Classic Editor
