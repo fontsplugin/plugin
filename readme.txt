@@ -1,11 +1,11 @@
 === Google Fonts Typography ===
 Contributors: DannyCooper, googlefonts
-Tags: google, fonts, google fonts, typography, elementor, beaver builder
+Tags: google, fonts, google fonts, typography, elementor
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.3
 License: GPLv2 or later
-Stable tag: 1.9.93
+Stable tag: 1.9.94
 
 The easiest to use Google Fonts Typography Plugin. No coding required. 900+ font choices.
 
@@ -62,7 +62,7 @@ For more info on Google Fonts for Wordpress, check out the following:
 * [Google Fonts in WPBakery](https://docs.fontsplugin.com/integrations/wpbakery)
 
 = Bugs =
-If you find an issue with Google Fonts for WordPress, let us know [here](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)!
+If you find an issue with Google Fonts Typography, let us know [here](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)!
 
 = Google Fonts Gutenberg Block =
 Add some flair to your content with our new Gutenberg block.
@@ -72,16 +72,16 @@ Add some flair to your content with our new Gutenberg block.
 * Text-align: left, right or center.
 
 = Contributions =
-Anyone is welcome to contribute to the 'Google Fonts for WordPress' plugin.
+Anyone is welcome to contribute to the Google Fonts Typography plugin.
 
 There are various ways you can contribute:
 
 1. Raise an [Issue](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)
-2. Translate the Google Fonts for WordPress plugin into [different languages](https://translate.wordpress.org/projects/wp-plugins/olympus-google-fonts/)
+2. Translate the Google Fonts Typography plugin into [different languages](https://translate.wordpress.org/projects/wp-plugins/olympus-google-fonts/)
 3. Provide feedback and suggestions on [enhancements](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)
 
 == Installation ==
-Upload 'Google Fonts for WordPress', activate it, and you're done!
+Upload Google Fonts Typography, activate it, and you're done!
 
 Navigate to wp-admin -> Appearance -> Customize and you will see a new tab named 'Google Fonts'
 
@@ -99,4 +99,4 @@ We are 99.99% certain it will, if it doesn't then please create a [support ticke
 
 == Changelog ==
 
-[See changelog.txt for the complete changelog.](https://raw.githubusercontent.com/dannycooper/olympus-google-fonts/master/changelog.txt)
+[See changelog.txt for the complete Google Fonts Typography changelog.](https://raw.githubusercontent.com/dannycooper/olympus-google-fonts/master/changelog.txt)
