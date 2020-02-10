@@ -1,3 +1,11 @@
+= 1.9.97 =
+
+ * Update copyright.
+
+= 1.9.95 =
+
+ * Improve compatibility with themes from 'Theme Freesia'.
+
 = 1.9.94 =
 
  * Fix headings in Gutenberg not inheriting font settings.
