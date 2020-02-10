@@ -14,7 +14,7 @@
  * Domain Path: /languages
  *
  * @package   olympus-google-fonts
- * @copyright Copyright (c) 2019, Fonts Plugin
+ * @copyright Copyright (c) 2020, Fonts Plugin
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
