@@ -1,3 +1,7 @@
+= 1.9.99 =
+
+ * Add new fonts, including Inter.
+
 = 1.9.97 =
 
  * Update copyright.
