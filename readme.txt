@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.4
 License: GPLv2 or later
-Stable tag: 1.9.99
+Stable tag: 2.0.0
 
 The easiest to use Google Fonts Typography Plugin. No coding required. 900+ font choices.
 
@@ -30,11 +30,11 @@ The full Google Fonts library can be found here - [Google Fonts](https://fonts.g
 * SSL and HTTPS compatible.
 * Efficient Font Loading using a single request.
 * **SEO-Friendly** (Search Engine Optimization).
-* Tested with **PHP7**
-* Selective Font Loading
-* Preconnect Resource Hints
-* Host Google Fonts Locally
-* Font Size, Weight, Color and Line Height Typography Settings
+* Tested with **PHP7**.
+* Selective Font Loading.
+* Preconnect Resource Hints.
+* Host Google Fonts Locally.
+* Font Size, Weight, Color and Line Height Typography Settings.
 
 > Note: some features are Premium. Which means you need to upgrade to unlock those features. You can upgrade here: [Google Fonts Pro](https://fontsplugin.com/pro-upgrade/?utm_source=wporg&utm_campaign=upgrade)
 
@@ -42,12 +42,12 @@ The full Google Fonts library can be found here - [Google Fonts](https://fonts.g
 
 The Google Fonts for WordPress plugin will work with all WordPress themes and has been specifically tested with the following:
 
-* All OlympusThemes
 * All StudioPress and Genesis Themes
-* TwentyFifteen
-* TwentySixteen
-* TwentySeventeen
+* Twenty Seventeen
+* Twenty Nineteen
+* Twenty Twenty
 * ThemeGrill
+* LyraThemes
 * ThemeIsle
 
 ### Further Reading
@@ -67,8 +67,8 @@ If you find an issue with Google Fonts Typography, let us know [here](https://wo
 = Google Fonts Gutenberg Block =
 Add some flair to your content with our new Gutenberg block.
 
-* All 900+ fonts available in the editor
-* Font size, variant and line-height settings
+* All 900+ fonts available in the editor.
+* Font size, variant and line-height settings.
 * Text-align: left, right or center.
 
 = Contributions =
