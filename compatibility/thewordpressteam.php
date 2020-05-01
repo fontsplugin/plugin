@@ -1,6 +1,6 @@
 <?php
 /**
- * Compatability file for WordPress.org themes.
+ * Compatibility file for WordPress.org themes.
  *
  * @package   olympus-google-fonts
  * @copyright Copyright (c) 2020, Fonts Plugin
@@ -8,7 +8,7 @@
  */
 
 /**
- * Modify the default element selectors to improve compatability with WordPress.org themes.
+ * Modify the default element selectors to improve compatibility with WordPress.org themes.
  *
  * @param array $elements The default elements.
  */

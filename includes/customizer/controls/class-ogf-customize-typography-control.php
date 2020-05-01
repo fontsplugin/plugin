@@ -7,6 +7,11 @@
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Typography control class.
  */
@@ -106,7 +111,16 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 				<select class="ogf-select" {{{ data.family.link }}}>
 
-					<option value="default"><?php esc_html_e( 'Default Font', 'olympus-google-fonts' ); ?></option>
+				<option value="default"><?php esc_html_e( 'Default Font', 'olympus-google-fonts' ); ?></option>
+
+					<# if ( typeof ogf_custom_fonts !== "undefined" ) { #>
+
+						<option disabled><?php esc_html_e( '- Custom Fonts -', 'olympus-google-fonts' ); ?></option>
+						<# _.each( ogf_custom_fonts, function( font_data, font_id ) { #>
+							<option value="cf-{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.label }}</option>
+						<# } ) #>
+					<# } #>
+
 					<option disabled><?php esc_html_e( '- System Fonts -', 'olympus-google-fonts' ); ?></option>
 					<# _.each( ogf_system_fonts, function( font_data, font_id ) { #>
 						<option value="sf-{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.label }}</option>
@@ -136,7 +150,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 					<# if ( data.weight.label ) { #>
 						<span class="customize-control-title">{{ data.weight.label }}</span>
 					<# } #>
-
+					{{ data.weight.value }}
 					<select {{{ data.weight.link }}}>
 
 						<# _.each( data.weight.choices, function( label, choice ) { #>
@@ -233,19 +247,10 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 */
 	public function get_font_weight_choices( $font ) {
 
+		$all_variants = ogf_font_variants();
+
 		if ( 'default' === $font ) {
-			return array(
-				'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
-				'100' => esc_html__( 'Thin', 'olympus-google-fonts' ),
-				'200' => esc_html__( 'Extra Light', 'olympus-google-fonts' ),
-				'300' => esc_html__( 'Light', 'olympus-google-fonts' ),
-				'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
-				'500' => esc_html__( 'Medium', 'olympus-google-fonts' ),
-				'600' => esc_html__( 'Semi Bold', 'olympus-google-fonts' ),
-				'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
-				'800' => esc_html__( 'Extra Bold', 'olympus-google-fonts' ),
-				'900' => esc_html__( 'Ultra Bold', 'olympus-google-fonts' ),
-			);
+			return $all_variants;
 		}
 
 		if ( ogf_is_system_font( $font ) ) {
@@ -256,11 +261,17 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			);
 		}
 
-		$fonts = ogf_fonts_array();
+		$fonts_array = ogf_fonts_array();
 
-		$variants = $fonts[ $font ]['variants'];
+		$variants = $fonts_array[ $font ]['variants'];
 
-		return $variants;
+		$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
+
+		foreach ( $variants as $key => $value ) {
+			$new_variants[] = $all_variants[ $key ];
+		}
+
+		return $new_variants;
 	}
 
 	/**

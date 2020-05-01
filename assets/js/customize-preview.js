@@ -1,5 +1,3 @@
-'use strict';
-
 /* global ogf_elements, ogf_system_fonts */
 jQuery( document ).ready(
 	function() {

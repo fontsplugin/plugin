@@ -1,3 +1,8 @@
+= 2.0.1 =
+
+ * Huge optimization of the ogf_font_array function. props @bndn
+ * Fix typo in file structure
+
 = 2.0.0 =
 
  * Add support for LyraThemes.
@@ -20,7 +25,7 @@
 
 = 1.9.93 =
 
- * Improved TwentyTwenty compatability
+ * Improved TwentyTwenty compatibility
  * Update font list
 
 = 1.9.92 =

@@ -1,9 +1,8 @@
-'use strict';
+
 
 /* global ajaxurl */
 jQuery( document ).ready(
 	function() {
-		'use strict';
 		const form =
 		'<form id="ogf-deactivation-form" method="post">' +
 		'<h1>Help Us Do Better</h1>' +

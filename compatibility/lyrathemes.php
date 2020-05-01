@@ -1,6 +1,6 @@
 <?php
 /**
- * Compatability file for LyraThemes themes.
+ * Compatibility file for LyraThemes themes.
  *
  * @package   olympus-google-fonts
  * @copyright Copyright (c) 2020, Fonts Plugin
@@ -8,7 +8,7 @@
  */
 
 /**
- * Modify the default element selectors to improve compatability with LyraThemes themes.
+ * Modify the default element selectors to improve compatibility with LyraThemes themes.
  *
  * @param array $elements The default elements.
  */

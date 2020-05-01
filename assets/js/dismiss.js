@@ -1,5 +1,3 @@
-'use strict';
-
 /* global ajaxurl */
 jQuery( document ).ready( function() {
 	// Hook into the "notice-dismiss-welcome" class we added to the notice, so

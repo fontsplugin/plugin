@@ -1,10 +1,7 @@
-'use strict';
-
 wp.customize.controlConstructor[ 'multiple-checkbox' ] = wp.customize.Control.extend( {
 
 	// When we're finished loading continue processing.
 	ready: function() {
-		'use strict';
 
 		const control = this;
 

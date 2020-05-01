@@ -1,6 +1,6 @@
 <?php
 /**
- * Compatability file for ThemeIsle themes.
+ * Compatibility file for ThemeIsle themes.
  *
  * @package   olympus-google-fonts
  * @copyright Copyright (c) 2020, Fonts Plugin
@@ -8,7 +8,7 @@
  */
 
 /**
- * Modify the default element selectors to improve compatability with ThemeIsle themes.
+ * Modify the default element selectors to improve compatibility with ThemeIsle themes.
  *
  * @param array $elements The default elements.
  */

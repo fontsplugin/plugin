@@ -88,10 +88,25 @@ class GoogleFontsBlock extends Component {
 			return;
 		}
 
+		const variantNiceNames = {
+			0: "- Default -",
+			100: "Thin",
+			200: "Extra Light",
+			300: "Light",
+			regular: "Normal",
+			500: "Medium",
+			600: "Semi Bold",
+			700: "Bold",
+			800: "Extra Bold",
+			900: "Ultra Bold",
+		};
+
+
+
 		return fontObject.variants.filter( this.isItalic ).map( ( v ) => {
 			return {
 				value: v,
-				label: v,
+				label: variantNiceNames[v],
 			};
 		} );
 	}
@@ -160,8 +175,6 @@ class GoogleFontsBlock extends Component {
 			variantOptions = this.getVariantsForSelect( fontObject );
 			this.addGoogleFontToHead( fontID, fontObject );
 		}
-
-		console.log()
 
 		const controls = (
 			<InspectorControls>

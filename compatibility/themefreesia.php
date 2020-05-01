@@ -1,6 +1,6 @@
 <?php
 /**
- * Compatability file for Theme Freesia themes.
+ * Compatibility file for Theme Freesia themes.
  *
  * @package   olympus-google-fonts
  * @copyright Copyright (c) 2020, Fonts Plugin
@@ -8,7 +8,7 @@
  */
 
 /**
- * Modify the default element selectors to improve compatability with ThemeGrill themes.
+ * Modify the default element selectors to improve compatibility with ThemeGrill themes.
  *
  * @param array $elements The default elements.
  */

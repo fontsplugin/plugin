@@ -1,6 +1,4 @@
-'use strict';
-
-/* global ogf_font_array, ajaxurl, fontsReset, location */
+/* global ogf_font_variants, ogf_font_array, ajaxurl, fontsReset, location */
 ( function( api ) {
 	api.controlConstructor[ 'typography' ] = api.Control.extend(
 		{
@@ -41,9 +39,16 @@
 							const font = ogf_font_array[ value ];
 							const weightsSelect = jQuery( '.typography-font-weight select' );
 							const newWeights = font.variants;
+
+							// remove variants the font doesn't support.
+							for (const property in ogf_font_variants) {
+								if ( property != 0 && typeof( newWeights[property] ) == "undefined" ) delete ogf_font_variants[property];
+							}
+
+							// replace the 'Font Weight' select field values.
 							weightsSelect.empty();
 							jQuery.each(
-								newWeights,
+								ogf_font_variants,
 								function( key, val ) {
 									weightsSelect.append(
 										jQuery( '<option></option>' )

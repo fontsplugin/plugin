@@ -1,8 +1,6 @@
 /* global ogf_custom_selectors_url */
-'use strict';
 
 jQuery( document ).ready( function() {
-	'use strict';
 	const themeControls = jQuery( '#customize-theme-controls' );
 
 	/**
@@ -58,7 +56,6 @@ jQuery( document ).ready( function() {
 } );
 
 function customizerRepeaterRefreshValues() {
-	'use strict';
 	jQuery( '.customizer-repeater-general-control-repeater' ).each( function() {
 		const values = [];
 		jQuery( this ).find( '.customizer-repeater-general-control-repeater-container' ).each( function() {
@@ -90,7 +87,6 @@ const entityMap = {
 };
 
 function escapeHtml( string ) {
-	'use strict';
 	//noinspection JSUnresolvedFunction
 	string = String( string ).replace( new RegExp( '\r?\n', 'g' ), '<br />' );
 	string = String( string ).replace( /\\/g, '&#92;' );

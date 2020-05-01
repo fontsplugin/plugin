@@ -122,6 +122,7 @@ class Olympus_Google_Fonts {
 
 		wp_localize_script( 'ogf-customize-controls', 'ogf_font_array', ogf_fonts_array() );
 		wp_localize_script( 'ogf-customize-controls', 'ogf_system_fonts', ogf_system_fonts() );
+		wp_localize_script( 'ogf-customize-controls', 'ogf_font_variants', ogf_font_variants() );
 	}
 
 	/**

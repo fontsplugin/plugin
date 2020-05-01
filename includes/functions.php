@@ -156,7 +156,7 @@ function ogf_fonts_array() {
 	// Change the object to a multidimensional array.
 	$fonts_array = json_decode( $fonts_json, true );
 
-	// Change the array key to the font's ID.
+	// Format the variants array for easier use.
 	foreach ( $fonts_array['items'] as $key => $font ) {
 
 		$variants_remove = array(
@@ -172,29 +172,14 @@ function ogf_fonts_array() {
 			'900italic',
 		);
 
+		// remove italic variants.
 		$font['variants'] = array_diff( $font['variants'], $variants_remove );
 
+		// replace regular with numberic identifier.
 		$font['variants'] = str_replace( 'regular', '400', $font['variants'] );
 
+		// flip the key/values.
 		$font['variants'] = array_flip( $font['variants'] );
-
-		$weights = array(
-			'100' => esc_html__( 'Thin', 'olympus-google-fonts' ),
-			'200' => esc_html__( 'Extra Light', 'olympus-google-fonts' ),
-			'300' => esc_html__( 'Light', 'olympus-google-fonts' ),
-			'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
-			'500' => esc_html__( 'Medium', 'olympus-google-fonts' ),
-			'600' => esc_html__( 'Semi Bold', 'olympus-google-fonts' ),
-			'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
-			'800' => esc_html__( 'Extra Bold', 'olympus-google-fonts' ),
-			'900' => esc_html__( 'Ultra Bold', 'olympus-google-fonts' ),
-		);
-
-		foreach ( $font['variants'] as $k => $v ) {
-			$font['variants'][ $k ] = $weights[ $k ];
-		}
-
-		$font['variants']['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
 
 		$fonts_array['items'][ $key ] = $font;
 
@@ -224,6 +209,11 @@ function ogf_system_fonts() {
 			'label' => esc_html__( 'Calibri', 'olympus-google-fonts' ),
 			'stack' => 'Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;',
 		),
+		'century-gothic' => array(
+			'id'    => 'century-gothic',
+			'label' => esc_html__( 'Century Gothic', 'olympus-google-fonts' ),
+			'stack' => 'Century Gothic, CenturyGothic, AppleGothic, sans-serif;',
+		),
 		'consolas' => array(
 			'id'    => 'consolas',
 			'label' => esc_html__( 'Consolas', 'olympus-google-fonts' ),
@@ -236,7 +226,7 @@ function ogf_system_fonts() {
 		),
 		'helvetica' => array(
 			'id'    => 'helvetica',
-			'label' => esc_html__( 'Helvetica', 'olympus-google-fonts' ),
+			'label' => esc_html__( 'Helvetica Neue', 'olympus-google-fonts' ),
 			'stack' => 'Helvetica Neue, Helvetica, Arial, sans-serif',
 		),
 		'georgia' => array(
@@ -253,6 +243,11 @@ function ogf_system_fonts() {
 			'id'    => 'lucida-grande',
 			'label' => esc_html__( 'Lucida Grande', 'olympus-google-fonts' ),
 			'stack' => 'Lucida Grande, Lucida Sans Unicode, Lucida Sans, Geneva, Verdana, sans-serif',
+		),
+		'segoe-ui' => array(
+			'id'    => 'segoe-ui',
+			'label' => esc_html__( 'Segoe UI', 'olympus-google-fonts' ),
+			'stack' => 'Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif',
 		),
 		'tahoma' => array(
 			'id'    => 'tahoma',
@@ -285,6 +280,24 @@ function ogf_system_fonts() {
 
 	return $filtered_system_fonts;
 
+}
+
+/**
+ * Return the full range of font variants.
+ */
+function ogf_font_variants() {
+	return array(
+		'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
+		'100' => esc_html__( 'Thin', 'olympus-google-fonts' ),
+		'200' => esc_html__( 'Extra Light', 'olympus-google-fonts' ),
+		'300' => esc_html__( 'Light', 'olympus-google-fonts' ),
+		'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
+		'500' => esc_html__( 'Medium', 'olympus-google-fonts' ),
+		'600' => esc_html__( 'Semi Bold', 'olympus-google-fonts' ),
+		'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
+		'800' => esc_html__( 'Extra Bold', 'olympus-google-fonts' ),
+		'900' => esc_html__( 'Ultra Bold', 'olympus-google-fonts' ),
+	);
 }
 
 /**
