@@ -1,3 +1,7 @@
+= 2.0.2 =
+
+ * Remove incorrectly printed variable in customizer.
+
 = 2.0.1 =
 
  * Huge optimization of the ogf_font_array function. props @bndn

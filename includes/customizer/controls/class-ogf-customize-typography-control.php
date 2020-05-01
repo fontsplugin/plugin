@@ -102,7 +102,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 		<ul>
 
 		<# if ( data.family && typeof ogf_font_array != 'undefined' ) { #>
-
 			<li class="typography-font-family">
 
 				<# if ( data.family.label ) { #>
@@ -144,13 +143,11 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 		<div class="advanced-settings-wrapper">
 
 			<# if ( data.weight && data.weight.choices ) { #>
-
 				<li class="typography-font-weight">
 
 					<# if ( data.weight.label ) { #>
 						<span class="customize-control-title">{{ data.weight.label }}</span>
 					<# } #>
-					{{ data.weight.value }}
 					<select {{{ data.weight.link }}}>
 
 						<# _.each( data.weight.choices, function( label, choice ) { #>
@@ -164,7 +161,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			<# } #>
 
 			<# if ( data.style && data.style.choices ) { #>
-
 				<li class="typography-font-style">
 
 					<# if ( data.style.label ) { #>
@@ -184,7 +180,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			<# } #>
 
 			<# if ( data.size ) { #>
-
 				<li class="typography-font-size">
 
 					<div class="slider-custom-control">
@@ -203,7 +198,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			<# } #>
 
 			<# if ( data.line_height ) { #>
-
 				<li class="typography-line-height">
 
 					<div class="slider-custom-control">
@@ -222,7 +216,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			<# } #>
 
 			<# if ( data.color ) { #>
-
 				<li class="typography-font-color">
 
 					<# if ( data.color.label ) { #>

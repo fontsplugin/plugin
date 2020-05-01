@@ -89,16 +89,16 @@ class GoogleFontsBlock extends Component {
 		}
 
 		const variantNiceNames = {
-			0: "- Default -",
-			100: "Thin",
-			200: "Extra Light",
-			300: "Light",
-			regular: "Normal",
-			500: "Medium",
-			600: "Semi Bold",
-			700: "Bold",
-			800: "Extra Bold",
-			900: "Ultra Bold",
+			0: __( '- Default -', 'olympus-google-fonts' ),
+			100: __( 'Thin', 'olympus-google-fonts' ),
+			200: __( 'Extra Light', 'olympus-google-fonts' ),
+			300: __( 'Light', 'olympus-google-fonts' ),
+			regular: __( 'Normal', 'olympus-google-fonts' ),
+			500: __( 'Medium', 'olympus-google-fonts' ),
+			600: __( 'Semi Bold', 'olympus-google-fonts' ),
+			700: __( 'Bold', 'olympus-google-fonts' ),
+			800: __( 'Extra Bold', 'olympus-google-fonts' ),
+			900: __( 'Ultra Bold', 'olympus-google-fonts' ),
 		};
 
 
