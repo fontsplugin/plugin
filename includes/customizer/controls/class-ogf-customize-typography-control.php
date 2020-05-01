@@ -109,30 +109,24 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 				<# } #>
 
 				<select class="ogf-select" {{{ data.family.link }}}>
-
-				<option value="default"><?php esc_html_e( 'Default Font', 'olympus-google-fonts' ); ?></option>
-
+					<option value="default">
+						<?php esc_html_e( 'Default Font', 'olympus-google-fonts' ); ?>
+					</option>
 					<# if ( typeof ogf_custom_fonts !== "undefined" ) { #>
-
 						<option disabled><?php esc_html_e( '- Custom Fonts -', 'olympus-google-fonts' ); ?></option>
 						<# _.each( ogf_custom_fonts, function( font_data, font_id ) { #>
 							<option value="cf-{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.label }}</option>
 						<# } ) #>
 					<# } #>
-
 					<option disabled><?php esc_html_e( '- System Fonts -', 'olympus-google-fonts' ); ?></option>
 					<# _.each( ogf_system_fonts, function( font_data, font_id ) { #>
 						<option value="sf-{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.label }}</option>
 					<# } ) #>
-
 					<option disabled><?php esc_html_e( '- Google Fonts -', 'olympus-google-fonts' ); ?></option>
-
 					<# _.each( ogf_font_array, function( font_data, font_id ) { #>
 						<option value="{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.family }}</option>
 					<# } ) #>
-
 				</select>
-
 				<button type="button" class="advanced-button">
 					<span class="screen-reader-text"><?php esc_html_e( 'Advanced', 'olympus-google-fonts' ); ?></span>
 				</button>
@@ -141,67 +135,48 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 
 		<div class="advanced-settings-wrapper">
-
 			<# if ( data.weight && data.weight.choices ) { #>
 				<li class="typography-font-weight">
-
 					<# if ( data.weight.label ) { #>
 						<span class="customize-control-title">{{ data.weight.label }}</span>
 					<# } #>
 					<select {{{ data.weight.link }}}>
-
 						<# _.each( data.weight.choices, function( label, choice ) { #>
-
 							<option value="{{ choice }}" <# if ( choice === data.weight.value ) { #> selected="selected" <# } #>>{{ label }}</option>
-
 						<# } ) #>
-
 					</select>
 				</li>
 			<# } #>
 
 			<# if ( data.style && data.style.choices ) { #>
 				<li class="typography-font-style">
-
 					<# if ( data.style.label ) { #>
 						<span class="customize-control-title">{{ data.style.label }}</span>
 					<# } #>
-
 					<select {{{ data.style.link }}}>
-
 						<# _.each( data.style.choices, function( label, choice ) { #>
-
 							<option value="{{ choice }}" <# if ( choice === data.style.value ) { #> selected="selected" <# } #>>{{ label }}</option>
-
 						<# } ) #>
-
 					</select>
 				</li>
 			<# } #>
 
 			<# if ( data.size ) { #>
 				<li class="typography-font-size">
-
 					<div class="slider-custom-control">
-
 							<# if ( data.size.label ) { #>
 								<span class="customize-control-title">{{ data.size.label }}</span>
 							<# } #>
 							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.size.value }}"></span>
-
 							<div class="slider" slider-max-value="72" slider-step-value="1"></div>
 							<input class="customize-control-slider-value" {{{ data.size.link }}} type="number" value="{{ data.size.value }}">
-
 					</div>
-
 				</li>
 			<# } #>
 
 			<# if ( data.line_height ) { #>
 				<li class="typography-line-height">
-
 					<div class="slider-custom-control">
-
 							<# if ( data.line_height.label ) { #>
 								<span class="customize-control-title">{{ data.line_height.label }}</span>
 							<# } #>
@@ -209,21 +184,16 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 							<div class="slider" slider-max-value="3" slider-step-value=".1"></div>
 							<input class="customize-control-slider-value" {{{ data.line_height.link }}} type="number" value="{{ data.line_height.value }}">
-
 					</div>
-
 				</li>
 			<# } #>
 
 			<# if ( data.color ) { #>
 				<li class="typography-font-color">
-
 					<# if ( data.color.label ) { #>
 						<span class="customize-control-title">{{ data.color.label }}</span>
 					<# } #>
-
 					<input class="color-picker-hex" type="text" maxlength="7" {{{ data.color.link }}} value="{{ data.color.value }}" />
-
 				</li>
 			<# } #>
 
@@ -261,8 +231,10 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 		$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
 
 		foreach ( $variants as $key => $value ) {
-			$new_variants[] = $all_variants[ $key ];
+			$new_variants[$key] = $all_variants[ $key ];
 		}
+
+
 
 		return $new_variants;
 	}
