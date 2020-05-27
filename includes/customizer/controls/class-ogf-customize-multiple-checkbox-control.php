@@ -51,6 +51,16 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 			$this->json['inputAttrs'] .= $attr . '="' . esc_attr( $value ) . '" ';
 		}
 	}
+
+	/**
+	 * Overwrite this method as we are rendering the template with JS.
+	 *
+	 * @access protected
+	 * @since 1.0
+	 * @return void
+	 */
+	protected function render_content() {}
+
 	/**
 	 * An Underscore (JS) template for this control's content (but not its container).
 	 *
@@ -85,4 +95,5 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 		</ul>
 		<?php
 	}
+
 }

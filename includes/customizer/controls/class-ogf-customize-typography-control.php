@@ -85,6 +85,16 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			}
 		}
 	}
+
+	/**
+	 * Overwrite this method as we are rendering the template with JS.
+	 *
+	 * @access protected
+	 * @since 1.0
+	 * @return void
+	 */
+	protected function render_content() {}
+
 	/**
 	 * Underscore JS template to handle the control's output.
 	 */
@@ -231,10 +241,8 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 		$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
 
 		foreach ( $variants as $key => $value ) {
-			$new_variants[$key] = $all_variants[ $key ];
+			$new_variants[ $key ] = $all_variants[ $key ];
 		}
-
-
 
 		return $new_variants;
 	}

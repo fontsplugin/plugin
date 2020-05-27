@@ -43,6 +43,15 @@ class OGF_Customize_Multiple_Fonts_Control extends WP_Customize_Control {
 	}
 
 	/**
+	 * Overwrite this method as we are rendering the template with JS.
+	 *
+	 * @access protected
+	 * @since 1.0
+	 * @return void
+	 */
+	protected function render_content() {}
+
+	/**
 	 * Underscore JS template to handle the control's output.
 	 */
 	public function content_template() {

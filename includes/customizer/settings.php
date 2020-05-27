@@ -173,9 +173,16 @@ function ogf_customize_register( $wp_customize ) {
 			return;
 		}
 
-		$weights = $fonts->get_font_weights( $font_id );
-		$name    = $fonts->get_font_name( $font_id );
-		unset( $weights[0] );
+		$weights      = $fonts->get_font_weights( $font_id );
+		$name         = $fonts->get_font_name( $font_id );
+		$all_variants = ogf_font_variants();
+		$new_variants = array();
+		foreach ( $weights as $key => $value ) {
+			$new_variants[ $key ] = $all_variants[ $key ];
+		}
+		unset($new_variants[0]);
+
+
 		$wp_customize->add_setting(
 			$font_id . '_weights',
 			array(
@@ -199,7 +206,7 @@ function ogf_customize_register( $wp_customize ) {
 				array(
 					'label'       => $name,
 					'section'     => 'ogf_font_loading',
-					'choices'     => $weights,
+					'choices'     => $new_variants,
 					'input_attrs' => $input_attrs,
 				)
 			)

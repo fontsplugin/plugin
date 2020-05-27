@@ -287,16 +287,25 @@ function ogf_system_fonts() {
  */
 function ogf_font_variants() {
 	return array(
-		'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
-		'100' => esc_html__( 'Thin', 'olympus-google-fonts' ),
-		'200' => esc_html__( 'Extra Light', 'olympus-google-fonts' ),
-		'300' => esc_html__( 'Light', 'olympus-google-fonts' ),
-		'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
-		'500' => esc_html__( 'Medium', 'olympus-google-fonts' ),
-		'600' => esc_html__( 'Semi Bold', 'olympus-google-fonts' ),
-		'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
-		'800' => esc_html__( 'Extra Bold', 'olympus-google-fonts' ),
-		'900' => esc_html__( 'Ultra Bold', 'olympus-google-fonts' ),
+		'0'    => esc_html__( '- Default -', 'olympus-google-fonts' ),
+		'100'  => esc_html__( 'Thin', 'olympus-google-fonts' ),
+		'200'  => esc_html__( 'Extra Light', 'olympus-google-fonts' ),
+		'300'  => esc_html__( 'Light', 'olympus-google-fonts' ),
+		'400'  => esc_html__( 'Normal', 'olympus-google-fonts' ),
+		'500'  => esc_html__( 'Medium', 'olympus-google-fonts' ),
+		'600'  => esc_html__( 'Semi Bold', 'olympus-google-fonts' ),
+		'700'  => esc_html__( 'Bold', 'olympus-google-fonts' ),
+		'800'  => esc_html__( 'Extra Bold', 'olympus-google-fonts' ),
+		'900'  => esc_html__( 'Ultra Bold', 'olympus-google-fonts' ),
+		'100i' => esc_html__( 'Thin Italic', 'olympus-google-fonts' ),
+		'200i' => esc_html__( 'Extra Light Italic', 'olympus-google-fonts' ),
+		'300i' => esc_html__( 'Light Italic', 'olympus-google-fonts' ),
+		'400i' => esc_html__( 'Normal Italic', 'olympus-google-fonts' ),
+		'500i' => esc_html__( 'Medium Italic', 'olympus-google-fonts' ),
+		'600i' => esc_html__( 'Semi Bold Italic', 'olympus-google-fonts' ),
+		'700i' => esc_html__( 'Bold Italic', 'olympus-google-fonts' ),
+		'800i' => esc_html__( 'Extra Bold Italic', 'olympus-google-fonts' ),
+		'900i' => esc_html__( 'Ultra Bold Italic', 'olympus-google-fonts' ),
 	);
 }
 
