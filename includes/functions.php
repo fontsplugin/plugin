@@ -207,12 +207,12 @@ function ogf_system_fonts() {
 		'calibri' => array(
 			'id'    => 'calibri',
 			'label' => esc_html__( 'Calibri', 'olympus-google-fonts' ),
-			'stack' => 'Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif;',
+			'stack' => 'Calibri, Candara, Segoe, Segoe UI, Optima, Arial, sans-serif',
 		),
 		'century-gothic' => array(
 			'id'    => 'century-gothic',
 			'label' => esc_html__( 'Century Gothic', 'olympus-google-fonts' ),
-			'stack' => 'Century Gothic, CenturyGothic, AppleGothic, sans-serif;',
+			'stack' => 'Century Gothic, CenturyGothic, AppleGothic, sans-serif',
 		),
 		'consolas' => array(
 			'id'    => 'consolas',
@@ -272,7 +272,7 @@ function ogf_system_fonts() {
 		'verdana' => array(
 			'id'    => 'verdana',
 			'label' => esc_html__( 'Verdana', 'olympus-google-fonts' ),
-			'stack' => 'Verdana, Geneva, sans-serif;',
+			'stack' => 'Verdana, Geneva, sans-serif',
 		),
 	);
 
