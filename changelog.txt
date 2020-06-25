@@ -1,3 +1,9 @@
+= 2.0.6 =
+
+* Output the 'Basic Setting' choices as CSS variables. props @helgatheviking
+* Fix issue where important wasn't being applied to some system fonts.
+* Add welcome page.
+
 = 2.0.5 =
 
 * Fix error notice in customizer.
