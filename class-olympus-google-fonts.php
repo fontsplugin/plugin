@@ -57,9 +57,6 @@ class Olympus_Google_Fonts {
 		// Welcome notice class.
 		include OGF_DIR_PATH . 'includes/class-ogf-welcome.php';
 
-		// Deactivation class.
-		require OGF_DIR_PATH . 'includes/class-ogf-deactivation.php';
-
 		// Reset class.
 		require OGF_DIR_PATH . 'includes/class-ogf-reset.php';
 
