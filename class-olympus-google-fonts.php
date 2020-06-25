@@ -90,6 +90,10 @@ class Olympus_Google_Fonts {
 		if ( $fonts->has_custom_fonts() ) {
 			$url = $fonts->build_url();
 			wp_enqueue_style( 'olympus-google-fonts', $url, array(), OGF_VERSION );
+
+			$css = ogf_generate_css_variables();
+			wp_add_inline_style( 'olympus-google-fonts', $css );
+
 		}
 
 	}

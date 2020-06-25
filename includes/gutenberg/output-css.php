@@ -17,6 +17,9 @@ function ogf_gutenberg_enqueue_fonts() {
 	if ( $fonts->has_custom_fonts() ) {
 		$url = $fonts->build_url();
 		wp_enqueue_style( 'olympus-google-fonts', $url, array(), OGF_VERSION );
+
+		$css = ogf_generate_css_variables();
+		wp_add_inline_style( 'olympus-google-fonts', $css );
 	}
 
 }
@@ -169,5 +172,29 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
 		echo wp_kses_post( $return );
 
 	}
+
+}
+
+
+/**
+ * Helper function to build the CSS variables.
+ */
+function ogf_generate_css_variables() {
+
+	// Fonts.
+	$body_font    = str_replace('"', '', ogf_build_font_stack( get_theme_mod( 'ogf_body_font' ) ) );
+	$heading_font = str_replace('"', '', ogf_build_font_stack( get_theme_mod( 'ogf_headings_font' ) ) );
+	$input_font = str_replace('"', '', ogf_build_font_stack( get_theme_mod( 'ogf_inputs_font' ) ) );
+
+	$css =
+	'
+	:root {
+		--font-body: ' . esc_attr( $body_font ) . ';
+		--font-heading: ' . esc_attr( $heading_font ) . ';
+		--font-input: ' . esc_attr( $input_font ) . ';
+	}
+	';
+
+	return wp_strip_all_tags( $css );
 
 }
