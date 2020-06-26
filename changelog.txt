@@ -1,3 +1,7 @@
+= 2.0.7 =
+
+* Fix array_key_exists() error, props @rafafallo
+
 = 2.0.6 =
 
 * Output the 'Basic Setting' choices as CSS variables. props @helgatheviking
