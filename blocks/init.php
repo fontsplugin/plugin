@@ -104,7 +104,7 @@ function olympus_google_fonts_block_render( $attributes ) {
 			$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
 			$font_id     = str_replace( '+', '-', strtolower( $font_id ) );
 			$fonts       = ogf_fonts_array();
-			$variants    = $fonts[ $font_id ]['variants'];
+			$variants    = $fonts[ $font_id ]['v'];
 			unset( $variants[0] );
 
 			$variants_for_url = join( array_keys( $variants ), ',' );
@@ -116,7 +116,7 @@ function olympus_google_fonts_block_render( $attributes ) {
 		$style = "font-family: {$font_family};";
 	}
 
-	if ( $variant && 'regular' !== $variant ) {
+	if ( $variant && '0' !== $variant ) {
 		$style .= "font-weight: {$variant};";
 	}
 

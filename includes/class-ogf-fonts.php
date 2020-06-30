@@ -85,7 +85,7 @@ class OGF_Fonts {
 	 */
 	public function get_font_weights( $font_id ) {
 
-		$weights = $this->google_fonts[ $font_id ]['variants'];
+		$weights = $this->google_fonts[ $font_id ]['v'];
 
 		unset( $weights['0'] );
 
@@ -104,7 +104,7 @@ class OGF_Fonts {
 	 */
 	public function get_font_name( $font_id ) {
 
-		return $this->google_fonts[ $font_id ]['family'];
+		return $this->google_fonts[ $font_id ]['f'];
 
 	}
 
@@ -169,27 +169,17 @@ class OGF_Fonts {
 			// Check the users choice is a real font.
 			if ( array_key_exists( $font_id, $this->google_fonts ) ) {
 
-				$font_id_for_url = $this->get_font_id( $this->google_fonts[ $font_id ]['family'] );
+				$font_id_for_url = $this->get_font_id( $this->google_fonts[ $font_id ]['f'] );
 
-				$weights = $this->filter_selected_weights( $font_id, $this->google_fonts[ $font_id ]['variants'] );
+				$weights = $this->filter_selected_weights( $font_id, $this->google_fonts[ $font_id ]['v'] );
 
 				$families[] = $font_id_for_url . ':' . implode( ',', array_keys( $weights ) );
 
-				$subsets_array = $this->google_fonts[ $font_id ]['subsets'];
-
-				// Build an array of the subsets that need to be loaded.
-				foreach ( $subsets_array as $subset ) {
-
-					if ( ! in_array( $subset, $subsets, true ) ) {
-						$subsets[] = $subset;
-					}
-				}
 			}
 		}
 
 			$query_args = array(
 				'family'  => implode( '|', $families ),
-				'subset'  => implode( ',', $subsets ),
 				'display' => 'swap',
 			);
 

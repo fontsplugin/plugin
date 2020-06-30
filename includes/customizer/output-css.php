@@ -41,12 +41,14 @@ add_action( 'wp_head', 'ogf_output_css', 1000 );
  */
 function ogf_generate_css( $selector, $option_name ) {
 
-	$family      = get_theme_mod( $option_name . '_font', false );
-	$font_size   = get_theme_mod( $option_name . '_font_size', false );
-	$line_height = get_theme_mod( $option_name . '_line_height', false );
-	$weight      = get_theme_mod( $option_name . '_font_weight', false );
-	$style       = get_theme_mod( $option_name . '_font_style', false );
-	$color       = get_theme_mod( $option_name . '_font_color', false );
+	$family         = get_theme_mod( $option_name . '_font', false );
+	$font_size      = get_theme_mod( $option_name . '_font_size', false );
+	$line_height    = get_theme_mod( $option_name . '_line_height', false );
+	$weight         = get_theme_mod( $option_name . '_font_weight', false );
+	$style          = get_theme_mod( $option_name . '_font_style', false );
+	$color          = get_theme_mod( $option_name . '_font_color', false );
+	$text_transform = get_theme_mod( $option_name . '_text_transform', false );
+	$letter_spacing = get_theme_mod( $option_name . '_letter_spacing', false );
 
 	$return = '';
 
@@ -54,7 +56,7 @@ function ogf_generate_css( $selector, $option_name ) {
 			 ( $line_height !== '0' && $line_height ) ||
 			 ( $weight !== '0' && $weight ) ||
 			 ( $style !== 'default' && $style ) ||
-			   $font_size ||
+			   $font_size || $letter_spacing || $text_transform ||
 			   $color ) {
 
 		$return .= $selector . ' {' . PHP_EOL;
@@ -112,6 +114,22 @@ function ogf_generate_css( $selector, $option_name ) {
 			);
 		}
 
+		// Return font-color CSS.
+		if ( $letter_spacing ) {
+			$return .= sprintf(
+				'letter-spacing: %s;' . PHP_EOL,
+				esc_attr( $letter_spacing ) . 'px' . ogf_is_forced()
+			);
+		}
+
+		// Return text-transform CSS.
+		if ( $text_transform ) {
+			$return .= sprintf(
+				'text-transform: %s;' . PHP_EOL,
+				esc_attr( $text_transform ) . ogf_is_forced()
+			);
+		}
+
 		$return .= ' }' . PHP_EOL;
 
 		echo wp_kses_post( $return );
@@ -132,7 +150,7 @@ function ogf_build_font_stack( $font_id ) {
 
 	if ( array_key_exists( $font_id, $google_fonts ) ) {
 
-		$stack = '"' . $google_fonts[ $font_id ]['family'] . '"';
+		$stack = '"' . $google_fonts[ $font_id ]['f'] . '"';
 
 		return $stack;
 
@@ -158,5 +176,41 @@ function ogf_is_forced() {
 	if ( 1 === (int) get_theme_mod( 'ogf_force_styles' ) ) {
 		return ' !important';
 	}
+
+}
+
+/**
+ * Helper function to build the CSS variables.
+ */
+function ogf_generate_css_variables() {
+
+	$body_font     = get_theme_mod( 'ogf_body_font', false );
+	$headings_font = get_theme_mod( 'ogf_headings_font', false );
+	$inputs_font   = get_theme_mod( 'ogf_inputs_font', false );
+
+	$body_font_stack     = '';
+	$headings_font_stack = '';
+	$inputs_font_stack   = '';
+
+	if ( $body_font ) {
+		$body_font_stack = str_replace( '"', '', ogf_build_font_stack( $body_font ) );
+	}
+	if ( $headings_font ) {
+		$headings_font_stack = str_replace( '"', '', ogf_build_font_stack( $headings_font ) );
+	}
+	if ( $inputs_font ) {
+		$inputs_font_stack = str_replace( '"', '', ogf_build_font_stack( $inputs_font ) );
+	}
+
+	$css =
+	'
+	:root {
+		--font-body: ' . esc_attr( $body_font_stack ) . ';
+		--font-heading: ' . esc_attr( $headings_font_stack ) . ';
+		--font-input: ' . esc_attr( $inputs_font_stack ) . ';
+	}
+	';
+
+	return $css;
 
 }

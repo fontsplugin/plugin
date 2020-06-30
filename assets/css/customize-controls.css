@@ -22,7 +22,9 @@
 
 .typography-font-size,
 .typography-line-height,
-.typography-font-color {
+.typography-font-color,
+.typography-letter-spacing,
+.typography-text-transform {
 	display: none;
 }
 
@@ -32,20 +34,23 @@
 
 .customize-control-typography li.typography-font-color,
 .customize-control-typography li.typography-font-style,
-.customize-control-typography li.typography-font-weight {
+.customize-control-typography li.typography-font-weight,
+.customize-control-typography li.typography-text-transform {
 	width: 50%;
 	float: left;
 }
 
 .customize-control-typography li.typography-font-size,
-.customize-control-typography li.typography-line-height {
+.customize-control-typography li.typography-line-height,
+.customize-control-typography li.typography-letter-spacing {
 	clear: both;
 	max-width: 94%;
 	padding-top: 10px;
 }
 
 .customize-control-typography li.typography-font-style select,
-.customize-control-typography li.typography-font-weight select {
+.customize-control-typography li.typography-font-weight select,
+.customize-control-typography li.typography-text-transform select {
 	width: 90%;
 }
 

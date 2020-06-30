@@ -118,6 +118,37 @@ jQuery( document ).ready(
 					);
 				}
 			);
+
+			wp.customize(
+				id + '_text_transform',
+				function( value ) {
+					value.bind(
+						function( to ) {
+							jQuery( val.selectors ).each( function( i, v ) {
+								v.style.setProperty( 'text-transform', to, 'important' );
+							} );
+						}
+					);
+				}
+			);
+
+			wp.customize(
+				id + '_letter_spacing',
+				function( value ) {
+					value.bind(
+						function( to ) {
+							jQuery( val.selectors ).each( function( i, v ) {
+								if ( to === '' ) {
+									wp.customize.preview.send( 'refresh' );
+								} else {
+									v.style.setProperty( 'letter-spacing', to + 'px', 'important' );
+								}
+							} );
+						}
+					);
+				}
+			);
+
 		} );
 	}
 ); // jQuery( document ).ready

@@ -45,12 +45,14 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 		$this->l10n = wp_parse_args(
 			$this->l10n,
 			array(
-				'family'      => esc_html__( 'Font Family', 'olympus-google-fonts' ),
-				'weight'      => esc_html__( 'Font Weight', 'olympus-google-fonts' ),
-				'style'       => esc_html__( 'Font Style', 'olympus-google-fonts' ),
-				'size'        => esc_html__( 'Font Size (px)', 'olympus-google-fonts' ),
-				'line_height' => esc_html__( 'Line Height', 'olympus-google-fonts' ),
-				'color'       => esc_html__( 'Color', 'olympus-google-fonts' ),
+				'family'         => esc_html__( 'Font Family', 'olympus-google-fonts' ),
+				'weight'         => esc_html__( 'Font Weight', 'olympus-google-fonts' ),
+				'style'          => esc_html__( 'Font Style', 'olympus-google-fonts' ),
+				'size'           => esc_html__( 'Font Size (px)', 'olympus-google-fonts' ),
+				'line_height'    => esc_html__( 'Line Height', 'olympus-google-fonts' ),
+				'color'          => esc_html__( 'Color', 'olympus-google-fonts' ),
+				'letter_spacing' => esc_html__( 'Letter Spacing (px)', 'olympus-google-fonts' ),
+				'text_transform' => esc_html__( 'Text Transform', 'olympus-google-fonts' ),
 			)
 		);
 
@@ -80,8 +82,12 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 			if ( 'weight' === $setting_key ) {
 				$this->json[ $setting_key ]['choices'] = $this->get_font_weight_choices( $this->value( 'family' ) );
-			} elseif ( 'style' === $setting_key ) {
+			}
+			if ( 'style' === $setting_key ) {
 				$this->json[ $setting_key ]['choices'] = $this->get_font_style_choices();
+			}
+			if ( 'text_transform' === $setting_key ) {
+				$this->json[ $setting_key ]['choices'] = $this->get_text_transform_choices();
 			}
 		}
 	}
@@ -134,7 +140,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 					<# } ) #>
 					<option disabled><?php esc_html_e( '- Google Fonts -', 'olympus-google-fonts' ); ?></option>
 					<# _.each( ogf_font_array, function( font_data, font_id ) { #>
-						<option value="{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.family }}</option>
+						<option value="{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.f }}</option>
 					<# } ) #>
 				</select>
 				<button type="button" class="advanced-button">
@@ -171,6 +177,28 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 				</li>
 			<# } #>
 
+			<# if ( data.color ) { #>
+				<li class="typography-font-color">
+					<# if ( data.color.label ) { #>
+						<span class="customize-control-title">{{ data.color.label }}</span>
+					<# } #>
+					<input class="color-picker-hex" type="text" maxlength="7" {{{ data.color.link }}} value="{{ data.color.value }}" />
+				</li>
+			<# } #>
+
+			<# if ( data.text_transform && data.text_transform.choices ) { #>
+				<li class="typography-text-transform">
+					<# if ( data.text_transform.label ) { #>
+						<span class="customize-control-title">{{ data.text_transform.label }}</span>
+					<# } #>
+					<select {{{ data.text_transform.link }}}>
+						<# _.each( data.text_transform.choices, function( label, choice ) { #>
+							<option value="{{ choice }}" <# if ( choice === data.text_transform.value ) { #> selected="selected" <# } #>>{{ label }}</option>
+						<# } ) #>
+					</select>
+				</li>
+			<# } #>
+
 			<# if ( data.size ) { #>
 				<li class="typography-font-size">
 					<div class="slider-custom-control">
@@ -198,12 +226,16 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 				</li>
 			<# } #>
 
-			<# if ( data.color ) { #>
-				<li class="typography-font-color">
-					<# if ( data.color.label ) { #>
-						<span class="customize-control-title">{{ data.color.label }}</span>
-					<# } #>
-					<input class="color-picker-hex" type="text" maxlength="7" {{{ data.color.link }}} value="{{ data.color.value }}" />
+			<# if ( data.letter_spacing ) { #>
+				<li class="typography-letter-spacing">
+					<div class="slider-custom-control">
+							<# if ( data.letter_spacing.label ) { #>
+								<span class="customize-control-title">{{ data.letter_spacing.label }}</span>
+							<# } #>
+							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.letter_spacing.value }}"></span>
+							<div class="slider" slider-min-value="-5" slider-max-value="5" slider-step-value=".1"></div>
+							<input class="customize-control-slider-value" {{{ data.letter_spacing.link }}} type="number" value="{{ data.letter_spacing.value }}">
+					</div>
 				</li>
 			<# } #>
 
@@ -236,7 +268,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 		$fonts_array = ogf_fonts_array();
 
-		$variants = $fonts_array[ $font ]['variants'];
+		$variants = $fonts_array[ $font ]['v'];
 
 		$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
 
@@ -256,6 +288,18 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			'normal'  => esc_html__( 'Normal', 'olympus-google-fonts' ),
 			'italic'  => esc_html__( 'Italic', 'olympus-google-fonts' ),
 			'oblique' => esc_html__( 'Oblique', 'olympus-google-fonts' ),
+		);
+	}
+
+	/**
+	 * Returns the available text-transform values.
+	 */
+	public function get_text_transform_choices() {
+		return array(
+			''           => esc_html__( '- Default -', 'olympus-google-fonts' ),
+			'capitalize' => esc_html__( 'Capitalize', 'olympus-google-fonts' ),
+			'uppercase'  => esc_html__( 'Uppercase', 'olympus-google-fonts' ),
+			'lowercase'  => esc_html__( 'Lowercase', 'olympus-google-fonts' ),
 		);
 	}
 

@@ -116,22 +116,38 @@ function ogf_customize_register( $wp_customize ) {
 				)
 			);
 
+			$wp_customize->add_setting(
+				$id . '_letter_spacing',
+				array(
+					'transport' => 'postMessage',
+				)
+			);
+
+			$wp_customize->add_setting(
+				$id . '_text_transform',
+				array(
+					'transport' => 'postMessage',
+				)
+			);
+
 			$wp_customize->add_control(
 				new OGF_Customize_Typography_Control(
 					$wp_customize,
 					$id . '_typography',
 					array(
-						'priority'  =>  ( isset( $values['priority'] ) ? absint( $values['priority'] ) : 10 ),
+						'priority'    => ( isset( $values['priority'] ) ? absint( $values['priority'] ) : 10 ),
 						'label'       => esc_attr( $values['label'] ),
 						'description' => esc_attr( $values['description'] ),
 						'section'     => esc_attr( $values['section'] ),
 						'settings'    => array(
-							'family'      => $id . '_font',
-							'weight'      => $id . '_font_weight',
-							'style'       => $id . '_font_style',
-							'size'        => $id . '_font_size',
-							'line_height' => $id . '_line_height',
-							'color'       => $id . '_font_color',
+							'family'         => $id . '_font',
+							'weight'         => $id . '_font_weight',
+							'style'          => $id . '_font_style',
+							'size'           => $id . '_font_size',
+							'line_height'    => $id . '_line_height',
+							'color'          => $id . '_font_color',
+							'letter_spacing' => $id . '_letter_spacing',
+							'text_transform' => $id . '_text_transform',
 						),
 					)
 				)
@@ -180,8 +196,7 @@ function ogf_customize_register( $wp_customize ) {
 		foreach ( $weights as $key => $value ) {
 			$new_variants[ $key ] = $all_variants[ $key ];
 		}
-		unset($new_variants[0]);
-
+		unset( $new_variants[0] );
 
 		$wp_customize->add_setting(
 			$font_id . '_weights',

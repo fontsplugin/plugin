@@ -9,13 +9,13 @@
 				function addGoogleFont( fontName ) {
 					const font = ogf_font_array[ fontName ];
 					const weights = jQuery.map(
-						font.variants,
+						font.v,
 						function( value, key ) {
 							return key;
 						}
 					);
 					const weightsURL = weights.join( ',' );
-					const fontURL = font.family.replace( / /g, '+' ) + ':' + weightsURL;
+					const fontURL = font.f.replace( / /g, '+' ) + ':' + weightsURL;
 					wp.customize.previewer.send( 'olympusFontURL', '<link href=\'https://fonts.googleapis.com/css?family=' + fontURL + '\' rel=\'stylesheet\' type=\'text/css\'>' );
 				}
 
@@ -38,7 +38,7 @@
 
 							const font = ogf_font_array[ value ];
 							const weightsSelect = jQuery( '.typography-font-weight select' );
-							const newWeights = font.variants;
+							const newWeights = font.v;
 
 							// remove variants the font doesn't support.
 							for (const property in ogf_font_variants) {
@@ -96,11 +96,13 @@
 				jQuery( '.slider-custom-control' ).each( function() {
 					const sliderValue = jQuery( this ).find( '.customize-control-slider-value' ).val();
 					const newSlider = jQuery( this ).find( '.slider' );
+					const sliderMinValue = parseFloat( newSlider.attr( 'slider-min-value' ) );
 					const sliderMaxValue = parseFloat( newSlider.attr( 'slider-max-value' ) );
 					const sliderStepValue = parseFloat( newSlider.attr( 'slider-step-value' ) );
 
 					newSlider.slider( {
 						value: sliderValue,
+						min: sliderMinValue,
 						max: sliderMaxValue,
 						step: sliderStepValue,
 						slide: function() {
