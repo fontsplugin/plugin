@@ -1,7 +1,11 @@
+= 2.1.1 =
+
+* Fix issue where customizer wasn't loading correct font weights.
+
 = 2.1.0 =
 
-* Further optimize fonts.json
-* Update fonts list
+* Further optimize fonts.json.
+* Update fonts list.
 
 = 2.0.7 =
 
@@ -9,7 +13,7 @@
 
 = 2.0.6 =
 
-* Output the 'Basic Setting' choices as CSS variables. props @helgatheviking
+* Output the 'Basic Setting' choices as CSS variables. props @helgatheviking.
 * Fix issue where important wasn't being applied to some system fonts.
 * Add welcome page.
 

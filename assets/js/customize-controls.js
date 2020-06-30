@@ -33,22 +33,47 @@
 					function() {
 						const value = jQuery( this ).val();
 						control.settings.family.set( value );
-						if ( value !== 'default' && ! isSystemFont( value ) ) {
-							addGoogleFont( value );
+						const weightsSelect = jQuery( '.typography-font-weight select' );
 
-							const font = ogf_font_array[ value ];
-							const weightsSelect = jQuery( '.typography-font-weight select' );
-							const newWeights = font.v;
+						if ( value === 'default' || isSystemFont( value ) ) {
 
-							// remove variants the font doesn't support.
-							for (const property in ogf_font_variants) {
-								if ( property != 0 && typeof( newWeights[property] ) == "undefined" ) delete ogf_font_variants[property];
+							const defaultWeights = {
+								0: "- Default -",
+								400: "Normal",
+								700: "Bold",
 							}
 
 							// replace the 'Font Weight' select field values.
 							weightsSelect.empty();
 							jQuery.each(
-								ogf_font_variants,
+								defaultWeights,
+								function( key, val ) {
+									weightsSelect.append(
+										jQuery( '<option></option>' )
+											.attr( 'value', key ).text( val )
+									);
+								}
+							);
+
+						} else {
+							// Add Google Font enqueue to head of customizer.
+							addGoogleFont( value );
+
+							const font = ogf_font_array[ value ];
+							const newWeights = font.v;
+							newWeights[0] = "0";
+
+							// remove variants the font doesn't support.
+							var finalWeights = new Object();
+							for( var i in newWeights ) {
+								finalWeights[i] = ogf_font_variants[i];
+							}
+
+							// replace the 'Font Weight' select field values.
+							const weightsSelect = jQuery( '.typography-font-weight select' );
+							weightsSelect.empty();
+							jQuery.each(
+								finalWeights,
 								function( key, val ) {
 									weightsSelect.append(
 										jQuery( '<option></option>' )
