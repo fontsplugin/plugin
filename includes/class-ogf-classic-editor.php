@@ -61,9 +61,23 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 */
 		public function tinymce_custom_options( $opt ) {
 
-				$opt['font_formats'] = apply_filters( 'ogf_classic_font_formats', 'Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;' );
+			$base_type     = get_theme_mod( 'ogf_body_font' );
+			$headings_type = get_theme_mod( 'ogf_headings_font' );
 
-				return $opt;
+			$opt['font_formats'] = apply_filters( 'ogf_classic_font_formats', 'Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;' );
+
+			if ( ! isset( $opt['content_style'] ) ) {
+				$opt['content_style'] = '';
+			}
+
+			if ( $base_type !== 'default' ) {
+				$opt['content_style'] .= 'body, body p { font-family: ' . $base_type . ' !important; }';
+			}
+			if ( $headings_type !== 'default' ) {
+				$opt['content_style'] .= 'h1, h2, h3, h4, h5, h6 { font-family: ' . $headings_type . ' !important; }';
+			}
+
+			return $opt;
 		}
 
 		/**

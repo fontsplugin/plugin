@@ -67,7 +67,7 @@ class OGF_Customize_Multiple_Fonts_Control extends WP_Customize_Control {
 		<# if ( typeof ogf_font_array != 'undefined' ) { #>
 			<select data-placeholder="Choose some fonts..." multiple class="ogf-select" {{{ data.link }}}>
 				<# _.each( ogf_font_array, function( font_data, font_id ) { #>
-					<option value="{{ font_id }}">{{ font_data.family }}</option>
+					<option value="{{ font_id }}">{{ font_data.f }}</option>
 				<# } ) #>
 			</select>
 		<# } #>
