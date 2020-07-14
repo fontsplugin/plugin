@@ -1,5 +1,9 @@
 = 2.1.2 =
 
+* Fix broken link in readme.
+
+= 2.1.2 =
+
 * Overwrite the Classic Editor's typography using the 'Basic Settings'.
 
 = 2.1.1 =

@@ -5,12 +5,12 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.4
 License: GPLv2 or later
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 
 The easiest to use Google Fonts Typography Plugin. No coding required. 900+ font choices.
 
 == Description ==
-The [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_campaign=intro) library currently contains 877 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
+The [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=intro) library currently contains 998 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
 
 You're not stuck with one font for the entire website, you can easily choose one font for headings and another for your content.
 
@@ -36,7 +36,7 @@ The full Google Fonts library can be found here - [Google Fonts](https://fonts.g
 * Host Google Fonts Locally.
 * Font Size, Weight, Color and Line Height Typography Settings.
 
-> Note: some features are Premium. Which means you need to upgrade to unlock those features. You can upgrade here: [Google Fonts Pro](https://fontsplugin.com/pro-upgrade/?utm_source=wporg&utm_campaign=upgrade)
+> Note: some features are Premium. Which means you need to upgrade to unlock those features. You can upgrade here: [Google Fonts Pro](https://fontsplugin.com/pro-upgrade/?utm_source=wporg&utm_medium=readme&utm_campaign=upsell)
 
 = Plugin Compatibility =
 
@@ -54,12 +54,12 @@ The Google Fonts for WordPress plugin will work with all WordPress themes and ha
 
 For more info on Google Fonts for Wordpress, check out the following:
 
-* [Documentation](https://fontsplugin.com/docs/?utm_source=wporg)
-* [Font Combinations](https://fontsplugin.com/font-combinations/?utm_source=wporg)
-* [How to Use Google Fonts in WordPress](https://fontsplugin.com/wordpress-google-fonts/?utm_source=wporg)
-* [Google Fonts in Beaver Builder](https://docs.fontsplugin.com/integrations/beaver-builder)
-* [Google Fonts in Elementor](https://docs.fontsplugin.com/integrations/elementor)
-* [Google Fonts in WPBakery](https://docs.fontsplugin.com/integrations/wpbakery)
+* [Documentation](https://docsfontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
+* [Font Combinations](https://fontsplugin.com/font-combinations/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
+* [How to Use Google Fonts in WordPress](https://fontsplugin.com/wordpress-google-fonts/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
+* [Google Fonts in Beaver Builder](https://docs.fontsplugin.com/integrations/beaver-builder/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
+* [Google Fonts in Elementor](https://docs.fontsplugin.com/integrations/elementor/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
+* [Google Fonts in WPBakery](https://docs.fontsplugin.com/integrations/wpbakery/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 
 = Bugs =
 If you find an issue with Google Fonts Typography, let us know [here](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)!

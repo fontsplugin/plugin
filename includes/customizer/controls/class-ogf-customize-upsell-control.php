@@ -39,7 +39,7 @@ class OGF_Customize_Upsell_Control extends WP_Customize_Control {
 					<li>⚡️ Optimized Font Loading</li>
 					<li>🧙‍ Custom Elements</li>
 				</ul>
-				<a class="upsell__button button button-primary" href="https://fontsplugin.com/pro-upgrade/?utm_source=customizer&utm_campaign=<?php echo esc_attr( $this->section ); ?>" target="_blank">Learn More</a>
+				<a class="upsell__button button button-primary" href="https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=customizer&utm_campaign=<?php echo esc_attr( $this->section ); ?>" target="_blank">Learn More</a>
 			</div>
 		<?php
 	}
