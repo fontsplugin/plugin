@@ -116,13 +116,13 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your sidebar headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__sidebar',
-			'selectors'   => '.widget-title, .widget-area h1, .widget-area h2, .widget-area h3, .widget-area h4, .widgets-area h5, .widget-area h6',
+			'selectors'   => '.widget-title, .widget-area h1, .widget-area h2, .widget-area h3, .widget-area h4, .widgets-area h5, .widget-area h6, #secondary h1, #secondary h2, #secondary h3, #secondary h4, .widgets-area h5, #secondary h6',
 		),
 		'ogf_sidebar_content' => array(
 			'label'       => esc_html__( 'Content Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your sidebar content.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__sidebar',
-			'selectors'   => '.widget-area, .widget, .sidebar, #sidebar',
+			'selectors'   => '.widget-area, .widget, .sidebar, #sidebar, #secondary',
 		),
 		'ogf_footer_headings' => array(
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
