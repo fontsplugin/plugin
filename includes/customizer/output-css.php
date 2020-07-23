@@ -205,8 +205,8 @@ function ogf_generate_css_variables() {
 	$css =
 	'
 	:root {
-		--font-body: ' . esc_attr( $body_font_stack ) . ';
-		--font-heading: ' . esc_attr( $headings_font_stack ) . ';
+		--font-base: ' . esc_attr( $body_font_stack ) . ';
+		--font-headings: ' . esc_attr( $headings_font_stack ) . ';
 		--font-input: ' . esc_attr( $inputs_font_stack ) . ';
 	}
 	';
