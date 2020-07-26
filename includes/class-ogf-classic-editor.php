@@ -71,10 +71,10 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			}
 
 			if ( $base_type !== 'default' ) {
-				$opt['content_style'] .= 'body, body p { font-family: ' . $base_type . ' !important; }';
+				$opt['content_style'] .= 'body#tinymce, body#tinymce p { font-family: ' . $base_type . ' !important; }';
 			}
 			if ( $headings_type !== 'default' ) {
-				$opt['content_style'] .= 'h1, h2, h3, h4, h5, h6 { font-family: ' . $headings_type . ' !important; }';
+				$opt['content_style'] .= '#tinymce h1, #tinymce h2, #tinymce h3, #tinymce h4, #tinymce h5, #tinymce h6 { font-family: ' . $headings_type . ' !important; }';
 			}
 
 			return $opt;

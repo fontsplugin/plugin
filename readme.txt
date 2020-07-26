@@ -1,11 +1,11 @@
-=== Google Fonts Typography ===
+=== Fonts Plugin | Google Fonts Typography ===
 Contributors: DannyCooper, googlefonts
 Tags: google, fonts, google fonts, typography, elementor
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.4
 License: GPLv2 or later
-Stable tag: 2.1.5
+Stable tag: 2.1.6
 
 The easiest to use Google Fonts Typography Plugin. No coding required. 900+ font choices.
 

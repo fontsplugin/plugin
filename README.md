@@ -1,4 +1,4 @@
-Olympus Google Fonts
+Fonts Plugin | Google Fonts Typography
 ===
 
 Quickly and easily customize your website using Google Fonts.

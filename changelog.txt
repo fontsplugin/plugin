@@ -1,3 +1,7 @@
+= 2.1.6 =
+
+* Update fonts list.
+
 = 2.1.5 =
 
 * Rewrite CSS vars to use Automattic's theme format.
