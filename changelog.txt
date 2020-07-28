@@ -1,3 +1,8 @@
+= 2.1.8 =
+
+* Fix text-transform control not showing correctly.
+* Improve color control styling.
+
 = 2.1.7 =
 
 * Fix italic fonts not listed correctly in fonts.json.

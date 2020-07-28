@@ -32,14 +32,17 @@
 	width: 85%;
 }
 
-.customize-control-typography li.typography-font-color,
 .customize-control-typography li.typography-font-style,
-.customize-control-typography li.typography-font-weight,
-.customize-control-typography li.typography-text-transform {
+.customize-control-typography li.typography-font-weight {
 	width: 50%;
 	float: left;
 }
 
+.customize-control-typography li.typography-font-color .wp-picker-clear {
+	min-height: 30px;
+}
+
+.customize-control-typography li.typography-font-color,
 .customize-control-typography li.typography-font-size,
 .customize-control-typography li.typography-line-height,
 .customize-control-typography li.typography-letter-spacing {
@@ -49,9 +52,12 @@
 }
 
 .customize-control-typography li.typography-font-style select,
-.customize-control-typography li.typography-font-weight select,
-.customize-control-typography li.typography-text-transform select {
+.customize-control-typography li.typography-font-weight select {
 	width: 90%;
+}
+
+.customize-control-typography li.typography-text-transform select {
+    width: 93%;
 }
 
 .customize-control-typography li.typography-font-weight {

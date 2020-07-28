@@ -186,19 +186,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 				</li>
 			<# } #>
 
-			<# if ( data.text_transform && data.text_transform.choices ) { #>
-				<li class="typography-text-transform">
-					<# if ( data.text_transform.label ) { #>
-						<span class="customize-control-title">{{ data.text_transform.label }}</span>
-					<# } #>
-					<select {{{ data.text_transform.link }}}>
-						<# _.each( data.text_transform.choices, function( label, choice ) { #>
-							<option value="{{ choice }}" <# if ( choice === data.text_transform.value ) { #> selected="selected" <# } #>>{{ label }}</option>
-						<# } ) #>
-					</select>
-				</li>
-			<# } #>
-
 			<# if ( data.size ) { #>
 				<li class="typography-font-size">
 					<div class="slider-custom-control">
@@ -239,6 +226,19 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 				</li>
 			<# } #>
 
+			<# if ( data.text_transform && data.text_transform.choices ) { #>
+				<li class="typography-text-transform">
+					<# if ( data.text_transform.label ) { #>
+						<span class="customize-control-title">{{ data.text_transform.label }}</span>
+					<# } #>
+					<select {{{ data.text_transform.link }}}>
+						<# _.each( data.text_transform.choices, function( label, choice ) { #>
+							<option value="{{ choice }}" <# if ( choice === data.text_transform.value ) { #> selected="selected" <# } #>>{{ label }}</option>
+						<# } ) #>
+					</select>
+				</li>
+			<# } #>
+			
 		</div>
 
 		</ul>

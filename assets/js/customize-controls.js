@@ -100,6 +100,7 @@
 
 				picker.wpColorPicker(
 					{
+						width : 225,
 						change: function() {
 							setTimeout(
 								function() {
