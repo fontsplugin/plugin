@@ -193,7 +193,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 								<span class="customize-control-title">{{ data.size.label }}</span>
 							<# } #>
 							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.size.value }}"></span>
-							<div class="slider" slider-max-value="72" slider-step-value="1"></div>
+							<div class="slider" slider-min-value="1" slider-max-value="72" slider-step-value="1"></div>
 							<input class="customize-control-slider-value" {{{ data.size.link }}} type="number" value="{{ data.size.value }}">
 					</div>
 				</li>
@@ -207,7 +207,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 							<# } #>
 							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.line_height.value }}"></span>
 
-							<div class="slider" slider-max-value="3" slider-step-value=".1"></div>
+							<div class="slider" slider-min-value="0" slider-max-value="3" slider-step-value=".1"></div>
 							<input class="customize-control-slider-value" {{{ data.line_height.link }}} type="number" value="{{ data.line_height.value }}">
 					</div>
 				</li>
@@ -238,7 +238,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 					</select>
 				</li>
 			<# } #>
-			
+
 		</div>
 
 		</ul>
