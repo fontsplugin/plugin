@@ -14,8 +14,8 @@ class OGF_Admin_Welcome_Screen {
 	 * Start up
 	 */
 	public function __construct() {
-			add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
+		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 	}
 
 	/**
