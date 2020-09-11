@@ -39,6 +39,10 @@ class Olympus_Google_Fonts {
 	 */
 	public function includes() {
 
+		// Custom uploads functionality.
+		require OGF_DIR_PATH . 'includes/class-ogf-fonts-taxonomy.php';
+		require OGF_DIR_PATH . 'admin/class-ogf-upload-fonts-screen.php';
+
 		// Required files for building the Google Fonts URL.
 		include OGF_DIR_PATH . 'includes/functions.php';
 		include OGF_DIR_PATH . 'includes/class-ogf-fonts.php';
@@ -84,7 +88,7 @@ class Olympus_Google_Fonts {
 
 		$fonts = new OGF_Fonts();
 
-		if ( $fonts->has_custom_fonts() ) {
+		if ( $fonts->has_google_fonts() ) {
 			$url = $fonts->build_url();
 			wp_enqueue_style( 'olympus-google-fonts', $url, array(), OGF_VERSION );
 
@@ -123,6 +127,7 @@ class Olympus_Google_Fonts {
 
 		wp_localize_script( 'ogf-customize-controls', 'ogf_font_array', ogf_fonts_array() );
 		wp_localize_script( 'ogf-customize-controls', 'ogf_system_fonts', ogf_system_fonts() );
+		wp_localize_script( 'ogf-customize-controls', 'ogf_custom_fonts', ogf_custom_fonts() );
 		wp_localize_script( 'ogf-customize-controls', 'ogf_font_variants', ogf_font_variants() );
 	}
 
@@ -137,6 +142,7 @@ class Olympus_Google_Fonts {
 
 		wp_localize_script( 'ogf-customize-preview', 'ogf_elements', $elements );
 		wp_localize_script( 'ogf-customize-preview', 'ogf_system_fonts', ogf_system_fonts() );
+		wp_localize_script( 'ogf-customize-preview', 'ogf_custom_fonts', ogf_custom_fonts() );
 
 	}
 

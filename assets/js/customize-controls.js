@@ -26,6 +26,13 @@
 					return false;
 				}
 
+				function isCustomFont( fontID ) {
+					if ( fontID.indexOf( 'cf-' ) !== -1 ) {
+						return true;
+					}
+					return false;
+				}
+
 				// Load the font-weights for the newly selected font.
 				control.container.on(
 					'change',
@@ -35,7 +42,7 @@
 						control.settings.family.set( value );
 						const weightsSelect = jQuery( '.typography-font-weight select' );
 
-						if ( value === 'default' || isSystemFont( value ) ) {
+						if ( value === 'default' || isSystemFont( value ) || isCustomFont( value ) ) {
 
 							const defaultWeights = {
 								0: "- Default -",

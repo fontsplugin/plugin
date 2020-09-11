@@ -23,6 +23,7 @@ function olympus_google_fonts_block_js() {
 		OGF_VERSION,
 		false
 	);
+	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts', ogf_custom_fonts() );
 }
 
 add_action( 'enqueue_block_editor_assets', 'olympus_google_fonts_block_js' );
@@ -49,7 +50,7 @@ function olympus_google_fonts_register_block() {
 				),
 				'variant'    => array(
 					'type'    => 'string',
-					'default' => 'regular',
+					'default' => 'normal',
 				),
 				'fontSize'   => array(
 					'type' => 'number',
@@ -93,24 +94,17 @@ function olympus_google_fonts_block_render( $attributes ) {
 
 	if ( $font_id ) {
 
-		$system_fonts = ogf_system_fonts();
+		// standardize the format.
+		$font_id_standardized = str_replace( '+', '-', strtolower( $font_id ) );
 
-		if ( array_key_exists( $font_id, $system_fonts ) ) {
-
-			$font_family = $system_fonts[ $font_id ]['stack'];
-
-		} else {
-
-			$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
-			$font_id     = str_replace( '+', '-', strtolower( $font_id ) );
-			$fonts       = ogf_fonts_array();
-			$variants    = $fonts[ $font_id ]['v'];
-			unset( $variants[0] );
+		if ( array_key_exists( $font_id_standardized, OGF_Fonts::$google_fonts ) ) {
+			$variants = OGF_Fonts::$google_fonts[ $font_id_standardized ]['v'];
 
 			$variants_for_url = join( array_keys( $variants ), ',' );
 
-			wp_enqueue_style( 'google-font-' . $font_id, 'https://fonts.googleapis.com/css?family=' . $font_family . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
+			wp_enqueue_style( 'google-font-' . $font_id_standardized, 'https://fonts.googleapis.com/css?family=' . $font_id . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
 
+			$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
 		}
 
 		$style = "font-family: {$font_family};";
@@ -136,7 +130,7 @@ function olympus_google_fonts_block_render( $attributes ) {
 		$style .= "color: {$color};";
 	}
 
-	$output .= '<' . $block_type . ' class="google-fonts-blocks" style="' . $style . '">';
+	$output .= '<' . $block_type . ' class="fonts-plugin-block" style="' . $style . '">';
 	$output .= $content;
 	$output .= '</' . $block_type . '>';
 

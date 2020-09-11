@@ -24,7 +24,7 @@ define( 'OGF_DIR_URL', plugin_dir_url( __FILE__ ) );
 
 require OGF_DIR_PATH . 'class-olympus-google-fonts.php';
 require OGF_DIR_PATH . 'blocks/init.php';
-require OGF_DIR_PATH . 'admin/welcome.php';
+require OGF_DIR_PATH . 'admin/class-ogf-welcome-screen.php';
 
 $gfwp = new Olympus_Google_Fonts();
 

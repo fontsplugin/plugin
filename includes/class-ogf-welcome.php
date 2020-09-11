@@ -86,7 +86,7 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 			}
 			?>
 
-			<div class="notice notice-<?php echo esc_attr( $this->type ); ?> is-dismissible notice-dismiss-dc"  data-notice="<?php echo esc_attr( $this->slug ); ?>">
+			<div class="notice notice-<?php echo esc_attr( $this->type ); ?> is-dismissible notice-dismiss-dc" data-notice="<?php echo esc_attr( $this->slug ); ?>">
 				<p>
 					<?php
 						echo $this->message; // WPCS: XSS ok.
