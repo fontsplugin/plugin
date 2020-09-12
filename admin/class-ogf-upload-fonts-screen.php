@@ -44,7 +44,7 @@ class OGF_Upload_Fonts_Admin_Screen {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 
 		add_action( 'admin_menu', array( $this, 'register_custom_fonts_menu' ), 101 );
-		add_action( 'admin_head', array( $this, 'custom_fonts_menu_highlight' ) );
+		add_action( 'admin_head', array( $this, 'customize_output' ) );
 
 		add_filter( 'manage_edit-' . OGF_Fonts_Taxonomy::$taxonomy_slug . '_columns', array( $this, 'manage_columns' ) );
 
@@ -71,6 +71,10 @@ class OGF_Upload_Fonts_Admin_Screen {
 	 */
 	public function register_custom_fonts_menu() {
 
+		if ( ! defined( 'OGF_PRO' ) ) {
+			return;
+		}
+
 		$title = apply_filters( 'ogf_custom_fonts_menu_title', __( 'Upload Fonts', 'olympus-google-fonts' ) );
 		add_submenu_page(
 			$this->parent_menu_slug,
@@ -79,12 +83,13 @@ class OGF_Upload_Fonts_Admin_Screen {
 			OGF_Fonts_Taxonomy::$capability,
 			'edit-tags.php?taxonomy=' . OGF_Fonts_Taxonomy::$taxonomy_slug
 		);
+
 	}
 
 	/**
 	 * Modify taxonomy output.
 	 */
-	public function custom_fonts_menu_highlight() {
+	public function customize_output() {
 		global $parent_file, $submenu_file;
 
 		if ( 'edit-tags.php?taxonomy=' . OGF_Fonts_Taxonomy::$taxonomy_slug === $submenu_file ) {

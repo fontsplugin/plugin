@@ -33,6 +33,14 @@ class OGF_Admin_Welcome_Screen {
 			61
 		);
 
+		add_submenu_page(
+			'fonts-plugin',
+			__( 'Customize Fonts', 'olympus-google-fonts' ),
+			__( 'Customize Fonts', 'olympus-google-fonts' ),
+			'manage_options',
+			esc_url( admin_url( '/customize.php?autofocus[panel]=ogf_google_fonts' ) )
+		);
+
 	}
 
 	/**
