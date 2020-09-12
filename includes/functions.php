@@ -191,6 +191,16 @@ function ogf_fonts_array() {
 }
 
 /**
+ * Return a array of custom fonts.
+ */
+function ogf_custom_fonts() {
+
+	return OGF_Fonts_Taxonomy::get_fonts();
+
+}
+
+
+/**
  * Return a array of system fonts.
  */
 function ogf_system_fonts() {
@@ -312,6 +322,18 @@ function ogf_font_variants() {
  */
 function ogf_is_system_font( $font_id ) {
 	if ( strpos( $font_id, 'sf-' ) === 0 ) {
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Check if a font is a custom font (not Google Font).
+ *
+ * @param string $font_id The ID of the font to check.
+ */
+function ogf_is_custom_font( $font_id ) {
+	if ( strpos( $font_id, 'cf-' ) === 0 ) {
 		return true;
 	}
 	return false;

@@ -42,7 +42,17 @@ class GoogleFontsBlock extends Component {
 			};
 		} );
 
-		return systemFonts.concat( googleFonts );
+		const combinedFonts = systemFonts.concat( googleFonts );
+
+		const customFonts = Object.values(ogf_custom_fonts).map( ( font ) => {
+
+			return {
+				value: font.id,
+				label: font.label,
+			};
+		} );
+
+		return combinedFonts.concat( customFonts );
 	}
 
 	searchFonts( nameKey, myArray ){
@@ -53,15 +63,23 @@ class GoogleFontsBlock extends Component {
     }
 	}
 
-	isSystemFont( fontID ) {
-		const searchResults = this.searchFonts( fontID, systemFontsJson.items );
+	isCustomFont( fontID ) {
+		const searchResults = this.searchFonts( fontID, Object.values(ogf_custom_fonts) );
 
 		if ( typeof searchResults === 'object' ) {
 			return true;
 		}
 
 		return false;
+	}
 
+	isSystemFont( fontID ) {
+		const searchResults = this.searchFonts( fontID, systemFontsJson.items );
+		if ( typeof searchResults === 'object' ) {
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -138,7 +156,7 @@ class GoogleFontsBlock extends Component {
 	 * @param {Object} fontObject The font object.
 	 */
 	addGoogleFontToHead( fontFamily, fontObject ) {
-		if ( ! fontFamily || ! fontObject || this.isSystemFont() ) {
+		if ( ! fontFamily || ! fontObject ) {
 			return;
 		}
 
@@ -174,7 +192,7 @@ class GoogleFontsBlock extends Component {
 			},
 		];
 
-		if ( ! this.isSystemFont( fontID ) ) {
+		if ( ! this.isSystemFont( fontID ) && ! this.isCustomFont( fontID ) ) {
 			const fontObject = this.getFontObject( fontID.replace( /\+/g, ' ' ) );
 			variantOptions = this.getVariantsForSelect( fontObject );
 			this.addGoogleFontToHead( fontID, fontObject );

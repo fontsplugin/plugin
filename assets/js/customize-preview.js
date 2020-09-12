@@ -1,4 +1,4 @@
-/* global ogf_elements, ogf_system_fonts */
+/* global ogf_elements, ogf_system_fonts, ogf_custom_fonts */
 jQuery( document ).ready(
 	function() {
 		// Retrieve the Google Fonts url from the Customizer and append it to head.
@@ -19,6 +19,11 @@ jQuery( document ).ready(
 					const fontID = value.replace( 'sf-', '' );
 					v.style.setProperty( 'font-family', ogf_system_fonts[ fontID ].stack, 'important' );
 				} );
+			} else if ( isCustomFont( value ) ) {
+				jQuery( selector ).each( function( i, v ) {
+					const fontID = value.replace( 'cf-', '' );
+					v.style.setProperty( 'font-family', ogf_custom_fonts[ fontID ].stack, 'important' );
+				} );
 			} else {
 				jQuery( selector ).each( function( i, v ) {
 					v.style.setProperty( 'font-family', '"' + value.split( '-' ).join( ' ' ) + '"', 'important' );
@@ -28,6 +33,13 @@ jQuery( document ).ready(
 
 		function isSystemFont( fontID ) {
 			if ( fontID.indexOf( 'sf-' ) !== -1 ) {
+				return true;
+			}
+			return false;
+		}
+
+		function isCustomFont( fontID ) {
+			if ( fontID.indexOf( 'cf-' ) !== -1 ) {
 				return true;
 			}
 			return false;

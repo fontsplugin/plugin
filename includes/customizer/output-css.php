@@ -17,6 +17,7 @@ function ogf_output_css() {
 		<?php
 
 		do_action( 'ogf_inline_styles' );
+		echo render_custom_font_css();
 
 		foreach ( ogf_get_elements() as $id => $values ) {
 			ogf_generate_css( $values['selectors'], $id );
@@ -24,6 +25,8 @@ function ogf_output_css() {
 		foreach ( ogf_get_custom_elements() as $id => $values ) {
 			ogf_generate_css( $values['selectors'], $id );
 		}
+
+
 		?>
 	</style>
 	<!-- Fonts Plugin CSS -->
@@ -32,6 +35,43 @@ function ogf_output_css() {
 
 // Output custom CSS to live site.
 add_action( 'wp_head', 'ogf_output_css', 1000 );
+
+/**
+ *
+ */
+function render_custom_font_css() {
+	$fonts = OGF_Fonts_Taxonomy::get_fonts();
+
+	$css = '';
+
+	foreach ( $fonts as $font => $data ) {
+
+		$files = $data['files'];
+
+		if ( $files['woff'] || $files['woff2'] || $files['ttf'] || $files['otf'] ) {
+
+			$arr  = array();
+			$css .= '@font-face { font-family:' . esc_attr( $font ) . '; src:';
+			if ( $data['files']['woff'] ) {
+				$arr[] = 'url(' . esc_url( $data['files']['woff'] ) . ") format('woff')";
+			}
+			if ( $data['files']['woff2'] ) {
+				$arr[] = 'url(' . esc_url( $data['files']['woff2'] ) . ") format('woff2')";
+			}
+			if ( $data['files']['ttf'] ) {
+				$arr[] = 'url(' . esc_url( $data['files']['ttf'] ) . ") format('truetype')";
+			}
+			if ( $data['files']['otf'] ) {
+				$arr[] = 'url(' . esc_url( $data['files']['otf'] ) . ") format('opentype')";
+			}
+			$css .= join( ', ', $arr );
+			$css .= '; }';
+		}
+	}
+
+	return $css;
+
+}
 
 /**
  * Helper function to build the CSS styles.
@@ -146,24 +186,36 @@ function ogf_generate_css( $selector, $option_name ) {
  */
 function ogf_build_font_stack( $font_id ) {
 
-	$google_fonts = ogf_fonts_array();
+	if ( strpos( $font_id, 'sf-' ) !== false ) {
 
-	if ( array_key_exists( $font_id, $google_fonts ) ) {
+		$system_fonts = ogf_system_fonts();
 
-		$stack = '"' . $google_fonts[ $font_id ]['f'] . '"';
+		$font_id = str_replace( 'sf-', '', $font_id );
 
-		return $stack;
+		if ( array_key_exists( $font_id, $system_fonts ) ) {
 
-	}
+			return $system_fonts[ $font_id ]['stack'];
 
-	$system_fonts = ogf_system_fonts();
+		}
+	} elseif ( strpos( $font_id, 'cf-' ) !== false ) {
 
-	$font_id = str_replace( 'sf-', '', $font_id );
+		$custom_fonts = ogf_custom_fonts();
 
-	if ( array_key_exists( $font_id, $system_fonts ) ) {
+		$font_id = str_replace( 'cf-', '', $font_id );
 
-		return $system_fonts[ $font_id ]['stack'];
+		if ( array_key_exists( $font_id, $custom_fonts ) ) {
+			return $custom_fonts[ $font_id ]['stack'];
+		}
+	} else {
 
+		$google_fonts = ogf_fonts_array();
+
+		if ( array_key_exists( $font_id, $google_fonts ) ) {
+
+			$stack = '"' . $google_fonts[ $font_id ]['f'] . '"';
+
+			return $stack;
+		}
 	}
 
 }

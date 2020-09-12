@@ -14,7 +14,7 @@ function ogf_gutenberg_enqueue_fonts() {
 
 	$fonts = new OGF_Fonts();
 
-	if ( $fonts->has_custom_fonts() ) {
+	if ( $fonts->has_google_fonts() ) {
 		$url = $fonts->build_url();
 		wp_enqueue_style( 'olympus-google-fonts', $url, array(), OGF_VERSION );
 
