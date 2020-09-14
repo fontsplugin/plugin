@@ -6,7 +6,7 @@ import systemFontsJson from './systemFonts.json';
 const { __ } = wp.i18n;
 const { Component, Fragment } = wp.element;
 const { SelectControl, RangeControl, PanelBody } = wp.components;
-const { RichText, InspectorControls, BlockControls, AlignmentToolbar, PanelColorSettings } = wp.editor;
+const { RichText, InspectorControls, BlockControls, AlignmentToolbar, PanelColorSettings } = wp.blockEditor;
 
 class GoogleFontsBlock extends Component {
 
@@ -22,6 +22,21 @@ class GoogleFontsBlock extends Component {
 	 * @returns {Object}  value/label pair.
 	 */
 	getFontsForSelect() {
+
+		const customFonts = Object.values( ogf_custom_fonts ).map( ( font ) => {
+
+			return {
+				value: font.id,
+				label: font.label,
+			};
+		} );
+
+		customFonts.unshift({
+			value: '',
+			label: __( '- Custom Fonts -', 'olympus-google-fonts' ),
+			disabled: true,
+		});
+
 		const systemFonts = systemFontsJson.items.map( ( font ) => {
 			const label = font.label;
 			const value = font.id;
@@ -31,6 +46,14 @@ class GoogleFontsBlock extends Component {
 				label: label,
 			};
 		} );
+
+		systemFonts.unshift({
+			value: '',
+			label: __( '- System Fonts -', 'olympus-google-fonts' ),
+			disabled: true,
+		});
+
+		const combinedFonts = customFonts.concat( systemFonts );
 
 		const googleFonts = fontsJson.items.map( ( font ) => {
 			const label = font.f;
@@ -42,17 +65,13 @@ class GoogleFontsBlock extends Component {
 			};
 		} );
 
-		const combinedFonts = systemFonts.concat( googleFonts );
+		googleFonts.unshift({
+			value: '',
+			label: __( '- Google Fonts -', 'olympus-google-fonts' ),
+			disabled: true,
+		});
 
-		const customFonts = Object.values(ogf_custom_fonts).map( ( font ) => {
-
-			return {
-				value: font.id,
-				label: font.label,
-			};
-		} );
-
-		return combinedFonts.concat( customFonts );
+		return combinedFonts.concat( googleFonts );
 	}
 
 	searchFonts( nameKey, myArray ){
@@ -64,7 +83,7 @@ class GoogleFontsBlock extends Component {
 	}
 
 	isCustomFont( fontID ) {
-		const searchResults = this.searchFonts( fontID, Object.values(ogf_custom_fonts) );
+		const searchResults = this.searchFonts( fontID, Object.values( ogf_custom_fonts ) );
 
 		if ( typeof searchResults === 'object' ) {
 			return true;
@@ -285,7 +304,7 @@ class GoogleFontsBlock extends Component {
 						color: color,
 					} }
 					placeholder={ __( 'Add some content...', 'olympus-google-fonts' ) }
-					formattingControls={ [ 'italic', 'link' ] }
+					allowedFormats={ [ 'italic', 'link' ] }
 				/>
 			</Fragment>
 		);

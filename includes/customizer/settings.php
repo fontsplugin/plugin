@@ -180,53 +180,56 @@ function ogf_customize_register( $wp_customize ) {
 
 	$fonts = new OGF_Fonts();
 
-	$choices = $fonts->choices;
+	if ( $fonts->has_google_fonts() ) {
 
-	// Build the selective font loading controls.
-	foreach ( $choices as $font_id ) {
+		$choices = $fonts->choices;
 
-		if ( ogf_is_system_font( $font_id ) || ogf_is_custom_font( $font_id ) ) {
-			return;
-		}
+		// Build the selective font loading controls.
+		foreach ( $choices as $font_id ) {
 
-		$weights      = $fonts->get_font_weights( $font_id );
-		$name         = $fonts->get_font_name( $font_id );
-		$all_variants = ogf_font_variants();
-		$new_variants = array();
-		foreach ( $weights as $key => $value ) {
-			$new_variants[ $key ] = $all_variants[ $key ];
-		}
-		unset( $new_variants[0] );
+			if ( ogf_is_system_font( $font_id ) || ogf_is_custom_font( $font_id ) ) {
+				return;
+			}
 
-		$wp_customize->add_setting(
-			$font_id . '_weights',
-			array(
-				'default'   => array( '100', '200', '300', '400', '500', '600', '700', '800', '900', '100i', '200i', '300i', '400i', '500i', '600i', '700i', '800i', '900i' ),
-				'transport' => 'refresh',
-			)
-		);
+			$weights      = $fonts->get_font_weights( $font_id );
+			$name         = $fonts->get_font_name( $font_id );
+			$all_variants = ogf_font_variants();
+			$new_variants = array();
+			foreach ( $weights as $key => $value ) {
+				$new_variants[ $key ] = $all_variants[ $key ];
+			}
+			unset( $new_variants[0] );
 
-		$input_attrs = array();
-
-		if ( ! defined( 'OGF_PRO' ) ) {
-			$input_attrs = array(
-				'disabled' => false,
-			);
-		}
-
-		$wp_customize->add_control(
-			new OGF_Customize_Multiple_Checkbox_Control(
-				$wp_customize,
+			$wp_customize->add_setting(
 				$font_id . '_weights',
 				array(
-					'label'       => $name,
-					'section'     => 'ogf_font_loading',
-					'choices'     => $new_variants,
-					'input_attrs' => $input_attrs,
+					'default'   => array( '100', '200', '300', '400', '500', '600', '700', '800', '900', '100i', '200i', '300i', '400i', '500i', '600i', '700i', '800i', '900i' ),
+					'transport' => 'refresh',
 				)
-			)
-		);
+			);
 
+			$input_attrs = array();
+
+			if ( ! defined( 'OGF_PRO' ) ) {
+				$input_attrs = array(
+					'disabled' => false,
+				);
+			}
+
+			$wp_customize->add_control(
+				new OGF_Customize_Multiple_Checkbox_Control(
+					$wp_customize,
+					$font_id . '_weights',
+					array(
+						'label'       => $name,
+						'section'     => 'ogf_font_loading',
+						'choices'     => $new_variants,
+						'input_attrs' => $input_attrs,
+					)
+				)
+			);
+
+		}
 	}
 
 	$upsell_locations = array(

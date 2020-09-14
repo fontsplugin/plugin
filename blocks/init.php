@@ -105,6 +105,8 @@ function olympus_google_fonts_block_render( $attributes ) {
 			wp_enqueue_style( 'google-font-' . $font_id_standardized, 'https://fonts.googleapis.com/css?family=' . $font_id . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
 
 			$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
+		} else {
+			$font_family = $font_id;
 		}
 
 		$style = "font-family: {$font_family};";
