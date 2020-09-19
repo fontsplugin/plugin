@@ -54,7 +54,7 @@ The Google Fonts for WordPress plugin will work with all WordPress themes and ha
 
 For more info on Google Fonts for Wordpress, check out the following:
 
-* [Documentation](https://docsfontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
+* [Documentation](https://docs.fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [Font Combinations](https://fontsplugin.com/font-combinations/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [How to Use Google Fonts in WordPress](https://fontsplugin.com/wordpress-google-fonts/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [Google Fonts in Beaver Builder](https://docs.fontsplugin.com/integrations/beaver-builder/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
