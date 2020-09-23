@@ -338,3 +338,16 @@ function ogf_is_custom_font( $font_id ) {
 	}
 	return false;
 }
+
+/**
+ * Check if a font is a Google font.
+ *
+ * @param string $font_id The ID of the font to check.
+ */
+function ogf_is_google_font( $font_id ) {
+	if ( array_key_exists( $font_id, OGF_Fonts::$google_fonts ) ) {
+		return true;
+	}
+
+	return false;
+}

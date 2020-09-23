@@ -108,7 +108,11 @@ class OGF_Fonts {
 	 */
 	public function get_font_name( $font_id ) {
 
-		return self::$google_fonts[ $font_id ]['f'];
+		if ( array_key_exists( $font_id, self::$google_fonts ) ) {
+			return self::$google_fonts[ $font_id ]['f'];
+		} else {
+			return __( 'Font Missing', 'olympus-google-fonts' );
+		}
 
 	}
 

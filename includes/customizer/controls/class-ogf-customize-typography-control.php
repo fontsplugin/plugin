@@ -258,7 +258,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			return $all_variants;
 		}
 
-		if ( ogf_is_system_font( $font ) || ogf_is_custom_font( $font ) ) {
+		if ( ogf_is_system_font( $font ) || ogf_is_custom_font( $font ) || ! ogf_is_google_font( $font ) ) {
 			return array(
 				'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
 				'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),

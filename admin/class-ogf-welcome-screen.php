@@ -14,7 +14,7 @@ class OGF_Admin_Welcome_Screen {
 	 * Start up
 	 */
 	public function __construct() {
-		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
+		add_action( 'admin_menu', array( $this, 'add_plugin_page' ), 1 );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 	}
 
@@ -38,7 +38,8 @@ class OGF_Admin_Welcome_Screen {
 			__( 'Customize Fonts', 'olympus-google-fonts' ),
 			__( 'Customize Fonts', 'olympus-google-fonts' ),
 			'manage_options',
-			esc_url( admin_url( '/customize.php?autofocus[panel]=ogf_google_fonts' ) )
+			esc_url( admin_url( '/customize.php?autofocus[panel]=ogf_google_fonts' ) ),
+			5
 		);
 
 	}
