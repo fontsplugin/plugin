@@ -197,7 +197,7 @@ class OGF_Fonts {
 
 		$query_args = array(
 			'family'  => implode( '|', $families ),
-			'display' => 'swap',
+			'display' => get_theme_mod( 'ogf_font_display', 'swap' ),
 		);
 
 		return add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );

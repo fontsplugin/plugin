@@ -178,6 +178,29 @@ function ogf_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'ogf_font_display',
+		array(
+		  'sanitize_callback' => 'ogf_sanitize_select',
+		  'default' => 'swap',
+		)
+	);
+
+	$wp_customize->add_control(
+		'ogf_font_display',
+		array(
+		  'type'    => 'select',
+		  'section' => 'ogf_debugging', // Add a default or your own section
+		  'label'   => __( 'Font Display' ),
+		  'choices' => array(
+		    'swap'     => __( 'Swap', 'olympus-google-fonts' ),
+		    'block'    => __( 'Block', 'olympus-google-fonts' ),
+		    'fallback' => __( 'Fallback', 'olympus-google-fonts' ),
+		    'optional' => __( 'Optional', 'olympus-google-fonts' ),
+		  ),
+		)
+	);
+
 	$fonts = new OGF_Fonts();
 
 	if ( $fonts->has_google_fonts() ) {
@@ -269,3 +292,15 @@ function ogf_customize_register( $wp_customize ) {
 
 }
 add_action( 'customize_register', 'ogf_customize_register' );
+
+function ogf_sanitize_select( $input, $setting ) {
+
+  // Ensure input is a slug.
+  $input = sanitize_key( $input );
+
+  // Get list of choices from the control associated with the setting.
+  $choices = $setting->manager->get_control( $setting->id )->choices;
+
+  // If the input is a valid key, return it; otherwise, return the default.
+  return ( array_key_exists( $input, $choices ) ? $input : $setting->default );
+}

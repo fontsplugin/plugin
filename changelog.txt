@@ -1,3 +1,7 @@
+= 2.3.0 =
+
+* Add font-display option (block, swap, fallback, optional).
+
 = 2.2.4 =
 
 * Add failsafe to protect against fonts getting removed
