@@ -32,7 +32,7 @@ class GoogleFontsBlock extends Component {
 		} );
 
 		customFonts.unshift({
-			value: '',
+			value: '1',
 			label: __( '- Custom Fonts -', 'olympus-google-fonts' ),
 			disabled: true,
 		});
@@ -48,7 +48,7 @@ class GoogleFontsBlock extends Component {
 		} );
 
 		systemFonts.unshift({
-			value: '',
+			value: '1',
 			label: __( '- System Fonts -', 'olympus-google-fonts' ),
 			disabled: true,
 		});
@@ -66,7 +66,7 @@ class GoogleFontsBlock extends Component {
 		} );
 
 		googleFonts.unshift({
-			value: '',
+			value: '1',
 			label: __( '- Google Fonts -', 'olympus-google-fonts' ),
 			disabled: true,
 		});
@@ -304,7 +304,6 @@ class GoogleFontsBlock extends Component {
 						color: color,
 					} }
 					placeholder={ __( 'Add some content...', 'olympus-google-fonts' ) }
-					allowedFormats={ [ 'italic', 'link' ] }
 				/>
 			</Fragment>
 		);
