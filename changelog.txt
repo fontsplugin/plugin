@@ -1,3 +1,7 @@
+= 2.3.2 =
+
+* Fix join() error in PHP7.4
+
 = 2.3.1 =
 
 * Gutenberg block fixes
