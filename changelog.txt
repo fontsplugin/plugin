@@ -1,3 +1,7 @@
+= 2.3.4 =
+
+* Improve CSS specificity
+
 = 2.3.3 =
 
 * Classic Editor bug fix
