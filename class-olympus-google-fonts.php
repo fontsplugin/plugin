@@ -40,35 +40,35 @@ class Olympus_Google_Fonts {
 	public function includes() {
 
 		// Custom uploads functionality.
-		require OGF_DIR_PATH . 'includes/class-ogf-fonts-taxonomy.php';
-		require OGF_DIR_PATH . 'admin/class-ogf-upload-fonts-screen.php';
+		require_once OGF_DIR_PATH . 'includes/class-ogf-fonts-taxonomy.php';
+		require_once OGF_DIR_PATH . 'admin/class-ogf-upload-fonts-screen.php';
 
 		// Required files for building the Google Fonts URL.
-		include OGF_DIR_PATH . 'includes/functions.php';
-		include OGF_DIR_PATH . 'includes/class-ogf-fonts.php';
+		require_once OGF_DIR_PATH . 'includes/functions.php';
+		require_once OGF_DIR_PATH . 'includes/class-ogf-fonts.php';
 
 		// Required files for the customizer settings.
-		require OGF_DIR_PATH . 'includes/customizer/panels.php';
-		include OGF_DIR_PATH . 'includes/customizer/settings.php';
-		include OGF_DIR_PATH . 'includes/customizer/output-css.php';
+		require_once OGF_DIR_PATH . 'includes/customizer/panels.php';
+		require_once OGF_DIR_PATH . 'includes/customizer/settings.php';
+		require_once OGF_DIR_PATH . 'includes/customizer/output-css.php';
 
 		// Required files for the Gutenberg editor.
-		include OGF_DIR_PATH . 'includes/gutenberg/output-css.php';
+		require_once OGF_DIR_PATH . 'includes/gutenberg/output-css.php';
 
 		// Notifications class.
-		include OGF_DIR_PATH . 'includes/class-ogf-notifications.php';
+		require_once OGF_DIR_PATH . 'includes/class-ogf-notifications.php';
 
 		// Welcome notice class.
-		include OGF_DIR_PATH . 'includes/class-ogf-welcome.php';
+		require_once OGF_DIR_PATH . 'includes/class-ogf-welcome.php';
 
 		// Reset class.
-		require OGF_DIR_PATH . 'includes/class-ogf-reset.php';
+		require_once OGF_DIR_PATH . 'includes/class-ogf-reset.php';
 
 		// Classic Editor class.
-		require OGF_DIR_PATH . 'includes/class-ogf-classic-editor.php';
+		require_once OGF_DIR_PATH . 'includes/class-ogf-classic-editor.php';
 
 		// News widget.
-		require OGF_DIR_PATH . 'includes/class-ogf-dashboard-widget.php';
+		require_once OGF_DIR_PATH . 'includes/class-ogf-dashboard-widget.php';
 
 	}
 

@@ -22,7 +22,7 @@ add_action( 'customize_controls_enqueue_scripts', 'ogf_panels_customize_controls
  */
 function ogf_panels_customize_register( $wp_customize ) {
 
-	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-panel.php';
+	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-panel.php';
 	$wp_customize->register_panel_type( 'OGF_Customize_Panel' );
 
 	$ogf_panel = new OGF_Customize_Panel(

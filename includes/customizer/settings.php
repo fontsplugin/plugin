@@ -13,11 +13,11 @@
  * @param object $wp_customize Access to the $wp_customize object.
  */
 function ogf_customize_register( $wp_customize ) {
-	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-fonts-control.php';
-	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-typography-control.php';
-	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-repeater-control.php';
-	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-upsell-control.php';
-	require OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-checkbox-control.php';
+	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-fonts-control.php';
+	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-typography-control.php';
+	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-repeater-control.php';
+	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-upsell-control.php';
+	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-checkbox-control.php';
 
 	$wp_customize->register_control_type( 'OGF_Customize_Multiple_Fonts_Control' );
 	$wp_customize->register_control_type( 'OGF_Customize_Multiple_Checkbox_Control' );

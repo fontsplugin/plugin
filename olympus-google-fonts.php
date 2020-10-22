@@ -5,7 +5,7 @@
  * Plugin Name: Fonts Plugin | Google Fonts Typography
  * Plugin URI:  https://wordpress.org/plugins/olympus-google-fonts/
  * Description: The easiest to use Google Fonts typography plugin. No coding required. 900+ font choices.
- * Version:     2.3.1
+ * Version:     2.3.3
  * Author:      Fonts Plugin
  * Author URI:  https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=description
  * Text Domain: olympus-google-fonts
@@ -18,13 +18,21 @@
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
-define( 'OGF_VERSION', '2.3.1' );
-define( 'OGF_DIR_PATH', plugin_dir_path( __FILE__ ) );
-define( 'OGF_DIR_URL', plugin_dir_url( __FILE__ ) );
+if ( ! defined( 'OGF_VERSION' ) ) {
+	define( 'OGF_VERSION', '2.3.3' );
+}
 
-require OGF_DIR_PATH . 'class-olympus-google-fonts.php';
-require OGF_DIR_PATH . 'blocks/init.php';
-require OGF_DIR_PATH . 'admin/class-ogf-welcome-screen.php';
+if ( ! defined( 'OGF_DIR_PATH' ) ) {
+	define( 'OGF_DIR_PATH', plugin_dir_path( __FILE__ ) );
+}
+
+if ( ! defined( 'OGF_DIR_URL' ) ) {
+	define( 'OGF_DIR_URL', plugin_dir_url( __FILE__ ) );
+}
+
+require_once OGF_DIR_PATH . 'class-olympus-google-fonts.php';
+require_once OGF_DIR_PATH . 'blocks/init.php';
+require_once OGF_DIR_PATH . 'admin/class-ogf-welcome-screen.php';
 
 $gfwp = new Olympus_Google_Fonts();
 
@@ -33,33 +41,32 @@ $theme_author       = strtolower( esc_attr( $current_theme->get( 'Author' ) ) );
 $theme_author       = str_replace( ' ', '', $theme_author );
 $author_compat_path = OGF_DIR_PATH . '/compatibility/' . $theme_author . '.php';
 if ( file_exists( $author_compat_path ) ) {
-	require $author_compat_path;
+	require_once $author_compat_path;
 }
 
-/**
- * Add a redirection check on activation.
- */
-function ogf_activate() {
-	add_option( 'ogf_do_activation_redirect', true );
-}
-register_activation_hook( __FILE__, 'ogf_activate' );
-
-
-/**
- * Redirect to the Google Fonts Welcome page.
- */
-function ogf_redirect() {
-
-	// don't show the welcome message to users before v2.0.6.
-	if ( get_site_option( 'ogf_activation_date' ) < 1593090943 ) {
-		return;
+if ( ! function_exists( 'ogf_activate' ) ) {
+	/**
+	 * Add a redirection check on activation.
+	 */
+	function ogf_activate() {
+		add_option( 'ogf_do_activation_redirect', true );
 	}
+	register_activation_hook( __FILE__, 'ogf_activate' );
+}
 
-	if ( get_option( 'ogf_do_activation_redirect', false ) ) {
-		delete_option( 'ogf_do_activation_redirect' );
-		if ( ! isset( $_GET['activate-multi'] ) ) {
-			wp_redirect( 'admin.php?page=fonts-plugin' );
-			exit;
+
+if ( ! function_exists( 'ogf_redirect' ) ) {
+	/**
+	 * Redirect to the Google Fonts Welcome page.
+	 */
+	function ogf_redirect() {
+
+		if ( get_option( 'ogf_do_activation_redirect', false ) ) {
+			delete_option( 'ogf_do_activation_redirect' );
+			if ( ! isset( $_GET['activate-multi'] ) ) {
+				wp_redirect( 'admin.php?page=fonts-plugin' );
+				exit;
+			}
 		}
 	}
 }

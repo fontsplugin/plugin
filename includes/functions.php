@@ -50,7 +50,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Buttons and Inputs Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your input fields and buttons.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_basic',
-			'selectors'   => 'button, input, select, textarea',
+			'selectors'   => 'button, .button, input, select, textarea, .wp-block-button, .wp-block-button__link',
 		),
 		'ogf_site_title' => array(
 			'label'       => esc_html__( 'Site Title Typography', 'olympus-google-fonts' ),

@@ -100,7 +100,7 @@ function olympus_google_fonts_block_render( $attributes ) {
 		if ( array_key_exists( $font_id_standardized, OGF_Fonts::$google_fonts ) ) {
 			$variants = OGF_Fonts::$google_fonts[ $font_id_standardized ]['v'];
 
-			$variants_for_url = join( array_keys( $variants ), ',' );
+			$variants_for_url = join( ',', array_keys( $variants ) );
 
 			wp_enqueue_style( 'google-font-' . $font_id_standardized, 'https://fonts.googleapis.com/css?family=' . $font_id . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
 
