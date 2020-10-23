@@ -169,6 +169,15 @@ function ogf_fonts_array() {
 			'700italic',
 			'800italic',
 			'900italic',
+			'100i',
+			'200i',
+			'300i',
+			'400i',
+			'500i',
+			'600i',
+			'700i',
+			'800i',
+			'900i'
 		);
 
 		// remove italic variants.
