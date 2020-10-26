@@ -73,24 +73,19 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 
 			if ( ogf_is_custom_font( $base_type ) ) {
 				$base_type = str_replace( 'cf-', '', $base_type );
-			}
-			if ( ogf_is_custom_font( $headings_type ) ) {
-				$headings_type = str_replace( 'cf-', '', $headings_type );
-			}
-
-			if ( ogf_is_system_font( $base_type ) ) {
+			} elseif ( ogf_is_system_font( $base_type ) ) {
 				$base_type = str_replace( 'sf-', '', $base_type );
 				$base_type = $this->system_fonts[ $base_type ]['stack'];
-			}
-			if ( ogf_is_system_font( $headings_type ) ) {
-				$headings_type = str_replace( 'sf-', '', $headings_type );
-				$headings_type = $this->system_fonts[ $headings_type ]['stack'];
-			}
-
-			if ( ogf_is_google_font( $base_type ) ) {
+			} elseif ( ogf_is_google_font( $base_type ) ) {
 				$base_type = $this->ogf_fonts->get_font_name( $base_type );
 			}
-			if ( ogf_is_google_font( $headings_type ) ) {
+
+			if ( ogf_is_custom_font( $headings_type ) ) {
+				$headings_type = str_replace( 'cf-', '', $headings_type );
+			} elseif ( ogf_is_system_font( $headings_type ) ) {
+				$headings_type = str_replace( 'sf-', '', $headings_type );
+				$headings_type = $this->system_fonts[ $headings_type ]['stack'];
+			} elseif ( ogf_is_google_font( $headings_type ) ) {
 				$headings_type = $this->ogf_fonts->get_font_name( $headings_type );
 			}
 

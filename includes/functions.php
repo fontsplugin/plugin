@@ -169,6 +169,15 @@ function ogf_fonts_array() {
 			'700italic',
 			'800italic',
 			'900italic',
+			'100i',
+			'200i',
+			'300i',
+			'400i',
+			'500i',
+			'600i',
+			'700i',
+			'800i',
+			'900i',
 		);
 
 		// remove italic variants.
@@ -321,6 +330,11 @@ function ogf_font_variants() {
  * @param string $font_id The ID of the font to check.
  */
 function ogf_is_system_font( $font_id ) {
+
+	if ( ! is_string( $font_id ) ) {
+		return;
+	}
+
 	if ( strpos( $font_id, 'sf-' ) === 0 ) {
 		return true;
 	}
@@ -333,6 +347,11 @@ function ogf_is_system_font( $font_id ) {
  * @param string $font_id The ID of the font to check.
  */
 function ogf_is_custom_font( $font_id ) {
+
+	if ( ! is_string( $font_id ) ) {
+		return;
+	}
+
 	if ( strpos( $font_id, 'cf-' ) === 0 ) {
 		return true;
 	}
@@ -345,6 +364,11 @@ function ogf_is_custom_font( $font_id ) {
  * @param string $font_id The ID of the font to check.
  */
 function ogf_is_google_font( $font_id ) {
+
+	if ( ! is_string( $font_id ) ) {
+		return;
+	}
+
 	if ( array_key_exists( $font_id, OGF_Fonts::$google_fonts ) ) {
 		return true;
 	}

@@ -190,7 +190,7 @@ function ogf_customize_register( $wp_customize ) {
 		'ogf_font_display',
 		array(
 		  'type'    => 'select',
-		  'section' => 'ogf_debugging', // Add a default or your own section
+		  'section' => 'ogf_debugging',
 		  'label'   => __( 'Font Display' ),
 		  'choices' => array(
 		    'swap'     => __( 'Swap', 'olympus-google-fonts' ),
