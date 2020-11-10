@@ -300,6 +300,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			'capitalize' => esc_html__( 'Capitalize', 'olympus-google-fonts' ),
 			'uppercase'  => esc_html__( 'Uppercase', 'olympus-google-fonts' ),
 			'lowercase'  => esc_html__( 'Lowercase', 'olympus-google-fonts' ),
+			'none'       => esc_html__( 'None', 'olympus-google-fonts' ),
 		);
 	}
 

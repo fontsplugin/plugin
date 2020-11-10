@@ -138,7 +138,9 @@ class GoogleFontsBlock extends Component {
 			900: __( 'Ultra Bold', 'olympus-google-fonts' ),
 		};
 
-		fontObject.v.indexOf("0") === -1 ? fontObject.v.unshift("0") : console.log("This item already exists");
+		if( fontObject.v.indexOf("0") === -1 ) {
+			fontObject.v.unshift("0");
+		}
 
 		return fontObject.v.filter( this.isItalic ).map( ( variant ) => {
 			return {
