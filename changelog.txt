@@ -1,7 +1,11 @@
+= 2.3.7 =
+
+* Add compatibility pack for ColorLib themes
+
 = 2.3.6 =
 
-* Add 'none' option to text-transform
-* Remove useless console.log in gutenberg
+* Add 'none' option to text-transform in the Customizer
+* Remove useless console.log in Gutenberg
 
 = 2.3.5 =
 
