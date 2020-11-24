@@ -40,7 +40,11 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 */
 		public function __construct() {
 
-			$this->ogf_fonts = new OGF_Fonts();
+			if ( true === get_theme_mod( 'ogf_disable_post_level_controls', 1 ) ) {
+				return;
+			}
+
+			$this->ogf_fonts    = new OGF_Fonts();
 			$this->system_fonts = ogf_system_fonts();
 
 			add_filter( 'mce_buttons', array( $this, 'tinymce_add_buttons' ), 1 );
