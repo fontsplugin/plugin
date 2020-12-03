@@ -68,13 +68,6 @@ class OGF_Admin_Welcome_Screen {
 	 * Options page callback
 	 */
 	public function render_welcome_page() {
-
-		if ( get_option( 'ogf_dismiss_guide', false ) !== false ) {
-			return;
-		}
-
-		$current_user = wp_get_current_user();
-		$email = ( string ) $current_user->user_email;
 		?>
 			<div class="eb-wrap">
 				<div class="eb-content">
@@ -91,13 +84,20 @@ class OGF_Admin_Welcome_Screen {
 							<li>How to use Google Fonts without <strong>slowing down</strong> your website.</li>
 						</ul>
 						<p>Download your free copy today.</p>
-						<!-- Begin Mailchimp Signup Form -->
-						<form action="https://fontsplugin.us9.list-manage.com/subscribe/post?u=1ed15f4383eb532a1a1034fb9&amp;id=2ed49283a0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
-							<input type="email" value="<?php echo sanitize_email( $email ); ?>" placeholder="Your email address..." name="EMAIL" class="required email" id="mce-EMAIL">
-							<div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_1ed15f4383eb532a1a1034fb9_2ed49283a0" tabindex="-1" value=""></div>
-							<input type="submit" value="Send My Guide!" name="subscribe" id="mc-embedded-subscribe" class="ogf-send-guide-button button">
-						</form>
-						<!--End mc_embed_signup-->
+
+						<?php if ( get_option( 'ogf_dismiss_guide', false ) === false ) : ?>
+							<form action="https://fontsplugin.email/subscribe" method="post" class="validate" target="_blank" novalidate>
+								<input type="email" value="" placeholder="Your email address..." name="email" class="required email" id="mce-EMAIL">
+								<input type="hidden" name="list" value="2guyf8U56tOENOh6892lBQ6w"/>
+		<input type="hidden" name="subform" value="yes"/>
+								<input type="submit" value="Send My Guide!" name="submit" class="ogf-send-guide-button button">
+							</form>
+						<?php else : ?>
+
+							<a class="ogf-send-guide-button button" href="https://fontsplugin.com/wp-content/uploads/qs-guide.pdf" target="_blank">Read Guide</a>
+
+						<?php endif; ?>
+
 					</div>
 				</div>
 			</div>

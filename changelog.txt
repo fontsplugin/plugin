@@ -1,5 +1,9 @@
 = 2.3.8 =
 
+* Improve QS Guide page
+
+= 2.3.8 =
+
 * Administrators can now disable the editor-level font controls
 
 = 2.3.7 =

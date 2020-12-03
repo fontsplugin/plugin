@@ -19,6 +19,9 @@ jQuery( document ).ready( function() {
 					data: {
 						action: 'ogf_dismiss_guide',
 					},
+					complete: function(){
+						location.reload();
+				 	}
 				}
 			);
 		}
