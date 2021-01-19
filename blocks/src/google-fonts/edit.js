@@ -258,7 +258,7 @@ class GoogleFontsBlock extends Component {
 						onChange={ ( value ) => setAttributes( { fontSize: value } ) }
 						allowReset={ true }
 						min="10"
-						max="50"
+						max="150"
 					/>
 					<RangeControl
 						label={ __( 'Line Height', 'olympus-google-fonts' ) }

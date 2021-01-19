@@ -1,4 +1,8 @@
-= 2.3.8 =
+= 2.4.0 =
+
+* Increase max font size in Gutenberg to 150px
+
+= 2.3.9 =
 
 * Improve QS Guide page
 
