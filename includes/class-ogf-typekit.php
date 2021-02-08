@@ -32,7 +32,7 @@ class OGF_Typekit {
 			__( 'Adobe Fonts', 'olympus-google-fonts' ),
 			'manage_options',
 			'fonts-plugin-typekit',
-			array( $this, 'render_settings_page' ),
+			array( $this, 'render_settings_page' )
 		);
 	}
 
