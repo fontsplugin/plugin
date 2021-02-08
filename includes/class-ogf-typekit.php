@@ -127,11 +127,21 @@ class OGF_Typekit {
 			return;
 		}
 
-		$settings      = get_option( 'fp-typekit', false );
+		$settings = get_option( 'fp-typekit', false );
+		
+		if ( ! array_key_exists( 'api_key', $settings ) ) {
+			return;
+		}
+		
 		$api_key       = $settings['api_key'];
 		$url           = 'https://typekit.com/api/v1/json/kits/';
 		$curl_args     = array();
 		$response      = wp_remote_request( $url . '?token=' . esc_attr( $api_key ), $curl_args );
+		
+		if ( wp_remote_retrieve_response_code( $response ) != '200' ) {
+			return;
+		}
+
 		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 		$kits          = array();
 
@@ -140,16 +150,19 @@ class OGF_Typekit {
 			foreach ( $response_body->kits as $kit ) {
 				// perform an API request for the individual kit.
 				$data = $this->get_kit_from_api( $api_key, $kit->id );
-				// Enable kits by default.
-				$kits[ $kit->id ]['enabled'] = true;
-				// loop through the kit and standardize the data.
-				foreach ( $data->families as $family ) {
-					$kits[ $kit->id ]['families'][] = array(
-						'label'    => $family->name,
-						'id'       => $family->slug,
-						'variants' => array_map( array( $this, 'standardize_variant_names' ), $family->variations ),
-						'stack'    => $family->css_stack,
-					);
+				
+				if( $data ) {
+					// Enable kits by default.
+					$kits[ $kit->id ]['enabled'] = true;
+					// loop through the kit and standardize the data.
+					foreach ( $data->families as $family ) {
+						$kits[ $kit->id ]['families'][] = array(
+							'label'    => $family->name,
+							'id'       => $family->slug,
+							'variants' => array_map( array( $this, 'standardize_variant_names' ), $family->variations ),
+							'stack'    => $family->css_stack,
+						);
+					}
 				}
 			}
 		}
@@ -167,8 +180,13 @@ class OGF_Typekit {
 		$url           = 'https://typekit.com/api/v1/json/kits/' . esc_attr( $kit_id ) . '?token=' . esc_attr( $api_key );
 		$curl_args     = array();
 		$response      = wp_remote_request( $url, $curl_args );
-		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
-		return $response_body->kit;
+		
+		if ( wp_remote_retrieve_response_code( $response ) == '200' ) {
+			$response_body = json_decode( wp_remote_retrieve_body( $response ) );
+			return $response_body->kit;
+		}
+		
+		return false;
 	}
 
 	/**
