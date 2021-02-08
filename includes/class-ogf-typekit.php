@@ -76,8 +76,12 @@ class OGF_Typekit {
 	 * Render the Typekit settings.
 	 */
 	public function render_settings() {
-		$settings = (array) get_option( 'fp-typekit' );
-		$value    = $settings['api_key'];
+		$settings = get_option( 'fp-typekit', array() );
+		$value = '';
+
+		if ( array_key_exists( 'api_key', $settings ) ) {
+			$value = $settings['api_key'];
+		}
 
 		echo '<input type="text" name="fp-typekit[api_key]" value="' . esc_attr( $value ) . '" />';
 		echo '<input name="submit" class="button button-primary" type="submit" value="' . esc_attr__( 'Save', 'olympus-google-fonts' ) . '" />';
@@ -90,6 +94,11 @@ class OGF_Typekit {
 		echo '<p>' . esc_html__( 'The following data was retrieved from the Typekit API:', 'olympus-google-fonts' ) . '</p>';
 		echo '<ul class="fp-typekit-results">';
 		$kits = get_option( 'fp-typekit-data' );
+
+		if ( ! is_array( $kits ) ) {
+			return;
+		}
+
 		foreach ( $kits as $id => $kit ) {
 			echo '<li><strong>' . esc_html__( 'Kit: ', 'olympus-google-fonts' ) . '</strong>' . esc_attr( $id ) . '</li><ul>';
 			foreach ( $kit['families'] as $family ) {
@@ -127,17 +136,17 @@ class OGF_Typekit {
 			return;
 		}
 
-		$settings = get_option( 'fp-typekit', false );
-		
+		$settings = get_option( 'fp-typekit', array() );
+
 		if ( ! array_key_exists( 'api_key', $settings ) ) {
 			return;
 		}
-		
-		$api_key       = $settings['api_key'];
-		$url           = 'https://typekit.com/api/v1/json/kits/';
-		$curl_args     = array();
-		$response      = wp_remote_request( $url . '?token=' . esc_attr( $api_key ), $curl_args );
-		
+
+		$api_key   = $settings['api_key'];
+		$url       = 'https://typekit.com/api/v1/json/kits/';
+		$curl_args = array();
+		$response  = wp_remote_request( $url . '?token=' . esc_attr( $api_key ), $curl_args );
+
 		if ( wp_remote_retrieve_response_code( $response ) != '200' ) {
 			return;
 		}
@@ -150,8 +159,8 @@ class OGF_Typekit {
 			foreach ( $response_body->kits as $kit ) {
 				// perform an API request for the individual kit.
 				$data = $this->get_kit_from_api( $api_key, $kit->id );
-				
-				if( $data ) {
+
+				if ( $data ) {
 					// Enable kits by default.
 					$kits[ $kit->id ]['enabled'] = true;
 					// loop through the kit and standardize the data.
@@ -180,12 +189,12 @@ class OGF_Typekit {
 		$url           = 'https://typekit.com/api/v1/json/kits/' . esc_attr( $kit_id ) . '?token=' . esc_attr( $api_key );
 		$curl_args     = array();
 		$response      = wp_remote_request( $url, $curl_args );
-		
+
 		if ( wp_remote_retrieve_response_code( $response ) == '200' ) {
 			$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 			return $response_body->kit;
 		}
-		
+
 		return false;
 	}
 
@@ -229,11 +238,11 @@ class OGF_Typekit {
 	public static function get_fonts() {
 		$fonts = array();
 		$kits  = get_option( 'fp-typekit-data', array() );
-		
+
 		if ( ! is_array( $kits ) ) {
-			return;
+			return $fonts;
 		}
-		
+
 		foreach ( $kits as $kit ) {
 			foreach ( $kit['families'] as $family ) {
 				$fonts[ 'tk-' . $family['id'] ] = array(
@@ -253,12 +262,11 @@ class OGF_Typekit {
 	public function enqueue_css() {
 		$typekit_data = get_option( 'fp-typekit-data', array() );
 
-		if ( ! is_array( $typekit_data ) ) {
-			return;
-		}		
-		
-		foreach ( $typekit_data as $id => $values ) {
-			wp_enqueue_style( 'typekit-' . $id, 'https://use.typekit.com/' . $id . '.css', array(), OGF_VERSION );
+		if ( is_array( $typekit_data ) ) {
+
+			foreach ( $typekit_data as $id => $values ) {
+				wp_enqueue_style( 'typekit-' . $id, 'https://use.typekit.com/' . $id . '.css', array(), OGF_VERSION );
+			}
 		}
 	}
 
