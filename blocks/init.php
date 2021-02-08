@@ -24,6 +24,7 @@ function olympus_google_fonts_block_js() {
 		false
 	);
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts', ogf_custom_fonts() );
+	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_typekit_fonts', ogf_typekit_fonts() );
 }
 
 add_action( 'enqueue_block_editor_assets', 'olympus_google_fonts_block_js' );

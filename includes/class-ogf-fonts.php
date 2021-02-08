@@ -135,7 +135,7 @@ class OGF_Fonts {
 		}
 
 		foreach ( $this->choices as $choice ) {
-			if ( ! ogf_is_system_font( $choice ) && ! ogf_is_custom_font( $choice ) ) {
+			if ( ! ogf_is_system_font( $choice ) && ! ogf_is_custom_font( $choice ) && ! ogf_is_typekit_font( $choice ) ) {
 				return true;
 			}
 		}

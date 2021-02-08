@@ -24,6 +24,10 @@ jQuery( document ).ready(
 					const fontID = value.replace( 'cf-', '' );
 					v.style.setProperty( 'font-family', ogf_custom_fonts[ fontID ].stack, 'important' );
 				} );
+			} else if ( isTypekitFont( value ) ) {
+				jQuery( selector ).each( function( i, v ) {
+					v.style.setProperty( 'font-family', ogf_typekit_fonts[ value ].stack, 'important' );
+				} );
 			} else {
 				jQuery( selector ).each( function( i, v ) {
 					v.style.setProperty( 'font-family', '"' + value.split( '-' ).join( ' ' ) + '"', 'important' );
@@ -40,6 +44,13 @@ jQuery( document ).ready(
 
 		function isCustomFont( fontID ) {
 			if ( fontID.indexOf( 'cf-' ) !== -1 ) {
+				return true;
+			}
+			return false;
+		}
+
+		function isTypekitFont( fontID ) {
+			if ( fontID.indexOf( 'tk-' ) !== -1 ) {
 				return true;
 			}
 			return false;

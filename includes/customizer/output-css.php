@@ -206,6 +206,13 @@ function ogf_build_font_stack( $font_id ) {
 		if ( array_key_exists( $font_id, $custom_fonts ) ) {
 			return $custom_fonts[ $font_id ]['stack'];
 		}
+	} elseif ( strpos( $font_id, 'tk-' ) !== false ) {
+
+		$typekit_fonts = ogf_typekit_fonts();
+
+		if ( array_key_exists( $font_id, $typekit_fonts ) ) {
+			return $typekit_fonts[ $font_id ]['stack'];
+		}
 	} else {
 
 		$google_fonts = ogf_fonts_array();

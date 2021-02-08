@@ -26,6 +26,13 @@
 					return false;
 				}
 
+				function isTypekitFont( fontID ) {
+					if ( fontID.indexOf( 'tk-' ) !== -1 ) {
+						return true;
+					}
+					return false;
+				}
+
 				function isCustomFont( fontID ) {
 					if ( fontID.indexOf( 'cf-' ) !== -1 ) {
 						return true;
@@ -42,7 +49,7 @@
 						control.settings.family.set( value );
 						const weightsSelect = jQuery( '.typography-font-weight select' );
 
-						if ( value === 'default' || isSystemFont( value ) || isCustomFont( value ) ) {
+						if ( value === 'default' || isSystemFont( value ) || isCustomFont( value ) || isTypekitFont( value ) ) {
 
 							const defaultWeights = {
 								0: "- Default -",

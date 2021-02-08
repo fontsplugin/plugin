@@ -134,6 +134,12 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 							<option value="cf-{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.label }}</option>
 						<# } ) #>
 					<# } #>
+					<# if ( ! _.isEmpty( ogf_typekit_fonts ) ) { #>
+						<option disabled><?php esc_html_e( '- Typekit Fonts -', 'olympus-google-fonts' ); ?></option>
+						<# _.each( ogf_typekit_fonts, function( font_data, font_id ) { #>
+							<option value="{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.label }}</option>
+						<# } ) #>
+					<# } #>
 					<option disabled><?php esc_html_e( '- System Fonts -', 'olympus-google-fonts' ); ?></option>
 					<# _.each( ogf_system_fonts, function( font_data, font_id ) { #>
 						<option value="sf-{{ font_id }}" <# if ( font_id === data.family.value ) { #> selected="selected" <# } #>>{{ font_data.label }}</option>

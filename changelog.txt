@@ -1,3 +1,7 @@
+= 2.5.0 =
+
+* Add support for Adobe Fonts / Typekit
+
 = 2.4.0 =
 
 * Increase max font size in Gutenberg to 150px

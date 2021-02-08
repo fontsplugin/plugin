@@ -24,7 +24,6 @@ class GoogleFontsBlock extends Component {
 	getFontsForSelect() {
 
 		const customFonts = Object.values( ogf_custom_fonts ).map( ( font ) => {
-
 			return {
 				value: font.id,
 				label: font.label,
@@ -34,6 +33,19 @@ class GoogleFontsBlock extends Component {
 		customFonts.unshift({
 			value: '1',
 			label: __( '- Custom Fonts -', 'olympus-google-fonts' ),
+			disabled: true,
+		});
+
+		const typekitFonts = Object.values( ogf_typekit_fonts ).map( ( font ) => {
+			return {
+				value: font.id,
+				label: font.label,
+			};
+		} );
+
+		typekitFonts.unshift({
+			value: '1',
+			label: __( '- Typekit Fonts -', 'olympus-google-fonts' ),
 			disabled: true,
 		});
 
@@ -53,8 +65,6 @@ class GoogleFontsBlock extends Component {
 			disabled: true,
 		});
 
-		const combinedFonts = customFonts.concat( systemFonts );
-
 		const googleFonts = fontsJson.items.map( ( font ) => {
 			const label = font.f;
 			const value = label.replace( /\s+/g, '+' );
@@ -71,7 +81,8 @@ class GoogleFontsBlock extends Component {
 			disabled: true,
 		});
 
-		return combinedFonts.concat( googleFonts );
+		const combinedFonts = customFonts.concat( typekitFonts, systemFonts, googleFonts );
+		return combinedFonts;
 	}
 
 	searchFonts( nameKey, myArray ){
@@ -84,7 +95,6 @@ class GoogleFontsBlock extends Component {
 
 	isCustomFont( fontID ) {
 		const searchResults = this.searchFonts( fontID, Object.values( ogf_custom_fonts ) );
-
 		if ( typeof searchResults === 'object' ) {
 			return true;
 		}
@@ -94,6 +104,15 @@ class GoogleFontsBlock extends Component {
 
 	isSystemFont( fontID ) {
 		const searchResults = this.searchFonts( fontID, systemFontsJson.items );
+		if ( typeof searchResults === 'object' ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	isTypekitFont( fontID ) {
+		const searchResults = this.searchFonts( fontID, Object.values( ogf_typekit_fonts ) );
 		if ( typeof searchResults === 'object' ) {
 			return true;
 		}
@@ -213,7 +232,7 @@ class GoogleFontsBlock extends Component {
 			},
 		];
 
-		if ( ! this.isSystemFont( fontID ) && ! this.isCustomFont( fontID ) ) {
+		if ( ! this.isTypekitFont( fontID ) && ! this.isSystemFont( fontID ) && ! this.isCustomFont( fontID ) ) {
 			const fontObject = this.getFontObject( fontID.replace( /\+/g, ' ' ) );
 			variantOptions = this.getVariantsForSelect( fontObject );
 			this.addGoogleFontToHead( fontID, fontObject );

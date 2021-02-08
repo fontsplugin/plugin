@@ -56,7 +56,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Site Title Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your site title.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__branding',
-			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, #logo, #logo a, .logo, .logo a',
+			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, #site-logo, #site-logo a, #logo, #logo a, .logo, .logo a',
 		),
 		'ogf_site_description' => array(
 			'label'       => esc_html__( 'Site Description Typography', 'olympus-google-fonts' ),
@@ -208,6 +208,15 @@ function ogf_custom_fonts() {
 
 }
 
+/**
+ * Return a array of custom fonts.
+ */
+function ogf_typekit_fonts() {
+
+	return OGF_Typekit::get_fonts();
+
+}
+
 
 /**
  * Return a array of system fonts.
@@ -332,7 +341,7 @@ function ogf_font_variants() {
 function ogf_is_system_font( $font_id ) {
 
 	if ( ! is_string( $font_id ) ) {
-		return;
+		return false;
 	}
 
 	if ( strpos( $font_id, 'sf-' ) === 0 ) {
@@ -349,10 +358,27 @@ function ogf_is_system_font( $font_id ) {
 function ogf_is_custom_font( $font_id ) {
 
 	if ( ! is_string( $font_id ) ) {
-		return;
+		return false;
 	}
 
 	if ( strpos( $font_id, 'cf-' ) === 0 ) {
+		return true;
+	}
+	return false;
+}
+
+/**
+ * Check if a font is a Typekit font (not Google Font).
+ *
+ * @param string $font_id The ID of the font to check.
+ */
+function ogf_is_typekit_font( $font_id ) {
+
+	if ( ! is_string( $font_id ) ) {
+		return false;
+	}
+
+	if ( strpos( $font_id, 'tk-' ) === 0 ) {
 		return true;
 	}
 	return false;
@@ -366,7 +392,7 @@ function ogf_is_custom_font( $font_id ) {
 function ogf_is_google_font( $font_id ) {
 
 	if ( ! is_string( $font_id ) ) {
-		return;
+		return false;
 	}
 
 	if ( array_key_exists( $font_id, OGF_Fonts::$google_fonts ) ) {
