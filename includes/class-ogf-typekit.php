@@ -28,8 +28,8 @@ class OGF_Typekit {
 	public function add_settings_page() {
 		add_submenu_page(
 			'fonts-plugin',
-			__( 'Adobe Fonts (Typekit)', 'olympus-google-fonts' ),
-			__( 'Adobe Fonts (Typekit)', 'olympus-google-fonts' ),
+			__( 'Adobe Fonts', 'olympus-google-fonts' ),
+			__( 'Adobe Fonts', 'olympus-google-fonts' ),
 			'manage_options',
 			'fonts-plugin-typekit',
 			array( $this, 'render_settings_page' ),
@@ -210,7 +210,12 @@ class OGF_Typekit {
 	 */
 	public static function get_fonts() {
 		$fonts = array();
-		$kits  = get_option( 'fp-typekit-data' );
+		$kits  = get_option( 'fp-typekit-data', array() );
+		
+		if ( ! is_array( $kits ) ) {
+			return;
+		}
+		
 		foreach ( $kits as $kit ) {
 			foreach ( $kit['families'] as $family ) {
 				$fonts[ 'tk-' . $family['id'] ] = array(
@@ -228,8 +233,12 @@ class OGF_Typekit {
 	 * Enqueue typekit CSS files.
 	 */
 	public function enqueue_css() {
-		$typekit_data = get_option( 'fp-typekit-data' );
+		$typekit_data = get_option( 'fp-typekit-data', array() );
 
+		if ( ! is_array( $typekit_data ) ) {
+			return;
+		}		
+		
 		foreach ( $typekit_data as $id => $values ) {
 			wp_enqueue_style( 'typekit-' . $id, 'https://use.typekit.com/' . $id . '.css', array(), OGF_VERSION );
 		}
