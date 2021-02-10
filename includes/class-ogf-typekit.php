@@ -43,7 +43,7 @@ class OGF_Typekit {
 		register_setting( 'fonts-plugin', 'fp-typekit' );
 
 		add_settings_section( 'section-1', __( 'Configuration', 'olympus-google-fonts' ), array( $this, 'render_config_section' ), 'fonts-plugin-typekit' );
-		add_settings_section( 'section-2', __( 'Results', 'fonts-plugin-typekit' ), array( $this, 'render_results_section' ), 'fonts-plugin-typekit' );
+		add_settings_section( 'section-2', __( 'Results', 'olympus-google-fonts' ), array( $this, 'render_results_section' ), 'fonts-plugin-typekit' );
 		add_settings_field( 'api_key', __( 'API Key', 'olympus-google-fonts' ), array( $this, 'render_settings' ), 'fonts-plugin-typekit', 'section-1' );
 	}
 
@@ -76,14 +76,7 @@ class OGF_Typekit {
 	 * Render the Typekit settings.
 	 */
 	public function render_settings() {
-		$settings = get_option( 'fp-typekit', array() );
-		$value = '';
-
-		if ( array_key_exists( 'api_key', $settings ) ) {
-			$value = $settings['api_key'];
-		}
-
-		echo '<input type="text" name="fp-typekit[api_key]" value="' . esc_attr( $value ) . '" />';
+		echo '<input type="text" name="fp-typekit[api_key]" value="' . esc_attr( $this->get_api_key() ) . '" />';
 		echo '<input name="submit" class="button button-primary" type="submit" value="' . esc_attr__( 'Save', 'olympus-google-fonts' ) . '" />';
 	}
 
@@ -91,13 +84,20 @@ class OGF_Typekit {
 	 * Render the results section of the admin page.
 	 */
 	public function render_results_section() {
-		echo '<p>' . esc_html__( 'The following data was retrieved from the Typekit API:', 'olympus-google-fonts' ) . '</p>';
-		echo '<ul class="fp-typekit-results">';
+
 		$kits = get_option( 'fp-typekit-data' );
 
 		if ( ! is_array( $kits ) ) {
+			if ( $this->get_api_key() ) {
+				esc_html_e( 'There is a problem connecting to the API. Please check your API Key.', 'olympus-google-fonts' );
+			} else {
+				esc_html_e( 'Enter your Adobe Fonts API Key to retrieve the fonts.', 'olympus-google-fonts' );
+			}
 			return;
 		}
+
+		echo '<p>' . esc_html__( 'The following data was retrieved from the Typekit API:', 'olympus-google-fonts' ) . '</p>';
+		echo '<ul class="fp-typekit-results">';
 
 		foreach ( $kits as $id => $kit ) {
 			echo '<li><strong>' . esc_html__( 'Kit: ', 'olympus-google-fonts' ) . '</strong>' . esc_attr( $id ) . '</li><ul>';
@@ -107,6 +107,19 @@ class OGF_Typekit {
 			echo '</ul>';
 		}
 		echo '</ul>';
+	}
+
+	/**
+	 *
+	 */
+	public function get_api_key() {
+		$settings = get_option( 'fp-typekit', array() );
+
+		if ( ! array_key_exists( 'api_key', $settings ) ) {
+			return false;
+		}
+
+		return $settings['api_key'];
 	}
 
 	/**
@@ -124,28 +137,28 @@ class OGF_Typekit {
 	 */
 	public function get_kits() {
 
+		// Reset the data if the user has clicked the button.
 		if ( isset( $_GET['action'] ) && $_GET['action'] === 'reset' ) {
 			update_option( 'fp-typekit-data', false );
 		}
 
+		// Only perform action on the Fonts Plugin Typekit Page.
 		if ( get_current_screen()->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
 			return;
 		}
 
+		// If data exists we don't need to query the API.
 		if ( get_option( 'fp-typekit-data', false ) ) {
 			return;
 		}
 
-		$settings = get_option( 'fp-typekit', array() );
-
-		if ( ! array_key_exists( 'api_key', $settings ) ) {
+		if ( ! $this->get_api_key() ) {
 			return;
 		}
 
-		$api_key   = $settings['api_key'];
 		$url       = 'https://typekit.com/api/v1/json/kits/';
 		$curl_args = array();
-		$response  = wp_remote_request( $url . '?token=' . esc_attr( $api_key ), $curl_args );
+		$response  = wp_remote_request( $url . '?token=' . esc_attr( $this->get_api_key() ), $curl_args );
 
 		if ( wp_remote_retrieve_response_code( $response ) != '200' ) {
 			return;
@@ -158,7 +171,7 @@ class OGF_Typekit {
 			// loop through the kits object.
 			foreach ( $response_body->kits as $kit ) {
 				// perform an API request for the individual kit.
-				$data = $this->get_kit_from_api( $api_key, $kit->id );
+				$data = $this->get_kit_from_api( $kit->id );
 
 				if ( $data ) {
 					// Enable kits by default.
@@ -185,8 +198,8 @@ class OGF_Typekit {
 	 * @param string $api_key The API key.
 	 * @param string $kit_id  The Kit ID we are looking for.
 	 */
-	public function get_kit_from_api( $api_key, $kit_id ) {
-		$url           = 'https://typekit.com/api/v1/json/kits/' . esc_attr( $kit_id ) . '?token=' . esc_attr( $api_key );
+	public function get_kit_from_api( $kit_id ) {
+		$url           = 'https://typekit.com/api/v1/json/kits/' . esc_attr( $kit_id ) . '?token=' . esc_attr( $this->get_api_key() );
 		$curl_args     = array();
 		$response      = wp_remote_request( $url, $curl_args );
 

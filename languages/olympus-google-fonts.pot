@@ -1,21 +1,21 @@
-# Copyright (C) 2020 Fonts Plugin
-# This file is distributed under the same license as the Google Fonts Typography plugin.
+# Copyright (C) 2021 Fonts Plugin
+# This file is distributed under the same license as the Fonts Plugin | Google Fonts Typography plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Google Fonts Typography 2.1.0\n"
+"Project-Id-Version: Fonts Plugin | Google Fonts Typography 2.5.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/olympus-google-fonts\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-06-30T11:51:23+00:00\n"
+"POT-Creation-Date: 2021-02-10T11:08:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: olympus-google-fonts\n"
 
 #. Plugin Name of the plugin
-msgid "Google Fonts Typography"
+msgid "Fonts Plugin | Google Fonts Typography"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -27,18 +27,19 @@ msgid "The easiest to use Google Fonts typography plugin. No coding required. 90
 msgstr ""
 
 #. Author of the plugin
+#: admin/class-ogf-welcome-screen.php:28
 msgid "Fonts Plugin"
 msgstr ""
 
 #. Author URI of the plugin
-msgid "https://fontsplugin.com/?utm_source=wporg&utm_campaign=heading"
+msgid "https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=description"
 msgstr ""
 
-#: class-olympus-google-fonts.php:153
+#: class-olympus-google-fonts.php:164
 msgid "Settings"
 msgstr ""
 
-#: class-olympus-google-fonts.php:158
+#: class-olympus-google-fonts.php:171
 msgid "Upgrade to Pro"
 msgstr ""
 
@@ -166,180 +167,233 @@ msgstr ""
 msgid "Select and configure the font for your footer content."
 msgstr ""
 
-#: includes/functions.php:200
+#: includes/functions.php:228
 msgid "Arial"
 msgstr ""
 
-#: includes/functions.php:205
+#: includes/functions.php:233
 msgid "Calibri"
 msgstr ""
 
-#: includes/functions.php:210
+#: includes/functions.php:238
 msgid "Century Gothic"
 msgstr ""
 
-#: includes/functions.php:215
+#: includes/functions.php:243
 msgid "Consolas"
 msgstr ""
 
-#: includes/functions.php:220
+#: includes/functions.php:248
 msgid "Courier New"
 msgstr ""
 
-#: includes/functions.php:225
+#: includes/functions.php:253
 msgid "Helvetica Neue"
 msgstr ""
 
-#: includes/functions.php:230
+#: includes/functions.php:258
 msgid "Georgia"
 msgstr ""
 
-#: includes/functions.php:235
+#: includes/functions.php:263
 msgid "Futura"
 msgstr ""
 
-#: includes/functions.php:240
+#: includes/functions.php:268
 msgid "Lucida Grande"
 msgstr ""
 
-#: includes/functions.php:245
+#: includes/functions.php:273
 msgid "Segoe UI"
 msgstr ""
 
-#: includes/functions.php:250
+#: includes/functions.php:278
 msgid "Tahoma"
 msgstr ""
 
-#: includes/functions.php:255
+#: includes/functions.php:283
 msgid "Times New Roman"
 msgstr ""
 
-#: includes/functions.php:260
+#: includes/functions.php:288
 msgid "Trebuchet MS"
 msgstr ""
 
-#: includes/functions.php:265
+#: includes/functions.php:293
 msgid "Palatino"
 msgstr ""
 
-#: includes/functions.php:270
+#: includes/functions.php:298
 msgid "Verdana"
 msgstr ""
 
-#: includes/functions.php:286
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:263
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:273
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:287
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:299
+#: includes/functions.php:314
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:269
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:279
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:293
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:305
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:92
+#: blocks/src/google-fonts/edit.js:148
 msgid "- Default -"
 msgstr ""
 
-#: includes/functions.php:287
+#: includes/functions.php:315
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:93
+#: blocks/src/google-fonts/edit.js:149
 msgid "Thin"
 msgstr ""
 
-#: includes/functions.php:288
+#: includes/functions.php:316
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:94
+#: blocks/src/google-fonts/edit.js:150
 msgid "Extra Light"
 msgstr ""
 
-#: includes/functions.php:289
+#: includes/functions.php:317
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:95
+#: blocks/src/google-fonts/edit.js:151
 msgid "Light"
 msgstr ""
 
-#: includes/functions.php:290
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:264
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:288
+#: includes/functions.php:318
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:270
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:294
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:96
+#: blocks/src/google-fonts/edit.js:152
 msgid "Normal"
 msgstr ""
 
-#: includes/functions.php:291
+#: includes/functions.php:319
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:97
+#: blocks/src/google-fonts/edit.js:153
 msgid "Medium"
 msgstr ""
 
-#: includes/functions.php:292
+#: includes/functions.php:320
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:98
+#: blocks/src/google-fonts/edit.js:154
 msgid "Semi Bold"
 msgstr ""
 
-#: includes/functions.php:293
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:265
+#: includes/functions.php:321
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:271
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:99
+#: blocks/src/google-fonts/edit.js:155
 msgid "Bold"
 msgstr ""
 
-#: includes/functions.php:294
+#: includes/functions.php:322
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:100
+#: blocks/src/google-fonts/edit.js:156
 msgid "Extra Bold"
 msgstr ""
 
-#: includes/functions.php:295
+#: includes/functions.php:323
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:101
+#: blocks/src/google-fonts/edit.js:157
 msgid "Ultra Bold"
 msgstr ""
 
-#: includes/functions.php:296
+#: includes/functions.php:324
 msgid "Thin Italic"
 msgstr ""
 
-#: includes/functions.php:297
+#: includes/functions.php:325
 msgid "Extra Light Italic"
 msgstr ""
 
-#: includes/functions.php:298
+#: includes/functions.php:326
 msgid "Light Italic"
 msgstr ""
 
-#: includes/functions.php:299
+#: includes/functions.php:327
 msgid "Normal Italic"
 msgstr ""
 
-#: includes/functions.php:300
+#: includes/functions.php:328
 msgid "Medium Italic"
 msgstr ""
 
-#: includes/functions.php:301
+#: includes/functions.php:329
 msgid "Semi Bold Italic"
 msgstr ""
 
-#: includes/functions.php:302
+#: includes/functions.php:330
 msgid "Bold Italic"
 msgstr ""
 
-#: includes/functions.php:303
+#: includes/functions.php:331
 msgid "Extra Bold Italic"
 msgstr ""
 
-#: includes/functions.php:304
+#: includes/functions.php:332
 msgid "Ultra Bold Italic"
 msgstr ""
 
 #: includes/class-ogf-reset.php:41
+#: includes/class-ogf-reset.php:60
 msgid "This will reset all fonts set by this plugin to their defaults. This action can not be reversed."
 msgstr ""
 
-#: includes/class-ogf-reset.php:63
+#: includes/class-ogf-reset.php:59
+#: includes/class-ogf-reset.php:65
 msgid "Reset All Fonts"
 msgstr ""
 
 #. translators: %s Link to Google Fonts customizer panel.
 #: includes/class-ogf-welcome.php:104
 msgid "Thank you for installing <strong>Google Fonts for WordPress</strong>! Configure your fonts here: <a href=\"%s\">WordPress Customizer</a>"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:65
+msgid "Custom Fonts"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:66
+#: blocks/dist/blocks.build.js:1
+#: blocks/src/google-fonts/edit.js:261
+msgid "Font"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:67
+msgctxt "Admin menu name"
+msgid "Custom Fonts"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:68
+msgid "Search Fonts"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:69
+msgid "All Fonts"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:70
+msgid "Parent Font"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:71
+msgid "Parent Font:"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:72
+msgid "Edit Font"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:73
+msgid "Update Font"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:74
+msgid "Add New Font"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:75
+msgid "New Font Name"
+msgstr ""
+
+#: includes/class-ogf-fonts-taxonomy.php:76
+msgid "No fonts found"
 msgstr ""
 
 #. translators: Number of years
@@ -401,9 +455,31 @@ msgstr ""
 msgid "If your choices are not displaying correctly, check this box."
 msgstr ""
 
+#: includes/customizer/settings.php:193
+msgid "Disable Editor Controls"
+msgstr ""
+
+#: includes/customizer/settings.php:197
+msgid "Remove font controls from the individual post editor screen (Gutenberg and Classic)."
+msgstr ""
+
+#: includes/customizer/settings.php:216
+msgid "Swap"
+msgstr ""
+
+#: includes/customizer/settings.php:217
+msgid "Block"
+msgstr ""
+
+#: includes/customizer/settings.php:218
+msgid "Fallback"
+msgstr ""
+
+#: includes/customizer/settings.php:219
+msgid "Optional"
+msgstr ""
+
 #: includes/customizer/panels.php:32
-#: admin/welcome.php:28
-#: admin/welcome.php:29
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/index.js:12
 msgid "Google Fonts"
@@ -511,7 +587,7 @@ msgstr ""
 
 #: includes/customizer/controls/class-ogf-customize-typography-control.php:52
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:221
+#: blocks/src/google-fonts/edit.js:283
 msgid "Line Height"
 msgstr ""
 
@@ -532,39 +608,55 @@ msgid "Default Font"
 msgstr ""
 
 #: includes/customizer/controls/class-ogf-customize-typography-control.php:132
+#: blocks/dist/blocks.build.js:1
+#: blocks/src/google-fonts/edit.js:35
 msgid "- Custom Fonts -"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:137
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:138
+#: blocks/dist/blocks.build.js:1
+#: blocks/src/google-fonts/edit.js:48
+msgid "- Typekit Fonts -"
+msgstr ""
+
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:143
+#: blocks/dist/blocks.build.js:1
+#: blocks/src/google-fonts/edit.js:64
 msgid "- System Fonts -"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:141
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:147
+#: blocks/dist/blocks.build.js:1
+#: blocks/src/google-fonts/edit.js:80
 msgid "- Google Fonts -"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:147
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:153
 msgid "Advanced"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:289
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:295
 msgid "Italic"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:290
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:296
 msgid "Oblique"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:300
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:306
 msgid "Capitalize"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:301
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:307
 msgid "Uppercase"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-typography-control.php:302
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:308
 msgid "Lowercase"
+msgstr ""
+
+#: includes/customizer/controls/class-ogf-customize-typography-control.php:309
+msgid "None"
 msgstr ""
 
 #: includes/class-ogf-dashboard-widget.php:30
@@ -574,6 +666,134 @@ msgstr ""
 #: includes/class-ogf-dashboard-widget.php:71
 #: includes/class-ogf-dashboard-widget.php:97
 msgid "Temporarily unable to load feed."
+msgstr ""
+
+#: includes/class-ogf-typekit.php:31
+#: includes/class-ogf-typekit.php:32
+msgid "Adobe Fonts"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:45
+msgid "Configuration"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:46
+msgid "Results"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:47
+msgid "API Key"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:55
+msgid "Adobe Fonts (Typekit) Configuration"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:61
+msgid "Refresh Fonts"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:72
+msgid "<p>You can retrieve your Adobe Fonts API Key here: <a target=\"_blank\" href=\"https://fonts.adobe.com/account/tokens\">https://fonts.adobe.com/account/tokens</a></p>"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:80
+msgid "Save"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:92
+msgid "There is a problem connecting to the API. Please check your API Key."
+msgstr ""
+
+#: includes/class-ogf-typekit.php:94
+msgid "Enter your Adobe Fonts API Key to retrieve the fonts."
+msgstr ""
+
+#: includes/class-ogf-typekit.php:99
+msgid "The following data was retrieved from the Typekit API:"
+msgstr ""
+
+#: includes/class-ogf-typekit.php:103
+msgid "Kit: "
+msgstr ""
+
+#: includes/class-ogf-typekit.php:105
+msgid "Font Family: "
+msgstr ""
+
+#: includes/class-ogf-fonts.php:114
+msgid "Font Missing"
+msgstr ""
+
+#: admin/class-ogf-welcome-screen.php:39
+#: admin/class-ogf-welcome-screen.php:40
+msgid "Customize Fonts"
+msgstr ""
+
+#: admin/class-ogf-welcome-screen.php:49
+#: admin/class-ogf-welcome-screen.php:50
+msgid "Documentation"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:78
+msgid "Upload Fonts"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:105
+msgid "The name of the font as it appears in the customizer options."
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:136
+msgid "WOFF Font File"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:137
+msgid "WOFF2 Font File"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:138
+msgid "OpenType (.otf) Font File"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:139
+msgid "TrueType (.ttf) Font File"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:149
+msgid "Font .woff"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:149
+msgid "Upload the font's .woff file or enter the URL."
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:150
+msgid "Font .woff2"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:150
+msgid "Upload the font's .woff2 file or enter the URL."
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:151
+msgid "Font .ttf"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:151
+msgid "Upload the font's .ttf file or enter the URL."
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:152
+msgid "Font .otf"
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:152
+msgid "Upload the font's .otf file or enter the URL."
+msgstr ""
+
+#: admin/class-ogf-upload-fonts-screen.php:170
+#: admin/class-ogf-upload-fonts-screen.php:194
+msgid "Upload"
 msgstr ""
 
 #: blocks/dist/blocks.build.js:1
@@ -587,41 +807,36 @@ msgid "Heading"
 msgstr ""
 
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:181
+#: blocks/src/google-fonts/edit.js:243
 msgid "Font Settings"
 msgstr ""
 
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:183
+#: blocks/src/google-fonts/edit.js:245
 msgid "Block Type"
 msgstr ""
 
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:199
-msgid "Font"
-msgstr ""
-
-#: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:206
+#: blocks/src/google-fonts/edit.js:268
 msgid "Font Variant"
 msgstr ""
 
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:213
+#: blocks/src/google-fonts/edit.js:275
 msgid "Font Size"
 msgstr ""
 
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:230
+#: blocks/src/google-fonts/edit.js:292
 msgid "Color Settings"
 msgstr ""
 
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:235
+#: blocks/src/google-fonts/edit.js:297
 msgid "Text Color"
 msgstr ""
 
 #: blocks/dist/blocks.build.js:1
-#: blocks/src/google-fonts/edit.js:265
+#: blocks/src/google-fonts/edit.js:327
 msgid "Add some content..."
 msgstr ""
