@@ -49,7 +49,7 @@
 						control.settings.family.set( value );
 						const weightsSelect = jQuery( '.typography-font-weight select' );
 
-						if ( value === 'default' || isSystemFont( value ) || isCustomFont( value ) || isTypekitFont( value ) ) {
+						if ( value === 'default' || isSystemFont( value ) || isCustomFont( value ) ) {
 
 							const defaultWeights = {
 								0: "- Default -",
@@ -61,6 +61,28 @@
 							weightsSelect.empty();
 							jQuery.each(
 								defaultWeights,
+								function( key, val ) {
+									weightsSelect.append(
+										jQuery( '<option></option>' )
+											.attr( 'value', key ).text( val )
+									);
+								}
+							);
+						} else if ( isTypekitFont( value ) ) {
+							const font = ogf_typekit_fonts[ value ];
+							const newWeights = font.variants;
+							newWeights.unshift("0");
+
+							// remove variants the font doesn't support.
+							var finalWeights = new Object();
+							newWeights.forEach( function(i) {
+								finalWeights[i] = ogf_font_variants[i];
+							});
+
+							const weightsSelect = jQuery( '.typography-font-weight select' );
+							weightsSelect.empty();
+							jQuery.each(
+								finalWeights,
 								function( key, val ) {
 									weightsSelect.append(
 										jQuery( '<option></option>' )

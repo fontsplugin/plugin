@@ -264,25 +264,41 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			return $all_variants;
 		}
 
-		if ( ogf_is_system_font( $font ) || ogf_is_custom_font( $font ) || ! ogf_is_google_font( $font ) ) {
-			return array(
-				'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
-				'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
-				'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
-			);
+		if ( ogf_is_google_font( $font ) ) {
+			$fonts_array       = ogf_fonts_array();
+			$variants          = $fonts_array[ $font ]['v'];
+			$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
+
+			foreach ( $variants as $key => $value ) {
+				$new_variants[ $key ] = $all_variants[ $key ];
+			}
+
+			return $new_variants;
 		}
 
-		$fonts_array = ogf_fonts_array();
+		if ( ogf_is_typekit_font( $font ) ) {
+			$fonts_array = ogf_typekit_fonts();
 
-		$variants = $fonts_array[ $font ]['v'];
+			if ( ! array_key_exists( $font, $fonts_array ) ) {
+				return;
+			}
 
-		$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
+			$variants          = $fonts_array[ $font ]['variants'];
+			$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
 
-		foreach ( $variants as $key => $value ) {
-			$new_variants[ $key ] = $all_variants[ $key ];
+			foreach ( $variants as $variant ) {
+				$new_variants[ $variant ] = $all_variants[ $variant ];
+			}
+
+			return $new_variants;
 		}
 
-		return $new_variants;
+		return array(
+			'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
+			'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
+			'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
+		);
+
 	}
 
 	/**

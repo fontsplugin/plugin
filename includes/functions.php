@@ -203,20 +203,15 @@ function ogf_fonts_array() {
  * Return a array of custom fonts.
  */
 function ogf_custom_fonts() {
-
 	return OGF_Fonts_Taxonomy::get_fonts();
-
 }
 
 /**
  * Return a array of custom fonts.
  */
 function ogf_typekit_fonts() {
-
 	return OGF_Typekit::get_fonts();
-
 }
-
 
 /**
  * Return a array of system fonts.

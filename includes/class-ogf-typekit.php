@@ -1,6 +1,6 @@
 <?php
 /**
- * Fonts Plugin Typekit Addon.
+ * Fonts Plugin Typekit class.
  *
  * @package olympus-google-fonts
  */
@@ -18,6 +18,7 @@ class OGF_Typekit {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_head', array( $this, 'get_kits' ) );
 		add_action( 'admin_head', array( $this, 'css_styles' ) );
+		add_action( 'admin_head', array( $this, 'manage_kits' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_css' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_css' ) );
 	}
@@ -101,8 +102,18 @@ class OGF_Typekit {
 
 		foreach ( $kits as $id => $kit ) {
 			echo '<li><strong>' . esc_html__( 'Kit: ', 'olympus-google-fonts' ) . '</strong>' . esc_attr( $id ) . '</li><ul>';
+
+			$status = ( $kit['enabled'] ? esc_html__( 'Enabled', 'olympus-google-fonts' ) : esc_html__( 'Disabled', 'olympus-google-fonts' ) );
+
+			echo '<li><strong>Status:</strong> ' . $status . '</li>';
 			foreach ( $kit['families'] as $family ) {
 				echo '<li><strong>' . esc_html__( 'Font Family: ', 'olympus-google-fonts' ) . '</strong>' . esc_attr( $family['label'] ) . '</li>';
+			}
+
+			if( $kit['enabled'] ) {
+				echo '<li><a href="' . esc_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=disable&kit_id=' . $id ) ) . '">' . esc_html__( 'Disable Kit', 'olympus-google-fonts' ) . '</a></li>';
+			} else {
+				echo '<li><a href="' . esc_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=enable&kit_id=' . $id ) ) . '">' . esc_html__( 'Enable Kit', 'olympus-google-fonts' ) . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -110,7 +121,7 @@ class OGF_Typekit {
 	}
 
 	/**
-	 *
+	 * Retrieve the API key from the database if it exists.
 	 */
 	public function get_api_key() {
 		$settings = get_option( 'fp-typekit', array() );
@@ -136,7 +147,6 @@ class OGF_Typekit {
 	 * Get kits from Typekit API.
 	 */
 	public function get_kits() {
-
 		// Reset the data if the user has clicked the button.
 		if ( isset( $_GET['action'] ) && $_GET['action'] === 'reset' ) {
 			update_option( 'fp-typekit-data', false );
@@ -195,20 +205,48 @@ class OGF_Typekit {
 	/**
 	 * Get kit data from API.
 	 *
-	 * @param string $api_key The API key.
-	 * @param string $kit_id  The Kit ID we are looking for.
+	 * @param string $kit_id The Kit ID we are looking for.
 	 */
 	public function get_kit_from_api( $kit_id ) {
-		$url           = 'https://typekit.com/api/v1/json/kits/' . esc_attr( $kit_id ) . '?token=' . esc_attr( $this->get_api_key() );
-		$curl_args     = array();
-		$response      = wp_remote_request( $url, $curl_args );
+		$url       = 'https://typekit.com/api/v1/json/kits/' . esc_attr( $kit_id ) . '?token=' . esc_attr( $this->get_api_key() );
+		$curl_args = array();
+		$response  = wp_remote_request( $url, $curl_args );
 
-		if ( wp_remote_retrieve_response_code( $response ) == '200' ) {
+		if ( wp_remote_retrieve_response_code( $response ) === 200 ) {
 			$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 			return $response_body->kit;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get kit data from API.
+	 */
+	public function manage_kits() {
+
+		// Only perform action on the Fonts Plugin Typekit Page.
+		if ( get_current_screen()->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
+			return;
+		}
+
+		if ( ! isset( $_GET['action'] ) ) {
+			return;
+		}
+
+		// Reset the data if the user has clicked the button.
+		if ( $_GET['action'] === 'disable' && isset( $_GET['kit_id'] ) ) {
+			$data = get_option( 'fp-typekit-data', array() );
+			$data[ $_GET['kit_id'] ]['enabled'] = false;
+			update_option( 'fp-typekit-data', $data );
+		}
+
+		// Reset the data if the user has clicked the button.
+		if ( $_GET['action'] === 'enable' && isset( $_GET['kit_id'] ) ) {
+			$data = get_option( 'fp-typekit-data', array() );
+			$data[ $_GET['kit_id'] ]['enabled'] = true;
+			update_option( 'fp-typekit-data', $data );
+		}
 	}
 
 	/**
@@ -257,6 +295,9 @@ class OGF_Typekit {
 		}
 
 		foreach ( $kits as $kit ) {
+			if ( ! $kit['enabled'] ) {
+				return $fonts;
+			}
 			foreach ( $kit['families'] as $family ) {
 				$fonts[ 'tk-' . $family['id'] ] = array(
 					'id'       => $family['id'],
@@ -276,7 +317,6 @@ class OGF_Typekit {
 		$typekit_data = get_option( 'fp-typekit-data', array() );
 
 		if ( is_array( $typekit_data ) ) {
-
 			foreach ( $typekit_data as $id => $values ) {
 				wp_enqueue_style( 'typekit-' . $id, 'https://use.typekit.com/' . $id . '.css', array(), OGF_VERSION );
 			}

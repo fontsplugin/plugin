@@ -20,7 +20,6 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 */
 		private $wp_customize;
 
-
 		/**
 		 * OGF_Fonts object.
 		 *
@@ -36,16 +35,31 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		private $system_fonts;
 
 		/**
+		 * Array of custom fonts.
+		 *
+		 * @var array
+		 */
+		private $custom_fonts;
+
+		/**
+		 * Array of typekit fonts.
+		 *
+		 * @var array
+		 */
+		private $typekit_fonts;
+
+		/**
 		 * Class constructor.
 		 */
 		public function __construct() {
-
 			if ( true === get_theme_mod( 'ogf_disable_post_level_controls', 1 ) ) {
 				return;
 			}
 
-			$this->ogf_fonts    = new OGF_Fonts();
-			$this->system_fonts = ogf_system_fonts();
+			$this->ogf_fonts     = new OGF_Fonts();
+			$this->system_fonts  = ogf_system_fonts();
+			$this->custom_fonts  = ogf_custom_fonts();
+			$this->typekit_fonts = ogf_typekit_fonts();
 
 			add_filter( 'mce_buttons', array( $this, 'tinymce_add_buttons' ), 1 );
 			add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_custom_options' ) );
@@ -71,26 +85,29 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 * @param array $opt Tiny MCE options.
 		 */
 		public function tinymce_custom_options( $opt ) {
-
 			$base_type     = get_theme_mod( 'ogf_body_font' );
 			$headings_type = get_theme_mod( 'ogf_headings_font' );
 
-			if ( ogf_is_custom_font( $base_type ) ) {
+			if ( ogf_is_custom_font( $base_type ) && array_key_exists( $base_type, $this->custom_fonts ) ) {
 				$base_type = str_replace( 'cf-', '', $base_type );
-			} elseif ( ogf_is_system_font( $base_type ) ) {
+			} elseif ( ogf_is_system_font( $base_type ) && array_key_exists( $base_type, $this->system_fonts ) ) {
 				$base_type = str_replace( 'sf-', '', $base_type );
 				$base_type = $this->system_fonts[ $base_type ]['stack'];
 			} elseif ( ogf_is_google_font( $base_type ) ) {
 				$base_type = $this->ogf_fonts->get_font_name( $base_type );
+			} elseif ( ogf_is_typekit_font( $base_type ) && array_key_exists( $base_type, $this->typekit_fonts ) ) {
+				$base_type = $this->typekit_fonts[ $base_type ]['stack'];
 			}
 
 			if ( ogf_is_custom_font( $headings_type ) ) {
 				$headings_type = str_replace( 'cf-', '', $headings_type );
-			} elseif ( ogf_is_system_font( $headings_type ) ) {
+			} elseif ( ogf_is_system_font( $headings_type ) && array_key_exists( $headings_type, $this->system_fonts ) ) {
 				$headings_type = str_replace( 'sf-', '', $headings_type );
 				$headings_type = $this->system_fonts[ $headings_type ]['stack'];
 			} elseif ( ogf_is_google_font( $headings_type ) ) {
 				$headings_type = $this->ogf_fonts->get_font_name( $headings_type );
+			} elseif ( ogf_is_typekit_font( $headings_type ) && array_key_exists( $headings_type, $this->typekit_fonts ) ) {
+				$headings_type = $this->typekit_fonts[ $headings_type ]['stack'];
 			}
 
 			$opt['font_formats'] = apply_filters( 'ogf_classic_font_formats', 'Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;' );
@@ -124,7 +141,15 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 				} elseif ( ogf_is_custom_font( $font ) ) {
 					$fonts = ogf_custom_fonts();
 					$font = str_replace( 'cf-', '', $font );
-					$new_default .= $fonts[ $font ]['label'] . '=' . $fonts[ $font ]['stack'] . ';';
+					if ( array_key_exists( $font, $fonts ) ) {
+						$new_default .= $fonts[ $font ]['label'] . '=' . $fonts[ $font ]['stack'] . ';';
+					}
+				} elseif ( ogf_is_typekit_font( $font ) ) {
+					$fonts = ogf_typekit_fonts();
+					$font = str_replace( 'tk-', '', $font );
+					if ( array_key_exists( $font, $fonts ) ) {
+						$new_default .= $fonts[ $font ]['label'] . '=' . $fonts[ $font ]['stack'] . ';';
+					}
 				} else {
 					$new_default .= $this->ogf_fonts->get_font_name( $font ) . '=' . $this->ogf_fonts->get_font_name( $font ) . ';';
 				}

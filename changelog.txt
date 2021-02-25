@@ -1,3 +1,8 @@
+= 2.5.4 =
+
+* Update Google Fonts list
+* Improve Adobe Fonts integration
+
 = 2.5.3 =
 
 * Update localization

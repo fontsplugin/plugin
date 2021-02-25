@@ -29,7 +29,7 @@ function ogf_panels_customize_register( $wp_customize ) {
 		$wp_customize,
 		'ogf_google_fonts',
 		array(
-			'title'    => esc_html__( 'Google Fonts', 'olympus-google-fonts' ),
+			'title'    => esc_html__( 'Fonts Plugin', 'olympus-google-fonts' ),
 			'priority' => 1,
 		)
 	);
