@@ -39,7 +39,6 @@ class OGF_Dashboard_Widget {
 	 * Show Widget
 	 */
 	public function show_widget() {
-
 		$show = true;
 
 		if ( apply_filters( 'ogf_show_news', true ) === false ) {
@@ -116,7 +115,6 @@ class OGF_Dashboard_Widget {
 		</ul>
 
 		<?php
-
 	}
 }
 

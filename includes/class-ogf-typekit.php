@@ -70,7 +70,7 @@ class OGF_Typekit {
 	 * Render the settings intro section of the Typekit page.
 	 */
 	public function render_config_section() {
-			_e( '<p>You can retrieve your Adobe Fonts API Key here: <a target="_blank" href="https://fonts.adobe.com/account/tokens">https://fonts.adobe.com/account/tokens</a></p>', 'olympus-google-fonts' );
+		_e( '<p>You can retrieve your Adobe Fonts API Key here: <a target="_blank" href="https://fonts.adobe.com/account/tokens">https://fonts.adobe.com/account/tokens</a></p>', 'olympus-google-fonts' );
 	}
 
 	/**
@@ -224,7 +224,6 @@ class OGF_Typekit {
 	 * Get kit data from API.
 	 */
 	public function manage_kits() {
-
 		// Only perform action on the Fonts Plugin Typekit Page.
 		if ( get_current_screen()->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
 			return;
@@ -322,7 +321,6 @@ class OGF_Typekit {
 			}
 		}
 	}
-
 }
 
 new OGF_Typekit();

@@ -30,17 +30,14 @@ class OGF_Fonts {
 	 * Let's get started.
 	 */
 	public function __construct() {
-
 		self::$google_fonts = ogf_fonts_array();
 		$this->get_choices();
-
 	}
 
 	/**
 	 * Get the users font choices.
 	 */
 	public function get_choices() {
-
 		$elements = array_keys( ogf_get_elements() );
 
 		foreach ( $elements as $element ) {
@@ -64,7 +61,6 @@ class OGF_Fonts {
 				$this->choices[] = $value;
 			}
 		}
-
 	}
 
 	/**
@@ -73,9 +69,7 @@ class OGF_Fonts {
 	 * @param string $font The font we are getting the id of.
 	 */
 	public function get_font_id( $font ) {
-
 		return str_replace( ' ', '+', $font );
-
 	}
 
 	/**
@@ -84,7 +78,6 @@ class OGF_Fonts {
 	 * @param string $font_id The font ID.
 	 */
 	public function get_font_weights( $font_id ) {
-
 		$weights = self::$google_fonts[ $font_id ]['v'];
 
 		if ( ! is_array( $weights ) ) {
@@ -98,7 +91,6 @@ class OGF_Fonts {
 		}
 
 		return $weights;
-
 	}
 
 	/**
@@ -107,22 +99,18 @@ class OGF_Fonts {
 	 * @param string $font_id The font ID.
 	 */
 	public function get_font_name( $font_id ) {
-
 		if ( array_key_exists( $font_id, self::$google_fonts ) ) {
 			return self::$google_fonts[ $font_id ]['f'];
 		} else {
 			return __( 'Font Missing', 'olympus-google-fonts' );
 		}
-
 	}
 
 	/**
 	 * DEPRECATED use has_google_fonts() instead.
 	 */
 	public function has_custom_fonts() {
-
 		return $this->has_google_fonts();
-
 	}
 
 	/**
@@ -151,7 +139,6 @@ class OGF_Fonts {
 	 * @param string $weights The font weights.
 	 */
 	public function filter_selected_weights( $font_id, $weights ) {
-
 		unset( $weights['0'] );
 
 		foreach ( $weights as $key => $value ) {
@@ -164,14 +151,12 @@ class OGF_Fonts {
 			return $weights;
 		}
 		return array_intersect_key( $weights, array_flip( $selected_weights ) );
-
 	}
 
 	/**
 	 * Return the Google Fonts url.
 	 */
 	public function build_url() {
-
 		$families = array();
 		$subsets  = array();
 
@@ -201,7 +186,6 @@ class OGF_Fonts {
 		);
 
 		return add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
-
 	}
 
 }

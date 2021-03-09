@@ -67,7 +67,6 @@ if ( ! class_exists( 'OGF_Reset' ) ) :
 					),
 				)
 			);
-
 		}
 
 		/**

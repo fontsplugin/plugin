@@ -17,7 +17,7 @@ function ogf_output_css() {
 		<?php
 
 		do_action( 'ogf_inline_styles' );
-		echo render_custom_font_css();
+		echo ogf_return_custom_font_css();
 
 		foreach ( ogf_get_elements() as $id => $values ) {
 			ogf_generate_css( $values['selectors'], $id );
@@ -37,9 +37,9 @@ function ogf_output_css() {
 add_action( 'wp_head', 'ogf_output_css', 1000 );
 
 /**
- *
+ * Return the CSS for enqueing Custom Font Uploads.
  */
-function render_custom_font_css() {
+function ogf_return_custom_font_css() {
 	$fonts = OGF_Fonts_Taxonomy::get_fonts();
 
 	$css = '';
@@ -70,7 +70,6 @@ function render_custom_font_css() {
 	}
 
 	return $css;
-
 }
 
 /**
@@ -80,7 +79,6 @@ function render_custom_font_css() {
  * @param string $option_name The option name to pull from the database.
  */
 function ogf_generate_css( $selector, $option_name ) {
-
 	$family         = get_theme_mod( $option_name . '_font', false );
 	$font_size      = get_theme_mod( $option_name . '_font_size', false );
 	$line_height    = get_theme_mod( $option_name . '_line_height', false );
@@ -175,7 +173,6 @@ function ogf_generate_css( $selector, $option_name ) {
 		echo wp_kses_post( $return );
 
 	}
-
 }
 
 /**
@@ -185,7 +182,6 @@ function ogf_generate_css( $selector, $option_name ) {
  * @return string The built font stack.
  */
 function ogf_build_font_stack( $font_id ) {
-
 	if ( strpos( $font_id, 'sf-' ) !== false ) {
 
 		$system_fonts = ogf_system_fonts();
@@ -224,25 +220,21 @@ function ogf_build_font_stack( $font_id ) {
 			return $stack;
 		}
 	}
-
 }
 
 /**
  * Check if the styles should be forced.
  */
 function ogf_is_forced() {
-
 	if ( 1 === (int) get_theme_mod( 'ogf_force_styles' ) ) {
 		return ' !important';
 	}
-
 }
 
 /**
  * Helper function to build the CSS variables.
  */
 function ogf_generate_css_variables() {
-
 	$body_font     = get_theme_mod( 'ogf_body_font', false );
 	$headings_font = get_theme_mod( 'ogf_headings_font', false );
 	$inputs_font   = get_theme_mod( 'ogf_inputs_font', false );
@@ -271,5 +263,4 @@ function ogf_generate_css_variables() {
 	';
 
 	return $css;
-
 }

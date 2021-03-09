@@ -248,7 +248,6 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 	}
 endif;
 
-
 /*
 * Instantiate the OGF_Notifications class.
 */

@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the Fonts Plugin | Google Fonts Typography plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Fonts Plugin | Google Fonts Typography 2.5.4\n"
+"Project-Id-Version: Fonts Plugin | Google Fonts Typography 2.5.5\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/olympus-google-fonts\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-02-25T13:48:45+00:00\n"
+"POT-Creation-Date: 2021-03-09T11:22:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.1.0\n"
 "X-Domain: olympus-google-fonts\n"
@@ -27,7 +27,7 @@ msgid "The easiest to use Google Fonts typography plugin. No coding required. 10
 msgstr ""
 
 #. Author of the plugin
-#: includes/customizer/panels.php:32
+#: includes/customizer/panels.php:31
 #: admin/class-ogf-welcome-screen.php:28
 msgid "Fonts Plugin"
 msgstr ""
@@ -36,199 +36,199 @@ msgstr ""
 msgid "https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=description"
 msgstr ""
 
-#: class-olympus-google-fonts.php:164
+#: class-olympus-google-fonts.php:151
 msgid "Settings"
 msgstr ""
 
-#: class-olympus-google-fonts.php:171
+#: class-olympus-google-fonts.php:157
 msgid "Upgrade to Pro"
 msgstr ""
 
-#: includes/functions.php:38
+#: includes/functions.php:35
 msgid "Base Typography"
 msgstr ""
 
-#: includes/functions.php:39
+#: includes/functions.php:36
 msgid "Select and configure the font for your content."
 msgstr ""
 
-#: includes/functions.php:44
-#: includes/functions.php:116
-#: includes/functions.php:128
+#: includes/functions.php:41
+#: includes/functions.php:113
+#: includes/functions.php:125
 msgid "Headings Typography"
 msgstr ""
 
-#: includes/functions.php:45
+#: includes/functions.php:42
 msgid "Select and configure the font for your headings."
 msgstr ""
 
-#: includes/functions.php:50
+#: includes/functions.php:47
 msgid "Buttons and Inputs Typography"
 msgstr ""
 
-#: includes/functions.php:51
+#: includes/functions.php:48
 msgid "Select and configure the font for your input fields and buttons."
 msgstr ""
 
-#: includes/functions.php:56
+#: includes/functions.php:53
 msgid "Site Title Typography"
 msgstr ""
 
-#: includes/functions.php:57
+#: includes/functions.php:54
 msgid "Select and configure the font for your site title."
 msgstr ""
 
-#: includes/functions.php:62
+#: includes/functions.php:59
 msgid "Site Description Typography"
 msgstr ""
 
-#: includes/functions.php:63
+#: includes/functions.php:60
 msgid "Select and configure the font for your site description."
 msgstr ""
 
-#: includes/functions.php:68
+#: includes/functions.php:65
 msgid "Navigation Typography"
 msgstr ""
 
-#: includes/functions.php:69
+#: includes/functions.php:66
 msgid "Select and configure the font for your site navigation."
 msgstr ""
 
-#: includes/functions.php:74
-#: includes/functions.php:122
-#: includes/functions.php:136
+#: includes/functions.php:71
+#: includes/functions.php:119
+#: includes/functions.php:133
 msgid "Content Typography"
 msgstr ""
 
-#: includes/functions.php:75
+#: includes/functions.php:72
 msgid "Select and configure the font for your post and page content."
 msgstr ""
 
-#: includes/functions.php:80
+#: includes/functions.php:77
 msgid "Title and H1 Typography"
 msgstr ""
 
-#: includes/functions.php:81
+#: includes/functions.php:78
 msgid "Select and configure the font for your title and H1 headings."
 msgstr ""
 
-#: includes/functions.php:86
+#: includes/functions.php:83
 msgid "H2 Typography"
 msgstr ""
 
-#: includes/functions.php:87
+#: includes/functions.php:84
 msgid "Select and configure the font for your H2 headings."
 msgstr ""
 
-#: includes/functions.php:92
+#: includes/functions.php:89
 msgid "H3 Typography"
 msgstr ""
 
-#: includes/functions.php:93
+#: includes/functions.php:90
 msgid "Select and configure the font for your H3 headings."
 msgstr ""
 
-#: includes/functions.php:98
+#: includes/functions.php:95
 msgid "H4 Typography"
 msgstr ""
 
-#: includes/functions.php:99
+#: includes/functions.php:96
 msgid "Select and configure the font for your H4 headings."
 msgstr ""
 
-#: includes/functions.php:104
+#: includes/functions.php:101
 msgid "H5 Typography"
 msgstr ""
 
-#: includes/functions.php:105
+#: includes/functions.php:102
 msgid "Select and configure the font for your H5 headings."
 msgstr ""
 
-#: includes/functions.php:110
+#: includes/functions.php:107
 msgid "H6 Typography"
 msgstr ""
 
-#: includes/functions.php:111
+#: includes/functions.php:108
 msgid "Select and configure the font for your H6 headings."
 msgstr ""
 
-#: includes/functions.php:117
+#: includes/functions.php:114
 msgid "Select and configure the font for your sidebar headings."
 msgstr ""
 
-#: includes/functions.php:123
+#: includes/functions.php:120
 msgid "Select and configure the font for your sidebar content."
 msgstr ""
 
-#: includes/functions.php:129
+#: includes/functions.php:126
 msgid "Select and configure the font for your footer headings."
 msgstr ""
 
-#: includes/functions.php:137
+#: includes/functions.php:134
 msgid "Select and configure the font for your footer content."
 msgstr ""
 
-#: includes/functions.php:223
+#: includes/functions.php:218
 msgid "Arial"
 msgstr ""
 
-#: includes/functions.php:228
+#: includes/functions.php:223
 msgid "Calibri"
 msgstr ""
 
-#: includes/functions.php:233
+#: includes/functions.php:228
 msgid "Century Gothic"
 msgstr ""
 
-#: includes/functions.php:238
+#: includes/functions.php:233
 msgid "Consolas"
 msgstr ""
 
-#: includes/functions.php:243
+#: includes/functions.php:238
 msgid "Courier New"
 msgstr ""
 
-#: includes/functions.php:248
+#: includes/functions.php:243
 msgid "Helvetica Neue"
 msgstr ""
 
-#: includes/functions.php:253
+#: includes/functions.php:248
 msgid "Georgia"
 msgstr ""
 
-#: includes/functions.php:258
+#: includes/functions.php:253
 msgid "Futura"
 msgstr ""
 
-#: includes/functions.php:263
+#: includes/functions.php:258
 msgid "Lucida Grande"
 msgstr ""
 
-#: includes/functions.php:268
+#: includes/functions.php:263
 msgid "Segoe UI"
 msgstr ""
 
-#: includes/functions.php:273
+#: includes/functions.php:268
 msgid "Tahoma"
 msgstr ""
 
-#: includes/functions.php:278
+#: includes/functions.php:273
 msgid "Times New Roman"
 msgstr ""
 
-#: includes/functions.php:283
+#: includes/functions.php:278
 msgid "Trebuchet MS"
 msgstr ""
 
-#: includes/functions.php:288
+#: includes/functions.php:283
 msgid "Palatino"
 msgstr ""
 
-#: includes/functions.php:293
+#: includes/functions.php:288
 msgid "Verdana"
 msgstr ""
 
-#: includes/functions.php:309
+#: includes/functions.php:303
 #: includes/customizer/controls/class-ogf-customize-typography-control.php:270
 #: includes/customizer/controls/class-ogf-customize-typography-control.php:287
 #: includes/customizer/controls/class-ogf-customize-typography-control.php:297
@@ -239,25 +239,25 @@ msgstr ""
 msgid "- Default -"
 msgstr ""
 
-#: includes/functions.php:310
+#: includes/functions.php:304
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/edit.js:149
 msgid "Thin"
 msgstr ""
 
-#: includes/functions.php:311
+#: includes/functions.php:305
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/edit.js:150
 msgid "Extra Light"
 msgstr ""
 
-#: includes/functions.php:312
+#: includes/functions.php:306
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/edit.js:151
 msgid "Light"
 msgstr ""
 
-#: includes/functions.php:313
+#: includes/functions.php:307
 #: includes/customizer/controls/class-ogf-customize-typography-control.php:298
 #: includes/customizer/controls/class-ogf-customize-typography-control.php:310
 #: blocks/dist/blocks.build.js:1
@@ -265,70 +265,70 @@ msgstr ""
 msgid "Normal"
 msgstr ""
 
-#: includes/functions.php:314
+#: includes/functions.php:308
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/edit.js:153
 msgid "Medium"
 msgstr ""
 
-#: includes/functions.php:315
+#: includes/functions.php:309
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/edit.js:154
 msgid "Semi Bold"
 msgstr ""
 
-#: includes/functions.php:316
+#: includes/functions.php:310
 #: includes/customizer/controls/class-ogf-customize-typography-control.php:299
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/edit.js:155
 msgid "Bold"
 msgstr ""
 
-#: includes/functions.php:317
+#: includes/functions.php:311
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/edit.js:156
 msgid "Extra Bold"
 msgstr ""
 
-#: includes/functions.php:318
+#: includes/functions.php:312
 #: blocks/dist/blocks.build.js:1
 #: blocks/src/google-fonts/edit.js:157
 msgid "Ultra Bold"
 msgstr ""
 
-#: includes/functions.php:319
+#: includes/functions.php:313
 msgid "Thin Italic"
 msgstr ""
 
-#: includes/functions.php:320
+#: includes/functions.php:314
 msgid "Extra Light Italic"
 msgstr ""
 
-#: includes/functions.php:321
+#: includes/functions.php:315
 msgid "Light Italic"
 msgstr ""
 
-#: includes/functions.php:322
+#: includes/functions.php:316
 msgid "Normal Italic"
 msgstr ""
 
-#: includes/functions.php:323
+#: includes/functions.php:317
 msgid "Medium Italic"
 msgstr ""
 
-#: includes/functions.php:324
+#: includes/functions.php:318
 msgid "Semi Bold Italic"
 msgstr ""
 
-#: includes/functions.php:325
+#: includes/functions.php:319
 msgid "Bold Italic"
 msgstr ""
 
-#: includes/functions.php:326
+#: includes/functions.php:320
 msgid "Extra Bold Italic"
 msgstr ""
 
-#: includes/functions.php:327
+#: includes/functions.php:321
 msgid "Ultra Bold Italic"
 msgstr ""
 
@@ -343,7 +343,7 @@ msgid "Reset All Fonts"
 msgstr ""
 
 #. translators: %s Link to Google Fonts customizer panel.
-#: includes/class-ogf-welcome.php:104
+#: includes/class-ogf-welcome.php:102
 msgid "Thank you for installing <strong>Google Fonts for WordPress</strong>! Configure your fonts here: <a href=\"%s\">WordPress Customizer</a>"
 msgstr ""
 
@@ -430,18 +430,18 @@ msgstr ""
 msgid "No thanks / I already have"
 msgstr ""
 
-#: includes/class-ogf-notifications.php:258
+#: includes/class-ogf-notifications.php:257
 msgid "Google Fonts for WordPress"
 msgstr ""
 
 #: includes/customizer/settings.php:38
-#: includes/customizer/panels.php:71
-#: includes/customizer/panels.php:101
+#: includes/customizer/panels.php:70
+#: includes/customizer/panels.php:100
 msgid "Custom Elements"
 msgstr ""
 
 #: includes/customizer/settings.php:56
-#: includes/customizer/panels.php:159
+#: includes/customizer/panels.php:158
 msgid "Load Fonts Only"
 msgstr ""
 
@@ -481,87 +481,87 @@ msgstr ""
 msgid "Optional"
 msgstr ""
 
-#: includes/customizer/panels.php:41
+#: includes/customizer/panels.php:40
 msgid "Theme Settings"
 msgstr ""
 
-#: includes/customizer/panels.php:50
+#: includes/customizer/panels.php:49
 msgid "Basic Settings"
 msgstr ""
 
-#: includes/customizer/panels.php:60
+#: includes/customizer/panels.php:59
 msgid "Advanced Settings"
 msgstr ""
 
 #. Translators: %s Custom Elements Customizer Panel URL
-#: includes/customizer/panels.php:74
+#: includes/customizer/panels.php:73
 msgid "Define your Custom Elements here and then customize them under <a href=\"%s\">Advanced Settings &rarr; Custom Elements</a>."
 msgstr ""
 
-#: includes/customizer/panels.php:82
+#: includes/customizer/panels.php:81
 msgid "Font Loading"
 msgstr ""
 
-#: includes/customizer/panels.php:92
+#: includes/customizer/panels.php:91
 msgid "Debugging"
 msgstr ""
 
 #. Translators: %s Custom Elements Customizer Panel URL
-#: includes/customizer/panels.php:103
+#: includes/customizer/panels.php:102
 msgid "Custom Elements allow you to apply Google Fonts to any part of your website, they can be setup under <a href=\"%s\">Google Fonts &rarr; Custom Elements</a>."
 msgstr ""
 
-#: includes/customizer/panels.php:111
+#: includes/customizer/panels.php:110
 msgid "Theme Elements"
 msgstr ""
 
-#: includes/customizer/panels.php:119
+#: includes/customizer/panels.php:118
 msgid "Branding"
 msgstr ""
 
-#: includes/customizer/panels.php:127
+#: includes/customizer/panels.php:126
 msgid "Navigation"
 msgstr ""
 
-#: includes/customizer/panels.php:135
+#: includes/customizer/panels.php:134
 msgid "Content"
 msgstr ""
 
-#: includes/customizer/panels.php:143
+#: includes/customizer/panels.php:142
 msgid "Sidebar"
 msgstr ""
 
-#: includes/customizer/panels.php:151
+#: includes/customizer/panels.php:150
 msgid "Footer"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:83
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:82
 msgid "Add New"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:86
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:85
 msgid "Save Elements"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:134
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:140
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:132
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:138
 msgid "Label"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:145
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:151
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:143
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:149
 msgid "Description"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:156
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:154
 msgid "Selectors"
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:162
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:160
 msgid "Add your selectors..."
 msgstr ""
 
-#: includes/customizer/controls/class-ogf-customize-repeater-control.php:166
+#: includes/customizer/controls/class-ogf-customize-repeater-control.php:164
 msgid "Delete field"
 msgstr ""
 
@@ -659,8 +659,8 @@ msgstr ""
 msgid "Typography News"
 msgstr ""
 
-#: includes/class-ogf-dashboard-widget.php:71
-#: includes/class-ogf-dashboard-widget.php:97
+#: includes/class-ogf-dashboard-widget.php:70
+#: includes/class-ogf-dashboard-widget.php:96
 msgid "Temporarily unable to load feed."
 msgstr ""
 
@@ -733,7 +733,7 @@ msgstr ""
 msgid "Enable Kit"
 msgstr ""
 
-#: includes/class-ogf-fonts.php:114
+#: includes/class-ogf-fonts.php:105
 msgid "Font Missing"
 msgstr ""
 

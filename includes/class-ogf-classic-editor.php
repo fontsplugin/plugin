@@ -123,7 +123,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 				$opt['content_style'] .= '#tinymce h1, #tinymce h2, #tinymce h3, #tinymce h4, #tinymce h5, #tinymce h6 { font-family: ' . $headings_type . ' !important; }';
 			}
 
-			$opt['content_style'] .= render_custom_font_css();
+			$opt['content_style'] .= ogf_return_custom_font_css();
 			return $opt;
 		}
 

@@ -38,12 +38,11 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 	 * Render the control.
 	 */
 	public function render_content() {
-
-		/*Get default options*/
+		// Get default options.
 		$default = json_decode( $this->setting->default );
-		/*Get values (json format)*/
+		// Get values (json format).
 		$values = $this->value();
-		/*Decode values*/
+		// Decode values.
 		$json = json_decode( $values );
 		if ( ! is_array( $json ) ) {
 			$json = array( $values );
@@ -95,7 +94,7 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 	 * @param array $array The array.
 	 */
 	private function iterate_array( $array = array() ) {
-		/*Counter that helps checking if the box is first and should have the delete button disabled*/
+		// Counter that helps checking if the box is first and should have the delete button disabled.
 		$count = 0;
 		if ( ! empty( $array ) ) {
 			foreach ( $array as $icon ) {
@@ -122,7 +121,6 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 	 * @param string $count   Count how many controls have been displayed so far.
 	 */
 	private function input_control( $values = '', $count = 0 ) {
-
 		$label       = ( isset( $values->label ) ? $values->label : '' );
 		$description = ( isset( $values->description ) ? $values->description : '' );
 		$selectors   = ( isset( $values->selectors ) ? $values->selectors : '' );

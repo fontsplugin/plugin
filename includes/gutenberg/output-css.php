@@ -11,7 +11,6 @@
  * Enqeue the Google Fonts URL.
  */
 function ogf_gutenberg_enqueue_fonts() {
-
 	$fonts = new OGF_Fonts();
 
 	if ( $fonts->has_google_fonts() ) {
@@ -21,7 +20,6 @@ function ogf_gutenberg_enqueue_fonts() {
 		$css = ogf_generate_css_variables();
 		wp_add_inline_style( 'olympus-google-fonts', $css );
 	}
-
 }
 add_action( 'enqueue_block_editor_assets', 'ogf_gutenberg_enqueue_fonts' );
 
@@ -29,7 +27,6 @@ add_action( 'enqueue_block_editor_assets', 'ogf_gutenberg_enqueue_fonts' );
  * Output the font CSS to wp_head.
  */
 function ogf_gutenberg_output_css() {
-
 	// Only load on Gutenberg-enabled pages.
 	global $current_screen;
 	$current_screen = get_current_screen();
@@ -172,5 +169,12 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
 		echo wp_kses_post( $return );
 
 	}
-
 }
+
+/**
+ * Add CSS for Custom Font Uploads to Gutenberg
+ */
+function ogf_gutenberg_custom_font_css() {
+	echo ogf_return_custom_font_css();
+}
+add_action( 'ogf_gutenberg_inline_styles', 'ogf_gutenberg_custom_font_css', 1 );

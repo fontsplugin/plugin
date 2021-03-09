@@ -16,7 +16,6 @@ class Olympus_Google_Fonts {
 	 * Initialize plugin.
 	 */
 	public function __construct() {
-
 		$this->includes();
 
 		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
@@ -31,14 +30,12 @@ class Olympus_Google_Fonts {
 		if ( ! defined( 'OGF_PRO' ) ) {
 			add_action( 'customize_register', array( $this, 'remove_pro_sections' ) );
 		}
-
 	}
 
 	/**
 	 * Load plugin files.
 	 */
 	public function includes() {
-
 		// Custom uploads functionality.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-fonts-taxonomy.php';
 		require_once OGF_DIR_PATH . 'admin/class-ogf-upload-fonts-screen.php';
@@ -72,23 +69,19 @@ class Olympus_Google_Fonts {
 
 		// News widget.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-dashboard-widget.php';
-
 	}
 
 	/**
 	 * Load plugin textdomain.
 	 */
 	public function load_textdomain() {
-
 		load_plugin_textdomain( 'olympus-google-fonts', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-
 	}
 
 	/**
 	 * Enqeue the Google Fonts URL.
 	 */
 	public function enqueue() {
-
 		$fonts = new OGF_Fonts();
 
 		if ( $fonts->has_google_fonts() ) {
@@ -99,7 +92,6 @@ class Olympus_Google_Fonts {
 			wp_add_inline_style( 'olympus-google-fonts', $css );
 
 		}
-
 	}
 
 	/**
@@ -110,7 +102,6 @@ class Olympus_Google_Fonts {
 	 * @return array $urls           URLs to print for resource hints.
 	 */
 	public function resource_hints( $urls, $relation_type ) {
-
 		if ( wp_style_is( 'olympus-google-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
 			$urls[] = array(
 				'href' => 'https://fonts.gstatic.com',
@@ -118,7 +109,6 @@ class Olympus_Google_Fonts {
 			);
 		}
 		return $urls;
-
 	}
 
 	/**
@@ -139,7 +129,6 @@ class Olympus_Google_Fonts {
 	 * Load preview scripts/styles.
 	 */
 	public function customize_preview_enqueue() {
-
 		wp_enqueue_script( 'ogf-customize-preview', esc_url( OGF_DIR_URL . 'assets/js/customize-preview.js' ), array( 'jquery' ), OGF_VERSION, true );
 
 		$elements = array_merge( ogf_get_elements(), ogf_get_custom_elements() );
@@ -148,7 +137,6 @@ class Olympus_Google_Fonts {
 		wp_localize_script( 'ogf-customize-preview', 'ogf_system_fonts', ogf_system_fonts() );
 		wp_localize_script( 'ogf-customize-preview', 'ogf_custom_fonts', ogf_custom_fonts() );
 		wp_localize_script( 'ogf-customize-preview', 'ogf_typekit_fonts', ogf_typekit_fonts() );
-
 	}
 
 	/**
@@ -157,7 +145,6 @@ class Olympus_Google_Fonts {
 	 * @param array $links Current links array.
 	 */
 	public function links( $links ) {
-
 		// Customizer Settings Link.
 		$customizer_url = admin_url( 'customize.php?autofocus[panel]=ogf_google_fonts' );
 
@@ -166,16 +153,13 @@ class Olympus_Google_Fonts {
 		array_push( $links, $settings_link );
 
 		if ( ! defined( 'OGF_PRO' ) ) {
-
 			// Upgrade Link.
 			$pro_link = '<a href="https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=wpadmin&utm_campaign=upsell">' . esc_html__( 'Upgrade to Pro', 'olympus-google-fonts' ) . '</a>';
 
 			array_push( $links, $pro_link );
-
 		}
 
 		return $links;
-
 	}
 
 	/**

@@ -1,3 +1,7 @@
+= 2.5.5 =
+
+* Fix bug where Custom Font Files weren't being enqueued in Gutenberg.
+
 = 2.5.4 =
 
 * Update Google Fonts list

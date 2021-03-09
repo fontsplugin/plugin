@@ -21,7 +21,6 @@ add_action( 'customize_controls_enqueue_scripts', 'ogf_panels_customize_controls
  * @param object $wp_customize Access to the $wp_customize object.
  */
 function ogf_panels_customize_register( $wp_customize ) {
-
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-panel.php';
 	$wp_customize->register_panel_type( 'OGF_Customize_Panel' );
 
@@ -160,6 +159,5 @@ function ogf_panels_customize_register( $wp_customize ) {
 			'panel' => 'ogf_advanced',
 		)
 	);
-
 }
 add_action( 'customize_register', 'ogf_panels_customize_register' );

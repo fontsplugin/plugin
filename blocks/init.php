@@ -81,7 +81,6 @@ add_action( 'init', 'olympus_google_fonts_register_block' );
  * @param array $attributes The block attributes.
  */
 function olympus_google_fonts_block_render( $attributes ) {
-
 	$block_type  = isset( $attributes['blockType'] ) ? esc_attr( $attributes['blockType'] ) : 'p';
 	$font_id     = isset( $attributes['fontID'] ) ? sanitize_text_field( $attributes['fontID'] ) : '';
 	$variant     = isset( $attributes['variant'] ) ? sanitize_text_field( $attributes['variant'] ) : '';

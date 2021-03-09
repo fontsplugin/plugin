@@ -80,7 +80,6 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 		 * Display the admin notice.
 		 */
 		public function display_admin_notice() {
-
 			if ( get_option( 'dismissed-' . $this->slug, false ) ) {
 				return;
 			}
@@ -95,7 +94,6 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 			</div>
 			<?php
 		}
-
 	}
 endif;
 
