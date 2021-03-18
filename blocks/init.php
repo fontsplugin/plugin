@@ -12,6 +12,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( false !== get_theme_mod( 'ogf_disable_post_level_controls', false ) ) {
+	return;
+}
+
 /**
  * Enqueue Gutenberg block assets for backend editor.
  */

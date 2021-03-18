@@ -16,9 +16,6 @@ function ogf_gutenberg_enqueue_fonts() {
 	if ( $fonts->has_google_fonts() ) {
 		$url = $fonts->build_url();
 		wp_enqueue_style( 'olympus-google-fonts', $url, array(), OGF_VERSION );
-
-		$css = ogf_generate_css_variables();
-		wp_add_inline_style( 'olympus-google-fonts', $css );
 	}
 }
 add_action( 'enqueue_block_editor_assets', 'ogf_gutenberg_enqueue_fonts' );
@@ -177,4 +174,4 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
 function ogf_gutenberg_custom_font_css() {
 	echo ogf_return_custom_font_css();
 }
-add_action( 'ogf_gutenberg_inline_styles', 'ogf_gutenberg_custom_font_css', 1 );
+add_action( 'ogf_gutenberg_inline_styles', 'ogf_gutenberg_custom_font_css', 2 );

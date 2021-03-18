@@ -288,14 +288,13 @@ class OGF_Typekit {
 	public static function get_fonts() {
 		$fonts = array();
 		$kits  = get_option( 'fp-typekit-data', array() );
-
 		if ( ! is_array( $kits ) ) {
 			return $fonts;
 		}
 
 		foreach ( $kits as $kit ) {
 			if ( ! $kit['enabled'] ) {
-				return $fonts;
+				continue;
 			}
 			foreach ( $kit['families'] as $family ) {
 				$fonts[ 'tk-' . $family['id'] ] = array(
@@ -317,6 +316,12 @@ class OGF_Typekit {
 
 		if ( is_array( $typekit_data ) ) {
 			foreach ( $typekit_data as $id => $values ) {
+
+				// skip if the kit is disabled.
+				if ( $values['enabled'] === false ) {
+					continue;
+				}
+
 				wp_enqueue_style( 'typekit-' . $id, 'https://use.typekit.com/' . $id . '.css', array(), OGF_VERSION );
 			}
 		}

@@ -16,7 +16,9 @@ class Olympus_Google_Fonts {
 	 * Initialize plugin.
 	 */
 	public function __construct() {
+		$this->constants();
 		$this->includes();
+		$this->compatability();
 
 		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 
@@ -29,6 +31,23 @@ class Olympus_Google_Fonts {
 
 		if ( ! defined( 'OGF_PRO' ) ) {
 			add_action( 'customize_register', array( $this, 'remove_pro_sections' ) );
+		}
+	}
+
+	/**
+	 * Load plugin files.
+	 */
+	public function constants() {
+		if ( ! defined( 'OGF_VERSION' ) ) {
+			define( 'OGF_VERSION', '2.5.6' );
+		}
+
+		if ( ! defined( 'OGF_DIR_PATH' ) ) {
+			define( 'OGF_DIR_PATH', plugin_dir_path( __FILE__ ) );
+		}
+
+		if ( ! defined( 'OGF_DIR_URL' ) ) {
+			define( 'OGF_DIR_URL', plugin_dir_url( __FILE__ ) );
 		}
 	}
 
@@ -53,6 +72,7 @@ class Olympus_Google_Fonts {
 		require_once OGF_DIR_PATH . 'includes/class-ogf-typekit.php';
 
 		// Required files for the Gutenberg editor.
+		require_once OGF_DIR_PATH . 'blocks/init.php';
 		require_once OGF_DIR_PATH . 'includes/gutenberg/output-css.php';
 
 		// Notifications class.
@@ -69,6 +89,22 @@ class Olympus_Google_Fonts {
 
 		// News widget.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-dashboard-widget.php';
+
+		// Admin sidebar page(s).
+		require_once OGF_DIR_PATH . 'admin/class-ogf-welcome-screen.php';
+	}
+
+	/**
+	 * Load plugin textdomain.
+	 */
+	public function compatability() {
+		$current_theme      = wp_get_theme();
+		$theme_author       = strtolower( esc_attr( $current_theme->get( 'Author' ) ) );
+		$theme_author       = str_replace( ' ', '', $theme_author );
+		$author_compat_path = OGF_DIR_PATH . '/compatibility/' . $theme_author . '.php';
+		if ( file_exists( $author_compat_path ) ) {
+			require_once $author_compat_path;
+		}
 	}
 
 	/**
@@ -87,10 +123,6 @@ class Olympus_Google_Fonts {
 		if ( $fonts->has_google_fonts() ) {
 			$url = $fonts->build_url();
 			wp_enqueue_style( 'olympus-google-fonts', $url, array(), OGF_VERSION );
-
-			$css = ogf_generate_css_variables();
-			wp_add_inline_style( 'olympus-google-fonts', $css );
-
 		}
 	}
 
@@ -173,3 +205,5 @@ class Olympus_Google_Fonts {
 	}
 
 }
+
+$gfwp = new Olympus_Google_Fonts();

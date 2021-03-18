@@ -239,28 +239,33 @@ function ogf_generate_css_variables() {
 	$headings_font = get_theme_mod( 'ogf_headings_font', false );
 	$inputs_font   = get_theme_mod( 'ogf_inputs_font', false );
 
-	$body_font_stack     = '';
-	$headings_font_stack = '';
-	$inputs_font_stack   = '';
+	if ( $body_font === 'default' && $headings_font === 'default' && $inputs_font === 'default' ) {
+		return;
+	}
+
+	if ( ! $body_font && ! $headings_font && ! $inputs_font ) {
+		return;
+	}
+
+	$css = ':root {';
 
 	if ( $body_font ) {
 		$body_font_stack = str_replace( '"', '', ogf_build_font_stack( $body_font ) );
+		$css .= '--font-base: ' . esc_attr( $body_font_stack ) . ';';
 	}
 	if ( $headings_font ) {
 		$headings_font_stack = str_replace( '"', '', ogf_build_font_stack( $headings_font ) );
+		$css .= '--font-headings: ' . esc_attr( $headings_font_stack ) . ';';
 	}
 	if ( $inputs_font ) {
 		$inputs_font_stack = str_replace( '"', '', ogf_build_font_stack( $inputs_font ) );
+		$css .= '--font-input: ' . esc_attr( $inputs_font_stack ) . ';';
 	}
 
-	$css =
-	'
-	:root {
-		--font-base: ' . esc_attr( $body_font_stack ) . ';
-		--font-headings: ' . esc_attr( $headings_font_stack ) . ';
-		--font-input: ' . esc_attr( $inputs_font_stack ) . ';
-	}
-	';
+	$css .= '}';
 
-	return $css;
+	echo $css;
 }
+
+add_action( 'ogf_inline_styles', 'ogf_generate_css_variables', 1 );
+add_action( 'ogf_gutenberg_inline_styles', 'ogf_generate_css_variables', 1 );

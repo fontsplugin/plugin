@@ -1,3 +1,9 @@
+= 2.5.6 =
+
+* Code optimization for future improvements.
+* Fix inefficiencies with Typekit enqueues.
+* Improve output of CSS variables.
+
 = 2.5.5 =
 
 * Fix bug where Custom Font Files weren't being enqueued in Gutenberg.
