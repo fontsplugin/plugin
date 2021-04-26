@@ -109,6 +109,12 @@ function ogf_get_elements() {
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-content h6, .post-content h6, .page-content h6, #content h6, .type-post h6, .type-page h6',
 		),
+		'ogf_blockquotes' => array(
+			'label'       => esc_html__( 'Quotes', 'olympus-google-fonts' ),
+			'description' => esc_html__( 'Select and configure the font for quotations.', 'olympus-google-fonts' ),
+			'section'     => 'ogf_advanced__content',
+			'selectors'   => 'blockquote, .wp-block-quote, blockquote p, .wp-block-quote p',
+		),
 		'ogf_sidebar_headings' => array(
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your sidebar headings.', 'olympus-google-fonts' ),
