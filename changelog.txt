@@ -1,3 +1,8 @@
+= 2.5.7 =
+
+* Add control for quotes (blockquotes)
+* Improve compatibility with TwentyTwenty
+
 = 2.5.6 =
 
 * Code optimization for future improvements.
