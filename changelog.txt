@@ -1,3 +1,9 @@
+= 2.5.8 =
+
+* Fix issue where 'Font Loading' screen was not showing if any non-Google fonts were chosen.
+* If 'Force Styles' is enabled, add !important to block output.
+* Add compatibility pack for the Graphene theme.
+
 = 2.5.7 =
 
 * Add control for quotes (blockquotes)

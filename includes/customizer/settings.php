@@ -225,22 +225,23 @@ function ogf_customize_register( $wp_customize ) {
 
 	if ( $fonts->has_google_fonts() ) {
 
-		$choices = $fonts->choices;
-
 		// Build the selective font loading controls.
-		foreach ( $choices as $font_id ) {
+		foreach ( $fonts->choices as $font_id ) {
 
 			if ( ! ogf_is_google_font( $font_id ) ) {
-				return;
+				continue;
 			}
 
 			$weights      = $fonts->get_font_weights( $font_id );
 			$name         = $fonts->get_font_name( $font_id );
 			$all_variants = ogf_font_variants();
 			$new_variants = array();
+
 			foreach ( $weights as $key => $value ) {
 				$new_variants[ $key ] = $all_variants[ $key ];
 			}
+
+			// remove the 'default' value.
 			unset( $new_variants[0] );
 
 			$wp_customize->add_setting(

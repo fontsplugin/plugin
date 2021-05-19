@@ -167,11 +167,3 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
 
 	}
 }
-
-/**
- * Add CSS for Custom Font Uploads to Gutenberg
- */
-function ogf_gutenberg_custom_font_css() {
-	echo ogf_return_custom_font_css();
-}
-add_action( 'ogf_gutenberg_inline_styles', 'ogf_gutenberg_custom_font_css', 2 );

@@ -95,6 +95,7 @@ function olympus_google_fonts_block_render( $attributes ) {
 	$color       = isset( $attributes['color'] ) ? sanitize_text_field( $attributes['color'] ) : '';
 	$output      = '';
 	$style       = '';
+	$forced      = ogf_is_forced();
 
 	if ( $font_id ) {
 
@@ -113,27 +114,27 @@ function olympus_google_fonts_block_render( $attributes ) {
 			$font_family = $font_id;
 		}
 
-		$style = "font-family: {$font_family};";
+		$style = "font-family: {$font_family}{$forced};";
 	}
 
 	if ( $variant && '0' !== $variant ) {
-		$style .= "font-weight: {$variant};";
+		$style .= "font-weight: {$variant}{$forced};";
 	}
 
 	if ( $font_size ) {
-		$style .= "font-size: {$font_size}px;";
+		$style .= "font-size: {$font_size}px{$forced};";
 	}
 
 	if ( $line_height ) {
-		$style .= "line-height: {$line_height};";
+		$style .= "line-height: {$line_height}{$forced};";
 	}
 
 	if ( $align ) {
-		$style .= "text-align: {$align};";
+		$style .= "text-align: {$align}{$forced};";
 	}
 
 	if ( $color ) {
-		$style .= "color: {$color};";
+		$style .= "color: {$color}{$forced};";
 	}
 
 	$output .= '<' . $block_type . ' class="fonts-plugin-block" style="' . $style . '">';

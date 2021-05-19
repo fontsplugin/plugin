@@ -15,25 +15,18 @@ function ogf_output_css() {
 	<!-- Fonts Plugin CSS - https://fontsplugin.com/ -->
 	<style>
 		<?php
-
 		do_action( 'ogf_inline_styles' );
-		echo ogf_return_custom_font_css();
-
 		foreach ( ogf_get_elements() as $id => $values ) {
 			ogf_generate_css( $values['selectors'], $id );
 		}
 		foreach ( ogf_get_custom_elements() as $id => $values ) {
 			ogf_generate_css( $values['selectors'], $id );
 		}
-
-
 		?>
 	</style>
 	<!-- Fonts Plugin CSS -->
 	<?php
 }
-
-// Output custom CSS to live site.
 add_action( 'wp_head', 'ogf_output_css', 1000 );
 
 /**
@@ -71,6 +64,15 @@ function ogf_return_custom_font_css() {
 
 	return $css;
 }
+
+/**
+ * Echo ogf_return_custom_font_css
+ */
+function ogf_echo_custom_font_css() {
+	echo ogf_return_custom_font_css();
+}
+add_action( 'ogf_inline_styles', 'ogf_echo_custom_font_css', 2, 0 );
+add_action( 'ogf_gutenberg_inline_styles', 'ogf_echo_custom_font_css', 2 );
 
 /**
  * Helper function to build the CSS styles.
@@ -235,34 +237,30 @@ function ogf_is_forced() {
  * Helper function to build the CSS variables.
  */
 function ogf_generate_css_variables() {
-	$body_font     = get_theme_mod( 'ogf_body_font', false );
-	$headings_font = get_theme_mod( 'ogf_headings_font', false );
-	$inputs_font   = get_theme_mod( 'ogf_inputs_font', false );
+	$body_font     = get_theme_mod( 'ogf_body_font', 'default' );
+	$headings_font = get_theme_mod( 'ogf_headings_font', 'default' );
+	$inputs_font   = get_theme_mod( 'ogf_inputs_font', 'default' );
 
 	if ( $body_font === 'default' && $headings_font === 'default' && $inputs_font === 'default' ) {
 		return;
 	}
 
-	if ( ! $body_font && ! $headings_font && ! $inputs_font ) {
-		return;
-	}
+	$css = ':root {' . PHP_EOL;
 
-	$css = ':root {';
-
-	if ( $body_font ) {
+	if ( $body_font && $body_font !== 'default' ) {
 		$body_font_stack = str_replace( '"', '', ogf_build_font_stack( $body_font ) );
-		$css .= '--font-base: ' . esc_attr( $body_font_stack ) . ';';
+		$css .= '--font-base: ' . esc_attr( $body_font_stack ) . ';' . PHP_EOL;
 	}
-	if ( $headings_font ) {
+	if ( $headings_font && $headings_font !== 'default' ) {
 		$headings_font_stack = str_replace( '"', '', ogf_build_font_stack( $headings_font ) );
-		$css .= '--font-headings: ' . esc_attr( $headings_font_stack ) . ';';
+		$css .= '--font-headings: ' . esc_attr( $headings_font_stack ) . ';' . PHP_EOL;
 	}
-	if ( $inputs_font ) {
+	if ( $inputs_font && $inputs_font !== 'default' ) {
 		$inputs_font_stack = str_replace( '"', '', ogf_build_font_stack( $inputs_font ) );
-		$css .= '--font-input: ' . esc_attr( $inputs_font_stack ) . ';';
+		$css .= '--font-input: ' . esc_attr( $inputs_font_stack ) . ';' . PHP_EOL;
 	}
 
-	$css .= '}';
+	$css .= '}' . PHP_EOL;
 
 	echo $css;
 }
