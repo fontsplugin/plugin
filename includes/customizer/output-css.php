@@ -231,6 +231,7 @@ function ogf_is_forced() {
 	if ( 1 === (int) get_theme_mod( 'ogf_force_styles' ) ) {
 		return ' !important';
 	}
+	return '';
 }
 
 /**
