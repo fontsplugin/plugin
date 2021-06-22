@@ -29,6 +29,8 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 	 */
 	public function enqueue() {
 		wp_enqueue_script( 'customizer-repeater-script', OGF_DIR_URL . 'assets/js/customizer-repeater.js', array( 'jquery', 'jquery-ui-draggable', 'wp-color-picker' ), OGF_VERSION, true );
+		$ogf_repeater = array( 'return_url' => esc_url( admin_url( '/customize.php?autofocus[section]=ogf_custom' ) ) );
+		wp_localize_script( 'customizer-repeater-script', 'ogf_repeater', $ogf_repeater );
 	}
 
 	/**

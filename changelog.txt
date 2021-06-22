@@ -1,3 +1,8 @@
+= 2.5.9 =
+
+* Update fonts list.
+* Fix conflict in Customizer with the Hestia theme.
+
 = 2.5.8 =
 
 * Fix issue where 'Font Loading' screen was not showing if any non-Google fonts were chosen.

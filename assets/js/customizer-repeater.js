@@ -1,6 +1,7 @@
-/* global ogf_custom_selectors_url */
+/* global ogf_repeater */
 
 jQuery( document ).ready( function() {
+	console.log(ogf_repeater)
 	const themeControls = jQuery( '#customize-theme-controls' );
 
 	/**
@@ -49,13 +50,32 @@ jQuery( document ).ready( function() {
    * Save elements and refresh the customizer.
    */
 	themeControls.on( 'click', '.ogf_save_elements_button', function() {
-		wp.customize.previewer.save().done( function() {
-			window.location.href = ogf_custom_selectors_url;
+		jQuery.when( wp.customize.previewer.save() ).done( function() {
+			window.location.href = ogf_repeater.return_url;
 		} );
 	} );
 } );
 
 function customizerRepeaterRefreshValues() {
+
+	const entityMap = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+		'"': '&quot;',
+		'\'': '&#39;',
+		'/': '&#x2F;',
+	};
+
+	function escapeHtml( string ) {
+		//noinspection JSUnresolvedFunction
+		string = String( string ).replace( new RegExp( '\r?\n', 'g' ), '<br />' );
+		string = String( string ).replace( /\\/g, '&#92;' );
+		return String( string ).replace( /[&<>"'\/]/g, function( s ) {
+			return entityMap[ s ];
+		} );
+	}
+
 	jQuery( '.customizer-repeater-general-control-repeater' ).each( function() {
 		const values = [];
 		jQuery( this ).find( '.customizer-repeater-general-control-repeater-container' ).each( function() {
@@ -74,23 +94,5 @@ function customizerRepeaterRefreshValues() {
 		} );
 		jQuery( this ).find( '.customizer-repeater-colector' ).val( JSON.stringify( values ) );
 		jQuery( this ).find( '.customizer-repeater-colector' ).trigger( 'change' );
-	} );
-}
-
-const entityMap = {
-	'&': '&amp;',
-	'<': '&lt;',
-	'>': '&gt;',
-	'"': '&quot;',
-	'\'': '&#39;',
-	'/': '&#x2F;',
-};
-
-function escapeHtml( string ) {
-	//noinspection JSUnresolvedFunction
-	string = String( string ).replace( new RegExp( '\r?\n', 'g' ), '<br />' );
-	string = String( string ).replace( /\\/g, '&#92;' );
-	return String( string ).replace( /[&<>"'\/]/g, function( s ) {
-		return entityMap[ s ];
 	} );
 }
