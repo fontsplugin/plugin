@@ -1,7 +1,6 @@
 /* global ogf_repeater */
 
 jQuery( document ).ready( function() {
-	console.log(ogf_repeater)
 	const themeControls = jQuery( '#customize-theme-controls' );
 
 	/**
