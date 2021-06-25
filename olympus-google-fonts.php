@@ -40,7 +40,7 @@ register_activation_hook( __FILE__, 'ogf_activate' );
 function ogf_redirect() {
 	if ( get_option( 'ogf_do_activation_redirect', false ) ) {
 		delete_option( 'ogf_do_activation_redirect' );
-		if ( ! isset( $_GET['activate-multi'] ) ) {
+		if ( ! isset( $_GET['activate-multi'] ) && ! is_network_admin() ) {
 			wp_redirect( 'admin.php?page=fonts-plugin' );
 			exit;
 		}
