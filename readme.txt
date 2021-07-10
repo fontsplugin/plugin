@@ -3,7 +3,7 @@ Contributors: DannyCooper, googlefonts, fontsplugin
 Tags: google, fonts, google fonts, typekit, elementor, adobe fonts, typography, upload fonts, custom fonts, preloading, customizer, font size, font color, design
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
-Tested up to: 5.7
+Tested up to: 5.8
 License: GPLv2 or later
 Stable tag: 2.5.9
 
