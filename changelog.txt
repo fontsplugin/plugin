@@ -1,3 +1,7 @@
+= 3.0.0 =
+
+* Fix imcompatibility with Juliet theme tagline.
+
 = 2.5.9 =
 
 * Update fonts list.
