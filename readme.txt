@@ -5,7 +5,8 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 5.8
 License: GPLv2 or later
-Stable tag: 3.0.0
+Stable tag: 3.0.1
+
 The easiest to use Google Fonts Typography Plugin. No coding required. 1000+ font choices.
 
 == Description ==
@@ -73,7 +74,7 @@ Add some flair to your content with our new Gutenberg block.
 * 1000+ Google Fonts available in the editor.
 * Font size, variant and line-height settings.
 * Text-align: left, right or center.
-* Adone Fonts (Typekit) support.
+* Adobe Fonts (Typekit) support.
 
 = Contributions =
 Anyone is welcome to contribute to Fonts Plugin.
