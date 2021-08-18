@@ -1,3 +1,7 @@
+= 3.0.3 =
+
+* Security hardening
+
 = 3.0.2 =
 
 * Update fonts list in Gutenberg

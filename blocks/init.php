@@ -138,8 +138,8 @@ function olympus_google_fonts_block_render( $attributes ) {
 	}
 
 	$output .= '<' . $block_type . ' class="fonts-plugin-block" style="' . esc_attr( $style ) . '">';
-	$output .= wp_kses_post( $content );
+	$output .= $content;
 	$output .= '</' . $block_type . '>';
 
-	return $output;
+	return wp_kses_post( $output );
 }
