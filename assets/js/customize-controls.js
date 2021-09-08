@@ -303,3 +303,17 @@ jQuery( document ).ready( function() {
 		},
 	} );
 }( wp.customize ) );
+
+
+(function($){
+    /* Show/Hide Read More link inside Site Preview */
+    wp.customize( 'fpp_use_woff2', function( use_woff2 ) {
+        use_woff2.bind( function( value ) {
+            if( true == value ){
+                $('#customize-control-fpp_preloading').hide();
+            } else {
+                $('#customize-control-fpp_preloading').show();
+            }
+        } );
+    } );
+})(jQuery);

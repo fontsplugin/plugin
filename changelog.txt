@@ -1,3 +1,7 @@
+= 3.0.4 =
+
+* Add subset=all parameter to ensure all glyphs are loaded
+
 = 3.0.3 =
 
 * Security hardening
