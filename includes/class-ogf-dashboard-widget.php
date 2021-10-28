@@ -27,7 +27,7 @@ class OGF_Dashboard_Widget {
 	public function add_dashboard_widget() {
 		wp_add_dashboard_widget(
 			'ogf-rss-feed',
-			esc_html__( 'Typography News', 'olympus-google-fonts' ),
+			esc_html__( 'Typography News from Fonts Plugin', 'olympus-google-fonts' ),
 			array(
 				$this,
 				'display_rss_dashboard_widget',
@@ -60,44 +60,33 @@ class OGF_Dashboard_Widget {
 			return;
 		}
 
-		include_once ABSPATH . WPINC . '/feed.php';
-
-		$rss_items = get_transient( 'ogf_feed' );
-		if ( false === $rss_items ) {
-
-			$rss = fetch_feed( 'https://fontsplugin.com/feed/' );
-			if ( is_wp_error( $rss ) ) {
-				echo esc_html__( 'Temporarily unable to load feed.', 'olympus-google-fonts' );
-
-				return;
-			}
-			$rss_items = $rss->get_items( 0, 4 ); // Show four items.
-
-			$cached = array();
-			foreach ( $rss_items as $item ) {
-				$cached[] = array(
-					'url'     => $item->get_permalink(),
-					'title'   => $item->get_title(),
-					'date'    => $item->get_date( 'M jS Y' ),
-					'content' => substr( wp_strip_all_tags( $item->get_content() ), 0, 128 ) . '...',
-				);
-			}
-			$rss_items = $cached;
-
-			set_transient( 'ogf_feed', $cached, WEEK_IN_SECONDS );
-
-		}
-
+		$rss_items = array(
+			'first' => array(
+				'url' => 'https://fontsplugin.com/speed-up-wordpress/',
+				'title' => 'How To Speed Up WordPress (A Non-Technical Guide)',
+				'date' => 'Nov 16th 2020',
+				'content' => 'You hate slow websites, your visitors do too. Studies have shown that 47% of users expect pages to load in two seconds or less. ...',
+			),
+			'second' => array(
+				'url' => 'https://fontsplugin.com/disable-google-fonts/',
+				'title' => 'How to Disable Google Fonts in WordPress',
+				'date' => 'Aug 10th 2019',
+				'content' => 'Google Fonts can be a great addition to your website that considerably improves your typography. However, they do add an externa...', ),
+			'third' => array(
+				'url' => 'https://fontsplugin.com/how-to-download-google-fonts/', 'title' => 'How To Download Google Fonts',
+				'date' => 'May 29th 2019',
+				'content' => 'Google Fonts are free for both personal and commercial use. That means you can download and use them in your projects without ha...',
+			),
+			'fourth' => array(
+				'url' => 'https://fontsplugin.com/google-fonts-univers/',
+				'title' => 'Google Fonts Similar to Univers',
+				'date' => 'May 29th 2019',
+				'content' => 'Released in 1957, Univers is a sans-serif font designed by Adrian Frutiger and released by his employer Deberny & Peignot. ...',
+			),
+		);
 		?>
-
 		<ul>
 			<?php
-			if ( false === $rss_items ) {
-				echo esc_html__( 'Temporarily unable to load feed.', 'olympus-google-fonts' );
-
-				return;
-			}
-
 			foreach ( $rss_items as $item ) {
 				?>
 				<li>
@@ -110,10 +99,8 @@ class OGF_Dashboard_Widget {
 				</li>
 				<?php
 			}
-
 			?>
 		</ul>
-
 		<?php
 	}
 }
