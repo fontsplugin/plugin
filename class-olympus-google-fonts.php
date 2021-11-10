@@ -39,7 +39,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.0.6' );
+			define( 'OGF_VERSION', '3.0.7' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
