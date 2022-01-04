@@ -1,3 +1,7 @@
+= 3.0.11 =
+
+* Add compatibility pack for Edge Themes / Qode Framework
+
 = 3.0.9 =
 
 * Update fonts list
