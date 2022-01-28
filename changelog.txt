@@ -1,3 +1,7 @@
+= 3.0.12 =
+
+* Version bump
+
 = 3.0.11 =
 
 * Add compatibility pack for Edge Themes / Qode Framework
