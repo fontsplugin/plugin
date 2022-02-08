@@ -20,14 +20,6 @@
 	display: none;
 }
 
-.typography-font-size,
-.typography-line-height,
-.typography-font-color,
-.typography-letter-spacing,
-.typography-text-transform {
-	display: none;
-}
-
 .customize-control-typography li.typography-font-family select {
 	width: 85%;
 }
@@ -77,8 +69,11 @@
 .customize-control-typography .advanced-settings-wrapper.show {
 	display: block !important;
 	margin-top: 10px;
-	padding: 10px;
 	background: #dadada;
+}
+
+.customize-control-typography .inner {
+	padding: 10px
 }
 
 .advanced-settings-wrapper:after {
@@ -128,10 +123,10 @@
 	position: relative;
 	vertical-align: middle;
 	font-size: 13px;
-	   -moz-user-select: none;
-		-ms-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 	-webkit-user-select: none;
-			user-select: none;
+	user-select: none;
 }
 
 .chosen-container * {
@@ -149,7 +144,7 @@
 	border-top: 0;
 	background: #ffffff;
 	-webkit-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
-			box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 4px 5px rgba(0, 0, 0, 0.15);
 }
 
 .chosen-container.chosen-with-drop .chosen-drop {
@@ -719,7 +714,7 @@
 .slider-custom-control .slider {
 	width: 65%;
 	float: left;
-	margin: 10px 0 10px;
+	margin: 10px 0 10px 6px;
 }
 .slider-custom-control .slider-reset {
 	float: right;
@@ -834,4 +829,8 @@
 	background-repeat: no-repeat !important;
 	background-size: 16px !important;
 	background-position: 15px 50% !important;
+}
+
+.customize-control-typography .customize-control-title {
+	font-size: 13px;
 }

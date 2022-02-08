@@ -16,7 +16,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Typography control class.
  */
 class OGF_Customize_Typography_Control extends WP_Customize_Control {
-
 	/**
 	 * The type of customize control being rendered.
 	 *
@@ -27,7 +26,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	/**
 	 * Array
 	 *
-	 * @var string
+	 * @var array
 	 */
 	public $l10n = array();
 
@@ -95,8 +94,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	/**
 	 * Overwrite this method as we are rendering the template with JS.
 	 *
-	 * @access protected
-	 * @since 1.0
 	 * @return void
 	 */
 	protected function render_content() {}
@@ -154,9 +151,8 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 				</button>
 			</li>
 		<# } #>
-
-
 		<div class="advanced-settings-wrapper">
+			<div class="inner">
 			<# if ( data.weight && data.weight.choices ) { #>
 				<li class="typography-font-weight">
 					<# if ( data.weight.label ) { #>
@@ -183,70 +179,8 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 				</li>
 			<# } #>
 
-			<# if ( data.color ) { #>
-				<li class="typography-font-color">
-					<# if ( data.color.label ) { #>
-						<span class="customize-control-title">{{ data.color.label }}</span>
-					<# } #>
-					<input class="color-picker-hex" type="text" maxlength="7" {{{ data.color.link }}} value="{{ data.color.value }}" />
-				</li>
-			<# } #>
-
-			<# if ( data.size ) { #>
-				<li class="typography-font-size">
-					<div class="slider-custom-control">
-							<# if ( data.size.label ) { #>
-								<span class="customize-control-title">{{ data.size.label }}</span>
-							<# } #>
-							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.size.value }}"></span>
-							<div class="slider" slider-min-value="1" slider-max-value="72" slider-step-value="1"></div>
-							<input class="customize-control-slider-value" {{{ data.size.link }}} type="number" value="{{ data.size.value }}">
-					</div>
-				</li>
-			<# } #>
-
-			<# if ( data.line_height ) { #>
-				<li class="typography-line-height">
-					<div class="slider-custom-control">
-							<# if ( data.line_height.label ) { #>
-								<span class="customize-control-title">{{ data.line_height.label }}</span>
-							<# } #>
-							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.line_height.value }}"></span>
-
-							<div class="slider" slider-min-value="0" slider-max-value="3" slider-step-value=".1"></div>
-							<input class="customize-control-slider-value" {{{ data.line_height.link }}} type="number" value="{{ data.line_height.value }}">
-					</div>
-				</li>
-			<# } #>
-
-			<# if ( data.letter_spacing ) { #>
-				<li class="typography-letter-spacing">
-					<div class="slider-custom-control">
-							<# if ( data.letter_spacing.label ) { #>
-								<span class="customize-control-title">{{ data.letter_spacing.label }}</span>
-							<# } #>
-							<span class="slider-reset dashicons dashicons-image-rotate" slider-reset-value="{{ data.letter_spacing.value }}"></span>
-							<div class="slider" slider-min-value="-5" slider-max-value="5" slider-step-value=".1"></div>
-							<input class="customize-control-slider-value" {{{ data.letter_spacing.link }}} type="number" value="{{ data.letter_spacing.value }}">
-					</div>
-				</li>
-			<# } #>
-
-			<# if ( data.text_transform && data.text_transform.choices ) { #>
-				<li class="typography-text-transform">
-					<# if ( data.text_transform.label ) { #>
-						<span class="customize-control-title">{{ data.text_transform.label }}</span>
-					<# } #>
-					<select {{{ data.text_transform.link }}}>
-						<# _.each( data.text_transform.choices, function( label, choice ) { #>
-							<option value="{{ choice }}" <# if ( choice === data.text_transform.value ) { #> selected="selected" <# } #>>{{ label }}</option>
-						<# } ) #>
-					</select>
-				</li>
-			<# } #>
-
 		</div>
-
+		</div>
 		</ul>
 		<?php
 	}
@@ -255,6 +189,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 * Returns the available font weights.
 	 *
 	 * @param string $font User's font choice.
+	 * @return array Available font variants.
 	 */
 	public function get_font_weight_choices( $font ) {
 
@@ -280,7 +215,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			$fonts_array = ogf_typekit_fonts();
 
 			if ( ! array_key_exists( $font, $fonts_array ) ) {
-				return;
+				return array();
 			}
 
 			$variants          = $fonts_array[ $font ]['variants'];
@@ -303,6 +238,8 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 	/**
 	 * Returns the available font styles.
+	 *
+	 * @return array CSS font-style values.
 	 */
 	public function get_font_style_choices() {
 		return array(
@@ -315,6 +252,8 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 	/**
 	 * Returns the available text-transform values.
+	 *
+	 * @return array CSS text-transform values.
 	 */
 	public function get_text_transform_choices() {
 		return array(
@@ -325,5 +264,4 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			'none'       => esc_html__( 'None', 'olympus-google-fonts' ),
 		);
 	}
-
 }
