@@ -22,43 +22,43 @@
 	margin-bottom: 8px
 }
 
-
 .eb-content {
 	background: #fff;
 	border-radius: 3px;
 	box-sizing: border-box;
-}
-
-.eb-content {
 	margin: 0 auto;
 	max-width: 740px;
 	box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
 }
 
-
 .eb-content__header {
 	border-top: 5px solid #b43534;
 	border-radius: 5px 5px 0 0;
 }
+
 .eb-content__header h1 {
 	font-size: 24px;
-	padding: 50px 50px 0 50px;
+	padding: 50px 50px 0;
 	margin: 0
 }
+
 .eb-content__inner {
 	background-color: #fff;
-	padding: 25px 50px 50px 50px;
+	padding: 25px 50px 50px;
 }
 
 .eb-sidebar__inner {
 	background-color: white;
 }
+
 .eb-sidebar__header {
 	background-color: #0d72a7
 }
+
 .eb-sidebar__plugin {
-	padding: 30px 30px;
+	padding: 30px;
 }
+
 .eb-sidebar__header h2 {
 	color: #fff;
 	font-size: 16px;
@@ -80,10 +80,12 @@
   margin-left: 8px;
 	height: auto
 }
+
 #mce-EMAIL {
 	padding: 5px 12px;
 	min-height: 27px
 }
+
 .ebook-cover {
 	float: right;
 	max-width: 30%;
@@ -92,25 +94,32 @@
 }
 
 @media only screen and (max-width: 960px) {
+
 	.eb-content {
 		max-width: 98%;
 		float: none;
 	}
+
 	.eb-wrap {
 			margin: 1%;
 	}
+
 }
 @media only screen and (max-width: 480px) {
+
 	.ebook-cover {
 		display: none
 	}
+
 	#mce-EMAIL {
     padding: 5px 12px;
     width: 100%;
     margin-bottom: 10px;
-}
+	}
+
 	.eb-wrap .button {
 		width: 100%;
 		margin-left: 0;
 	}
+	
 }
