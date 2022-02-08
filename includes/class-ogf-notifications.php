@@ -31,7 +31,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		/**
 		 * Time limit.
 		 *
-		 * @var string $time_limit
+		 * @var int $time_limit
 		 */
 		private $time_limit;
 
@@ -52,7 +52,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		/**
 		 * Class constructor.
 		 *
-		 * @param string $args Arguments.
+		 * @param array $args Arguments.
 		 */
 		public function __construct( $args ) {
 			$this->slug         = $args['slug'];
@@ -72,7 +72,8 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		/**
 		 * Seconds to words.
 		 *
-		 * @param string $seconds Seconds in time.
+		 * @param int $seconds Seconds in time.
+		 * @return string
 		 */
 		public function seconds_to_words( $seconds ) {
 			// Get the years.
@@ -85,14 +86,16 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 			$weeks = ( intval( $seconds ) / WEEK_IN_SECONDS ) % 52;
 			if ( $weeks > 1 ) {
 				/* translators: Number of weeks */
-				return sprintf( __( 'a week', '%s weeks', $weeks, 'olympus-google-fonts' ), $weeks );
+				return sprintf( _n( 'a week', '%s weeks', $weeks, 'olympus-google-fonts' ), $weeks );
 			}
 			// Get the days.
 			$days = ( intval( $seconds ) / DAY_IN_SECONDS ) % 7;
 			if ( $days > 1 ) {
 				/* translators: Number of days */
-				return sprintf( __( '%s days', 'olympus-google-fonts' ), $days );
+				return sprintf( _n( '%s day', '%s days', $days, 'olympus-google-fonts' ), $days );
 			}
+
+			return sprintf( _n( '%s second', '%s seconds', $seconds, 'olympus-google-fonts' ), intval( $seconds ) );
 		}
 
 		/**

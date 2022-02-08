@@ -117,7 +117,7 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 	 * Input Control
 	 *
 	 * @param object $values Values for the controls.
-	 * @param string $count   Count how many controls have been displayed so far.
+	 * @param int    $count  Count how many controls have been displayed so far.
 	 */
 	private function input_control( $values = '', $count = 0 ) {
 		$label       = ( isset( $values->label ) ? $values->label : '' );

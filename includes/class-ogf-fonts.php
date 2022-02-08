@@ -11,7 +11,6 @@
  * This class builds the Google Fonts URL.
  */
 class OGF_Fonts {
-
 	/**
 	 * All Google Fonts.
 	 *
@@ -133,10 +132,11 @@ class OGF_Fonts {
 	}
 
 	/**
-	 * Remove the fonts the user has chosen not to load.
+	 * Remove the font variants the user has chosen not to load.
 	 *
 	 * @param string $font_id The font ID.
-	 * @param string $weights The font weights.
+	 * @param array $weights The font weights.
+	 * @return array
 	 */
 	public function filter_selected_weights( $font_id, $weights ) {
 		unset( $weights['0'] );
@@ -154,20 +154,21 @@ class OGF_Fonts {
 	}
 
 	/**
-	 * Return the Google Fonts url.
+	 * Return the Google Fonts URL.
+	 *
+	 * @return false|string
 	 */
 	public function build_url() {
 		$families = array();
 		$subsets  = array();
 
 		if ( empty( $this->choices ) ) {
-			return;
+			return false;
 		}
 
 		$fonts = array_unique( $this->choices );
 
 		foreach ( $fonts as $font_id ) {
-
 			// Check the users choice is a real font.
 			if ( array_key_exists( $font_id, self::$google_fonts ) ) {
 
@@ -176,7 +177,6 @@ class OGF_Fonts {
 				$weights = $this->filter_selected_weights( $font_id, self::$google_fonts[ $font_id ]['v'] );
 
 				$families[] = $font_id_for_url . ':' . implode( ',', array_keys( $weights ) );
-
 			}
 		}
 
@@ -188,5 +188,4 @@ class OGF_Fonts {
 
 		return add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );
 	}
-
 }

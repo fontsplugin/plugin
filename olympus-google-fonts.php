@@ -28,6 +28,8 @@ add_action( 'plugins_loaded', 'ogf_initiate', 10 );
 
 /**
  * Add a redirection check on activation.
+ *
+ * @return void
  */
 function ogf_activate() {
 	add_option( 'ogf_do_activation_redirect', true );

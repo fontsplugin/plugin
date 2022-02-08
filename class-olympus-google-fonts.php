@@ -175,6 +175,7 @@ class Olympus_Google_Fonts {
 	 * Add custom links to plugin settings page.
 	 *
 	 * @param array $links Current links array.
+	 * @return array $links Modified links array.
 	 */
 	public function links( $links ) {
 		// Customizer Settings Link.

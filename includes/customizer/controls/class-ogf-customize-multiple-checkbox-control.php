@@ -24,8 +24,6 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 	public $type = 'multiple-checkbox';
 	/**
 	 * Enqueue control related scripts/styles.
-	 *
-	 * @access public
 	 */
 	public function enqueue() {
 		wp_enqueue_script( 'ogf-multicheck', OGF_DIR_URL . 'assets/js/multiple-checkbox.js', array( 'jquery' ), OGF_VERSION, true );
@@ -54,10 +52,6 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 
 	/**
 	 * Overwrite this method as we are rendering the template with JS.
-	 *
-	 * @access protected
-	 * @since 1.0
-	 * @return void
 	 */
 	protected function render_content() {}
 
@@ -95,5 +89,4 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 		</ul>
 		<?php
 	}
-
 }

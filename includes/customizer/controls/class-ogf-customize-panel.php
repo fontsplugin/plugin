@@ -33,6 +33,8 @@ class OGF_Customize_Panel extends WP_Customize_Panel {
 
 	/**
 	 * Gather the parameters passed to client JavaScript via JSON.
+	 *
+	 * @return array
 	 */
 	public function json() {
 		$array                   = wp_array_slice_assoc( (array) $this, array( 'id', 'description', 'priority', 'type', 'panel' ) );

@@ -9,6 +9,8 @@
 
 /**
  * An array of user-defined elements that can be customized using the plugin.
+ *
+ * @return array An array of user-defined elements.
  */
 function ogf_get_custom_elements() {
 	$theme_mod = get_theme_mod( 'ogf_custom_selectors', false );
@@ -28,6 +30,8 @@ function ogf_get_custom_elements() {
 
 /**
  * An array of elements that can be customized using the plugin.
+ *
+ * @return array Elements the plugin can target.
  */
 function ogf_get_elements() {
 	$elements = array(
@@ -149,9 +153,11 @@ function ogf_get_elements() {
 /**
  * Return an array of all available Google Fonts.
  *
- * @return array    All Google Fonts.
+ * @return array All Google Fonts.
  */
 function ogf_fonts_array() {
+	$fonts = array();
+
 	$fonts_json = file_get_contents( OGF_DIR_PATH . '/blocks/src/google-fonts/fonts.json' );
 
 	// Change the object to a multidimensional array.
@@ -159,7 +165,6 @@ function ogf_fonts_array() {
 
 	// Format the variants array for easier use.
 	foreach ( $fonts_array['items'] as $key => $font ) {
-
 		$variants_remove = array(
 			'100italic',
 			'200italic',
@@ -188,7 +193,6 @@ function ogf_fonts_array() {
 		$font['v'] = array_flip( $font['v'] );
 
 		$fonts_array['items'][ $key ] = $font;
-
 	}
 
 	// Change the array key to the font's ID.
@@ -202,13 +206,17 @@ function ogf_fonts_array() {
 
 /**
  * Return a array of custom fonts.
+ *
+ * @return array User uploaded fonts.
  */
 function ogf_custom_fonts() {
 	return OGF_Fonts_Taxonomy::get_fonts();
 }
 
 /**
- * Return a array of custom fonts.
+ * Return a array of typekit fonts.
+ *
+ * @return array Typekit fonts.
  */
 function ogf_typekit_fonts() {
 	return OGF_Typekit::get_fonts();
@@ -216,6 +224,8 @@ function ogf_typekit_fonts() {
 
 /**
  * Return a array of system fonts.
+ *
+ * @return array System fonts.
  */
 function ogf_system_fonts() {
 	$system_fonts = array(
@@ -303,6 +313,8 @@ function ogf_system_fonts() {
 
 /**
  * Return the full range of font variants.
+ *
+ * @return array Font variants.
  */
 function ogf_font_variants() {
 	return array(
@@ -332,6 +344,7 @@ function ogf_font_variants() {
  * Check if a font is a system font (not Google Font).
  *
  * @param string $font_id The ID of the font to check.
+ * @return bool
  */
 function ogf_is_system_font( $font_id ) {
 	if ( ! is_string( $font_id ) ) {
@@ -348,6 +361,7 @@ function ogf_is_system_font( $font_id ) {
  * Check if a font is a custom font (not Google Font).
  *
  * @param string $font_id The ID of the font to check.
+ * @return bool
  */
 function ogf_is_custom_font( $font_id ) {
 	if ( ! is_string( $font_id ) ) {
@@ -364,9 +378,9 @@ function ogf_is_custom_font( $font_id ) {
  * Check if a font is a Typekit font (not Google Font).
  *
  * @param string $font_id The ID of the font to check.
+ * @return bool
  */
 function ogf_is_typekit_font( $font_id ) {
-
 	if ( ! is_string( $font_id ) ) {
 		return false;
 	}
@@ -381,6 +395,7 @@ function ogf_is_typekit_font( $font_id ) {
  * Check if a font is a Google font.
  *
  * @param string $font_id The ID of the font to check.
+ * @return bool
  */
 function ogf_is_google_font( $font_id ) {
 	if ( ! is_string( $font_id ) ) {

@@ -12,28 +12,28 @@ class OGF_Fonts_Taxonomy {
 	/**
 	 * Instance of OGF_Fonts_Taxonomy
 	 *
-	 * @var (Object) OGF_Fonts_Taxonomy
+	 * @var object OGF_Fonts_Taxonomy
 	 */
 	private static $instance = null;
 
 	/**
 	 * Fonts
 	 *
-	 * @var (string) $fonts
+	 * @var array $fonts
 	 */
 	public static $fonts = null;
 
 	/**
 	 * Capability required for this menu to be displayed
 	 *
-	 * @var (string) $capability
+	 * @var string $capability
 	 */
 	public static $capability = 'edit_theme_options';
 
 	/**
 	 * Register Taxonomy
 	 *
-	 * @var (string) $register_taxonomy
+	 * @var string $register_taxonomy
 	 */
 	public static $taxonomy_slug = 'ogf_custom_fonts';
 
@@ -98,6 +98,7 @@ class OGF_Fonts_Taxonomy {
 	 * Default fonts
 	 *
 	 * @param array $fonts fonts array of fonts.
+	 * @return array
 	 */
 	protected static function default_args( $fonts ) {
 		return wp_parse_args(
@@ -130,7 +131,7 @@ class OGF_Fonts_Taxonomy {
 
 			if ( ! empty( $terms ) ) {
 				foreach ( $terms as $term ) {
-					self::$fonts[ $term->slug ]['id'] = $term->slug;
+					self::$fonts[ $term->slug ]['id']    = $term->slug;
 					self::$fonts[ $term->slug ]['label'] = $term->name;
 					self::$fonts[ $term->slug ]['stack'] = $term->slug;
 					self::$fonts[ $term->slug ]['files'] = self::get_font_links( $term->term_id );

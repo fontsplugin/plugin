@@ -58,7 +58,7 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 		 */
 		public function enqueue() {
 
-			wp_enqueue_script( 'ogf-admin', esc_url( OGF_DIR_URL . 'assets/js/admin.js' ), 'jquery', OGF_VERSION, false );
+			wp_enqueue_script( 'ogf-admin', esc_url( OGF_DIR_URL . 'assets/js/admin.js' ), array( 'jquery' ), OGF_VERSION, false );
 
 		}
 

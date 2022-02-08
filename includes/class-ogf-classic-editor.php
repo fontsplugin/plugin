@@ -14,13 +14,6 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 	class OGF_Classic_Editor {
 
 		/**
-		 * WP_Customize object.
-		 *
-		 * @var WP_Customize_Manager
-		 */
-		private $wp_customize;
-
-		/**
 		 * OGF_Fonts object.
 		 *
 		 * @var object
@@ -70,7 +63,8 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		/**
 		 * Add buttons to the editor.
 		 *
-		 * @param array $buttons Tiny MCE buttons.
+		 * @param array $buttons Tiny MCE buttons array.
+		 * @return array Modified Tiny MCE buttons array.
 		 */
 		public function tinymce_add_buttons( $buttons ) {
 			return array_merge(
@@ -83,6 +77,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 * Customize the Tiny MCE settings.
 		 *
 		 * @param array $opt Tiny MCE options.
+		 * @return array Modified Tiny MCE options.
 		 */
 		public function tinymce_custom_options( $opt ) {
 			$base_type     = get_theme_mod( 'ogf_body_font' );
@@ -130,7 +125,8 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		/**
 		 * Add fonts to the classic editor list.
 		 *
-		 * @param array $old_default The default fonts.
+		 * @param string $old_default The default fonts.
+		 * @return string Modified fonts string.
 		 */
 		public function tinymce_add_fonts( $old_default ) {
 			$new_default = '';
