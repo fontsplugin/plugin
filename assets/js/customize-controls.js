@@ -4,6 +4,39 @@
 		{
 			ready: function() {
 				const control = this;
+				const controlClass = '.customize-control-typography';
+				const footerActions = jQuery( '#customize-footer-actions' );
+				//
+				// Do stuff when device icons are clicked
+				jQuery( control.selector + ' .ogf-device-controls > div' ).on( 'click', function( event ) {
+					console.log(event);
+					var device = jQuery( this ).data( 'option' );
+					wp.customize.previewedDevice.set( device );
+
+					jQuery( controlClass + ' .ogf-device-controls div' ).each( function() {
+						var _this = jQuery( this );
+
+						if ( device === _this.attr( 'data-option' ) ) {
+							_this.addClass( 'selected' );
+							_this.siblings().removeClass( 'selected' );
+						}
+					} );
+
+				});
+
+				// Set the selected devices in our control when the Customizer devices are clicked
+				footerActions.find( '.devices button' ).on( 'click', function() {
+					var device = jQuery( this ).data( 'device' );
+
+					jQuery( controlClass + ' .ogf-device-controls div' ).each( function() {
+						var _this = jQuery( this );
+
+						if ( device === _this.attr( 'data-option' ) ) {
+							_this.addClass( 'selected' );
+							_this.siblings().removeClass( 'selected' );
+						}
+					} );
+				});
 
 				// Load the Google Font for the preview.
 				function addGoogleFont( fontName ) {

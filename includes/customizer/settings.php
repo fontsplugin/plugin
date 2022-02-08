@@ -7,6 +7,14 @@
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
+function ogf_register_typography_control( $wp_customize ) {
+	if ( ! class_exists( 'OGF_Customize_Typography_Control' ) ) {
+		require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-typography-control.php';
+		$wp_customize->register_control_type( 'OGF_Customize_Typography_Control' );
+	}
+}
+add_action( 'customize_register', 'ogf_register_typography_control', 10 );
+
 /**
  * An array containing the customizer sections, settings and controls.
  *
@@ -14,14 +22,13 @@
  */
 function ogf_customize_register( $wp_customize ) {
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-fonts-control.php';
-	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-typography-control.php';
+
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-repeater-control.php';
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-upsell-control.php';
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-checkbox-control.php';
 
 	$wp_customize->register_control_type( 'OGF_Customize_Multiple_Fonts_Control' );
 	$wp_customize->register_control_type( 'OGF_Customize_Multiple_Checkbox_Control' );
-	$wp_customize->register_control_type( 'OGF_Customize_Typography_Control' );
 
 	$wp_customize->add_setting(
 		'ogf_custom_selectors',
@@ -66,11 +73,9 @@ function ogf_customize_register( $wp_customize ) {
 	 * @param array $elements array of elements to build controls based on.
 	 */
 	function ogf_build_customizer_controls( $elements ) {
-
 		global $wp_customize;
 
 		foreach ( $elements as $id => $values ) {
-
 			$wp_customize->add_setting(
 				$id . '_font',
 				array(
@@ -103,9 +108,37 @@ function ogf_customize_register( $wp_customize ) {
 			);
 
 			$wp_customize->add_setting(
+				$id . '_font_size_tablet',
+				array(
+					'transport' => 'refresh',
+				)
+			);
+
+			$wp_customize->add_setting(
+				$id . '_font_size_mobile',
+				array(
+					'transport' => 'refresh',
+				)
+			);
+
+			$wp_customize->add_setting(
 				$id . '_line_height',
 				array(
 					'transport' => 'postMessage',
+				)
+			);
+
+			$wp_customize->add_setting(
+				$id . '_line_height_tablet',
+				array(
+					'transport' => 'refresh',
+				)
+			);
+
+			$wp_customize->add_setting(
+				$id . '_line_height_mobile',
+				array(
+					'transport' => 'refresh',
 				)
 			);
 
@@ -144,7 +177,11 @@ function ogf_customize_register( $wp_customize ) {
 							'weight'         => $id . '_font_weight',
 							'style'          => $id . '_font_style',
 							'size'           => $id . '_font_size',
+							'size_tablet'           => $id . '_font_size_tablet',
+							'size_mobile'           => $id . '_font_size_mobile',
 							'line_height'    => $id . '_line_height',
+							'line_height_tablet'    => $id . '_line_height_tablet',
+							'line_height_mobile'    => $id . '_line_height_mobile',
 							'color'          => $id . '_font_color',
 							'letter_spacing' => $id . '_letter_spacing',
 							'text_transform' => $id . '_text_transform',
@@ -310,13 +347,14 @@ function ogf_customize_register( $wp_customize ) {
 	}
 
 }
-add_action( 'customize_register', 'ogf_customize_register' );
+add_action( 'customize_register', 'ogf_customize_register', 20 );
 
 /**
  * Sanitize value from select field.
  *
  * @param string $input The selected input.
- * @param string $setting The setting.
+ * @param object $setting The setting.
+ * @return bool
  */
 function ogf_sanitize_select( $input, $setting ) {
 	// Ensure input is a slug.
