@@ -134,6 +134,12 @@ class Olympus_Google_Fonts {
 	 * @return array $urls           URLs to print for resource hints.
 	 */
 	public function resource_hints( $urls, $relation_type ) {
+
+		// If we are using local fonts we don't need this.
+		if ( get_theme_mod( 'fpp_host_locally' ) === true ) {
+			return $urls;
+		}
+
 		if ( wp_style_is( 'olympus-google-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
 			$urls[] = array(
 				'href' => 'https://fonts.gstatic.com',
