@@ -1,3 +1,7 @@
+= 3.0.14 =
+
+* Add support for block-based themes and full site editing.
+
 = 3.0.13 =
 
 * Fix issue where resource hints were being loaded when using local fonts

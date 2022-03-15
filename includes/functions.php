@@ -57,7 +57,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Site Title Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your site title.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__branding',
-			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, #site-logo, #site-logo a, #logo, #logo a, .logo, .logo a',
+			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, #site-logo, #site-logo a, #logo, #logo a, .logo, .logo a, .wp-block-site-title, .wp-block-site-title a',
 		),
 		'ogf_site_description' => array(
 			'label'       => esc_html__( 'Site Description Typography', 'olympus-google-fonts' ),
@@ -69,7 +69,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Navigation Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your site navigation.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__navigation',
-			'selectors'   => '.menu, .page_item a, .menu-item a',
+			'selectors'   => '.menu, .page_item a, .menu-item a, .wp-block-navigation, .wp-block-navigation-item__content',
 		),
 		'ogf_post_page_content' => array(
 			'label'       => esc_html__( 'Content Typography', 'olympus-google-fonts' ),
