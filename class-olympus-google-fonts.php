@@ -20,7 +20,7 @@ class Olympus_Google_Fonts {
 		$this->includes();
 		$this->compatability();
 
-		add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
+		add_action( 'init', array( $this, 'load_textdomain' ) );
 
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ), 1000 ); // ensure our Google Font styles load last.
 		add_filter( 'wp_resource_hints', array( $this, 'resource_hints' ), 10, 2 );
@@ -39,7 +39,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.0.14' );
+			define( 'OGF_VERSION', '3.0.15' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
