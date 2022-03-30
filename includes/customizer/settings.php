@@ -163,6 +163,13 @@ function ogf_customize_register( $wp_customize ) {
 				)
 			);
 
+			$wp_customize->add_setting(
+				$id . '_text_decoration',
+				array(
+					'transport' => 'postMessage',
+				)
+			);
+
 			$wp_customize->add_control(
 				new OGF_Customize_Typography_Control(
 					$wp_customize,
@@ -172,19 +179,24 @@ function ogf_customize_register( $wp_customize ) {
 						'label'       => ( isset( $values['label'] ) ? esc_attr( $values['label'] ) : '' ),
 						'description' => ( isset( $values['description'] ) ? esc_attr( $values['description'] ) : '' ),
 						'section'     => ( isset( $values['section'] ) ? esc_attr( $values['section'] ) : '' ),
-						'settings'    => array(
-							'family'         => $id . '_font',
-							'weight'         => $id . '_font_weight',
-							'style'          => $id . '_font_style',
-							'size'           => $id . '_font_size',
-							'size_tablet'           => $id . '_font_size_tablet',
-							'size_mobile'           => $id . '_font_size_mobile',
-							'line_height'    => $id . '_line_height',
-							'line_height_tablet'    => $id . '_line_height_tablet',
-							'line_height_mobile'    => $id . '_line_height_mobile',
-							'color'          => $id . '_font_color',
-							'letter_spacing' => $id . '_letter_spacing',
-							'text_transform' => $id . '_text_transform',
+						'settings'    =>
+							apply_filters(
+								'ogf_typography_control_settings',
+								array(
+								'family'             => $id . '_font',
+								'weight'             => $id . '_font_weight',
+								'style'              => $id . '_font_style',
+								'size'               => $id . '_font_size',
+								'size_tablet'        => $id . '_font_size_tablet',
+								'size_mobile'        => $id . '_font_size_mobile',
+								'line_height'        => $id . '_line_height',
+								'line_height_tablet' => $id . '_line_height_tablet',
+								'line_height_mobile' => $id . '_line_height_mobile',
+								'color'              => $id . '_font_color',
+								'letter_spacing'     => $id . '_letter_spacing',
+								'text_transform'     => $id . '_text_transform',
+							),
+							$id
 						),
 					)
 				)

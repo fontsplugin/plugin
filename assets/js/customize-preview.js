@@ -156,6 +156,19 @@ jQuery( document ).ready(
 			);
 
 			wp.customize(
+				id + '_text_decoration',
+				function( value ) {
+					value.bind(
+						function( to ) {
+							jQuery( val.selectors ).each( function( i, v ) {
+								v.style.setProperty( 'text-decoration', to, 'important' );
+							} );
+						}
+					);
+				}
+			);
+
+			wp.customize(
 				id + '_letter_spacing',
 				function( value ) {
 					value.bind(

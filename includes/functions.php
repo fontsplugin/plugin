@@ -135,9 +135,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your footer headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__footer',
-			'selectors'   => 'footer h1, footer h2, footer h3, footer h4, footer h5, footer h6,
-												.footer h1, .footer h2, .footer h3, .footer h4, .footer h5, .footer h6
-												#footer h1, #footer h2, #footer h3, #footer h4, #footer h5, #footer h6',
+			'selectors'   => 'footer h1, footer h2, footer h3, footer h4, footer h5, footer h6, .footer h1, .footer h2, .footer h3, .footer h4, .footer h5, .footer h6, #footer h1, #footer h2, #footer h3, #footer h4, #footer h5, #footer h6',
 		),
 		'ogf_footer_content' => array(
 			'label'       => esc_html__( 'Content Typography', 'olympus-google-fonts' ),

@@ -48,6 +48,7 @@
 	width: 90%;
 }
 
+.customize-control-typography li.typography-text-decoration select,
 .customize-control-typography li.typography-text-transform select {
     width: 93%;
 }

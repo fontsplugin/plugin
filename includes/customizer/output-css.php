@@ -92,6 +92,7 @@ function ogf_generate_css( $selector, $option_name ) {
 	$color          = get_theme_mod( $option_name . '_font_color', false );
 	$text_transform = get_theme_mod( $option_name . '_text_transform', false );
 	$letter_spacing = get_theme_mod( $option_name . '_letter_spacing', false );
+	$text_decoration = get_theme_mod( $option_name . '_text_decoration', false );
 
 	$return = '';
 
@@ -100,7 +101,7 @@ function ogf_generate_css( $selector, $option_name ) {
 			 ( $weight !== '0' && $weight ) ||
 			 ( $style !== 'default' && $style ) ||
 			   $font_size || $letter_spacing || $text_transform ||
-			   $color ) {
+			   $color || $text_decoration ) {
 
 		$return .= $selector . ' {' . PHP_EOL;
 
@@ -170,6 +171,14 @@ function ogf_generate_css( $selector, $option_name ) {
 			$return .= sprintf(
 				'text-transform: %s;' . PHP_EOL,
 				esc_attr( $text_transform ) . ogf_is_forced()
+			);
+		}
+
+		// Return text-decoration CSS.
+		if ( $text_decoration ) {
+			$return .= sprintf(
+				'text-decoration: %s;' . PHP_EOL,
+				esc_attr( $text_decoration ) . ogf_is_forced()
 			);
 		}
 
