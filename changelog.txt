@@ -1,3 +1,7 @@
+= 3.0.17 =
+
+* Add filters to font control choices
+
 = 3.0.16 =
 
 * Fix footer heading selectors.
