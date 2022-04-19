@@ -192,7 +192,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 * @return array Available font variants.
 	 */
 	public function get_font_weight_choices( $font ) {
-
 		$all_variants = ogf_font_variants();
 
 		if ( 'default' === $font ) {
@@ -228,12 +227,13 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			return $new_variants;
 		}
 
-		return array(
+		$choices = array(
 			'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
 			'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
 			'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
 		);
 
+		return apply_filters( 'ogf_default_font_weight_choices', $choices );
 	}
 
 	/**
@@ -242,12 +242,14 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 * @return array CSS font-style values.
 	 */
 	public function get_font_style_choices() {
-		return array(
+		$choices = array(
 			'default' => esc_html__( '- Default -', 'olympus-google-fonts' ),
 			'normal'  => esc_html__( 'Normal', 'olympus-google-fonts' ),
 			'italic'  => esc_html__( 'Italic', 'olympus-google-fonts' ),
 			'oblique' => esc_html__( 'Oblique', 'olympus-google-fonts' ),
 		);
+
+		return apply_filters( 'ogf_default_font_style_choices', $choices );
 	}
 
 	/**
@@ -256,12 +258,14 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 * @return array CSS text-transform values.
 	 */
 	public function get_text_transform_choices() {
-		return array(
+		$choices = array(
 			''           => esc_html__( '- Default -', 'olympus-google-fonts' ),
 			'capitalize' => esc_html__( 'Capitalize', 'olympus-google-fonts' ),
 			'uppercase'  => esc_html__( 'Uppercase', 'olympus-google-fonts' ),
 			'lowercase'  => esc_html__( 'Lowercase', 'olympus-google-fonts' ),
 			'none'       => esc_html__( 'None', 'olympus-google-fonts' ),
 		);
+
+		return apply_filters( 'ogf_default_text_transform_choices', $choices );
 	}
 }
