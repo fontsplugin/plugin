@@ -93,6 +93,7 @@ function olympus_google_fonts_block_render( $attributes ) {
 	$align       = isset( $attributes['align'] ) ? sanitize_text_field( $attributes['align'] ) : '';
 	$content     = isset( $attributes['content'] ) ? wp_kses_post( $attributes['content'] ) : '';
 	$color       = isset( $attributes['color'] ) ? sanitize_text_field( $attributes['color'] ) : '';
+	$class_name  = isset( $attributes['className'] ) ? sanitize_text_field( $attributes['className'] ) : '';
 	$output      = '';
 	$style       = '';
 	$forced      = ogf_is_forced();
@@ -137,7 +138,7 @@ function olympus_google_fonts_block_render( $attributes ) {
 		$style .= "color: {$color}{$forced};";
 	}
 
-	$output .= '<' . $block_type . ' class="fonts-plugin-block" style="' . esc_attr( $style ) . '">';
+	$output .= '<' . $block_type . ' class="fonts-plugin-block ' . $class_name . '" style="' . esc_attr( $style ) . '">';
 	$output .= $content;
 	$output .= '</' . $block_type . '>';
 
