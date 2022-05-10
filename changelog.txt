@@ -1,6 +1,10 @@
+= 3.0.18 =
+
+* Update fonts list.
+
 = 3.0.17 =
 
-* Add filters to font control choices
+* Add filters to font control choices.
 
 = 3.0.16 =
 
