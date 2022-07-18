@@ -8,6 +8,7 @@ jobs:
     name: "build"
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - name: WordPress Plugin Deploy
         uses: 10up/actions-wordpress/dotorg-plugin-deploy@stable
         env:
