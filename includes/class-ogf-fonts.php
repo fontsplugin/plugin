@@ -135,7 +135,7 @@ class OGF_Fonts {
 	 * Remove the font variants the user has chosen not to load.
 	 *
 	 * @param string $font_id The font ID.
-	 * @param array $weights The font weights.
+	 * @param array  $weights The font weights.
 	 * @return array
 	 */
 	public function filter_selected_weights( $font_id, $weights ) {

@@ -213,7 +213,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		 */
 		public function review() {
 			$no_bug_url = wp_nonce_url( admin_url( '?' . $this->nobug_option . '=true' ), 'ogf-notification-nounce' );
-			$time = $this->seconds_to_words( time() - get_site_option( $this->date_option ) );
+			$time       = $this->seconds_to_words( time() - get_site_option( $this->date_option ) );
 			?>
 			<div class="notice updated ogf-notice">
 				<div class="ogf-notice-inner">

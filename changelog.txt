@@ -1,3 +1,7 @@
+= 3.0.21 =
+
+* Improve compatability with Full Site Editing (FSE)
+
 = 3.0.20 =
 
 * Update fonts list.

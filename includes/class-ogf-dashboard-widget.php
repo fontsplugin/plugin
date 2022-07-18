@@ -61,26 +61,28 @@ class OGF_Dashboard_Widget {
 		}
 
 		$rss_items = array(
-			'first' => array(
-				'url' => 'https://fontsplugin.com/speed-up-wordpress/',
-				'title' => 'How To Speed Up WordPress (A Non-Technical Guide)',
-				'date' => 'Nov 16th 2020',
+			'first'  => array(
+				'url'     => 'https://fontsplugin.com/speed-up-wordpress/',
+				'title'   => 'How To Speed Up WordPress (A Non-Technical Guide)',
+				'date'    => 'Nov 16th 2020',
 				'content' => 'You hate slow websites, your visitors do too. Studies have shown that 47% of users expect pages to load in two seconds or less. ...',
 			),
 			'second' => array(
-				'url' => 'https://fontsplugin.com/disable-google-fonts/',
-				'title' => 'How to Disable Google Fonts in WordPress',
-				'date' => 'Aug 10th 2019',
-				'content' => 'Google Fonts can be a great addition to your website that considerably improves your typography. However, they do add an externa...', ),
-			'third' => array(
-				'url' => 'https://fontsplugin.com/how-to-download-google-fonts/', 'title' => 'How To Download Google Fonts',
-				'date' => 'May 29th 2019',
+				'url'     => 'https://fontsplugin.com/disable-google-fonts/',
+				'title'   => 'How to Disable Google Fonts in WordPress',
+				'date'    => 'Aug 10th 2019',
+				'content' => 'Google Fonts can be a great addition to your website that considerably improves your typography. However, they do add an externa...',
+			),
+			'third'  => array(
+				'url'     => 'https://fontsplugin.com/how-to-download-google-fonts/',
+				'title'   => 'How To Download Google Fonts',
+				'date'    => 'May 29th 2019',
 				'content' => 'Google Fonts are free for both personal and commercial use. That means you can download and use them in your projects without ha...',
 			),
 			'fourth' => array(
-				'url' => 'https://fontsplugin.com/google-fonts-univers/',
-				'title' => 'Google Fonts Similar to Univers',
-				'date' => 'May 29th 2019',
+				'url'     => 'https://fontsplugin.com/google-fonts-univers/',
+				'title'   => 'Google Fonts Similar to Univers',
+				'date'    => 'May 29th 2019',
 				'content' => 'Released in 1957, Univers is a sans-serif font designed by Adrian Frutiger and released by his employer Deberny & Peignot. ...',
 			),
 		);

@@ -200,7 +200,8 @@ class GoogleFontsBlock extends Component {
 			return;
 		}
 
-		const head = document.head;
+		const fse = document.querySelector('[name=editor-canvas]');
+		const head = fse ? fse.contentDocument.head : document.head;
 		const link = document.createElement( 'link' );
 
 		link.type = 'text/css';
