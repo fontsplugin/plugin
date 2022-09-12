@@ -1,4 +1,4 @@
-= 3.1.0 =
+= 3.1.2 =
 
 * Automatically add all custom uploaded and typekit/adobe fonts to the Classic Editor
 
