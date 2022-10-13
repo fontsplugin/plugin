@@ -63,7 +63,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Site Description Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your site description.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__branding',
-			'selectors'   => '#site-description, .site-description',
+			'selectors'   => '#site-description, .site-description, #site-tagline, .site-tagline, .wp-block-site-tagline',
 		),
 		'ogf_site_navigation' => array(
 			'label'       => esc_html__( 'Navigation Typography', 'olympus-google-fonts' ),
@@ -75,7 +75,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Content Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your post and page content.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
-			'selectors'   => '.entry-content, .entry-content p, .post-content, .page-content, .post-excerpt, .entry-summary, .entry-excerpt, .excerpt, .excerpt p, .type-post p, .type-page p',
+			'selectors'   => '.entry-content, .entry-content p, .post-content, .page-content, .post-excerpt, .entry-summary, .entry-excerpt, .excerpt, .excerpt p, .type-post p, .type-page p, .wp-block-post-content, .wp-block-post-excerpt',
 		),
 		'ogf_post_page_h1' => array(
 			'label'       => esc_html__( 'Title and H1 Typography', 'olympus-google-fonts' ),
@@ -405,4 +405,13 @@ function ogf_is_google_font( $font_id ) {
 	}
 
 	return false;
+}
+
+/**
+ * Check if WooCommerce is activated
+ */
+if ( ! function_exists( 'is_woocommerce_activated' ) ) {
+    function is_woocommerce_activated() {
+        if ( class_exists( 'woocommerce' ) ) { return true; } else { return false; }
+    }
 }

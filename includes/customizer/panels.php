@@ -38,7 +38,6 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_theme',
 		array(
 			'title'    => esc_html__( 'Theme Settings', 'olympus-google-fonts' ),
-			'priority' => '1',
 			'panel'    => 'ogf_google_fonts',
 		)
 	);
@@ -47,7 +46,6 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_basic',
 		array(
 			'title'    => __( 'Basic Settings', 'olympus-google-fonts' ),
-			'priority' => '2',
 			'panel'    => 'ogf_google_fonts',
 		)
 	);
@@ -57,7 +55,6 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_advanced',
 		array(
 			'title'    => __( 'Advanced Settings', 'olympus-google-fonts' ),
-			'priority' => '3',
 			'panel'    => 'ogf_google_fonts',
 		)
 	);
@@ -68,7 +65,6 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_custom',
 		array(
 			'title'       => esc_html__( 'Custom Elements', 'olympus-google-fonts' ),
-			'priority'    => '5',
 			/* Translators: %s Custom Elements Customizer Panel URL */
 			'description' => sprintf( __( 'Define your Custom Elements here and then customize them under <a href="%s">Advanced Settings &rarr; Custom Elements</a>.', 'olympus-google-fonts' ), esc_url( admin_url( '/customize.php?autofocus[section]=ogf_advanced__custom' ) ) ),
 			'panel'       => 'ogf_google_fonts',
@@ -79,7 +75,6 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_font_loading',
 		array(
 			'title'       => esc_html__( 'Font Loading', 'olympus-google-fonts' ),
-			'priority'    => '6',
 			'description' => 'Optimize your site\'s performance by unchecking any font weights you don\'t need.',
 			'panel'       => 'ogf_google_fonts',
 		)
@@ -89,7 +84,6 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_debugging',
 		array(
 			'title'    => esc_html__( 'Debugging', 'olympus-google-fonts' ),
-			'priority' => '8',
 			'panel'    => 'ogf_google_fonts',
 		)
 	);
@@ -159,5 +153,55 @@ function ogf_panels_customize_register( $wp_customize ) {
 			'panel' => 'ogf_advanced',
 		)
 	);
+
+	if ( is_woocommerce_activated() ) {
+
+		$ogf_woocommerce_panel = new OGF_Customize_Panel(
+			$wp_customize,
+			'ogf_woocommerce',
+			array(
+				'title'    => __( 'WooCommerce', 'olympus-google-fonts' ),
+				'panel'    => 'ogf_google_fonts',
+			)
+		);
+
+		$wp_customize->add_panel( $ogf_woocommerce_panel );
+
+		$wp_customize->add_section(
+			'ogf_wc_shop',
+			array(
+				'title' => esc_html__( 'WooCommerce Shop Page', 'olympus-google-fonts' ),
+				'panel' => 'ogf_woocommerce',
+			)
+		);
+		$wp_customize->add_section(
+			'ogf_wc_single',
+			array(
+				'title' => esc_html__( 'WooCommerce Single Product', 'olympus-google-fonts' ),
+				'panel' => 'ogf_woocommerce',
+			)
+		);
+		$wp_customize->add_section(
+			'ogf_wc_block',
+			array(
+				'title' => esc_html__( 'WooCommerce Blocks', 'olympus-google-fonts' ),
+				'panel' => 'ogf_woocommerce',
+			)
+		);
+		$wp_customize->add_section(
+			'ogf_wc_cart',
+			array(
+				'title' => esc_html__( 'WooCommerce Cart', 'olympus-google-fonts' ),
+				'panel' => 'ogf_woocommerce',
+			)
+		);
+		$wp_customize->add_section(
+			'ogf_wc_checkout',
+			array(
+				'title' => esc_html__( 'WooCommerce Checkout', 'olympus-google-fonts' ),
+				'panel' => 'ogf_woocommerce',
+			)
+		);
+	}
 }
 add_action( 'customize_register', 'ogf_panels_customize_register' );

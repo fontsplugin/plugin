@@ -1,10 +1,14 @@
+= 3.2.0 =
+
+* Add WooCommerce support.
+
 = 3.1.2 =
 
-* Automatically add all custom uploaded and typekit/adobe fonts to the Classic Editor
+* Automatically add all custom uploaded and typekit/adobe fonts to the Classic Editor.
 
 = 3.0.21 =
 
-* Improve compatability with Full Site Editing (FSE)
+* Improve compatibility with Full Site Editing (FSE).
 
 = 3.0.20 =
 
