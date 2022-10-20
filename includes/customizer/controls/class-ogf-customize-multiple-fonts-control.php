@@ -22,7 +22,7 @@ class OGF_Customize_Multiple_Fonts_Control extends WP_Customize_Control {
 	 *
 	 * @var string
 	 */
-	public $type = 'typography-multiselect';
+	public $type = 'ogf-typography-multiselect';
 
 	/**
 	 * Enqueue scripts/styles for the color picker.

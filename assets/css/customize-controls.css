@@ -1,3 +1,8 @@
+.customize-control-checkbox label {
+    vertical-align: top;
+    font-weight: 600;
+}
+
 #customize-theme-controls #sub-accordion-section-ogf_basic,
 #customize-theme-controls #sub-accordion-section-ogf_theme,
 #customize-theme-controls #sub-accordion-section-ogf_woocommerce,
@@ -26,60 +31,60 @@
 	display: none;
 }
 
-.customize-control-typography li.typography-font-family select {
+.customize-control-ogf-typography li.typography-font-family select {
 	width: 85%;
 }
 
-.customize-control-typography li.typography-font-style,
-.customize-control-typography li.typography-font-weight {
+.customize-control-ogf-typography li.typography-font-style,
+.customize-control-ogf-typography li.typography-font-weight {
 	width: 50%;
 	float: left;
 }
 
-.customize-control-typography li.typography-font-color .wp-picker-clear {
+.customize-control-ogf-typography li.typography-font-color .wp-picker-clear {
 	min-height: 30px;
 }
 
-.customize-control-typography li.typography-font-color,
-.customize-control-typography li.typography-font-size,
-.customize-control-typography li.typography-line-height,
-.customize-control-typography li.typography-letter-spacing {
+.customize-control-ogf-typography li.typography-font-color,
+.customize-control-ogf-typography li.typography-font-size,
+.customize-control-ogf-typography li.typography-line-height,
+.customize-control-ogf-typography li.typography-letter-spacing {
 	clear: both;
 	max-width: 94%;
 	padding-top: 10px;
 }
 
-.customize-control-typography li.typography-font-style select,
-.customize-control-typography li.typography-font-weight select {
+.customize-control-ogf-typography li.typography-font-style select,
+.customize-control-ogf-typography li.typography-font-weight select {
 	width: 90%;
 }
 
-.customize-control-typography li.typography-text-decoration select,
-.customize-control-typography li.typography-text-transform select {
+.customize-control-ogf-typography li.typography-text-decoration select,
+.customize-control-ogf-typography li.typography-text-transform select {
     width: 93%;
 }
 
-.customize-control-typography li.typography-font-weight {
+.customize-control-ogf-typography li.typography-font-weight {
 	clear: both;
 }
 
-.customize-control-typography li.typography-font-size input,
-.customize-control-typography li.typography-line-height input {
+.customize-control-ogf-typography li.typography-font-size input,
+.customize-control-ogf-typography li.typography-line-height input {
 	width: 50px;
 	float: right;
 }
 
-.customize-control-typography .advanced-settings-wrapper {
+.customize-control-ogf-typography .advanced-settings-wrapper {
 	display: none;
 }
 
-.customize-control-typography .advanced-settings-wrapper.show {
+.customize-control-ogf-typography .advanced-settings-wrapper.show {
 	display: block !important;
 	margin-top: 10px;
 	background: #dadada;
 }
 
-.customize-control-typography .inner {
+.customize-control-ogf-typography .inner {
 	padding: 10px
 }
 
@@ -115,11 +120,11 @@
 	padding: 2px;
 }
 
-.customize-control-typography input[type='range'] {
+.customize-control-ogf-typography input[type='range'] {
 	width: 90%;
 }
 
-.customize-control-typography .customize-control-notifications-container {
+.customize-control-ogf-typography .customize-control-notifications-container {
 	display: none;
 }
 
@@ -856,6 +861,6 @@
 	background-position: 15px 50% !important;
 }
 
-.customize-control-typography .customize-control-title {
+.customize-control-ogf-typography .customize-control-title {
 	font-size: 13px;
 }

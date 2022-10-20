@@ -1,4 +1,4 @@
-wp.customize.controlConstructor[ 'multiple-checkbox' ] = wp.customize.Control.extend( {
+wp.customize.controlConstructor[ 'ogf-multiple-checkbox' ] = wp.customize.Control.extend( {
 
 	// When we're finished loading continue processing.
 	ready: function() {

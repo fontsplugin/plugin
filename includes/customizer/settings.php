@@ -63,6 +63,7 @@ function ogf_customize_register( $wp_customize ) {
 				'label'       => esc_html__( 'Load Fonts Only', 'olympus-google-fonts' ),
 				'description' => esc_html__( 'Load fonts but don\'t automatically assign them to an element.', 'olympus-google-fonts' ),
 				'section'     => 'ogf_advanced__css',
+				'type'        => 'ogf-typography-multiselect',
 			)
 		)
 	);
@@ -179,6 +180,7 @@ function ogf_customize_register( $wp_customize ) {
 						'label'       => ( isset( $values['label'] ) ? esc_attr( $values['label'] ) : '' ),
 						'description' => ( isset( $values['description'] ) ? esc_attr( $values['description'] ) : '' ),
 						'section'     => ( isset( $values['section'] ) ? esc_attr( $values['section'] ) : '' ),
+						'type'        => 'ogf-typography',
 						'settings'    =>
 							apply_filters(
 								'ogf_typography_control_settings',
@@ -220,10 +222,10 @@ function ogf_customize_register( $wp_customize ) {
 		'force_styles',
 		array(
 			'label'       => esc_html__( 'Force Styles?', 'olympus-google-fonts' ),
+			'description' => esc_html__( 'If your choices are not displaying correctly, check this box.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_debugging',
 			'settings'    => 'ogf_force_styles',
 			'type'        => 'checkbox',
-			'description' => esc_html__( 'If your choices are not displaying correctly, check this box.', 'olympus-google-fonts' ),
 		)
 	);
 
@@ -240,10 +242,10 @@ function ogf_customize_register( $wp_customize ) {
 		'ogf_disable_post_level_controls',
 		array(
 			'label'       => esc_html__( 'Disable Editor Controls', 'olympus-google-fonts' ),
+			'description' => esc_html__( 'Remove font controls from the individual post editor screen (Gutenberg and Classic).', 'olympus-google-fonts' ),
 			'section'     => 'ogf_debugging',
 			'settings'    => 'ogf_disable_post_level_controls',
 			'type'        => 'checkbox',
-			'description' => esc_html__( 'Remove font controls from the individual post editor screen (Gutenberg and Classic).', 'olympus-google-fonts' ),
 		)
 	);
 
@@ -258,14 +260,15 @@ function ogf_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'ogf_font_display',
 		array(
+			'label'   => esc_html__( 'Font Display', 'olympus-google-fonts' ),
+			'description'   => '<a href="https://fontsplugin.com/google-fonts-font-display-swap/#values">' . esc_html__( 'Learn more →', 'olympus-google-fonts' ) . '</a>',
 			'type'    => 'select',
 			'section' => 'ogf_debugging',
-			'label'   => __( 'Font Display' ),
 			'choices' => array(
-				'swap'     => __( 'Swap', 'olympus-google-fonts' ),
-				'block'    => __( 'Block', 'olympus-google-fonts' ),
-				'fallback' => __( 'Fallback', 'olympus-google-fonts' ),
-				'optional' => __( 'Optional', 'olympus-google-fonts' ),
+				'swap'     => esc_html__( 'Swap', 'olympus-google-fonts' ),
+				'block'    => esc_html__( 'Block', 'olympus-google-fonts' ),
+				'fallback' => esc_html__( 'Fallback', 'olympus-google-fonts' ),
+				'optional' => esc_html__( 'Optional', 'olympus-google-fonts' ),
 			),
 		)
 	);
@@ -318,6 +321,7 @@ function ogf_customize_register( $wp_customize ) {
 						'section'     => 'ogf_font_loading',
 						'choices'     => $new_variants,
 						'input_attrs' => $input_attrs,
+						'type'        => 'ogf-multiple-checkbox',
 					)
 				)
 			);
@@ -352,6 +356,7 @@ function ogf_customize_register( $wp_customize ) {
 				array(
 					'section'  => $loc,
 					'priority' => 120,
+					'type'     => 'ogf-upsell',
 				)
 			)
 		);

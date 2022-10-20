@@ -21,7 +21,7 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 	 *
 	 * @var string
 	 */
-	public $type = 'multiple-checkbox';
+	public $type = 'ogf-multiple-checkbox';
 	/**
 	 * Enqueue control related scripts/styles.
 	 */

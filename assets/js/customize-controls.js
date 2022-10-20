@@ -1,10 +1,10 @@
 /* global ogf_font_variants, ogf_font_array, ajaxurl, fontsReset, location */
 ( function( api ) {
-	api.controlConstructor[ 'typography' ] = api.Control.extend(
+	api.controlConstructor[ 'ogf-typography' ] = api.Control.extend(
 		{
 			ready: function() {
 				const control = this;
-				const controlClass = '.customize-control-typography';
+				const controlClass = '.customize-control-ogf-typography';
 				const footerActions = jQuery( '#customize-footer-actions' );
 				//
 				// Do stuff when device icons are clicked
@@ -321,7 +321,7 @@ jQuery( document ).ready( function() {
 
 /* === Multiple Fonts Control === */
 ( function( api ) {
-	api.controlConstructor[ 'typography-multiselect' ] = api.Control.extend( {
+	api.controlConstructor[ 'ogf-typography-multiselect' ] = api.Control.extend( {
 		ready: function() {
 			const control = this;
 			// Initialize chosen.js
@@ -339,13 +339,12 @@ jQuery( document ).ready( function() {
 
 
 (function($){
-    /* Show/Hide Read More link inside Site Preview */
-    wp.customize( 'fpp_use_woff2', function( use_woff2 ) {
-        use_woff2.bind( function( value ) {
+    wp.customize( 'fpp_host_locally', function( fpp_host_locally ) {
+        fpp_host_locally.bind( function( value ) {
             if( true == value ){
-                $('#customize-control-fpp_preloading').hide();
+                $('#customize-control-fpp_use_woff2').show();
             } else {
-                $('#customize-control-fpp_preloading').show();
+                $('#customize-control-fpp_use_woff2').hide();
             }
         } );
     } );

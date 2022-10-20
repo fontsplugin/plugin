@@ -22,7 +22,7 @@ class OGF_Customize_Upsell_Control extends WP_Customize_Control {
 	 *
 	 * @var string
 	 */
-	public $type = 'upsell';
+	public $type = 'ogf-upsell';
 
 	/**
 	 * Render the control's content.

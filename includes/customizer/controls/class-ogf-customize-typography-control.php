@@ -21,7 +21,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 *
 	 * @var string
 	 */
-	public $type = 'typography';
+	public $type = 'ogf-typography';
 
 	/**
 	 * Array
