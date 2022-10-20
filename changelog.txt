@@ -1,3 +1,7 @@
+= 3.2.1 =
+
+* Add prefixes to control types to prevent conflicts.
+
 = 3.2.0 =
 
 * Add WooCommerce support.
