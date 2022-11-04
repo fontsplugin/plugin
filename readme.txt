@@ -10,7 +10,7 @@ Stable tag: 3.2.1
 The easiest to use Google Fonts Plugin. No coding required. Optimized for Speed. 1000+ font choices.
 
 == Description ==
-The [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=intro) library currently contains 998 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
+The [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=intro) library currently contains 1455 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
 
 You're not stuck with one font for the entire website, you can easily choose one font for headings and another for your content.
 
