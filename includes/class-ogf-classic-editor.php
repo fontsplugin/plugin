@@ -103,7 +103,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			} elseif ( ogf_is_google_font( $headings_type ) ) {
 				$headings_type = $this->ogf_fonts->get_font_name( $headings_type );
 			} elseif ( ogf_is_typekit_font( $headings_type ) && array_key_exists( $headings_type, $this->typekit_fonts ) ) {
-				$headings_type = $this->typekit_fonts[ $headings_type ]['stack'];
+				$headings_type = $this->typekit_fonts[ $headings_type ]['label'];
 			}
 
 			$opt['font_formats'] = apply_filters( 'ogf_classic_font_formats', 'Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;' );
