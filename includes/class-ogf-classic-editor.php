@@ -138,7 +138,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 				}
 			}
 
-			foreach ( array_unique( $this->custom_fonts ) as $font ) {
+			foreach ( $this->custom_fonts as $font ) {
 				$new_default .= $font['label'] . '=' . $font['stack'] . ';';
 			}
 

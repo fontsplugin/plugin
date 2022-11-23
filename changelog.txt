@@ -1,3 +1,7 @@
+= 3.2.4 =
+
+* Add prefix to WooCommerce helper
+
 = 3.2.2 =
 
 * Fix Classic Editor error when using Typekit fonts
