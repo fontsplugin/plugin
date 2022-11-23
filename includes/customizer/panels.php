@@ -154,7 +154,7 @@ function ogf_panels_customize_register( $wp_customize ) {
 		)
 	);
 
-	if ( is_woocommerce_activated() ) {
+	if ( ogf_is_woocommerce_activated() ) {
 
 		$ogf_woocommerce_panel = new OGF_Customize_Panel(
 			$wp_customize,

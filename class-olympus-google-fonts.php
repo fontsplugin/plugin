@@ -105,7 +105,7 @@ class Olympus_Google_Fonts {
 		if ( file_exists( $author_compat_path ) ) {
 			require_once $author_compat_path;
 		}
-		if ( is_woocommerce_activated() ) {
+		if ( ogf_is_woocommerce_activated() ) {
 			require_once OGF_DIR_PATH . '/compatibility/woocommerce.php';
 		}
 	}
