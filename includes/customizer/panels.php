@@ -81,6 +81,15 @@ function ogf_panels_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_section(
+		'ogf_font_subsets',
+		array(
+			'title'       => esc_html__( 'Font Subsets', 'olympus-google-fonts' ),
+			'description' => 'Optimize your site\'s performance by removing font subsets that you don\'t need.',
+			'panel'       => 'ogf_google_fonts',
+		)
+	);
+
+	$wp_customize->add_section(
 		'ogf_debugging',
 		array(
 			'title'    => esc_html__( 'Debugging', 'olympus-google-fonts' ),

@@ -85,11 +85,22 @@ class OGF_Fonts {
 
 		unset( $weights['0'] );
 
-		foreach ( $weights as $key => $value ) {
-			$weights[ $key . 'i' ] = $value . ' Italic';
+		return $weights;
+	}
+
+	/**
+	 * Get the font subsets from ID.
+	 *
+	 * @param string $font_id The font ID.
+	 */
+	public function get_font_subsets( $font_id ) {
+		$subsets = self::$google_fonts[ $font_id ]['s'];
+
+		if ( ! is_array( $subsets ) ) {
+			return array();
 		}
 
-		return $weights;
+		return $subsets;
 	}
 
 	/**

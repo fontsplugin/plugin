@@ -134,9 +134,11 @@
 
 							// remove variants the font doesn't support.
 							var finalWeights = new Object();
-							for( var i in newWeights ) {
-								finalWeights[i] = ogf_font_variants[i];
-							}
+							Object.keys(newWeights).forEach( function(val, i) {
+								if ( ! val.endsWith('0i') ) {
+									finalWeights[val] = ogf_font_variants[val];
+								}
+							});
 
 							// replace the 'Font Weight' select field values.
 							const weightsSelect = jQuery( '.typography-font-weight select' );

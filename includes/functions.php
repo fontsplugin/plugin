@@ -163,33 +163,6 @@ function ogf_fonts_array() {
 
 	// Format the variants array for easier use.
 	foreach ( $fonts_array['items'] as $key => $font ) {
-		$variants_remove = array(
-			'100italic',
-			'200italic',
-			'300italic',
-			'400italic',
-			'500italic',
-			'600italic',
-			'700italic',
-			'800italic',
-			'900italic',
-			'100i',
-			'200i',
-			'300i',
-			'400i',
-			'500i',
-			'600i',
-			'700i',
-			'800i',
-			'900i',
-		);
-
-		// remove italic variants.
-		$font['v'] = array_diff( $font['v'], $variants_remove );
-
-		// flip the key/values.
-		$font['v'] = array_flip( $font['v'] );
-
 		$fonts_array['items'][ $key ] = $font;
 	}
 
@@ -197,7 +170,9 @@ function ogf_fonts_array() {
 	foreach ( $fonts_array['items'] as $font ) {
 		$id           = trim( strtolower( str_replace( ' ', '-', $font['f'] ) ) );
 		$fonts[ $id ] = $font;
+		$fonts[ $id ]['v'] = array_flip($fonts[ $id ]['v']);
 	}
+
 
 	return $fonts;
 }
