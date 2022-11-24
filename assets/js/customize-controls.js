@@ -134,9 +134,11 @@
 
 							// remove variants the font doesn't support.
 							var finalWeights = new Object();
-							for( var i in newWeights ) {
-								finalWeights[i] = ogf_font_variants[i];
-							}
+							Object.keys(newWeights).forEach( function(val, i) {
+								if ( ! val.endsWith('0i') ) {
+									finalWeights[val] = ogf_font_variants[val];
+								}
+							});
 
 							// replace the 'Font Weight' select field values.
 							const weightsSelect = jQuery( '.typography-font-weight select' );
@@ -336,16 +338,3 @@ jQuery( document ).ready( function() {
 		},
 	} );
 }( wp.customize ) );
-
-
-(function($){
-    wp.customize( 'fpp_host_locally', function( fpp_host_locally ) {
-        fpp_host_locally.bind( function( value ) {
-            if( true == value ){
-                $('#customize-control-fpp_use_woff2').show();
-            } else {
-                $('#customize-control-fpp_use_woff2').hide();
-            }
-        } );
-    } );
-})(jQuery);

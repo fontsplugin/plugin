@@ -192,18 +192,33 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 * @return array Available font variants.
 	 */
 	public function get_font_weight_choices( $font ) {
+
+		$variants_to_remove = array(
+			'100i' => esc_html__( 'Thin Italic', 'olympus-google-fonts' ),
+			'200i' => esc_html__( 'Extra Light Italic', 'olympus-google-fonts' ),
+			'300i' => esc_html__( 'Light Italic', 'olympus-google-fonts' ),
+			'400i' => esc_html__( 'Normal Italic', 'olympus-google-fonts' ),
+			'500i' => esc_html__( 'Medium Italic', 'olympus-google-fonts' ),
+			'600i' => esc_html__( 'Semi Bold Italic', 'olympus-google-fonts' ),
+			'700i' => esc_html__( 'Bold Italic', 'olympus-google-fonts' ),
+			'800i' => esc_html__( 'Extra Bold Italic', 'olympus-google-fonts' ),
+			'900i' => esc_html__( 'Ultra Bold Italic', 'olympus-google-fonts' ),
+		);
+
 		$all_variants = ogf_font_variants();
 
 		if ( 'default' === $font ) {
-			return $all_variants;
+			return array_diff( $all_variants, $variants_to_remove );
 		}
+
 
 		if ( ogf_is_google_font( $font ) ) {
 			$fonts_array       = ogf_fonts_array();
 			$variants          = $fonts_array[ $font ]['v'];
 			$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
+			$diff = array_diff_key( $variants, $variants_to_remove );
 
-			foreach ( $variants as $key => $value ) {
+			foreach ( $diff as $key => $value ) {
 				$new_variants[ $key ] = $all_variants[ $key ];
 			}
 

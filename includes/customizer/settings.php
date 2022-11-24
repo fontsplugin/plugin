@@ -327,6 +327,38 @@ function ogf_customize_register( $wp_customize ) {
 			);
 
 		}
+
+		$subsets = [];
+
+		foreach ( $fonts->choices as $font_id ) {
+			$subsets = array_merge( $subsets, $fonts->get_font_subsets( $font_id ) );
+		}
+
+		$wp_customize->add_setting(
+			'fpp_disable_subsets',
+			array(
+				'default'   => array(),
+				'transport' => 'refresh',
+			)
+		);
+
+		if ( defined( 'OGF_PRO' ) ) {
+
+			$wp_customize->add_control(
+				new OGF_Customize_Multiple_Checkbox_Control(
+					$wp_customize,
+					'fpp_disable_subsets',
+					array(
+						'label'       => 'Remove Subsets',
+						'section'     => 'ogf_font_subsets',
+						'choices'     => array_unique( $subsets ),
+						'type'        => 'ogf-multiple-checkbox',
+					)
+				)
+			);
+
+		}
+
 	}
 
 	$upsell_locations = array(

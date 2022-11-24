@@ -1,3 +1,15 @@
+= 3.2.5 =
+
+* Update fonts list
+
+= 3.2.4 =
+
+* Add prefix to WooCommerce helper
+
+= 3.2.2 =
+
+* Fix Classic Editor error when using Typekit fonts
+
 = 3.2.1 =
 
 * Add prefixes to control types to prevent conflicts.
