@@ -11,9 +11,13 @@ It's hard to know which font will look good on your website, that's why we've in
 
 Once you've found a combination you love, press save and make the changes publicly visible.
 
-The full Google Fonts library can be found here - https://fonts.google.com
+Useful Links
+------------
 
-The premium version of this plugin can be found here - https://fontsplugin.com
+* [Google Fonts Library](https://fonts.google.com)
+* [Fonts Plugin Pro](https://fontsplugin.com)
+* [Google Fonts Checker](https://fontsplugin.com/google-fonts-checker)
+
 
 Getting Started
 ---------------
