@@ -100,7 +100,8 @@ class OGF_Fonts {
 			return array();
 		}
 
-		return $subsets;
+		// We need both the key and value to be the subset name.
+		return array_combine( $subsets, $subsets );
 	}
 
 	/**
@@ -171,7 +172,6 @@ class OGF_Fonts {
 	 */
 	public function build_url() {
 		$families = array();
-		$subsets  = array();
 
 		if ( empty( $this->choices ) ) {
 			return false;
@@ -194,7 +194,6 @@ class OGF_Fonts {
 		$query_args = array(
 			'family'  => implode( '|', $families ),
 			'display' => get_theme_mod( 'ogf_font_display', 'swap' ),
-			'subset'  => 'all',
 		);
 
 		return add_query_arg( $query_args, 'https://fonts.googleapis.com/css' );

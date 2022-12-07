@@ -274,6 +274,7 @@ function ogf_customize_register( $wp_customize ) {
 	);
 
 	$fonts = new OGF_Fonts();
+	$subsets = [];
 
 	if ( $fonts->has_google_fonts() ) {
 
@@ -326,11 +327,6 @@ function ogf_customize_register( $wp_customize ) {
 				)
 			);
 
-		}
-
-		$subsets = [];
-
-		foreach ( $fonts->choices as $font_id ) {
 			$subsets = array_merge( $subsets, $fonts->get_font_subsets( $font_id ) );
 		}
 

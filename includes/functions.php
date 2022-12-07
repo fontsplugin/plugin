@@ -45,7 +45,7 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Headings Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_basic',
-			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, .entry-title, .entry-title a, h1, h2, h3, h4, h5, h6, .widget-title',
+			'selectors'   => '#site-title, .site-title, #site-title a, .site-title a, .entry-title, .entry-title a, h1, h2, h3, h4, h5, h6, .widget-title, .elementor-heading-title',
 		),
 		'ogf_inputs' => array(
 			'label'       => esc_html__( 'Buttons and Inputs Typography', 'olympus-google-fonts' ),
@@ -75,43 +75,43 @@ function ogf_get_elements() {
 			'label'       => esc_html__( 'Content Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your post and page content.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
-			'selectors'   => '.entry-content, .entry-content p, .post-content, .page-content, .post-excerpt, .entry-summary, .entry-excerpt, .excerpt, .excerpt p, .type-post p, .type-page p, .wp-block-post-content, .wp-block-post-excerpt',
+			'selectors'   => '.entry-content, .entry-content p, .post-content, .page-content, .post-excerpt, .entry-summary, .entry-excerpt, .excerpt, .excerpt p, .type-post p, .type-page p, .wp-block-post-content, .wp-block-post-excerpt, .elementor, .elementor p',
 		),
 		'ogf_post_page_h1' => array(
 			'label'       => esc_html__( 'Title and H1 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your title and H1 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
-			'selectors'   => '.wp-block-post-title, .wp-block-post-title a, .entry-title, .entry-title a, .post-title, .post-title a, .page-title, .entry-content h1, #content h1, .type-post h1, .type-page h1',
+			'selectors'   => '.wp-block-post-title, .wp-block-post-title a, .entry-title, .entry-title a, .post-title, .post-title a, .page-title, .entry-content h1, #content h1, .type-post h1, .type-page h1, .elementor h1',
 		),
 		'ogf_post_page_h2' => array(
 			'label'       => esc_html__( 'H2 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H2 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
-			'selectors'   => '.entry-content h2, .post-content h2, .page-content h2, #content h2, .type-post h2, .type-page h2',
+			'selectors'   => '.entry-content h2, .post-content h2, .page-content h2, #content h2, .type-post h2, .type-page h2, .elementor h2',
 		),
 		'ogf_post_page_h3' => array(
 			'label'       => esc_html__( 'H3 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H3 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
-			'selectors'   => '.entry-content h3, .post-content h3, .page-content h3, #content h3, .type-post h3, .type-page h3',
+			'selectors'   => '.entry-content h3, .post-content h3, .page-content h3, #content h3, .type-post h3, .type-page h3, .elementor h3',
 		),
 		'ogf_post_page_h4' => array(
 			'label'       => esc_html__( 'H4 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H4 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
-			'selectors'   => '.entry-content h4, .post-content h4, .page-content h4, #content h4, .type-post h4, .type-page h4',
+			'selectors'   => '.entry-content h4, .post-content h4, .page-content h4, #content h4, .type-post h4, .type-page h4, .elementor h4',
 		),
 		'ogf_post_page_h5' => array(
 			'label'       => esc_html__( 'H5 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H5 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
-			'selectors'   => '.entry-content h5, .post-content h5, .page-content h5, #content h5, .type-post h5, .type-page h5',
+			'selectors'   => '.entry-content h5, .post-content h5, .page-content h5, #content h5, .type-post h5, .type-page h5, .elementor h5',
 		),
 		'ogf_post_page_h6' => array(
 			'label'       => esc_html__( 'H6 Typography', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for your H6 headings.', 'olympus-google-fonts' ),
 			'section'     => 'ogf_advanced__content',
-			'selectors'   => '.entry-content h6, .post-content h6, .page-content h6, #content h6, .type-post h6, .type-page h6',
+			'selectors'   => '.entry-content h6, .post-content h6, .page-content h6, #content h6, .type-post h6, .type-page h6, .elementor h6',
 		),
 		'ogf_blockquotes' => array(
 			'label'       => esc_html__( 'Quotes', 'olympus-google-fonts' ),
@@ -170,9 +170,8 @@ function ogf_fonts_array() {
 	foreach ( $fonts_array['items'] as $font ) {
 		$id           = trim( strtolower( str_replace( ' ', '-', $font['f'] ) ) );
 		$fonts[ $id ] = $font;
-		$fonts[ $id ]['v'] = array_flip($fonts[ $id ]['v']);
+		$fonts[ $id ]['v'] = array_flip( $fonts[ $id ]['v'] );
 	}
-
 
 	return $fonts;
 }

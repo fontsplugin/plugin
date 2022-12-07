@@ -45,7 +45,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 * Class constructor.
 		 */
 		public function __construct() {
-			if ( true === get_theme_mod( 'ogf_disable_post_level_controls', 1 ) ) {
+			if ( true === get_theme_mod( 'ogf_disable_post_level_controls', false ) ) {
 				return;
 			}
 
