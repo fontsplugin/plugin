@@ -1,3 +1,7 @@
+= 3.2.6 =
+
+* Fix Customizer error when using system fonts
+
 = 3.2.5 =
 
 * Update fonts list
