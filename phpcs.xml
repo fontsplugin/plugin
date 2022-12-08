@@ -12,31 +12,34 @@
 	<!-- Exclude minified Javascript files. -->
 	<exclude-pattern>*.min.js</exclude-pattern>
 
-	<!-- Include the WordPress-Extra standard. -->
-	<rule ref="WordPress-Extra">
 		<!--
-		We may want a middle ground though. The best way to do this is add the
-		entire ruleset, then rule by rule, remove ones that don't suit a project.
-		We can do this by running `phpcs` with the '-s' flag, which allows us to
-		see the names of the sniffs reporting errors.
-		Once we know the sniff names, we can opt to exclude sniffs which don't
-		suit our project like so.
+	#############################################################################
+	SNIFF AGAINST THE WordPress RULESET
+	Exclude a few select sniffs/errorcodes for specific reasons and
+	add configuration for a sniff.
+	#############################################################################
+	-->
+	<rule ref="WordPress">
+		<properties>
+			<property name="minimum_supported_version" value="5.9"/>
+		</properties>
 
-		The below two examples just show how you can exclude rules.
-		They are not intended as advice about which sniffs to exclude.
-		-->
+		<!-- WPCS demands long arrays. YoastCS demands short arrays. -->
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
 
-		<!--
-		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
-		<exclude name="WordPress.Security.EscapeOutput"/>
-		-->
+		<!-- Demanding Yoda conditions is stupid. -->
+		<exclude name="WordPress.PHP.YodaConditions"/>
+
+		<!-- A while loop is the only valid control structure where an assignment can be justified. -->
+		<exclude name="WordPress.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition"/>
+
+		<!-- If a conscious choice has been made for a non-strict comparison, that's ok.
+		I.e. when `strict` has been explicitely set to `false` in an array comparison,
+		it will be allowed. -->
+		<exclude name="WordPress.PHP.StrictInArray.FoundNonStrictFalse"/>
 	</rule>
-
-	<!-- Let's also check that everything is properly documented. -->
-	<rule ref="WordPress-Docs"/>
 
 	<!-- Add in some extra rules from other standards. -->
 	<rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
 	<rule ref="Generic.Commenting.Todo"/>
-
 </ruleset>

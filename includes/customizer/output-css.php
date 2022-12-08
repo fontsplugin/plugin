@@ -97,11 +97,12 @@ function ogf_generate_css( $selector, $option_name ) {
 	$return = '';
 
 	if ( ( $family !== 'default' && $family ) ||
-			 ( $line_height !== '0' && $line_height ) ||
-			 ( $weight !== '0' && $weight ) ||
-			 ( $style !== 'default' && $style ) ||
-			   $font_size || $letter_spacing || $text_transform ||
-			   $color || $text_decoration ) {
+		( $line_height !== '0' && $line_height ) ||
+		( $weight !== '0' && $weight ) ||
+		( $style !== 'default' && $style ) ||
+		$font_size || $letter_spacing || $text_transform ||
+		$color || $text_decoration
+	) {
 
 		$return .= $selector . ' {' . PHP_EOL;
 
@@ -262,14 +263,17 @@ function ogf_generate_css_variables() {
 
 	if ( $body_font && $body_font !== 'default' ) {
 		$body_font_stack = str_replace( '"', '', ogf_build_font_stack( $body_font ) );
+
 		$css .= '--font-base: ' . esc_attr( $body_font_stack ) . ';' . PHP_EOL;
 	}
 	if ( $headings_font && $headings_font !== 'default' ) {
 		$headings_font_stack = str_replace( '"', '', ogf_build_font_stack( $headings_font ) );
+
 		$css .= '--font-headings: ' . esc_attr( $headings_font_stack ) . ';' . PHP_EOL;
 	}
 	if ( $inputs_font && $inputs_font !== 'default' ) {
 		$inputs_font_stack = str_replace( '"', '', ogf_build_font_stack( $inputs_font ) );
+		
 		$css .= '--font-input: ' . esc_attr( $inputs_font_stack ) . ';' . PHP_EOL;
 	}
 

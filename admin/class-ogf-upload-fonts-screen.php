@@ -6,14 +6,14 @@
  */
 
 /**
- * OGF_Upload_Fonts_Admin_Screen
+ * OGF_Upload_Fonts_Screen
  */
-class OGF_Upload_Fonts_Admin_Screen {
+class OGF_Upload_Fonts_Screen {
 
 	/**
-	 * Instance of OGF_Upload_Fonts_Admin_Screen
+	 * Instance of OGF_Upload_Fonts_Screen
 	 *
-	 * @var (Object) OGF_Upload_Fonts_Admin_Screen
+	 * @var (Object) OGF_Upload_Fonts_Screen
 	 */
 	private static $instance = null;
 
@@ -25,7 +25,7 @@ class OGF_Upload_Fonts_Admin_Screen {
 	protected $parent_menu_slug = 'fonts-plugin';
 
 	/**
-	 * Instance of OGF_Upload_Fonts_Admin_Screen.
+	 * Instance of OGF_Upload_Fonts_Screen.
 	 *
 	 * @return object Class object.
 	 */
@@ -62,15 +62,18 @@ class OGF_Upload_Fonts_Admin_Screen {
 	 * Add options page
 	 */
 	public function enqueue() {
+		if ( get_current_screen()->id !== 'edit-ogf_custom_fonts' ) {
+			return;
+		}
+
 		wp_enqueue_media();
-		wp_enqueue_script( 'olympus-google-fonts-upload', plugins_url( 'assets/js/uploadFonts.js', dirname( __FILE__ ) ), false, '1.0.0' );
+		wp_enqueue_script( 'olympus-google-fonts-upload', plugins_url( 'assets/js/uploadFonts.js', dirname( __FILE__ ) ), [], '1.0.0' );
 	}
 
 	/**
 	 * Register custom font menu
 	 */
 	public function register_custom_fonts_menu() {
-
 		if ( ! defined( 'OGF_PRO' ) ) {
 			return;
 		}
@@ -83,7 +86,6 @@ class OGF_Upload_Fonts_Admin_Screen {
 			OGF_Fonts_Taxonomy::$capability,
 			'edit-tags.php?taxonomy=' . OGF_Fonts_Taxonomy::$taxonomy_slug
 		);
-
 	}
 
 	/**
@@ -114,7 +116,6 @@ class OGF_Upload_Fonts_Admin_Screen {
 	 * @return array $columns updated columns.
 	 */
 	public function manage_columns( $columns ) {
-
 		$screen = get_current_screen();
 		// If current screen is add new custom fonts screen.
 		if ( isset( $screen->base ) && 'edit-tags' == $screen->base ) {
@@ -156,7 +157,7 @@ class OGF_Upload_Fonts_Admin_Screen {
 	/**
 	 * Add Taxonomy data field
 	 *
-	 * @param int    $id current term id.
+	 * @param string $id current term id.
 	 * @param string $title font type title.
 	 * @param string $description title font type description.
 	 * @param string $value title font type meta values.
@@ -176,7 +177,7 @@ class OGF_Upload_Fonts_Admin_Screen {
 	/**
 	 * Add Taxonomy data field
 	 *
-	 * @param int    $id current term id.
+	 * @param string $id current term id.
 	 * @param string $title font type title.
 	 * @param string $value title font type meta values.
 	 * @param string $description title font type description.
@@ -227,7 +228,7 @@ class OGF_Upload_Fonts_Admin_Screen {
 	}
 
 	/**
-	 * Correct the mome types and extension for the font types.
+	 * Correct the mime types and extension for the font types.
 	 *
 	 * @param array  $defaults File data array containing 'ext', 'type', and
 	 *                                          'proper_filename' keys.
@@ -249,7 +250,6 @@ class OGF_Upload_Fonts_Admin_Screen {
 
 		return $defaults;
 	}
-
 }
 
-OGF_Upload_Fonts_Admin_Screen::get_instance();
+OGF_Upload_Fonts_Screen::get_instance();

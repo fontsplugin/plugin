@@ -60,7 +60,11 @@ class OGF_Admin_Welcome_Screen {
 	 * Add options page
 	 */
 	public function enqueue() {
-		wp_enqueue_style( 'olympus-google-fonts-welcome', plugins_url( 'admin/style.css', dirname( __FILE__ ) ), false, '1.0.0' );
+
+		if ( get_current_screen()->id === 'toplevel_page_fonts-plugin' ) {
+			wp_enqueue_style( 'olympus-google-fonts-welcome', plugins_url( 'admin/style.css', dirname( __FILE__ ) ), false, '1.0.0' );
+		}
+
 		wp_enqueue_script( 'ogf-admin', esc_url( OGF_DIR_URL . 'assets/js/admin.js' ), 'jquery', OGF_VERSION, false );
 	}
 
