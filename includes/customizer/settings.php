@@ -7,6 +7,11 @@
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
+/**
+ * Register the custom Typography control.
+ *
+ * @param object $wp_customize Access to the $wp_customize object.
+ */
 function ogf_register_typography_control( $wp_customize ) {
 	if ( ! class_exists( 'OGF_Customize_Typography_Control' ) ) {
 		require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-typography-control.php';
@@ -22,7 +27,6 @@ add_action( 'customize_register', 'ogf_register_typography_control', 10 );
  */
 function ogf_customize_register( $wp_customize ) {
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-fonts-control.php';
-
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-repeater-control.php';
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-upsell-control.php';
 	require_once OGF_DIR_PATH . 'includes/customizer/controls/class-ogf-customize-multiple-checkbox-control.php';
@@ -185,21 +189,21 @@ function ogf_customize_register( $wp_customize ) {
 							apply_filters(
 								'ogf_typography_control_settings',
 								array(
-								'family'             => $id . '_font',
-								'weight'             => $id . '_font_weight',
-								'style'              => $id . '_font_style',
-								'size'               => $id . '_font_size',
-								'size_tablet'        => $id . '_font_size_tablet',
-								'size_mobile'        => $id . '_font_size_mobile',
-								'line_height'        => $id . '_line_height',
-								'line_height_tablet' => $id . '_line_height_tablet',
-								'line_height_mobile' => $id . '_line_height_mobile',
-								'color'              => $id . '_font_color',
-								'letter_spacing'     => $id . '_letter_spacing',
-								'text_transform'     => $id . '_text_transform',
+									'family'             => $id . '_font',
+									'weight'             => $id . '_font_weight',
+									'style'              => $id . '_font_style',
+									'size'               => $id . '_font_size',
+									'size_tablet'        => $id . '_font_size_tablet',
+									'size_mobile'        => $id . '_font_size_mobile',
+									'line_height'        => $id . '_line_height',
+									'line_height_tablet' => $id . '_line_height_tablet',
+									'line_height_mobile' => $id . '_line_height_mobile',
+									'color'              => $id . '_font_color',
+									'letter_spacing'     => $id . '_letter_spacing',
+									'text_transform'     => $id . '_text_transform',
+								),
+								$id
 							),
-							$id
-						),
 					)
 				)
 			);
@@ -260,11 +264,11 @@ function ogf_customize_register( $wp_customize ) {
 	$wp_customize->add_control(
 		'ogf_font_display',
 		array(
-			'label'   => esc_html__( 'Font Display', 'olympus-google-fonts' ),
-			'description'   => '<a href="https://fontsplugin.com/google-fonts-font-display-swap/#values">' . esc_html__( 'Learn more →', 'olympus-google-fonts' ) . '</a>',
-			'type'    => 'select',
-			'section' => 'ogf_debugging',
-			'choices' => array(
+			'label'       => esc_html__( 'Font Display', 'olympus-google-fonts' ),
+			'description' => '<a href = "https: //fontsplugin.com/google-fonts-font-display-swap/#values">' . esc_html__( 'Learn more →', 'olympus-google-fonts' ) . '</a>',
+			'type'        => 'select',
+			'section'     => 'ogf_debugging',
+			'choices'     => array(
 				'swap'     => esc_html__( 'Swap', 'olympus-google-fonts' ),
 				'block'    => esc_html__( 'Block', 'olympus-google-fonts' ),
 				'fallback' => esc_html__( 'Fallback', 'olympus-google-fonts' ),
@@ -273,7 +277,7 @@ function ogf_customize_register( $wp_customize ) {
 		)
 	);
 
-	$fonts = new OGF_Fonts();
+	$fonts   = new OGF_Fonts();
 	$subsets = [];
 
 	if ( $fonts->has_google_fonts() ) {
@@ -345,16 +349,14 @@ function ogf_customize_register( $wp_customize ) {
 					$wp_customize,
 					'fpp_disable_subsets',
 					array(
-						'label'       => 'Remove Subsets',
-						'section'     => 'ogf_font_subsets',
-						'choices'     => array_unique( $subsets ),
-						'type'        => 'ogf-multiple-checkbox',
+						'label'   => 'Remove Subsets',
+						'section' => 'ogf_font_subsets',
+						'choices' => array_unique( $subsets ),
+						'type'    => 'ogf-multiple-checkbox',
 					)
 				)
 			);
-
 		}
-
 	}
 
 	$upsell_locations = array(

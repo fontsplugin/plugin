@@ -183,7 +183,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 				.notice.ogf-notice {
 					padding: 20px !important;
 				}
-				.notice.ogf-noticee .ogf-notice-inner {
+				.notice.ogf-notice .ogf-notice-inner {
 					display: block;
 				}
 				.notice.ogf-notice .ogf-notice-inner .ogf-notice-content {
@@ -212,7 +212,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		 * Output review content.
 		 */
 		public function review() {
-			$no_bug_url = wp_nonce_url( admin_url( '?' . $this->nobug_option . '=true' ), 'ogf-notification-nounce' );
+			$no_bug_url = wp_nonce_url( admin_url( '?' . $this->nobug_option . '=true' ), 'ogf-notification-nonce' );
 			$time       = $this->seconds_to_words( time() - get_site_option( $this->date_option ) );
 			?>
 			<div class="notice updated ogf-notice">
@@ -243,7 +243,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		 */
 		public function set_no_bug() {
 			// Bail out if not on correct page.
-			if ( ! isset( $_GET['_wpnonce'] ) || ( ! wp_verify_nonce( $_GET['_wpnonce'], 'ogf-notification-nounce' ) || ! is_admin() || ! isset( $_GET[ $this->nobug_option ] ) || ! current_user_can( 'manage_options' ) ) ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ( ! wp_verify_nonce( $_GET['_wpnonce'], 'ogf-notification-nonce' ) || ! is_admin() || ! isset( $_GET[ $this->nobug_option ] ) || ! current_user_can( 'manage_options' ) ) ) {
 				return;
 			}
 			add_site_option( $this->nobug_option, true );

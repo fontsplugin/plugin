@@ -55,23 +55,23 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 					$this->iterate_array( $default );
 					?>
 					<input type="hidden"
-					id="customizer-repeater-<?php echo esc_attr( $this->id ); ?>-colector" <?php esc_attr( $this->link() ); ?>
-					class="customizer-repeater-colector"
+					id="customizer-repeater-<?php echo esc_attr( $this->id ); ?>-collector" <?php esc_attr( $this->link() ); ?>
+					class="customizer-repeater-collector"
 					value="<?php echo esc_textarea( wp_json_encode( $default ) ); ?>"/>
 					<?php
 				} else {
 					$this->iterate_array();
 					?>
 					<input type="hidden"
-					id="customizer-repeater-<?php echo esc_attr( $this->id ); ?>-colector" <?php esc_attr( $this->link() ); ?>
-					class="customizer-repeater-colector"/>
+					id="customizer-repeater-<?php echo esc_attr( $this->id ); ?>-collector" <?php esc_attr( $this->link() ); ?>
+					class="customizer-repeater-collector"/>
 					<?php
 				}
 			} else {
 				$this->iterate_array( $json );
 				?>
-				<input type="hidden" id="customizer-repeater-<?php echo esc_attr( $this->id ); ?>-colector" <?php esc_attr( $this->link() ); ?>
-				class="customizer-repeater-colector" value="<?php echo esc_textarea( $this->value() ); ?>"/>
+				<input type="hidden" id="customizer-repeater-<?php echo esc_attr( $this->id ); ?>-collector" <?php esc_attr( $this->link() ); ?>
+				class="customizer-repeater-collector" value="<?php echo esc_textarea( $this->value() ); ?>"/>
 				<?php
 			}
 			?>

@@ -26,7 +26,7 @@ class OGF_Customize_Multiple_Checkbox_Control extends WP_Customize_Control {
 	 * Enqueue control related scripts/styles.
 	 */
 	public function enqueue() {
-		wp_enqueue_script( 'ogf-multicheck', OGF_DIR_URL . 'assets/js/multiple-checkbox.js', array( 'jquery' ), OGF_VERSION, true );
+		wp_enqueue_script( 'ogf-multiple-checkbox', OGF_DIR_URL . 'assets/js/multiple-checkbox.js', array( 'jquery' ), OGF_VERSION, true );
 	}
 	/**
 	 * Refresh the parameters passed to the JavaScript via JSON.

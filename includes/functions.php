@@ -384,12 +384,10 @@ function ogf_is_google_font( $font_id ) {
 /**
  * Check if WooCommerce is activated
  */
-if ( ! function_exists( 'ogf_is_woocommerce_activated' ) ) {
-    function ogf_is_woocommerce_activated() {
-        if ( class_exists( 'woocommerce' ) ) {
-					return true;
-				} else {
-					return false;
-				}
-    }
+function ogf_is_woocommerce_activated() {
+	if ( class_exists( 'woocommerce' ) ) {
+		return true;
+	} else {
+		return false;
+	}
 }

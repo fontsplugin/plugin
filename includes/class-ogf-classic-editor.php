@@ -176,9 +176,9 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 					}
 
 					$editor_styles[] = esc_url( 'https://use.typekit.com/' . $id . '.css' );
+				}
 			}
 		}
-	}
 
 	}
 endif;

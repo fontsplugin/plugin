@@ -216,6 +216,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 			$fonts_array       = ogf_fonts_array();
 			$variants          = $fonts_array[ $font ]['v'];
 			$new_variants['0'] = esc_html__( '- Default -', 'olympus-google-fonts' );
+
 			$diff = array_diff_key( $variants, $variants_to_remove );
 
 			foreach ( $diff as $key => $value ) {

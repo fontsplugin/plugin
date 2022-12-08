@@ -110,7 +110,7 @@ class OGF_Typekit {
 				echo '<li><strong>' . esc_html__( 'Font Family: ', 'olympus-google-fonts' ) . '</strong>' . esc_attr( $family['label'] ) . '</li>';
 			}
 
-			if( $kit['enabled'] ) {
+			if ( $kit['enabled'] ) {
 				echo '<li><a href="' . esc_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=disable&kit_id=' . $id ) ) . '">' . esc_html__( 'Disable Kit', 'olympus-google-fonts' ) . '</a></li>';
 			} else {
 				echo '<li><a href="' . esc_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=enable&kit_id=' . $id ) ) . '">' . esc_html__( 'Enable Kit', 'olympus-google-fonts' ) . '</a></li>';

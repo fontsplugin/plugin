@@ -91,7 +91,7 @@ function customizerRepeaterRefreshValues() {
 				} );
 			}
 		} );
-		jQuery( this ).find( '.customizer-repeater-colector' ).val( JSON.stringify( values ) );
-		jQuery( this ).find( '.customizer-repeater-colector' ).trigger( 'change' );
+		jQuery( this ).find( '.customizer-repeater-collector' ).val( JSON.stringify( values ) );
+		jQuery( this ).find( '.customizer-repeater-collector' ).trigger( 'change' );
 	} );
 }

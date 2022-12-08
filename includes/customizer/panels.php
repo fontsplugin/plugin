@@ -37,16 +37,16 @@ function ogf_panels_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'ogf_theme',
 		array(
-			'title'    => esc_html__( 'Theme Settings', 'olympus-google-fonts' ),
-			'panel'    => 'ogf_google_fonts',
+			'title' => esc_html__( 'Theme Settings', 'olympus-google-fonts' ),
+			'panel' => 'ogf_google_fonts',
 		)
 	);
 
 	$wp_customize->add_section(
 		'ogf_basic',
 		array(
-			'title'    => __( 'Basic Settings', 'olympus-google-fonts' ),
-			'panel'    => 'ogf_google_fonts',
+			'title' => __( 'Basic Settings', 'olympus-google-fonts' ),
+			'panel' => 'ogf_google_fonts',
 		)
 	);
 
@@ -54,8 +54,8 @@ function ogf_panels_customize_register( $wp_customize ) {
 		$wp_customize,
 		'ogf_advanced',
 		array(
-			'title'    => __( 'Advanced Settings', 'olympus-google-fonts' ),
-			'panel'    => 'ogf_google_fonts',
+			'title' => __( 'Advanced Settings', 'olympus-google-fonts' ),
+			'panel' => 'ogf_google_fonts',
 		)
 	);
 
@@ -92,8 +92,8 @@ function ogf_panels_customize_register( $wp_customize ) {
 	$wp_customize->add_section(
 		'ogf_debugging',
 		array(
-			'title'    => esc_html__( 'Debugging', 'olympus-google-fonts' ),
-			'panel'    => 'ogf_google_fonts',
+			'title' => esc_html__( 'Debugging', 'olympus-google-fonts' ),
+			'panel' => 'ogf_google_fonts',
 		)
 	);
 
@@ -169,8 +169,8 @@ function ogf_panels_customize_register( $wp_customize ) {
 			$wp_customize,
 			'ogf_woocommerce',
 			array(
-				'title'    => __( 'WooCommerce', 'olympus-google-fonts' ),
-				'panel'    => 'ogf_google_fonts',
+				'title' => __( 'WooCommerce', 'olympus-google-fonts' ),
+				'panel' => 'ogf_google_fonts',
 			)
 		);
 

@@ -31,7 +31,7 @@ function ogf_output_css() {
 add_action( 'wp_head', 'ogf_output_css', 1000 );
 
 /**
- * Return the CSS for enqueing Custom Font Uploads.
+ * Return the CSS for enqueuing Custom Font Uploads.
  *
  * @return string @font-face output.
  */
@@ -84,14 +84,14 @@ add_action( 'ogf_gutenberg_inline_styles', 'ogf_echo_custom_font_css', 2 );
  * @param string $option_name The option name to pull from the database.
  */
 function ogf_generate_css( $selector, $option_name ) {
-	$family         = get_theme_mod( $option_name . '_font', false );
-	$font_size      = get_theme_mod( $option_name . '_font_size', false );
-	$line_height    = get_theme_mod( $option_name . '_line_height', false );
-	$weight         = get_theme_mod( $option_name . '_font_weight', false );
-	$style          = get_theme_mod( $option_name . '_font_style', false );
-	$color          = get_theme_mod( $option_name . '_font_color', false );
-	$text_transform = get_theme_mod( $option_name . '_text_transform', false );
-	$letter_spacing = get_theme_mod( $option_name . '_letter_spacing', false );
+	$family          = get_theme_mod( $option_name . '_font', false );
+	$font_size       = get_theme_mod( $option_name . '_font_size', false );
+	$line_height     = get_theme_mod( $option_name . '_line_height', false );
+	$weight          = get_theme_mod( $option_name . '_font_weight', false );
+	$style           = get_theme_mod( $option_name . '_font_style', false );
+	$color           = get_theme_mod( $option_name . '_font_color', false );
+	$text_transform  = get_theme_mod( $option_name . '_text_transform', false );
+	$letter_spacing  = get_theme_mod( $option_name . '_letter_spacing', false );
 	$text_decoration = get_theme_mod( $option_name . '_text_decoration', false );
 
 	$return = '';
@@ -273,7 +273,7 @@ function ogf_generate_css_variables() {
 	}
 	if ( $inputs_font && $inputs_font !== 'default' ) {
 		$inputs_font_stack = str_replace( '"', '', ogf_build_font_stack( $inputs_font ) );
-		
+
 		$css .= '--font-input: ' . esc_attr( $inputs_font_stack ) . ';' . PHP_EOL;
 	}
 

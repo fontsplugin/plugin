@@ -8,7 +8,7 @@
 /**
  * Create the admin pages.
  */
-class OGF_Admin_Welcome_Screen {
+class OGF_Welcome_Screen {
 
 	/**
 	 * Start up
@@ -118,5 +118,5 @@ class OGF_Admin_Welcome_Screen {
 }
 
 if ( is_admin() ) {
-	$my_settings_page = new OGF_Admin_Welcome_Screen();
+	$ogf_welcome_screen = new OGF_Welcome_Screen();
 }
