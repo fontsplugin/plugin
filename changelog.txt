@@ -1,3 +1,7 @@
+= 3.3.0 =
+
+* Cache the Google Fonts request so we can embed the @font-face CSS directly
+
 = 3.2.6 =
 
 * Fix Customizer error when using system fonts
