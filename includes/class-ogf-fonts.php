@@ -128,19 +128,17 @@ class OGF_Fonts {
 	 * Helper to check if the user is using any Google fonts.
 	 */
 	public function has_google_fonts() {
-
 		if ( empty( $this->choices ) ) {
 			return false;
 		}
 
 		foreach ( $this->choices as $choice ) {
-			if ( ! ogf_is_system_font( $choice ) && ! ogf_is_custom_font( $choice ) && ! ogf_is_typekit_font( $choice ) ) {
+			if ( ogf_is_google_font( $choice ) ) {
 				return true;
 			}
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -153,16 +151,61 @@ class OGF_Fonts {
 	public function filter_selected_weights( $font_id, $weights ) {
 		unset( $weights['0'] );
 
-		foreach ( $weights as $key => $value ) {
-			$weights[ $key . 'i' ] = $value . ' Italic';
-		}
-
 		$selected_weights = get_theme_mod( $font_id . '_weights', false );
 
 		if ( ! $selected_weights ) {
 			return $weights;
 		}
+
 		return array_intersect_key( $weights, array_flip( $selected_weights ) );
+	}
+
+	/**
+	 * Get contents from remote URL.
+	 *
+	 * @param string $url The Google Fonts URL.
+	 *
+	 * @return string
+	 */
+	public function get_remote_url_contents( $url ) {
+		$user_agent = 'Mozilla/5.0 (compatible; MSIE 10.0; Macintosh; Intel Mac OS X 10_7_3; Trident/6.0)';
+
+		// Get the response.
+		$response = wp_remote_get( $url, array( 'user-agent' => $user_agent ) );
+
+		// Early exit if there was an error.
+		if ( is_wp_error( $response ) ) {
+			return '';
+		}
+		if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
+			return '';
+		}
+
+		// Get the CSS from our response.
+		$contents = wp_remote_retrieve_body( $response );
+
+		return $contents;
+	}
+
+	/**
+	 * Store CSS from URL provided.
+	 *
+	 * @param string $url The Google Fonts URL.
+	 *
+	 * @return string
+	 */
+	public function stored_css( $url ) {
+		$url_to_id         = md5( $url );
+		$external_font_css = get_transient( 'ogf_external_font_css_' . $url_to_id );
+
+		if ( false === ( $external_font_css ) ) {
+			// It wasn't there, so regenerate the data and save the transient.
+			$external_font_css = "\n" . '/* Cached: ' . date( 'F j, Y \a\t g:ia' ) . ' */' . "\n";
+			$external_font_css .= $this->get_remote_url_contents( $url );
+			set_transient( 'ogf_external_font_css_' . $url_to_id, $external_font_css, DAY_IN_SECONDS );
+		}
+
+		return $external_font_css;
 	}
 
 	/**

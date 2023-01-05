@@ -26,7 +26,6 @@ if ( ! class_exists( 'OGF_Reset' ) ) :
 		public function __construct() {
 			add_action( 'customize_register', array( $this, 'customize_register' ) );
 			add_action( 'wp_ajax_customizer_reset', array( $this, 'ajax_customizer_reset' ) );
-			add_action( 'customize_register', array( $this, 'customize_register' ) );
 			add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_scripts' ), 101 );
 		}
 
@@ -50,8 +49,6 @@ if ( ! class_exists( 'OGF_Reset' ) ) :
 		 * @param Object $wp_customize Global $wp_customize object.
 		 */
 		public function customize_register( $wp_customize ) {
-			$this->wp_customize = $wp_customize;
-
 			$wp_customize->add_control(
 				'ogf_reset_fonts',
 				array(

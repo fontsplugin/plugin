@@ -18,11 +18,11 @@ class Olympus_Google_Fonts {
 	public function __construct() {
 		$this->constants();
 		$this->includes();
-		$this->compatability();
+		$this->compatibility();
 
 		add_action( 'init', array( $this, 'load_textdomain' ) );
 
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ), 1000 ); // ensure our Google Font styles load last.
+		add_action( 'ogf_inline_styles', array( $this, 'enqueue' ), 0 );
 		add_filter( 'wp_resource_hints', array( $this, 'resource_hints' ), 10, 2 );
 		add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_controls_enqueue' ), 100 );
 		add_action( 'customize_preview_init', array( $this, 'customize_preview_enqueue' ) );
@@ -83,6 +83,7 @@ class Olympus_Google_Fonts {
 
 		// Reset class.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-reset.php';
+		require_once OGF_DIR_PATH . 'includes/class-ogf-clear-cache.php';
 
 		// Classic Editor class.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-classic-editor.php';
@@ -97,7 +98,7 @@ class Olympus_Google_Fonts {
 	/**
 	 * Load plugin textdomain.
 	 */
-	public function compatability() {
+	public function compatibility() {
 		$current_theme      = wp_get_theme();
 		$theme_author       = strtolower( esc_attr( $current_theme->get( 'Author' ) ) );
 		$theme_author       = str_replace( ' ', '', $theme_author );
@@ -118,14 +119,17 @@ class Olympus_Google_Fonts {
 	}
 
 	/**
-	 * Enqeue the Google Fonts URL.
+	 * Enqueue the Google Fonts URL.
 	 */
 	public function enqueue() {
 		$fonts = new OGF_Fonts();
-
-		if ( $fonts->has_google_fonts() ) {
+		if ( $fonts->has_google_fonts() && ! get_theme_mod( 'fpp_host_locally', false ) ) {
 			$url = $fonts->build_url();
-			wp_enqueue_style( 'olympus-google-fonts', $url, array(), OGF_VERSION );
+			if ( $fonts->stored_css( $url ) ) {
+				echo $fonts->stored_css( $url );
+			} else {
+				echo "@import url('" . $url . "');" . "\n";
+			}
 		}
 	}
 
@@ -137,13 +141,19 @@ class Olympus_Google_Fonts {
 	 * @return array $urls           URLs to print for resource hints.
 	 */
 	public function resource_hints( $urls, $relation_type ) {
-
 		// If we are using local fonts we don't need this.
 		if ( get_theme_mod( 'fpp_host_locally' ) === true ) {
 			return $urls;
 		}
 
-		if ( wp_style_is( 'olympus-google-fonts', 'queue' ) && 'preconnect' === $relation_type ) {
+		$fonts = new OGF_Fonts();
+
+		// If no Google Fonts are being used we don't need this.
+		if ( ! $fonts->has_google_fonts() ) {
+			return $urls;
+		}
+
+		if ( 'preconnect' === $relation_type ) {
 			$urls[] = array(
 				'href' => 'https://fonts.gstatic.com',
 				'crossorigin',

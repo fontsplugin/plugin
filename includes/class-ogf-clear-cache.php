@@ -2,7 +2,7 @@
 /**
  * Reset fonts class.
  *
- * @package   fonts-plugin-pro
+ * @package   olympus-google-fonts
  * @copyright Copyright (c) 2020, Fonts Plugin
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
@@ -26,7 +26,6 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 		public function __construct() {
 			add_action( 'customize_register', array( $this, 'customize_register' ) );
 			add_action( 'wp_ajax_customizer_clear_cache', array( $this, 'ajax_customizer_clear_cache' ) );
-			add_action( 'customize_register', array( $this, 'customize_register' ) );
 			add_action( 'customize_controls_enqueue_scripts', array( $this, 'customize_scripts' ), 101 );
 		}
 
@@ -35,11 +34,11 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 		 */
 		public function customize_scripts() {
 			wp_localize_script(
-				'fpp-customize-controls',
+				'ogf-customize-controls',
 				'clearCache',
 				array(
-					'confirm' => esc_html__( 'This will clear the local font cache.', 'fonts-plugin-pro' ),
-					'nonce'   => wp_create_nonce( 'fpp_clear_cache' ),
+					'confirm' => esc_html__( 'This will clear the local font cache.', 'olympus-google-fonts' ),
+					'nonce'   => wp_create_nonce( 'ogf_clear_cache' ),
 				)
 			);
 		}
@@ -53,16 +52,16 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 			$this->wp_customize = $wp_customize;
 
 			$wp_customize->add_control(
-				'fpp_reset_fonts',
+				'ogf_clear_cache',
 				array(
 					'type'        => 'button',
-					'label'   => __( 'Clear Font Cache', 'fonts-plugin-pro' ),
-					'description'   => __( 'This will clear the local font cache.', 'fonts-plugin-pro' ),
+					'label'       => __( 'Clear Font Cache', 'olympus-google-fonts' ),
+					'description' => __( 'This will clear the local font cache.', 'olympus-google-fonts' ),
 					'settings'    => array(),
 					'priority'    => 100,
 					'section'     => 'ogf_debugging',
 					'input_attrs' => array(
-						'value' => __( 'Clear Cache', 'fonts-plugin-pro' ),
+						'value' => __( 'Clear Cache', 'olympus-google-fonts' ),
 						'class' => 'button button-link-delete',
 					),
 				)
@@ -70,14 +69,14 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 		}
 
 		/**
-		 * The reset AJAX request handler.
+		 * The Clear Cache AJAX request handler.
 		 */
 		public function ajax_customizer_clear_cache() {
 			if ( ! $this->wp_customize->is_preview() ) {
 				wp_send_json_error( 'not_preview' );
 			}
 
-			if ( ! check_ajax_referer( 'fpp_clear_cache', 'security' ) ) {
+			if ( ! check_ajax_referer( 'ogf_clear_cache', 'security' ) ) {
 				wp_send_json_error( 'invalid_nonce' );
 			}
 
@@ -87,11 +86,21 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 		}
 
 		/**
-		 * Perform the reset.
+		 * Perform the Cache Clear.
 		 */
 		public function clear() {
-			$loader = new FPP_Host_Google_Fonts_Locally();
-			$loader->delete_fonts_folder();
+			$fonts = new OGF_Fonts();
+
+			if ( $fonts->has_google_fonts() ) {
+				$url = $fonts->build_url();
+				$url_to_id  = md5( $url );
+				delete_transient( 'ogf_external_font_css_' . $url_to_id );
+			}
+
+			if ( class_exists( 'FPP_Host_Google_Fonts_Locally' ) ) {
+				$loader = new FPP_Host_Google_Fonts_Locally();
+				$loader->delete_fonts_folder();
+			}
 		}
 	}
 endif;

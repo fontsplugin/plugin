@@ -47,7 +47,7 @@ function ogf_return_custom_font_css() {
 		if ( $files['woff'] || $files['woff2'] || $files['ttf'] || $files['otf'] ) {
 
 			$arr  = array();
-			$css .= '@font-face { font-family:' . esc_attr( $font ) . '; src:';
+
 			if ( $data['files']['woff'] ) {
 				$arr[] = 'url(' . esc_url( $data['files']['woff'] ) . ") format('woff')";
 			}
@@ -60,8 +60,10 @@ function ogf_return_custom_font_css() {
 			if ( $data['files']['otf'] ) {
 				$arr[] = 'url(' . esc_url( $data['files']['otf'] ) . ") format('opentype')";
 			}
-			$css .= join( ', ', $arr );
-			$css .= '; }';
+
+			$css .= '@font-face {' . "\n" . 'font-family:' . esc_attr( $font ) . '; src:' . "\n";
+			$css .= join( ',' . "\n", $arr );
+			$css .= ';' . "\n" . '}' . "\n";
 		}
 	}
 

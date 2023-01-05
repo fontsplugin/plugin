@@ -9,7 +9,6 @@
 				//
 				// Do stuff when device icons are clicked
 				jQuery( control.selector + ' .ogf-device-controls > div' ).on( 'click', function( event ) {
-					console.log(event);
 					var device = jQuery( this ).data( 'option' );
 					wp.customize.previewedDevice.set( device );
 
@@ -300,6 +299,28 @@
 
 			jQuery.post( ajaxurl, data, function( result ) {
 				wp.customize.state( 'saved' ).set( true );
+				location.reload();
+			} );
+		} );
+	} );
+
+	wp.customize.control( 'ogf_clear_cache', function( control ) {
+		control.container.find( '.button' ).on( 'click', function( event ) {
+			event.preventDefault();
+
+			console.log('clicked clear cache');
+
+			const data = {
+				wp_customize: 'on',
+				action: 'customizer_clear_cache',
+				security: clearCache.nonce,
+			};
+
+			jQuery( this ).attr( 'disabled', 'disabled' );
+
+			jQuery.post( ajaxurl, data, function( result ) {
+				wp.customize.state( 'saved' ).set( true );
+				alert('Cache successfully cleared.');
 				location.reload();
 			} );
 		} );
