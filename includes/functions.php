@@ -382,10 +382,21 @@ function ogf_is_google_font( $font_id ) {
 }
 
 /**
- * Check if WooCommerce is activated
+ * Check if WooCommerce is activated.
  */
 function ogf_is_woocommerce_activated() {
 	if ( class_exists( 'woocommerce' ) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
+ * Check if Fonts Plugin Pro is activated.
+ */
+function ogf_is_fpp_activated() {
+	if ( function_exists( 'fonts_plugin_pro_init' ) ) {
 		return true;
 	} else {
 		return false;

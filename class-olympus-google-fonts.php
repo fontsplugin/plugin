@@ -39,7 +39,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.3.0' );
+			define( 'OGF_VERSION', '3.3.1' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -123,13 +123,20 @@ class Olympus_Google_Fonts {
 	 */
 	public function enqueue() {
 		$fonts = new OGF_Fonts();
-		if ( $fonts->has_google_fonts() && ! get_theme_mod( 'fpp_host_locally', false ) ) {
-			$url = $fonts->build_url();
-			if ( $fonts->stored_css( $url ) ) {
-				echo $fonts->stored_css( $url );
-			} else {
-				echo "@import url('" . esc_url($url) . "');" . "\n";
-			}
+
+		if ( ! $fonts->has_google_fonts() ) {
+			return;
+		}
+
+		if ( ogf_is_fpp_activated() && (bool) get_theme_mod( 'fpp_host_locally', false ) === true ) {
+			return;
+		}
+
+		$url = $fonts->build_url();
+		if ( $fonts->stored_css( $url ) ) {
+			echo $fonts->stored_css( $url );
+		} else {
+			echo "@import url('" . esc_url( $url ) . "');" . "\n";
 		}
 	}
 

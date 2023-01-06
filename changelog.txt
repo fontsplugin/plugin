@@ -1,4 +1,8 @@
-= 3.3.0 =
+= 3.3.1 =
+
+* Use WOFF2 font format by default
+
+y= 3.3.0 =
 
 * Cache the Google Fonts request so we can embed the @font-face CSS directly
 

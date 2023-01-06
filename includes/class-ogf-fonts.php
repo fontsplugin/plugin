@@ -168,7 +168,7 @@ class OGF_Fonts {
 	 * @return string
 	 */
 	public function get_remote_url_contents( $url ) {
-		$user_agent = 'Mozilla/5.0 (compatible; MSIE 10.0; Macintosh; Intel Mac OS X 10_7_3; Trident/6.0)';
+		$user_agent = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0';
 
 		// Get the response.
 		$response = wp_remote_get( $url, array( 'user-agent' => $user_agent ) );
@@ -200,8 +200,8 @@ class OGF_Fonts {
 
 		if ( false === ( $external_font_css ) ) {
 			// It wasn't there, so regenerate the data and save the transient.
-			$external_font_css = "\n" . '/* Cached: ' . date( 'F j, Y \a\t g:ia' ) . ' */' . "\n";
-			$external_font_css .= $this->get_remote_url_contents( $url );
+			$external_font_css = '/* Cached: ' . date( 'F j, Y \a\t g:ia' ) . ' */' . PHP_EOL;
+			$external_font_css .= $this->get_remote_url_contents( $url ) . PHP_EOL;
 			set_transient( 'ogf_external_font_css_' . $url_to_id, $external_font_css, DAY_IN_SECONDS );
 		}
 
