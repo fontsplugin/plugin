@@ -39,7 +39,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.3.1' );
+			define( 'OGF_VERSION', '3.3.2' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -136,7 +136,7 @@ class Olympus_Google_Fonts {
 		if ( $fonts->stored_css( $url ) ) {
 			echo $fonts->stored_css( $url );
 		} else {
-			echo "@import url('" . esc_url( $url ) . "');" . "\n";
+			echo "@import url('" . esc_url( $url ) . "');" . PHP_EOL;
 		}
 	}
 

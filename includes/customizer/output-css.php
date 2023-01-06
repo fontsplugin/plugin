@@ -61,9 +61,7 @@ function ogf_return_custom_font_css() {
 				$arr[] = 'url(' . esc_url( $data['files']['otf'] ) . ") format('opentype')";
 			}
 
-			$css .= '@font-face {' . "\n" . 'font-family:' . esc_attr( $font ) . '; src:' . "\n";
-			$css .= join( ',' . "\n", $arr );
-			$css .= ';' . "\n" . '}' . "\n";
+			$css .= '@font-face {font-family:' . esc_attr( $font ) . '; src:' . join( ',', $arr ) . ';' . '}';
 		}
 	}
 

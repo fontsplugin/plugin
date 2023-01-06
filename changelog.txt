@@ -1,3 +1,7 @@
+= 3.3.2 =
+
+* Revert whitespace change that breaks editor.
+
 = 3.3.1 =
 
 * Use WOFF2 font format by default
