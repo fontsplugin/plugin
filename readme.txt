@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 6.1
 License: GPLv2 or later
-Stable tag: 3.3.2
+Stable tag: 3.3.3
 
 The easiest to use Google Fonts Plugin. No coding required. Optimized for Speed. 1000+ font choices.
 
@@ -61,6 +61,7 @@ For more info on Fonts Plugin, check out the following:
 
 * [Documentation](https://docs.fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [Font Combinations](https://fontsplugin.com/font-combinations/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
+* [Google Fonts Checker](https://fontsplugin.com/google-fonts-checker/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [How to Use Google Fonts in WordPress](https://fontsplugin.com/wordpress-google-fonts/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [Google Fonts in Beaver Builder](https://docs.fontsplugin.com/integrations/beaver-builder/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [Google Fonts in Elementor](https://docs.fontsplugin.com/integrations/elementor/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)

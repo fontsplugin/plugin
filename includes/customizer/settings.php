@@ -369,6 +369,7 @@ function ogf_customize_register( $wp_customize ) {
 		'ogf_advanced__footer',
 		'ogf_font_loading',
 		'ogf_debugging',
+		'ogf_optimization',
 	);
 
 	foreach ( $upsell_locations as $loc ) {

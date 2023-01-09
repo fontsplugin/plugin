@@ -39,7 +39,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.3.2' );
+			define( 'OGF_VERSION', '3.3.3' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -67,6 +67,7 @@ class Olympus_Google_Fonts {
 		require_once OGF_DIR_PATH . 'includes/customizer/panels.php';
 		require_once OGF_DIR_PATH . 'includes/customizer/settings.php';
 		require_once OGF_DIR_PATH . 'includes/customizer/output-css.php';
+		require_once OGF_DIR_PATH . 'includes//customizer/class-ogf-optimization-controls.php';
 
 		// Required files for the Typekit integration.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-typekit.php';

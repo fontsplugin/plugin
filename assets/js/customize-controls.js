@@ -342,6 +342,11 @@ jQuery( document ).ready( function() {
 	);
 } );
 
+/* === Optimization Controls === */
+jQuery( document ).ready( function() {
+	jQuery( '#_customize-input-ogf_host_locally, #_customize-input-ogf_preloading, #_customize-input-ogf_removal, #_customize-input-ogf_rewrite' ).attr( 'disabled', 'true' );
+} );
+
 /* === Multiple Fonts Control === */
 ( function( api ) {
 	api.controlConstructor[ 'ogf-typography-multiselect' ] = api.Control.extend( {
@@ -349,7 +354,7 @@ jQuery( document ).ready( function() {
 			const control = this;
 			// Initialize chosen.js
 			jQuery( '.ogf-select', control.container ).chosen( { width: '85%' } );
-			jQuery( 'select', control.container ).change(
+			jQuery( 'select', control.container ).on('change',
 				function() {
 					let selectValue = jQuery( this ).val();
 					selectValue = ( null === selectValue ) ? [] : selectValue;

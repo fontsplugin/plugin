@@ -1,6 +1,11 @@
+= 3.3.3 =
+
+* Fix classic editor error when custom and typekit fonts are used
+* Remove deprecated jQuery .change()
+
 = 3.3.2 =
 
-* Revert whitespace change that breaks editor.
+* Revert whitespace change that breaks editor
 
 = 3.3.1 =
 
