@@ -43,7 +43,7 @@ class OGF_Optimization_Controls {
 			'ogf_optimization',
 			array(
 				'title'       => __( 'Optimization', 'olympus-google-fonts' ),
-				'description' => __( '<p>Optimize the delivery of font files for improved performance and user-privacy.</p><p>Upgrade to <a href="https://fontsplugin.com/pro-upgrade">Fonts Plugin Pro</a> to unlock these features.', 'olympus-google-fonts' ),
+				'description' => __( '<p>Optimize the delivery of font files for improved performance and user-privacy.</p><p>Upgrade to <a href="https://fontsplugin.com/pro-upgrade">Fonts Plugin Pro</a> to unlock these features.</p>', 'olympus-google-fonts' ),
 				'panel'       => 'ogf_google_fonts',
 			)
 		);
@@ -72,7 +72,7 @@ class OGF_Optimization_Controls {
 			'ogf_host_locally',
 			array(
 				'label'       => esc_html__( 'Host Google Fonts Locally', 'olympus-google-fonts' ),
-				'description' => esc_html__( 'Fonts will be served from ' . $url . ' instead of fonts.googleapis.com', 'olympus-google-fonts' ),
+				'description' => sprintf (esc_html__( 'Fonts will be served from %s instead of fonts.googleapis.com.', 'olympus-google-fonts' ),$url),
 				'section'     => 'ogf_optimization',
 				'type'        => 'checkbox',
 				'settings'    => 'ogf_host_locally',

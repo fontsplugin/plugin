@@ -75,7 +75,7 @@ function ogf_panels_customize_register( $wp_customize ) {
 		'ogf_font_loading',
 		array(
 			'title'       => esc_html__( 'Font Loading', 'olympus-google-fonts' ),
-			'description' => 'Optimize your site\'s performance by unchecking any font weights you don\'t need.',
+			'description' => __( 'Optimize your site\'s performance by unchecking any font weights you don\'t need.', 'olympus-google-fonts' ),
 			'panel'       => 'ogf_google_fonts',
 		)
 	);
