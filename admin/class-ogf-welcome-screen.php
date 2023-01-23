@@ -76,29 +76,29 @@ class OGF_Welcome_Screen {
 			<div class="eb-wrap">
 				<div class="eb-content">
 					<div class="eb-content__header">
-						<h1>Your Quickstart Guide</h1>
+						<h1><?php esc_html_e( 'Your Quickstart Guide', 'olympus-google-fonts' ); ?></h1>
 					</div>
 					<div class="eb-content__inner">
 						<img class="ebook-cover" src="<?php echo esc_url( plugins_url( 'admin/fonts-plugin-quickstart-guide.png', dirname( __FILE__ ) ) ); ?>">
-						<p>To help you get the most out of the Google Fonts plugin we’ve put together a free quickstart guide.</p>
-						<p>In this beautifully-formatted, easy-to-read PDF you will learn:
+						<p><?php esc_html_e( 'To help you get the most out of the Google Fonts plugin we’ve put together a free quickstart guide.', 'olympus-google-fonts' ); ?></p>
+						<p><?php esc_html_e( 'In this beautifully-formatted, easy-to-read PDF you will learn:', 'olympus-google-fonts' ); ?>
 						<ul>
-							<li>How to <strong>easily</strong> customize your typography.</li>
-							<li>How to host fonts <strong>locally</strong> for speed, GDPR & DSGVO.</li>
-							<li>How to use Google Fonts without <strong>slowing down</strong> your website.</li>
+							<li><?php printf(esc_html__( 'How to %1$seasily%2$s customize your typography.', 'olympus-google-fonts' ),'<strong>','</strong>'); ?></li>
+							<li><?php printf(esc_html__( 'How to host fonts %1$slocally%2$s for speed, GDPR & DSGVO.', 'olympus-google-fonts' ),'<strong>','</strong>'); ?></li>
+							<li><?php printf(esc_html__( 'How to use Google Fonts without %1$sslowing down%2$s your website.', 'olympus-google-fonts' ),'<strong>','</strong>'); ?></li>
 						</ul>
-						<p>Download your free copy today.</p>
+						<p><?php esc_html_e( 'Download your free copy today.', 'olympus-google-fonts' ); ?></p>
 
 						<?php if ( get_option( 'ogf_dismiss_guide', false ) === false ) : ?>
 							<form action="https://fontsplugin.email/subscribe" method="post" class="validate" target="_blank" novalidate>
-								<input type="email" value="" placeholder="Your email address..." name="email" class="required email" id="mce-EMAIL">
+								<input type="email" value="" placeholder="<?php esc_attr_e( 'Your email address...', 'olympus-google-fonts' ); ?>" name="email" class="required email" id="mce-EMAIL">
 								<input type="hidden" name="list" value="2guyf8U56tOENOh6892lBQ6w"/>
 		<input type="hidden" name="subform" value="yes"/>
-								<input type="submit" value="Send My Guide!" name="submit" class="ogf-send-guide-button button">
+								<input type="submit" value="<?php esc_attr_e( 'Send My Guide!', 'olympus-google-fonts' ); ?>" name="submit" class="ogf-send-guide-button button">
 							</form>
 						<?php else : ?>
 
-							<a class="ogf-send-guide-button button" href="https://fontsplugin.com/wp-content/uploads/qs-guide.pdf" target="_blank">Read Guide</a>
+							<a class="ogf-send-guide-button button" href="https://fontsplugin.com/wp-content/uploads/qs-guide.pdf" target="_blank"><?php esc_html_e( 'Read Guide', 'olympus-google-fonts' ); ?></a>
 
 						<?php endif; ?>
 
