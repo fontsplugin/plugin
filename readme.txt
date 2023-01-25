@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 6.1
 License: GPLv2 or later
-Stable tag: 3.3.3
+Stable tag: 3.3.4
 
 The easiest to use Google Fonts Plugin. No coding required. Optimized for Speed. 1000+ font choices.
 

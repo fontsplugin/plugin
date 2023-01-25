@@ -1,3 +1,7 @@
+= 3.3.4 =
+
+* Improve translations (props @alexclassroom)
+
 = 3.3.3 =
 
 * Fix classic editor error when custom and typekit fonts are used
