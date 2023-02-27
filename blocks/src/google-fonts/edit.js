@@ -49,7 +49,7 @@ class GoogleFontsBlock extends Component {
 			disabled: true,
 		});
 
-		const systemFonts = systemFontsJson.items.map( ( font ) => {
+		const systemFonts = systemFontsJson.map( ( font ) => {
 			const label = font.label;
 			const value = font.id;
 
@@ -65,7 +65,7 @@ class GoogleFontsBlock extends Component {
 			disabled: true,
 		});
 
-		const googleFonts = fontsJson.items.map( ( font ) => {
+		const googleFonts = fontsJson.map( ( font ) => {
 			const label = font.f;
 			const value = label.replace( /\s+/g, '+' );
 
@@ -103,7 +103,7 @@ class GoogleFontsBlock extends Component {
 	}
 
 	isSystemFont( fontID ) {
-		const searchResults = this.searchFonts( fontID, systemFontsJson.items );
+		const searchResults = this.searchFonts( fontID, systemFontsJson );
 		if ( typeof searchResults === 'object' ) {
 			return true;
 		}
@@ -181,10 +181,10 @@ class GoogleFontsBlock extends Component {
 		}
 
 		// iterate over each element in the array
-		for ( let i = 0; i < fontsJson.items.length; i++ ) {
+		for ( let i = 0; i < fontsJson.length; i++ ) {
 			// look for the entry with a matching `code` value
-			if ( fontsJson.items[ i ].f === fontFamily ) {
-				return fontsJson.items[ i ];
+			if ( fontsJson[ i ].f === fontFamily ) {
+				return fontsJson[ i ];
 			}
 		}
 	}

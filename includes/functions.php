@@ -162,12 +162,12 @@ function ogf_fonts_array() {
 	$fonts_array = json_decode( $fonts_json, true );
 
 	// Format the variants array for easier use.
-	foreach ( $fonts_array['items'] as $key => $font ) {
-		$fonts_array['items'][ $key ] = $font;
+	foreach ( $fonts_array as $key => $font ) {
+		$fonts_array[ $key ] = $font;
 	}
 
 	// Change the array key to the font's ID.
-	foreach ( $fonts_array['items'] as $font ) {
+	foreach ( $fonts_array as $font ) {
 		$id           = trim( strtolower( str_replace( ' ', '-', $font['f'] ) ) );
 		$fonts[ $id ] = $font;
 		$fonts[ $id ]['v'] = array_flip( $fonts[ $id ]['v'] );

@@ -1,6 +1,4 @@
-{
-  "kind": "webfonts#webfontList",
-  "items": [
+[
    {
       "id":"arial",
       "label":"Arial",
@@ -66,5 +64,4 @@
       "label":"Verdana",
       "stack":"Verdana, Geneva, sans-serif;"
    }
- ]
-}
+]

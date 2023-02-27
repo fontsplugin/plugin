@@ -1,3 +1,7 @@
+= 3.3.5 =
+
+* Update font choices
+
 = 3.3.4 =
 
 * Improve translations (props @alexclassroom)
