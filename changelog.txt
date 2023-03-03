@@ -1,3 +1,7 @@
+= 3.3.7 =
+
+* Fix bug with subsets
+
 = 3.3.6 =
 
 * Update font choices
