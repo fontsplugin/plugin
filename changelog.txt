@@ -1,3 +1,7 @@
+= 3.3.8 =
+
+* Expand select of font size choices in Classic Editor
+
 = 3.3.7 =
 
 * Fix bug with subsets
