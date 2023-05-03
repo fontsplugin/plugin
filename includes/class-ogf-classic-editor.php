@@ -53,7 +53,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			$this->system_fonts  = ogf_system_fonts();
 			$this->custom_fonts  = ogf_custom_fonts();
 			$this->typekit_fonts = ogf_typekit_fonts();
-\
+
 			add_filter( 'tiny_mce_before_init', array( $this, 'add_font_sizes' ) );
 			add_filter( 'mce_buttons', array( $this, 'tinymce_add_buttons' ), 1 );
 			add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_custom_options' ) );
