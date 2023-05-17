@@ -203,12 +203,24 @@ class GoogleFontsBlock extends Component {
 		const fse = document.querySelector('[name=editor-canvas]');
 		const head = fse ? fse.contentDocument.head : document.head;
 		const link = document.createElement( 'link' );
+		const fontName = fontFamily.replace( /\s+/g, '+' );
 
 		link.type = 'text/css';
 		link.rel = 'stylesheet';
-		link.href = 'https://fonts.googleapis.com/css?family=' + fontFamily.replace( /\s+/g, '+' ) + ':' + fontObject.v.join( ',' );
+		link.id = fontName;
+		link.href = 'https://fonts.googleapis.com/css?family=' + fontName + ':' + fontObject.v.join( ',' );
 
-		head.appendChild( link );
+		if ( fse && fse.contentDocument.getElementById( fontName ) ) {
+			return;
+		}
+
+		if ( document.getElementById( fontName ) ) {
+			return;
+		}
+
+		if ( head ) {
+			head.appendChild( link );
+		}
 	}
 
 	render() {

@@ -1,3 +1,9 @@
+= 3.4.0 =
+
+* Add option to use px values in Classic Editor instead of pt. (Located in Appearance > Customize > Fonts Plugin > Debugging)
+* Fix block error in new Site Editor
+* Optimize Gutenberg output
+
 = 3.3.8 =
 
 * Expand select of font size choices in Classic Editor

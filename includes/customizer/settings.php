@@ -254,6 +254,26 @@ function ogf_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
+		'ogf_use_px',
+		array(
+			'default'           => 'true',
+			'transport'         => 'postMessage',
+			'sanitize_callback' => 'wp_validate_boolean',
+		)
+	);
+
+	$wp_customize->add_control(
+		'ogf_use_px',
+		array(
+			'label'       => esc_html__( 'Use px Font Sizes', 'olympus-google-fonts' ),
+			'description' => esc_html__( 'Replace the default (pt) font sizes with px values in the Classic Editor.', 'olympus-google-fonts' ),
+			'section'     => 'ogf_debugging',
+			'settings'    => 'ogf_use_px',
+			'type'        => 'checkbox',
+		)
+	);
+
+	$wp_customize->add_setting(
 		'ogf_font_display',
 		array(
 			'sanitize_callback' => 'ogf_sanitize_select',

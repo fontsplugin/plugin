@@ -72,7 +72,9 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 * @return array $args  - Modified arguments
 		 */
 		function add_font_sizes( $args ) {
-			$args['fontsize_formats'] = "6px 7px 8px 9px 10px 11px 12px 13px 14px 15px 16px 17px 18px 19px 20px 21px 22px 23px 24px 25px 26px 27px 28px 29px 30px 31px 32px 33px 34px 35px 36px 37px 38px 39px 40px 41px 42px 43px 44px 45px 46px 47px 48px 49px 50px 51px 52px 53px 55px 55px 56px 57px 58px 59px 60px 61px 62px 63px 66px 65px 66px 67px 68px 69px 70px 71px 72px 73px 77px 75px 76px 77px 78px 79px 80px";
+			if ( true === get_theme_mod( 'ogf_use_px', true ) ) {
+				$args['fontsize_formats'] = "6px 7px 8px 9px 10px 11px 12px 13px 14px 15px 16px 17px 18px 19px 20px 21px 22px 23px 24px 25px 26px 27px 28px 29px 30px 31px 32px 33px 34px 35px 36px 37px 38px 39px 40px 41px 42px 43px 44px 45px 46px 47px 48px 49px 50px 51px 52px 53px 55px 55px 56px 57px 58px 59px 60px 61px 62px 63px 66px 65px 66px 67px 68px 69px 70px 71px 72px 73px 77px 75px 76px 77px 78px 79px 80px";
+			}
 
 			return apply_filters( 'ogf_classic_font_sizes', $args );
 		}
