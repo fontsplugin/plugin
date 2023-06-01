@@ -70,10 +70,6 @@ if ( ! class_exists( 'OGF_Reset' ) ) :
 		 * The reset AJAX request handler.
 		 */
 		public function ajax_customizer_reset() {
-			if ( ! $this->wp_customize->is_preview() ) {
-				wp_send_json_error( 'not_preview' );
-			}
-
 			if ( ! check_ajax_referer( 'ogf_reset', 'security' ) ) {
 				wp_send_json_error( 'invalid_nonce' );
 			}
