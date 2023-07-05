@@ -197,42 +197,38 @@ function ogf_generate_css( $selector, $option_name ) {
  * @return string The built font stack.
  */
 function ogf_build_font_stack( $font_id ) {
+
+	$stack = 'sans-serif';
+
 	if ( strpos( $font_id, 'sf-' ) !== false ) {
 		$system_fonts = ogf_system_fonts();
-
 		$font_id = str_replace( 'sf-', '', $font_id );
 
 		if ( array_key_exists( $font_id, $system_fonts ) ) {
-
-			return $system_fonts[ $font_id ]['stack'];
-
+			$stack = $system_fonts[ $font_id ]['stack'];
 		}
 	} elseif ( strpos( $font_id, 'cf-' ) !== false ) {
 		$custom_fonts = ogf_custom_fonts();
-
 		$font_id = str_replace( 'cf-', '', $font_id );
 
 		if ( array_key_exists( $font_id, $custom_fonts ) ) {
-			return $custom_fonts[ $font_id ]['stack'];
+			$stack = $custom_fonts[ $font_id ]['stack'];
 		}
 	} elseif ( strpos( $font_id, 'tk-' ) !== false ) {
 		$typekit_fonts = ogf_typekit_fonts();
 
 		if ( array_key_exists( $font_id, $typekit_fonts ) ) {
-			return $typekit_fonts[ $font_id ]['stack'];
+			$stack = $typekit_fonts[ $font_id ]['stack'];
 		}
 	} else {
 		$google_fonts = ogf_fonts_array();
 
 		if ( array_key_exists( $font_id, $google_fonts ) ) {
-
 			$stack = '"' . $google_fonts[ $font_id ]['f'] . '"';
-			return $stack;
 		}
 	}
 
-	// If the code gets this far a font has gone missing.
-	return 'sans-serif';
+	return apply_filters( "ogf_{$font_id}_stack", $stack );
 }
 
 /**
