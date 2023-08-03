@@ -1,3 +1,7 @@
+= 3.4.3 =
+
+* Update font choices
+
 = 3.4.2 =
 
 * Add font stack filter
