@@ -1,3 +1,7 @@
+= 3.4.4 =
+
+* Tested with WP6.3
+
 = 3.4.3 =
 
 * Update font choices

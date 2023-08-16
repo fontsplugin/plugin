@@ -3,9 +3,9 @@ Contributors: DannyCooper, googlefonts, fontsplugin
 Tags: google, fonts, google fonts, typekit, elementor, adobe fonts, typography, upload fonts, custom fonts, preloading, customizer, font size, font color, design, woocommerce
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
-Tested up to: 6.2
+Tested up to: 6.3
 License: GPLv2 or later
-Stable tag: 3.4.3
+Stable tag: 3.4.4
 
 The easiest to use Google Fonts Plugin. No coding required. Optimized for Speed. 1000+ font choices.
 
