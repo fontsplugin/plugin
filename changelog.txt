@@ -1,3 +1,7 @@
+= 3.4.5 =
+
+* Update fonts list
+
 = 3.4.4 =
 
 * Tested with WP6.3
