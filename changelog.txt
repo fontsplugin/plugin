@@ -1,3 +1,7 @@
+= 3.4.6 =
+
+* Update tested value
+
 = 3.4.5 =
 
 * Update fonts list
