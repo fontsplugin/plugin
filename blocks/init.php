@@ -23,7 +23,7 @@ function olympus_google_fonts_block_js() {
 	wp_enqueue_script(
 		'olympus-google-fonts-block-js',
 		plugins_url( '/dist/blocks.build.js', __FILE__ ),
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor' ),
+		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-block-editor' ),
 		OGF_VERSION,
 		false
 	);
