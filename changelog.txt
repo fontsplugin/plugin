@@ -1,3 +1,7 @@
+= 3.4.9 =
+
+* Add secondary method for dismissing welcome admin message
+
 = 3.4.8 =
 
 * Fix script error on new widgets interface. props @guido07111975
