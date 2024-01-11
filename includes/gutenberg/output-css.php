@@ -71,6 +71,12 @@ function ogf_gutenberg_build_css() {
 		'ogf_post_page_h6' => array(
 			'selectors' => '.editor-styles-wrapper h6',
 		),
+		'ogf_site_title' => array(
+			'selectors' => '.editor-styles-wrapper .wp-block-site-title',
+		),
+		'ogf_site_navigation' => array(
+			'selectors' => '.editor-styles-wrapper .wp-block-navigation-item',
+		),
 	);
 
 	$elements = apply_filters( 'ogf_gutenberg_elements', $elements );
@@ -177,7 +183,7 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
  * @return array Modified editor settings with the added custom CSS style.
  */
 function ogf_add_styles_to_site_editor( $editor_settings, $editor_context ) {
-    $editor_settings["styles"][] = array(
+    $editor_settings['styles'][] = array(
         'css' => ogf_gutenberg_build_css()
     );
 

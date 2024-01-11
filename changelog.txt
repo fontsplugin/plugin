@@ -1,3 +1,7 @@
+= 3.5.0 =
+
+* Fix fonts not displaying correctly in the Site Editor interface.
+
 = 3.4.9 =
 
 * Add secondary method for dismissing welcome admin message
