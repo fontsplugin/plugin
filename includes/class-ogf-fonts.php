@@ -101,7 +101,9 @@ class OGF_Fonts {
 		}
 
 		// We need both the key and value to be the subset name.
-		return array_combine( $subsets, $subsets );
+		$combined = array_combine( $subsets, $subsets );
+		unset($combined['latin']);
+		return $combined;
 	}
 
 	/**
