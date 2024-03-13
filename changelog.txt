@@ -1,3 +1,7 @@
+= 3.6.0 =
+
+* Add cointrol for lists typography (Fonts Plugin → Advanced Settings → Content → Lists)
+
 = 3.5.1 =
 
 * Fix error where all subsets of a font could be removed.

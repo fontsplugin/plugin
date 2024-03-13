@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 6.4
 License: GPLv2 or later
-Stable tag: 3.5.1
+Stable tag: 3.6.0
 
 The easiest to use Google Fonts Plugin. No coding required. Optimized for Speed. 1000+ font choices.
 
@@ -32,7 +32,7 @@ The full Google Fonts library can be found here - [Google Fonts](https://fonts.g
 * SSL and HTTPS compatible.
 * Efficient Font Loading using a single request.
 * **SEO-Friendly** (Search Engine Optimization).
-* Tested with **PHP7**.
+* Tested with **PHP7** and **PHP8**..
 * Selective Font Loading.
 * Preconnect Resource Hints.
 * Host Google Fonts Locally.

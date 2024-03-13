@@ -113,6 +113,12 @@ function ogf_get_elements() {
 			'section'     => 'ogf_advanced__content',
 			'selectors'   => '.entry-content h6, .post-content h6, .page-content h6, #content h6, .type-post h6, .type-page h6, .elementor h6',
 		),
+		'ogf_lists' => array(
+			'label'       => esc_html__( 'Lists', 'olympus-google-fonts' ),
+			'description' => esc_html__( 'Select and configure the font for lists.', 'olympus-google-fonts' ),
+			'section'     => 'ogf_advanced__content',
+			'selectors'   => 'ul, ol, ul li, ol li, li',
+		),
 		'ogf_blockquotes' => array(
 			'label'       => esc_html__( 'Quotes', 'olympus-google-fonts' ),
 			'description' => esc_html__( 'Select and configure the font for quotations.', 'olympus-google-fonts' ),
