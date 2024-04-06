@@ -77,7 +77,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		 */
 		public function seconds_to_words( $seconds ) {
 			// Get the years.
-			$years = ( intval( $seconds ) / YEAR_IN_SECONDS ) % 100;
+			$years = absint(  $seconds / YEAR_IN_SECONDS ) % 100;
 			if ( $years > 0 ) {
 				/* translators: Number of years */
 				return sprintf( _n( 'a year', '%s years', $years, 'olympus-google-fonts' ), $years );
