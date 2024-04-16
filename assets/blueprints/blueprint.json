@@ -9,6 +9,16 @@
     ],
     "steps": [
         {
+            "step": "installPlugin",
+            "pluginZipFile": {
+                "resource": "url",
+                "url": "https:\/\/downloads.wordpress.org\/plugin\/olympus-google-fonts.3.6.3.zip"
+            },
+            "options": {
+                "activate": true
+            }
+        },
+        {
             "step": "login",
             "username": "admin",
             "password": "password"
