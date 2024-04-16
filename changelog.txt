@@ -1,6 +1,10 @@
+= 3.6.1 =
+
+* Test with WP6.5
+
 = 3.6.0 =
 
-* Add cointrol for lists typography (Fonts Plugin → Advanced Settings → Content → Lists)
+* Add control for lists typography (Fonts Plugin → Advanced Settings → Content → Lists)
 
 = 3.5.1 =
 
