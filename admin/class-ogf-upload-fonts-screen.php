@@ -219,10 +219,13 @@ class OGF_Upload_Fonts_Screen {
 	 * @return array $mimes Updated array of mime types.
 	 */
 	public function add_to_allowed_mimes( $mimes ) {
-		$mimes['woff']  = 'application/x-font-woff';
-		$mimes['woff2'] = 'application/x-font-woff2';
-		$mimes['ttf']   = 'application/x-font-ttf';
-		$mimes['otf']   = 'font/otf';
+
+		$php_7_ttf_mime_type = PHP_VERSION_ID >= 70300 ? 'application/font-sfnt' : 'application/x-font-ttf';
+
+		$mimes['otf']   = 'application/vnd.ms-opentype';
+		$mimes['ttf']   = PHP_VERSION_ID >= 70400 ? 'font/sfnt' : $php_7_ttf_mime_type;
+		$mimes['woff']  = PHP_VERSION_ID >= 80112 ? 'font/woff' : 'application/font-woff';
+		$mimes['woff2'] = PHP_VERSION_ID >= 80112 ? 'font/woff2' : 'application/font-woff2';
 
 		return $mimes;
 	}

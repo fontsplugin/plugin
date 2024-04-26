@@ -1,3 +1,7 @@
+= 3.6.4 =
+
+* Improve font file upload handling
+
 = 3.6.3 =
 
 * Readme improvements
