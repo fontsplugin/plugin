@@ -1,3 +1,7 @@
+= 3.6.42 =
+
+* Update blueprint
+
 = 3.6.4 =
 
 * Improve font file upload handling
