@@ -1,22 +1,26 @@
 {
-    "landingPage": "\/wp-admin\/customize.php?autofocus%5Bpanel%5D=ogf_google_fonts",
+    "landingPage": "/wp-admin/customize.php?autofocus%5Bpanel%5D=ogf_google_fonts",
     "preferredVersions": {
         "php": "8.0",
-        "wp": "5.9"
+        "wp": "latest"
     },
     "phpExtensionBundles": [
-        "kitchen-sink"
+        "light"
     ],
     "steps": [
         {
             "step": "installPlugin",
             "pluginZipFile": {
                 "resource": "url",
-                "url": "https:\/\/downloads.wordpress.org\/plugin\/olympus-google-fonts.3.6.3.zip"
+                "url": "https://downloads.wordpress.org/plugin/olympus-google-fonts.3.6.4.zip"
             },
             "options": {
                 "activate": true
             }
+        },
+        {
+            "step": "runPHP",
+            "code": "<?php require '/wordpress/wp-load.php'; delete_option( 'ogf_do_activation_redirect' );"
         },
         {
             "step": "login",
