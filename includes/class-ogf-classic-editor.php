@@ -56,7 +56,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 
 			add_filter( 'tiny_mce_before_init', array( $this, 'add_font_sizes' ) );
 			add_filter( 'mce_buttons', array( $this, 'tinymce_add_buttons' ), 1 );
-			add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_custom_options' ) );
+			add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_custom_options' ), 100 );
 			add_filter( 'ogf_classic_font_formats', array( $this, 'tinymce_add_fonts' ), 100 );
 			add_action( 'admin_init', array( $this, 'google_fonts_enqueue' ) );
 			add_action( 'admin_init', array( $this, 'typekit_fonts_enqueue' ) );
