@@ -92,8 +92,8 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 			$fonts = new OGF_Fonts();
 
 			if ( $fonts->has_google_fonts() ) {
-				$url = $fonts->build_url();
-				$url_to_id  = md5( $url );
+				$url       = $fonts->build_url();
+				$url_to_id = md5( $url );
 				delete_transient( 'ogf_external_font_css_' . $url_to_id );
 			}
 

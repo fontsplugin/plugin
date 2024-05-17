@@ -103,7 +103,7 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 				</div>
 
 				<?php
-				$count++;
+				++$count;
 			}
 		} else {
 			?>
@@ -165,5 +165,4 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 		</ul>
 		<?php
 	}
-
 }

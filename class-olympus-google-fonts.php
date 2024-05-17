@@ -231,7 +231,6 @@ class Olympus_Google_Fonts {
 		$wp_customize->remove_section( 'ogf_custom' );
 		$wp_customize->remove_section( 'ogf_advanced__custom' );
 	}
-
 }
 
 $gfwp = new Olympus_Google_Fonts();

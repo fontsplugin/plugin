@@ -298,13 +298,12 @@ function ogf_customize_register( $wp_customize ) {
 	);
 
 	$fonts   = new OGF_Fonts();
-	$subsets = [];
+	$subsets = array();
 
 	if ( $fonts->has_google_fonts() ) {
 
 		// Build the selective font loading controls.
 		foreach ( $fonts->choices as $font_id ) {
-
 			if ( ! ogf_is_google_font( $font_id ) ) {
 				continue;
 			}
@@ -363,7 +362,6 @@ function ogf_customize_register( $wp_customize ) {
 		);
 
 		if ( defined( 'OGF_PRO' ) ) {
-
 			$wp_customize->add_control(
 				new OGF_Customize_Multiple_Checkbox_Control(
 					$wp_customize,
@@ -393,7 +391,6 @@ function ogf_customize_register( $wp_customize ) {
 	);
 
 	foreach ( $upsell_locations as $loc ) {
-
 		if ( defined( 'OGF_PRO' ) ) {
 			return;
 		}
@@ -411,9 +408,7 @@ function ogf_customize_register( $wp_customize ) {
 				)
 			)
 		);
-
 	}
-
 }
 add_action( 'customize_register', 'ogf_customize_register', 20 );
 

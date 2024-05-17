@@ -56,7 +56,6 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 			add_action( 'wp_ajax_ogf_dismiss_notice', array( $this, 'dismiss_notice' ) );
 			add_action( 'admin_init', array( $this, 'dismiss_notice_backup' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
-
 		}
 
 		/**

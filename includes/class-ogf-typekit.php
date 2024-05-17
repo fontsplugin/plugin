@@ -235,14 +235,14 @@ class OGF_Typekit {
 
 		// Reset the data if the user has clicked the button.
 		if ( $_GET['action'] === 'disable' && isset( $_GET['kit_id'] ) ) {
-			$data = get_option( 'fp-typekit-data', array() );
+			$data                               = get_option( 'fp-typekit-data', array() );
 			$data[ $_GET['kit_id'] ]['enabled'] = false;
 			update_option( 'fp-typekit-data', $data );
 		}
 
 		// Reset the data if the user has clicked the button.
 		if ( $_GET['action'] === 'enable' && isset( $_GET['kit_id'] ) ) {
-			$data = get_option( 'fp-typekit-data', array() );
+			$data                               = get_option( 'fp-typekit-data', array() );
 			$data[ $_GET['kit_id'] ]['enabled'] = true;
 			update_option( 'fp-typekit-data', $data );
 		}

@@ -27,7 +27,8 @@ class OGF_Customize_Upsell_Control extends WP_Customize_Control {
 	/**
 	 * Render the control's content.
 	 */
-	public function render_content() { ?>
+	public function render_content() {
+		?>
 		<div class="ogf-upsell">
 			<h2 class="upsell__title"><?php esc_html_e( 'Upgrade to Fonts Plugin Pro', 'olympus-google-fonts' ); ?></h2>
 			<ul>
