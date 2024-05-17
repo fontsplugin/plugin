@@ -74,5 +74,4 @@ class OGF_Customize_Multiple_Fonts_Control extends WP_Customize_Control {
 
 		<?php
 	}
-
 }

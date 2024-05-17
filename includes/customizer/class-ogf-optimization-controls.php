@@ -63,8 +63,8 @@ class OGF_Optimization_Controls {
 		$wp_customize->add_setting(
 			'ogf_host_locally',
 			array(
-				'default'           => false,
-				'transport'         => 'postMessage',
+				'default'   => false,
+				'transport' => 'postMessage',
 			)
 		);
 
@@ -72,7 +72,7 @@ class OGF_Optimization_Controls {
 			'ogf_host_locally',
 			array(
 				'label'       => esc_html__( 'Host Google Fonts Locally', 'olympus-google-fonts' ),
-				'description' => sprintf (esc_html__( 'Fonts will be served from %s instead of fonts.googleapis.com.', 'olympus-google-fonts' ),$url),
+				'description' => sprintf( esc_html__( 'Fonts will be served from %s instead of fonts.googleapis.com.', 'olympus-google-fonts' ), $url ),
 				'section'     => 'ogf_optimization',
 				'type'        => 'checkbox',
 				'settings'    => 'ogf_host_locally',
@@ -82,16 +82,16 @@ class OGF_Optimization_Controls {
 		$wp_customize->add_setting(
 			'ogf_use_woff2',
 			array(
-				'default'           => false,
-				'transport'         => 'postMessage',
+				'default'   => false,
+				'transport' => 'postMessage',
 			)
 		);
 
 		$wp_customize->add_setting(
 			'ogf_preloading',
 			array(
-				'default'           => false,
-				'transport'         => 'postMessage',
+				'default'   => false,
+				'transport' => 'postMessage',
 			)
 		);
 
@@ -109,8 +109,8 @@ class OGF_Optimization_Controls {
 		$wp_customize->add_setting(
 			'ogf_removal',
 			array(
-				'default'           => false,
-				'transport'         => 'postMessage',
+				'default'   => false,
+				'transport' => 'postMessage',
 			)
 		);
 
@@ -128,19 +128,19 @@ class OGF_Optimization_Controls {
 		$wp_customize->add_setting(
 			'ogf_rewrite',
 			array(
-				'default'           => false,
-				'transport'         => 'postMessage',
+				'default'   => false,
+				'transport' => 'postMessage',
 			)
 		);
 
 		$wp_customize->add_control(
 			'ogf_rewrite',
 			array(
-				'label'           => esc_html__( 'Rewrite External Fonts', 'olympus-google-fonts' ),
-				'description'     => esc_html__( 'Convert fonts added by your theme and plugins to be locally hosted on your domain.', 'olympus-google-fonts' ),
-				'section'         => 'ogf_optimization',
-				'type'            => 'checkbox',
-				'settings'        => 'ogf_rewrite',
+				'label'       => esc_html__( 'Rewrite External Fonts', 'olympus-google-fonts' ),
+				'description' => esc_html__( 'Convert fonts added by your theme and plugins to be locally hosted on your domain.', 'olympus-google-fonts' ),
+				'section'     => 'ogf_optimization',
+				'type'        => 'checkbox',
+				'settings'    => 'ogf_rewrite',
 			)
 		);
 	}

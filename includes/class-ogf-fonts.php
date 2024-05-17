@@ -102,7 +102,7 @@ class OGF_Fonts {
 
 		// We need both the key and value to be the subset name.
 		$combined = array_combine( $subsets, $subsets );
-		unset($combined['latin']);
+		unset( $combined['latin'] );
 		return $combined;
 	}
 
@@ -202,7 +202,7 @@ class OGF_Fonts {
 
 		if ( false === ( $external_font_css ) ) {
 			// It wasn't there, so regenerate the data and save the transient.
-			$external_font_css = '/* Cached: ' . date( 'F j, Y \a\t g:ia' ) . ' */' . PHP_EOL;
+			$external_font_css  = '/* Cached: ' . date( 'F j, Y \a\t g:ia' ) . ' */' . PHP_EOL;
 			$external_font_css .= $this->get_remote_url_contents( $url ) . PHP_EOL;
 			set_transient( 'ogf_external_font_css_' . $url_to_id, $external_font_css, DAY_IN_SECONDS );
 		}
@@ -227,7 +227,6 @@ class OGF_Fonts {
 		foreach ( $fonts as $font_id ) {
 			// Check the users choice is a real font.
 			if ( array_key_exists( $font_id, self::$google_fonts ) ) {
-
 				$font_id_for_url = $this->get_font_id( self::$google_fonts[ $font_id ]['f'] );
 
 				$weights = $this->filter_selected_weights( $font_id, self::$google_fonts[ $font_id ]['v'] );

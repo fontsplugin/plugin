@@ -53,8 +53,8 @@ if ( ! class_exists( 'OGF_Reset' ) ) :
 				'ogf_reset_fonts',
 				array(
 					'type'        => 'button',
-					'label'   => __( 'Reset All Fonts', 'olympus-google-fonts' ),
-					'description'   => __( 'This will reset all fonts set by this plugin to their defaults. This action can not be reversed.', 'olympus-google-fonts' ),
+					'label'       => __( 'Reset All Fonts', 'olympus-google-fonts' ),
+					'description' => __( 'This will reset all fonts set by this plugin to their defaults. This action can not be reversed.', 'olympus-google-fonts' ),
 					'settings'    => array(),
 					'priority'    => 100,
 					'section'     => 'ogf_debugging',

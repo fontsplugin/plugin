@@ -44,48 +44,48 @@ function ogf_gutenberg_output_css() {
 
 function ogf_gutenberg_build_css() {
 	$elements = array(
-		'ogf_body' => array(
+		'ogf_body'              => array(
 			'selectors' => '.editor-styles-wrapper p, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6, #editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input',
 		),
-		'ogf_headings' => array(
+		'ogf_headings'          => array(
 			'selectors' => '#editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input, .editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6',
 		),
 		'ogf_post_page_content' => array(
 			'selectors' => '.editor-styles-wrapper p',
 		),
-		'ogf_post_page_h1' => array(
+		'ogf_post_page_h1'      => array(
 			'selectors' => '#editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input, .editor-styles-wrapper h1',
 		),
-		'ogf_post_page_h2' => array(
+		'ogf_post_page_h2'      => array(
 			'selectors' => '.editor-styles-wrapper h2',
 		),
-		'ogf_post_page_h3' => array(
+		'ogf_post_page_h3'      => array(
 			'selectors' => '.editor-styles-wrapper h3',
 		),
-		'ogf_post_page_h4' => array(
+		'ogf_post_page_h4'      => array(
 			'selectors' => '.editor-styles-wrapper h4',
 		),
-		'ogf_post_page_h5' => array(
+		'ogf_post_page_h5'      => array(
 			'selectors' => '.editor-styles-wrapper h5',
 		),
-		'ogf_post_page_h6' => array(
+		'ogf_post_page_h6'      => array(
 			'selectors' => '.editor-styles-wrapper h6',
 		),
-		'ogf_site_title' => array(
+		'ogf_site_title'        => array(
 			'selectors' => '.editor-styles-wrapper .wp-block-site-title',
 		),
-		'ogf_site_navigation' => array(
+		'ogf_site_navigation'   => array(
 			'selectors' => '.editor-styles-wrapper .wp-block-navigation-item',
 		),
 	);
 
 	$elements = apply_filters( 'ogf_gutenberg_elements', $elements );
-	$array = [];
+	$array    = array();
 	foreach ( $elements as $id => $values ) {
 		$array[] = ogf_generate_css_gutenberg( $values['selectors'], $id );
 	}
 
-	return implode(' ', $array);
+	return implode( ' ', $array );
 }
 
 /**
@@ -106,17 +106,15 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
 	$return = '';
 
 	if ( ( $family !== 'default' && $family ) ||
-			 ( $line_height !== '0' && $line_height ) ||
-			 ( $weight !== '0' && $weight ) ||
-			 ( $style !== 'default' && $style ) ||
-			   $font_size ||
-			   $color ) {
-
+			( $line_height !== '0' && $line_height ) ||
+			( $weight !== '0' && $weight ) ||
+			( $style !== 'default' && $style ) ||
+				$font_size ||
+				$color ) {
 		$return .= $selector . ' {' . PHP_EOL;
 
 		// Return font-family CSS.
 		if ( false !== $family && 'default' !== $family ) {
-
 			$stack = ogf_build_font_stack( $family );
 
 			if ( ! empty( $stack ) ) {
@@ -170,7 +168,6 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
 		$return .= ' }' . PHP_EOL;
 
 		return wp_kses_post( $return );
-
 	}
 }
 
@@ -183,10 +180,10 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
  * @return array Modified editor settings with the added custom CSS style.
  */
 function ogf_add_styles_to_site_editor( $editor_settings, $editor_context ) {
-    $editor_settings['styles'][] = array(
-        'css' => ogf_gutenberg_build_css()
-    );
+	$editor_settings['styles'][] = array(
+		'css' => ogf_gutenberg_build_css(),
+	);
 
-    return $editor_settings;
+	return $editor_settings;
 }
-add_filter( 'block_editor_settings_all', 'ogf_add_styles_to_site_editor', 10,2 );
+add_filter( 'block_editor_settings_all', 'ogf_add_styles_to_site_editor', 10, 2 );

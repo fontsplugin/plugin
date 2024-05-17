@@ -104,10 +104,13 @@ class OGF_Fonts_Taxonomy {
 		return wp_parse_args(
 			$fonts,
 			array(
-				'woff'  => '',
-				'woff2' => '',
-				'ttf'   => '',
-				'otf'   => '',
+				'woff'   => '',
+				'woff2'  => '',
+				'ttf'    => '',
+				'otf'    => '',
+				'weight' => '',
+				'style'  => '',
+				'family' => '',
 			)
 		);
 	}
@@ -159,7 +162,6 @@ class OGF_Fonts_Taxonomy {
 		$font_links = array();
 
 		if ( ! empty( $terms ) ) {
-
 			foreach ( $terms as $term ) {
 				if ( $term->name == $name ) {
 					$font_links[ $term->slug ] = self::get_font_links( $term->term_id );
@@ -168,7 +170,6 @@ class OGF_Fonts_Taxonomy {
 		}
 
 		return $font_links;
-
 	}
 
 	/**
@@ -200,7 +201,6 @@ class OGF_Fonts_Taxonomy {
 		}
 		update_option( 'taxonomy_' . self::$taxonomy_slug . "_{$term_id}", $links );
 	}
-
 }
 
 OGF_Fonts_Taxonomy::get_instance();

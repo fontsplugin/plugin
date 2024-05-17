@@ -54,7 +54,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 				'text_transform' => esc_html__( 'Text Transform', 'olympus-google-fonts' ),
 			)
 		);
-
 	}
 
 	/**
@@ -210,7 +209,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 		if ( 'default' === $font ) {
 			return array_diff( $all_variants, $variants_to_remove );
 		}
-
 
 		if ( ogf_is_google_font( $font ) ) {
 			$fonts_array       = ogf_fonts_array();
