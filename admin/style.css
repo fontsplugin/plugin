@@ -93,6 +93,10 @@
   margin-top: -25px;
 }
 
+input[type="text"].ogf-custom-fonts-link-input {
+	width: 78.5%;
+}
+
 @media only screen and (max-width: 960px) {
 
 	.eb-content {

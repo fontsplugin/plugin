@@ -53,7 +53,6 @@ class OGF_Welcome_Screen {
 			'',
 			25
 		);
-
 	}
 
 	/**
@@ -62,7 +61,7 @@ class OGF_Welcome_Screen {
 	public function enqueue() {
 
 		if ( get_current_screen()->id === 'toplevel_page_fonts-plugin' ) {
-			wp_enqueue_style( 'olympus-google-fonts-welcome', plugins_url( 'admin/style.css', dirname( __FILE__ ) ), false, '1.0.0' );
+			wp_enqueue_style( 'olympus-google-fonts-admin', plugins_url( 'admin/style.css', __DIR__ ), false, '1.0.0' );
 		}
 
 		wp_enqueue_script( 'ogf-admin', esc_url( OGF_DIR_URL . 'assets/js/admin.js' ), 'jquery', OGF_VERSION, false );
@@ -79,13 +78,13 @@ class OGF_Welcome_Screen {
 						<h1><?php esc_html_e( 'Your Quickstart Guide', 'olympus-google-fonts' ); ?></h1>
 					</div>
 					<div class="eb-content__inner">
-						<img class="ebook-cover" src="<?php echo esc_url( plugins_url( 'admin/fonts-plugin-quickstart-guide.png', dirname( __FILE__ ) ) ); ?>">
+						<img class="ebook-cover" src="<?php echo esc_url( plugins_url( 'admin/fonts-plugin-quickstart-guide.png', __DIR__ ) ); ?>">
 						<p><?php esc_html_e( 'To help you get the most out of the Google Fonts plugin we’ve put together a free quickstart guide.', 'olympus-google-fonts' ); ?></p>
 						<p><?php esc_html_e( 'In this beautifully-formatted, easy-to-read PDF you will learn:', 'olympus-google-fonts' ); ?>
 						<ul>
-							<li><?php printf(esc_html__( 'How to %1$seasily%2$s customize your typography.', 'olympus-google-fonts' ),'<strong>','</strong>'); ?></li>
-							<li><?php printf(esc_html__( 'How to host fonts %1$slocally%2$s for speed, GDPR & DSGVO.', 'olympus-google-fonts' ),'<strong>','</strong>'); ?></li>
-							<li><?php printf(esc_html__( 'How to use Google Fonts without %1$sslowing down%2$s your website.', 'olympus-google-fonts' ),'<strong>','</strong>'); ?></li>
+							<li><?php printf( esc_html__( 'How to %1$seasily%2$s customize your typography.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
+							<li><?php printf( esc_html__( 'How to host fonts %1$slocally%2$s for speed, GDPR & DSGVO.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
+							<li><?php printf( esc_html__( 'How to use Google Fonts without %1$sslowing down%2$s your website.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
 						</ul>
 						<p><?php esc_html_e( 'Download your free copy today.', 'olympus-google-fonts' ); ?></p>
 

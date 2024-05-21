@@ -45,7 +45,7 @@
 				file_frame.on( 'select', function() {
 					// Get media attachment details from the frame state
 					var attachment = file_frame.state().get('selection').first().toJSON();
-					window.inputWrapper.find( '.ogf-custom-fonts-link' ).val(attachment.url);
+					window.inputWrapper.find( '.ogf-custom-fonts-link-input' ).val(attachment.url);
 				});
       			// Finally, open the modal
 				file_frame.open();
