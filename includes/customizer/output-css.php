@@ -41,25 +41,36 @@ function ogf_return_custom_font_css() {
 	$css = '';
 
 	foreach ( $fonts as $font => $data ) {
-		$files = $data['files'];
+		$font_family = $data['files']['family'] ? esc_attr( $data['files']['family'] ) : $font;
+		$files       = $data['files'];
 
 		if ( $files['woff'] || $files['woff2'] || $files['ttf'] || $files['otf'] ) {
+			$css .= '@font-face {font-family:"' . $font_family . '";';
+
+			if ( $data['files']['weight'] ) {
+				$css .= 'font-weight:' . esc_attr( $data['files']['weight'] ) . ';';
+			}
+
+			if ( $data['files']['style'] ) {
+				$css .= 'font-style:' . esc_attr( $data['files']['style'] ) . ';';
+			}
+
 			$arr = array();
 
 			if ( $data['files']['woff'] ) {
-				$arr[] = 'url(' . esc_url( $data['files']['woff'] ) . ") format('woff')";
+				$arr[] = 'url("' . esc_url( $data['files']['woff'] ) . '") format("woff")';
 			}
 			if ( $data['files']['woff2'] ) {
-				$arr[] = 'url(' . esc_url( $data['files']['woff2'] ) . ") format('woff2')";
+				$arr[] = 'url("' . esc_url( $data['files']['woff2'] ) . '") format("woff2")';
 			}
 			if ( $data['files']['ttf'] ) {
-				$arr[] = 'url(' . esc_url( $data['files']['ttf'] ) . ") format('truetype')";
+				$arr[] = 'url("' . esc_url( $data['files']['ttf'] ) . '") format("truetype")';
 			}
 			if ( $data['files']['otf'] ) {
-				$arr[] = 'url(' . esc_url( $data['files']['otf'] ) . ") format('opentype')";
+				$arr[] = 'url("' . esc_url( $data['files']['otf'] ) . '") format("opentype")';
 			}
 
-			$css .= '@font-face {font-family:' . esc_attr( $font ) . '; src:' . join( ',', $arr ) . ';' . '}';
+			$css .= 'src:' . join( ',', $arr ) . ';}';
 		}
 	}
 

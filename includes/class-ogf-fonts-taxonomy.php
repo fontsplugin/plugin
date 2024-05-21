@@ -104,13 +104,14 @@ class OGF_Fonts_Taxonomy {
 		return wp_parse_args(
 			$fonts,
 			array(
-				'woff'   => '',
-				'woff2'  => '',
-				'ttf'    => '',
-				'otf'    => '',
-				'weight' => '',
-				'style'  => '',
-				'family' => '',
+				'woff'    => '',
+				'woff2'   => '',
+				'ttf'     => '',
+				'otf'     => '',
+				'weight'  => '',
+				'style'   => '',
+				'family'  => '',
+				'preload' => '1',
 			)
 		);
 	}
