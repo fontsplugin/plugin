@@ -50,6 +50,7 @@ class OGF_Upload_Fonts_Screen {
 
 		add_action( OGF_Fonts_Taxonomy::$taxonomy_slug . '_add_form_fields', array( $this, 'add_new_taxonomy_data' ) );
 		add_action( OGF_Fonts_Taxonomy::$taxonomy_slug . '_edit_form_fields', array( $this, 'edit_taxonomy_data' ) );
+		add_action( OGF_Fonts_Taxonomy::$taxonomy_slug . '_term_new_form_tag', array( $this, 'intro_text' ) );
 
 		add_action( 'edited_' . OGF_Fonts_Taxonomy::$taxonomy_slug, array( $this, 'save_metadata' ) );
 		add_action( 'create_' . OGF_Fonts_Taxonomy::$taxonomy_slug, array( $this, 'save_metadata' ) );
@@ -76,10 +77,6 @@ class OGF_Upload_Fonts_Screen {
 	 * Register custom font menu
 	 */
 	public function register_custom_fonts_menu() {
-		if ( ! defined( 'OGF_PRO' ) ) {
-			return;
-		}
-
 		$title = apply_filters( 'ogf_custom_fonts_menu_title', __( 'Upload Fonts', 'olympus-google-fonts' ) );
 		add_submenu_page(
 			$this->parent_menu_slug,
@@ -106,8 +103,9 @@ class OGF_Upload_Fonts_Screen {
 		?><style>#addtag div.form-field.term-slug-wrap, #edittag tr.form-field.term-slug-wrap { display: none; }
 			#addtag div.form-field.term-description-wrap, #edittag tr.form-field.term-description-wrap { display: none; }</style><script>jQuery( document ).ready( function( $ ) {
 				var $wrapper = $( '#addtag, #edittag' );
-				$wrapper.find( 'tr.form-field.term-name-wrap p, div.form-field.term-name-wrap > p' ).text( '<?php esc_html_e( 'The name of the font as it will appear in the font selector.', 'olympus-google-fonts' ); ?>' );
+				$wrapper.find( 'tr.form-field.term-name-wrap p, div.form-field.term-name-wrap > p' ).text( '<?php esc_html_e( 'A unique name to describe this variant.', 'olympus-google-fonts' ); ?>' );
 			} );</script>
+			<p>
 			<?php
 	}
 
@@ -131,6 +129,13 @@ class OGF_Upload_Fonts_Screen {
 	}
 
 	/**
+	 * Add options page
+	 */
+	public function intro_text() {
+		echo '><span>Documentation for this feature is available here: <a href="https://fontsplugin.com/upload-fonts-wordpress/">Upload Fonts to WordPress</a>.</span';
+	}
+
+	/**
 	 * Add new Taxonomy data
 	 */
 	public function add_new_taxonomy_data() {
@@ -149,7 +154,7 @@ class OGF_Upload_Fonts_Screen {
 	 * @param object $term taxonomy terms.
 	 */
 	public function edit_taxonomy_data( $term ) {
-		$data = OGF_Fonts_Taxonomy::get_font_links( $term->term_id );
+		$data = OGF_Fonts_Taxonomy::get_font_data( $term->term_id );
 		$this->font_family_edit_field( 'family', __( 'Font Family', 'olympus-google-fonts' ), $data['family'], __( 'The name of the font family. For example, Helvetica or Proxima Nova.', 'olympus-google-fonts' ) );
 		$this->font_file_edit_field( 'woff', __( 'Font .woff', 'olympus-google-fonts' ), $data['woff'], __( 'Upload the font\'s .woff file or enter the URL.', 'olympus-google-fonts' ) );
 		$this->font_file_edit_field( 'woff2', __( 'Font .woff2', 'olympus-google-fonts' ), $data['woff2'], __( 'Upload the font\'s .woff2 file or enter the URL.', 'olympus-google-fonts' ) );
@@ -157,7 +162,7 @@ class OGF_Upload_Fonts_Screen {
 		$this->font_file_edit_field( 'otf', __( 'Font .otf', 'olympus-google-fonts' ), $data['otf'], __( 'Upload the font\'s .otf file or enter the URL.', 'olympus-google-fonts' ) );
 		$this->font_weight_edit_field( 'weight', __( 'Font Weight', 'olympus-google-fonts' ), $data['weight'] );
 		$this->font_style_edit_field( 'style', __( 'Font Weight', 'olympus-google-fonts' ), $data['style'] );
-		$this->font_preload_edit_field( 'preload', __( 'Preload Font', 'olympus-google-fonts' ), $data['preload'] );
+		$this->font_preload_edit_field( 'preload', __( 'Preload Font', 'olympus-google-fonts' ), $data['preload'],  __( 'Preloading is a <a href="https://fontsplugin.com/pro-upgrade">Fonts Plugin Pro</a> feature.', 'olympus-google-fonts' )  );
 	}
 
 
@@ -387,7 +392,11 @@ class OGF_Upload_Fonts_Screen {
 				</label>
 			</th>
 			<td>
-				<input type="checkbox" id="metadata-<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( OGF_Fonts_Taxonomy::$taxonomy_slug ); ?>[<?php echo esc_attr( $id ); ?>]" <?php checked( $value, 1 ); ?> value="1">
+				<?php if( defined('OGF_PRO') ) : ?>
+					<input type="checkbox" id="metadata-<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( OGF_Fonts_Taxonomy::$taxonomy_slug ); ?>[<?php echo esc_attr( $id ); ?>]" <?php checked( $value, 1 ); ?> value="1">
+				<?php else : ?>
+					<p class="description"><?php echo wp_kses_post( $description ); ?></p>
+				<?php endif; ?>
 			</td>
 		</tr>
 		<?php
@@ -402,7 +411,7 @@ class OGF_Upload_Fonts_Screen {
 	public function save_metadata( $term_id ) {
 		if ( isset( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) ) {// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$value = array_map( 'esc_attr', $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-			OGF_Fonts_Taxonomy::update_font_links( $value, $term_id );
+			OGF_Fonts_Taxonomy::update_font_data( $value, $term_id );
 		}
 	}
 

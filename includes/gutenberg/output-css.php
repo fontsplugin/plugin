@@ -41,6 +41,7 @@ function ogf_gutenberg_output_css() {
 		<!-- Fonts Plugin Gutenberg CSS -->
 	<?php
 }
+add_action( 'admin_head', 'ogf_gutenberg_output_css' );
 
 function ogf_gutenberg_build_css() {
 	$elements = array(

@@ -102,6 +102,11 @@ class GoogleFontsBlock extends Component {
 		return false;
 	}
 
+	getCustomFontFamily( fontID ) {
+		const searchResults = this.searchFonts( fontID, Object.values( ogf_custom_fonts_unique ) );
+		return ogf_custom_fonts_unique[fontID] || fontID.replace( /\+/g, ' ' );
+	}
+
 	isSystemFont( fontID ) {
 		const searchResults = this.searchFonts( fontID, systemFontsJson );
 		if ( typeof searchResults === 'object' ) {
@@ -233,15 +238,43 @@ class GoogleFontsBlock extends Component {
 		let variantOptions = [
 			{
 				value: '0',
-				label: '- Default -',
+				label: __('- Default -', 'olympus-google-fonts' ),
+			},
+			{
+				value: '100',
+				label: __('Thin', 'olympus-google-fonts' ),
+			},
+			{
+				value: '200',
+				label: __('Extra Light', 'olympus-google-fonts' ),
+			},
+			{
+				value: '300',
+				label: __('Light', 'olympus-google-fonts' ),
 			},
 			{
 				value: '400',
-				label: 'Regular',
+				label: __('Regular', 'olympus-google-fonts' ),
+			},
+			{
+				value: '500',
+				label: __('Medium', 'olympus-google-fonts' ),
+			},
+			{
+				value: '500',
+				label: __('Semi Bold', 'olympus-google-fonts' ),
 			},
 			{
 				value: '700',
-				label: 'Bold',
+				label: __('Bold', 'olympus-google-fonts' ),
+			},
+			{
+				value: '800',
+				label: __('Extra Bold', 'olympus-google-fonts' ),
+			},
+			{
+				value: '900',
+				label: __('Ultra Bold', 'olympus-google-fonts' ),
 			},
 		];
 
@@ -332,7 +365,7 @@ class GoogleFontsBlock extends Component {
 					style={ {
 						fontSize: fontSize ? fontSize + 'px' : undefined,
 						textAlign: align,
-						fontFamily: fontID.replace( /\+/g, ' ' ),
+						fontFamily: 'this.getCustomFontFamily(fontID)',
 						fontWeight: variant,
 						lineHeight: lineHeight,
 						color: color,

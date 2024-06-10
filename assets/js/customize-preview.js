@@ -22,7 +22,7 @@ jQuery( document ).ready(
 			} else if ( isCustomFont( value ) ) {
 				jQuery( selector ).each( function( i, v ) {
 					const fontID = value.replace( 'cf-', '' );
-					v.style.setProperty( 'font-family', ogf_custom_fonts[ fontID ].stack, 'important' );
+					v.style.setProperty( 'font-family', ogf_custom_fonts[ fontID ].family || ogf_custom_fonts[ fontID ].stack, 'important' );
 				} );
 			} else if ( isTypekitFont( value ) ) {
 				jQuery( selector ).each( function( i, v ) {

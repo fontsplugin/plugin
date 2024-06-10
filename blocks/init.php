@@ -27,6 +27,7 @@ function olympus_google_fonts_block_js() {
 		OGF_VERSION,
 		false
 	);
+	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts_unique', ogf_custom_fonts_unique() );
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts', ogf_custom_fonts() );
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_typekit_fonts', ogf_typekit_fonts() );
 }
@@ -98,6 +99,8 @@ function olympus_google_fonts_block_render( $attributes ) {
 	$style       = '';
 	$forced      = ogf_is_forced();
 
+	$is_custom_font =  OGF_Fonts_Taxonomy::get_by_name($font_id);
+
 	if ( $font_id ) {
 
 		// standardize the format.
@@ -111,6 +114,8 @@ function olympus_google_fonts_block_render( $attributes ) {
 			wp_enqueue_style( 'google-font-' . $font_id_standardized, 'https://fonts.googleapis.com/css?family=' . $font_id . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
 
 			$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
+		} elseif ( isset( $is_custom_font['family'] ) ) {
+			$font_family = $is_custom_font['family'];
 		} else {
 			$font_family = $font_id;
 		}
