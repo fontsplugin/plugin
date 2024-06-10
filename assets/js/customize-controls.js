@@ -6,7 +6,7 @@
 				const control = this;
 				const controlClass = '.customize-control-ogf-typography';
 				const footerActions = jQuery( '#customize-footer-actions' );
-				//
+
 				// Do stuff when device icons are clicked
 				jQuery( control.selector + ' .ogf-device-controls > div' ).on( 'click', function( event ) {
 					var device = jQuery( this ).data( 'option' );
@@ -85,8 +85,15 @@
 
 							const defaultWeights = {
 								0: "- Default -",
+								100: "Thin",
+								200: "Extra Light",
+								300: "Light",
 								400: "Normal",
+								500: "Medium",
+								600: "SemiBold",
 								700: "Bold",
+								800: "Extra Bold",
+								900: "Black",
 							}
 
 							// replace the 'Font Weight' select field values.

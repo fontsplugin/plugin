@@ -1,3 +1,11 @@
+= 3.7.1 =
+
+* Update readme
+
+= 3.7.0 =
+
+* Unlock font uploads in free version
+
 = 3.6.51 =
 
 * Fix implicit conversion deprecation

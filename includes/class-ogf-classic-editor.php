@@ -102,26 +102,30 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			$base_type     = get_theme_mod( 'ogf_body_font' );
 			$headings_type = get_theme_mod( 'ogf_headings_font' );
 
-			if ( ogf_is_custom_font( $base_type ) && array_key_exists( $base_type, $this->custom_fonts ) ) {
-				$base_type = str_replace( 'cf-', '', $base_type );
-			} elseif ( ogf_is_system_font( $base_type ) && array_key_exists( $base_type, $this->system_fonts ) ) {
+			if ( ogf_is_custom_font( $base_type ) ) {
+				$name = str_replace( 'cf-', '', $base_type );
+				$font = OGF_Fonts_Taxonomy::get_by_name($name);
+				$base_type = $font['family'] ?: $name;
+			} elseif ( ogf_is_system_font( $base_type ) ) {
 				$base_type = str_replace( 'sf-', '', $base_type );
-				$base_type = $this->system_fonts[ $base_type ]['stack'];
+				$base_type = $this->typekit_fonts[ $base_type ]['stack'] ?? $base_type;
 			} elseif ( ogf_is_google_font( $base_type ) ) {
 				$base_type = $this->ogf_fonts->get_font_name( $base_type );
-			} elseif ( ogf_is_typekit_font( $base_type ) && array_key_exists( $base_type, $this->typekit_fonts ) ) {
-				$base_type = $this->typekit_fonts[ $base_type ]['stack'];
+			} elseif ( ogf_is_typekit_font( $base_type ) ) {
+				$base_type = $this->typekit_fonts[ $base_type ]['stack'] ?? $base_type;
 			}
 
 			if ( ogf_is_custom_font( $headings_type ) ) {
-				$headings_type = str_replace( 'cf-', '', $headings_type );
-			} elseif ( ogf_is_system_font( $headings_type ) && array_key_exists( $headings_type, $this->system_fonts ) ) {
+				$name = str_replace( 'cf-', '', $headings_type );
+				$font = OGF_Fonts_Taxonomy::get_by_name($name);
+				$headings_type = $font['family'] ?: $name;
+			} elseif ( ogf_is_system_font( $headings_type ) ) {
 				$headings_type = str_replace( 'sf-', '', $headings_type );
-				$headings_type = $this->system_fonts[ $headings_type ]['stack'];
+				$headings_type = $this->system_fonts[ $headings_type ]['stack'] ?? $headings_type;
 			} elseif ( ogf_is_google_font( $headings_type ) ) {
 				$headings_type = $this->ogf_fonts->get_font_name( $headings_type );
-			} elseif ( ogf_is_typekit_font( $headings_type ) && array_key_exists( $headings_type, $this->typekit_fonts ) ) {
-				$headings_type = $this->typekit_fonts[ $headings_type ]['label'];
+			} elseif ( ogf_is_typekit_font( $headings_type ) ) {
+				$headings_type = $this->typekit_fonts[ $headings_type ]['label'] ?? $headings_type;
 			}
 
 			$opt['font_formats'] = apply_filters( 'ogf_classic_font_formats', 'Arial=arial,helvetica,sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;Courier New=courier new,courier;Georgia=georgia,palatino;Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,monaco;Times New Roman=times new roman,times;Trebuchet MS=trebuchet ms,geneva;Verdana=verdana,geneva;' );
@@ -157,7 +161,9 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			}
 
 			foreach ( $this->custom_fonts as $font ) {
-				$new_default .= $font['label'] . '=' . $font['stack'] . ';';
+				$stack = $font['family'] ?: $font['stack'];
+
+				$new_default .= $font['label'] . '=' . $stack . ';';
 			}
 
 			foreach ( $this->typekit_fonts as $font ) {

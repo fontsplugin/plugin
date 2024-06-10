@@ -138,7 +138,9 @@ class OGF_Fonts_Taxonomy {
 					self::$fonts[ $term->slug ]['id']    = $term->slug;
 					self::$fonts[ $term->slug ]['label'] = $term->name;
 					self::$fonts[ $term->slug ]['stack'] = $term->slug;
-					self::$fonts[ $term->slug ]['files'] = self::get_font_links( $term->term_id );
+					self::$fonts[ $term->slug ]['files'] = self::get_font_data( $term->term_id );
+					self::$fonts[ $term->slug ]['family'] = self::$fonts[ $term->slug ]['files']['family'];
+
 				}
 			}
 		}
@@ -149,28 +151,19 @@ class OGF_Fonts_Taxonomy {
 	 * Get font data from name
 	 *
 	 * @param string $name custom font name.
-	 * @return array $font_links custom font data.
+	 * @return array $font_data custom font data.
 	 */
-	public static function get_links_by_name( $name ) {
+	public static function get_by_name( $name ) {
 
-		$terms = get_terms(
-			self::$taxonomy_slug,
-			array(
-				'hide_empty' => false,
-			)
-		);
+		$term = get_term_by('name', $name, self::$taxonomy_slug);
 
-		$font_links = array();
-
-		if ( ! empty( $terms ) ) {
-			foreach ( $terms as $term ) {
-				if ( $term->name == $name ) {
-					$font_links[ $term->slug ] = self::get_font_links( $term->term_id );
-				}
-			}
+		if ( ! $term ) {
+			return false;
 		}
 
-		return $font_links;
+		$font_data = self::get_font_data( $term->term_id );
+
+		return $font_data;
 	}
 
 	/**
@@ -179,9 +172,9 @@ class OGF_Fonts_Taxonomy {
 	 * @param int $term_id custom font term id.
 	 * @return array $links custom font data links.
 	 */
-	public static function get_font_links( $term_id ) {
-		$links = get_option( 'taxonomy_' . self::$taxonomy_slug . "_{$term_id}", array() );
-		return self::default_args( $links );
+	public static function get_font_data( $term_id ) {
+		$data = get_option( 'taxonomy_' . self::$taxonomy_slug . "_{$term_id}", array() );
+		return self::default_args( $data );
 	}
 
 	/**
@@ -190,17 +183,19 @@ class OGF_Fonts_Taxonomy {
 	 * @param array $posted custom font data.
 	 * @param int   $term_id custom font term id.
 	 */
-	public static function update_font_links( $posted, $term_id ) {
+	public static function update_font_data( $posted, $term_id ) {
 
-		$links = self::get_font_links( $term_id );
-		foreach ( array_keys( $links ) as $key ) {
+		error_log(print_r($posted, true));
+
+		$data = self::get_font_data( $term_id );
+		foreach ( array_keys( $data ) as $key ) {
 			if ( isset( $posted[ $key ] ) ) {
-				$links[ $key ] = $posted[ $key ];
+				$data[ $key ] = $posted[ $key ];
 			} else {
-				$links[ $key ] = '';
+				$data[ $key ] = '';
 			}
 		}
-		update_option( 'taxonomy_' . self::$taxonomy_slug . "_{$term_id}", $links );
+		update_option( 'taxonomy_' . self::$taxonomy_slug . "_{$term_id}", $data );
 	}
 }
 

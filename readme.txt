@@ -1,13 +1,13 @@
-=== Fonts Plugin | Google Fonts Typography ===
+=== Fonts Plugin | Use Google Fonts, Adobe Fonts or Upload Fonts ===
 Contributors: DannyCooper, googlefonts, fontsplugin
 Tags: google fonts, typekit fonts, adobe fonts, upload fonts, custom fonts
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 6.5
 License: GPLv2 or later
-Stable tag: 3.6.51
+Stable tag: 3.7.1
 
-The easiest to use Google Fonts Plugin. No coding required. Optimized for Speed. 1000+ font choices.
+The easiest to customize fonts in WordPress. Optimized for Speed. 1000+ font choices. Supports Google Fonts, Adobe Fonts and Upload Fonts.
 
 == Description ==
 The [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=intro) library currently contains 1455 unique fonts. This plugin allows you to easily use any of them on your WordPress website.
