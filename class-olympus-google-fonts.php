@@ -39,7 +39,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.7.1' );
+			define( 'OGF_VERSION', '3.7.2' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -195,6 +195,7 @@ class Olympus_Google_Fonts {
 		wp_localize_script( 'ogf-customize-preview', 'ogf_elements', $elements );
 		wp_localize_script( 'ogf-customize-preview', 'ogf_system_fonts', ogf_system_fonts() );
 		wp_localize_script( 'ogf-customize-preview', 'ogf_custom_fonts', ogf_custom_fonts() );
+		wp_localize_script( 'ogf-customize-preview', 'ogf_custom_fonts_unique', ogf_custom_fonts_unique() );
 		wp_localize_script( 'ogf-customize-preview', 'ogf_typekit_fonts', ogf_typekit_fonts() );
 	}
 

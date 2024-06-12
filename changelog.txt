@@ -1,3 +1,7 @@
+= 3.7.2 =
+
+* Fix customizer bug when using custom fonts 
+
 = 3.7.1 =
 
 * Update readme

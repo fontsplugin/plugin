@@ -124,7 +124,7 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 					<option value="default">
 						<?php esc_html_e( 'Default Font', 'olympus-google-fonts' ); ?>
 					</option>
-					<# if ( ! _.isEmpty( ogf_custom_fonts ) ) { #>
+					<# if ( ! _.isEmpty( ogf_custom_fonts_unique ) ) { #>
 						<option disabled><?php esc_html_e( '- Custom Fonts -', 'olympus-google-fonts' ); ?></option>
 						<# _.each( ogf_custom_fonts_unique, function( font_data, font_id ) { #>
 							<option value="cf-{{ font_id }}" <# if ( font_id === font_data ) { #> selected="selected" <# } #>>{{ font_data }}</option>
