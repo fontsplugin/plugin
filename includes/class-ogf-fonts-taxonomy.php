@@ -184,9 +184,6 @@ class OGF_Fonts_Taxonomy {
 	 * @param int   $term_id custom font term id.
 	 */
 	public static function update_font_data( $posted, $term_id ) {
-
-		error_log(print_r($posted, true));
-
 		$data = self::get_font_data( $term_id );
 		foreach ( array_keys( $data ) as $key ) {
 			if ( isset( $posted[ $key ] ) ) {

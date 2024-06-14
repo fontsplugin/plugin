@@ -1,3 +1,7 @@
+= 3.7.3 =
+
+* Fix unnecessary data being written to debug.log
+
 = 3.7.2 =
 
 * Fix customizer bug when using custom fonts 

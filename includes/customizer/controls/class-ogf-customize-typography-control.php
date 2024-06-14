@@ -191,7 +191,6 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 	 * @return array Available font variants.
 	 */
 	public function get_font_weight_choices( $font ) {
-
 		$variants_to_remove = array(
 			'100i' => esc_html__( 'Thin Italic', 'olympus-google-fonts' ),
 			'200i' => esc_html__( 'Extra Light Italic', 'olympus-google-fonts' ),

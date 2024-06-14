@@ -200,15 +200,14 @@ function ogf_custom_fonts() {
 function ogf_custom_fonts_unique() {
 	$fonts = OGF_Fonts_Taxonomy::get_fonts();
 	$new_fonts = [];
-	foreach( $fonts as $key => $value ) {
-
+	foreach ( $fonts as $key => $value ) {
 		if ( $value['family'] ) {
 			$new_fonts[$key] = $value['family'];
 		} else {
 			$new_fonts[$key] = $value['label'];
 		}
 	}
-	return array_unique($new_fonts);
+	return array_unique( $new_fonts );
 }
 
 /**
