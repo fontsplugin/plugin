@@ -3,9 +3,9 @@ Contributors: DannyCooper, googlefonts, fontsplugin
 Tags: google fonts, typekit fonts, adobe fonts, upload fonts, custom fonts
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
-Tested up to: 6.5
+Tested up to: 6.6
 License: GPLv2 or later
-Stable tag: 3.7.3
+Stable tag: 3.7.4
 
 The easiest to customize fonts in WordPress. Optimized for Speed. 1000+ font choices. Supports Google Fonts, Adobe Fonts and Upload Fonts.
 

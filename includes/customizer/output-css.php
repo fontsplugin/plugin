@@ -218,7 +218,7 @@ function ogf_build_font_stack( $font_id ) {
 		$font_id      = str_replace( 'cf-', '', $font_id );
 
 		if ( array_key_exists( $font_id, $custom_fonts ) ) {
-			$font = $custom_fonts[ $font_id ]['family'] ?: $custom_fonts[ $font_id ]['stack'];
+			$font = $custom_fonts[ $font_id ]['family'] ?? $custom_fonts[ $font_id ]['stack'];
 			$stack = '"' . $font . '"';
 		}
 	} elseif ( strpos( $font_id, 'tk-' ) !== false ) {
