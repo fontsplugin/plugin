@@ -105,7 +105,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			if ( ogf_is_custom_font( $base_type ) ) {
 				$name = str_replace( 'cf-', '', $base_type );
 				$font = OGF_Fonts_Taxonomy::get_by_name($name);
-				$base_type = $font['family'] ?? $name;
+				$base_type = ! empty( $font['family'] ) ? $font['family'] : $name;
 			} elseif ( ogf_is_system_font( $base_type ) ) {
 				$base_type = str_replace( 'sf-', '', $base_type );
 				$base_type = $this->typekit_fonts[ $base_type ]['stack'] ?? $base_type;
@@ -118,7 +118,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			if ( ogf_is_custom_font( $headings_type ) ) {
 				$name = str_replace( 'cf-', '', $headings_type );
 				$font = OGF_Fonts_Taxonomy::get_by_name($name);
-				$headings_type = $font['family'] ?? $name;
+				$headings_type = ! empty( $font['family'] ) ? $font['family'] : $name;
 			} elseif ( ogf_is_system_font( $headings_type ) ) {
 				$headings_type = str_replace( 'sf-', '', $headings_type );
 				$headings_type = $this->system_fonts[ $headings_type ]['stack'] ?? $headings_type;
@@ -161,7 +161,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			}
 
 			foreach ( $this->custom_fonts as $font ) {
-				$stack = $font['family'] ?? $font['stack'];
+				$stack = ! empty( $font['family'] ) ? $font['family'] : $font['stack'];
 
 				$new_default .= $font['label'] . '=' . $stack . ';';
 			}
