@@ -421,6 +421,8 @@ function ogf_is_woocommerce_activated() {
  * Check if MemberPress Courses is activated.
  */
 function ogf_is_memberpress_courses_activated() {
+	include_once ABSPATH . 'wp-admin/includes/plugin.php';
+
 	if ( is_plugin_active( 'memberpress-courses/main.php' ) ) {
 		return true;
 	} else {
