@@ -418,6 +418,17 @@ function ogf_is_woocommerce_activated() {
 }
 
 /**
+ * Check if MemberPress Courses is activated.
+ */
+function ogf_is_memberpress_courses_activated() {
+	if ( is_plugin_active( 'memberpress-courses/main.php' ) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+/**
  * Check if Fonts Plugin Pro is activated.
  */
 function ogf_is_fpp_activated() {

@@ -39,7 +39,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.7.5' );
+			define( 'OGF_VERSION', '3.7.6' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -109,6 +109,9 @@ class Olympus_Google_Fonts {
 		}
 		if ( ogf_is_woocommerce_activated() ) {
 			require_once OGF_DIR_PATH . '/compatibility/woocommerce.php';
+		}
+		if ( ogf_is_memberpress_courses_activated() ) {
+			require_once OGF_DIR_PATH . '/compatibility/memberpress-courses.php';
 		}
 	}
 

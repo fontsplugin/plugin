@@ -211,5 +211,26 @@ function ogf_panels_customize_register( $wp_customize ) {
 			)
 		);
 	}
+
+	if ( ogf_is_memberpress_courses_activated() ) {
+		$ogf_memberspress_courses_panel = new OGF_Customize_Panel(
+			$wp_customize,
+			'ogf_memberpress',
+			array(
+				'title' => __( 'MemberPress', 'olympus-google-fonts' ),
+				'panel' => 'ogf_google_fonts',
+			)
+		);
+
+		$wp_customize->add_panel( $ogf_memberspress_courses_panel );
+
+		$wp_customize->add_section(
+			'ogf_memberpress_courses',
+			array(
+				'title' => esc_html__( 'MemberPress Courses', 'olympus-google-fonts' ),
+				'panel' => 'ogf_memberpress',
+			)
+		);
+	}
 }
 add_action( 'customize_register', 'ogf_panels_customize_register' );

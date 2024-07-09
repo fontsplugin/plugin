@@ -1,3 +1,7 @@
+= 3.7.6 =
+
+* Add MemberPress Courses compatibility
+
 = 3.7.5 =
 
 * Fix issue with uploaded fonts not displaying on the front end
