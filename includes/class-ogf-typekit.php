@@ -59,7 +59,7 @@ class OGF_Typekit {
 		settings_fields( 'fonts-plugin' );
 		do_settings_sections( 'fonts-plugin-typekit' );
 		if ( get_option( 'fp-typekit-data', false ) ) {
-			echo '<a class="button button-primary" href="' . esc_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=reset' ) ) . '">' . esc_html__( 'Refresh Fonts', 'olympus-google-fonts' ) . '</a>';
+			echo '<a class="button button-primary" href="' . wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=reset' ), 'ogf-typekit-reset' ) . '">' . esc_html__( 'Refresh Fonts', 'olympus-google-fonts' ) . '</a>';
 		}
 		?>
 		</form>
@@ -111,9 +111,9 @@ class OGF_Typekit {
 			}
 
 			if ( $kit['enabled'] ) {
-				echo '<li><a href="' . esc_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=disable&kit_id=' . $id ) ) . '">' . esc_html__( 'Disable Kit', 'olympus-google-fonts' ) . '</a></li>';
+				echo '<li><a href="' . wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=disable&kit_id=' . $id ), 'ogf-typekit-disable' ) . '">' . esc_html__( 'Disable Kit', 'olympus-google-fonts' ) . '</a></li>';
 			} else {
-				echo '<li><a href="' . esc_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=enable&kit_id=' . $id ) ) . '">' . esc_html__( 'Enable Kit', 'olympus-google-fonts' ) . '</a></li>';
+				echo '<li><a href="' . wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=enable&kit_id=' . $id ), 'ogf-typekit-enable' ) . '">' . esc_html__( 'Enable Kit', 'olympus-google-fonts' ) . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -147,8 +147,13 @@ class OGF_Typekit {
 	 * Get kits from Typekit API.
 	 */
 	public function get_kits() {
+
 		// Reset the data if the user has clicked the button.
-		if ( isset( $_GET['action'] ) && $_GET['action'] === 'reset' ) {
+		if ( current_user_can('administrator') && isset( $_GET['action'] ) && $_GET['action'] === 'reset' ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-reset')) {
+				return;
+			}
+
 			update_option( 'fp-typekit-data', false );
 		}
 
@@ -235,15 +240,25 @@ class OGF_Typekit {
 
 		// Reset the data if the user has clicked the button.
 		if ( $_GET['action'] === 'disable' && isset( $_GET['kit_id'] ) ) {
-			$data                               = get_option( 'fp-typekit-data', array() );
-			$data[ $_GET['kit_id'] ]['enabled'] = false;
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-disable')) {
+				return;
+			}
+
+			$kit_id = sanitize_text_field( $_GET['kit_id'] );
+			$data                       = get_option( 'fp-typekit-data', array() );
+			$data[ $kit_id ]['enabled'] = false;
 			update_option( 'fp-typekit-data', $data );
 		}
 
 		// Reset the data if the user has clicked the button.
 		if ( $_GET['action'] === 'enable' && isset( $_GET['kit_id'] ) ) {
-			$data                               = get_option( 'fp-typekit-data', array() );
-			$data[ $_GET['kit_id'] ]['enabled'] = true;
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-enable')) {
+				return;
+			}
+
+			$kit_id = sanitize_text_field( $_GET['kit_id'] );
+			$data                       = get_option( 'fp-typekit-data', array() );
+			$data[ $kit_id ]['enabled'] = true;
 			update_option( 'fp-typekit-data', $data );
 		}
 	}
@@ -322,7 +337,9 @@ class OGF_Typekit {
 					continue;
 				}
 
-				wp_enqueue_style( 'typekit-' . $id, 'https://use.typekit.com/' . $id . '.css', array(), OGF_VERSION );
+				$clean_id = sanitize_text_field( $id );
+
+				wp_enqueue_style( 'typekit-' . $clean_id, 'https://use.typekit.com/' . $clean_id . '.css', array(), OGF_VERSION );
 			}
 		}
 	}

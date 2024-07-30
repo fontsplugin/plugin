@@ -43,7 +43,7 @@ class OGF_Optimization_Controls {
 			'ogf_optimization',
 			array(
 				'title'       => __( 'Optimization', 'olympus-google-fonts' ),
-				'description' => __( '<p>Optimize the delivery of font files for improved performance and user-privacy.</p><p>Upgrade to <a href="https://fontsplugin.com/pro-/?utm_source=plugin&utm_medium=customizer&utm_campaign=ogf_optimization_intro">Fonts Plugin Pro</a> to unlock these features.</p>', 'olympus-google-fonts' ),
+				'description' => __( '<p>Optimize the delivery of font files for improved performance and user-privacy.</p><p>Upgrade to <a href="https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=customizer&utm_campaign=ogf_optimization_intro">Fonts Plugin Pro</a> to unlock these features.</p>', 'olympus-google-fonts' ),
 				'panel'       => 'ogf_google_fonts',
 			)
 		);
