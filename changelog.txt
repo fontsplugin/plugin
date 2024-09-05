@@ -1,3 +1,7 @@
+= 3.7.9 =
+
+* Update fonts library
+
 = 3.7.8 =
 
 * Improve typekit security
