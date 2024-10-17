@@ -1,6 +1,13 @@
 = 3.7.8 =
 
 * Fix issue where uploaded fonts with 'sf-' in the name were confused for system fonts.
+= 3.7.9 =
+
+* Update fonts library
+
+= 3.7.8 =
+
+* Improve typekit security
 
 = 3.7.7 =
 
