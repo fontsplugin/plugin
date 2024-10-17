@@ -206,14 +206,14 @@ function ogf_build_font_stack( $font_id ) {
 
 	$stack = 'sans-serif';
 
-	if ( strpos( $font_id, 'sf-' ) !== false ) {
+	if ( str_starts_with( $font_id, 'sf-' ) !== false ) {
 		$system_fonts = ogf_system_fonts();
 		$font_id      = str_replace( 'sf-', '', $font_id );
 
 		if ( array_key_exists( $font_id, $system_fonts ) ) {
 			$stack = $system_fonts[ $font_id ]['stack'];
 		}
-	} elseif ( strpos( $font_id, 'cf-' ) !== false ) {
+	} elseif ( str_starts_with( $font_id, 'cf-' ) !== false ) {
 		$custom_fonts = ogf_custom_fonts();
 		$font_id      = str_replace( 'cf-', '', $font_id );
 
@@ -225,7 +225,7 @@ function ogf_build_font_stack( $font_id ) {
 			}
 			$stack = '"' . $font . '"';
 		}
-	} elseif ( strpos( $font_id, 'tk-' ) !== false ) {
+	} elseif ( str_starts_with( $font_id, 'tk-' ) !== false ) {
 		$typekit_fonts = ogf_typekit_fonts();
 
 		if ( array_key_exists( $font_id, $typekit_fonts ) ) {
