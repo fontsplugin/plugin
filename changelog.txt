@@ -1,6 +1,7 @@
-= 3.7.8 =
+= 3.8.0 =
 
 * Fix issue where uploaded fonts with 'sf-' in the name were confused for system fonts.
+
 = 3.7.9 =
 
 * Update fonts library
