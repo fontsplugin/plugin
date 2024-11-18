@@ -1,3 +1,7 @@
+= 3.8.1 =
+
+* Fix translation notice
+
 = 3.8.0 =
 
 * Fix issue where uploaded fonts with 'sf-' in the name were confused for system fonts.

@@ -39,7 +39,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.8.0' );
+			define( 'OGF_VERSION', '3.8.1' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -67,7 +67,7 @@ class Olympus_Google_Fonts {
 		require_once OGF_DIR_PATH . 'includes/customizer/panels.php';
 		require_once OGF_DIR_PATH . 'includes/customizer/settings.php';
 		require_once OGF_DIR_PATH . 'includes/customizer/output-css.php';
-		require_once OGF_DIR_PATH . 'includes//customizer/class-ogf-optimization-controls.php';
+		require_once OGF_DIR_PATH . 'includes/customizer/class-ogf-optimization-controls.php';
 
 		// Required files for the Typekit integration.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-typekit.php';
@@ -97,7 +97,7 @@ class Olympus_Google_Fonts {
 	}
 
 	/**
-	 * Load plugin textdomain.
+	 * Load compatibility packs for themes and plugins.
 	 */
 	public function compatibility() {
 		$current_theme      = wp_get_theme();

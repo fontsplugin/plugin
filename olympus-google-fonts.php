@@ -5,7 +5,7 @@
  * Plugin Name: Fonts Plugin | Use Google Fonts, Adobe Fonts or Upload Fonts
  * Plugin URI:  https://wordpress.org/plugins/olympus-google-fonts/
  * Description: The easiest to customize fonts in WordPress. Optimized for Speed. 1000+ font choices. Supports Google Fonts, Adobe Fonts and Upload Fonts.
- * Version:     3.8.0
+ * Version:     3.8.1
  * Author:      Fonts Plugin
  * Author URI:  https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=description
  * Text Domain: olympus-google-fonts
@@ -24,7 +24,7 @@
 function ogf_initiate() {
 	require_once 'class-olympus-google-fonts.php';
 }
-add_action( 'plugins_loaded', 'ogf_initiate', 10 );
+add_action( 'init', 'ogf_initiate', 10 );
 
 /**
  * Add a redirection check on activation.
