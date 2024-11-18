@@ -365,7 +365,7 @@ class GoogleFontsBlock extends Component {
 					style={ {
 						fontSize: fontSize ? fontSize + 'px' : undefined,
 						textAlign: align,
-						fontFamily: 'this.getCustomFontFamily(fontID)',
+						fontFamily: this.getCustomFontFamily(fontID),
 						fontWeight: variant,
 						lineHeight: lineHeight,
 						color: color,
