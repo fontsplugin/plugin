@@ -1,3 +1,7 @@
+= 3.8.3 =
+
+* Fix translation notice
+
 = 3.8.2 =
 
 * Temporary rollback 3.8.1 until we can fix the block issue

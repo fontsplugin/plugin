@@ -16,6 +16,46 @@ if ( false !== get_theme_mod( 'ogf_disable_post_level_controls', false ) ) {
 	return;
 }
 
+if ( ! function_exists( 'register_block_type' ) ) {
+	return;
+}
+
+register_block_type(
+	'olympus-google-fonts/google-fonts',
+	array(
+		'attributes'      => array(
+			'blockType'  => array(
+				'type'    => 'string',
+				'default' => 'p',
+			),
+			'fontID'     => array(
+				'type'    => 'string',
+				'default' => '',
+			),
+			'variant'    => array(
+				'type'    => 'string',
+				'default' => 'normal',
+			),
+			'fontSize'   => array(
+				'type' => 'number',
+			),
+			'lineHeight' => array(
+				'type' => 'number',
+			),
+			'align'      => array(
+				'type' => 'string',
+			),
+			'content'    => array(
+				'type' => 'string',
+			),
+			'color'      => array(
+				'type' => 'string',
+			),
+		),
+		'render_callback' => 'olympus_google_fonts_block_render',
+	)
+);
+
 /**
  * Enqueue Gutenberg block assets for backend editor.
  */
@@ -33,52 +73,6 @@ function olympus_google_fonts_block_js() {
 }
 
 add_action( 'enqueue_block_editor_assets', 'olympus_google_fonts_block_js' );
-
-/**
- * Registers the 'olympus-google-fonts/google-fonts' block on server.
- */
-function olympus_google_fonts_register_block() {
-	// Check if the register function exists.
-	if ( ! function_exists( 'register_block_type' ) ) {
-		return;
-	}
-	register_block_type(
-		'olympus-google-fonts/google-fonts',
-		array(
-			'attributes'      => array(
-				'blockType'  => array(
-					'type'    => 'string',
-					'default' => 'p',
-				),
-				'fontID'     => array(
-					'type'    => 'string',
-					'default' => '',
-				),
-				'variant'    => array(
-					'type'    => 'string',
-					'default' => 'normal',
-				),
-				'fontSize'   => array(
-					'type' => 'number',
-				),
-				'lineHeight' => array(
-					'type' => 'number',
-				),
-				'align'      => array(
-					'type' => 'string',
-				),
-				'content'    => array(
-					'type' => 'string',
-				),
-				'color'      => array(
-					'type' => 'string',
-				),
-			),
-			'render_callback' => 'olympus_google_fonts_block_render',
-		)
-	);
-}
-add_action( 'init', 'olympus_google_fonts_register_block' );
 
 /**
  * Front end render function for 'olympus-google-fonts/google-fonts'.
@@ -99,7 +93,8 @@ function olympus_google_fonts_block_render( $attributes ) {
 	$style       = '';
 	$forced      = ogf_is_forced();
 
-	$is_custom_font =  OGF_Fonts_Taxonomy::get_by_name($font_id);
+	$is_custom_font = OGF_Fonts_Taxonomy::get_by_name( $font_id );
+	$is_system_font = array_key_exists( $font_id, ogf_system_fonts() );
 
 	if ( $font_id ) {
 
@@ -114,8 +109,10 @@ function olympus_google_fonts_block_render( $attributes ) {
 			wp_enqueue_style( 'google-font-' . $font_id_standardized, 'https://fonts.googleapis.com/css?family=' . $font_id . ':' . $variants_for_url . '&display=swap', array(), OGF_VERSION );
 
 			$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
-		} elseif ( isset( $is_custom_font['family'] ) ) {
-			$font_family = $is_custom_font['family'];
+		} elseif ( $is_custom_font ) {
+			$font_family = $is_custom_font['family'] ?: $font_id;
+		} elseif ( $is_system_font ) {
+			$font_family = esc_attr( str_replace( '-', ' ', $font_id ) );
 		} else {
 			$font_family = $font_id;
 		}

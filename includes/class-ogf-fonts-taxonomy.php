@@ -155,8 +155,7 @@ class OGF_Fonts_Taxonomy {
 	 */
 	public static function get_by_name( $name ) {
 
-		$term = get_term_by('name', $name, self::$taxonomy_slug);
-
+		$term = get_term_by('slug', $name, self::$taxonomy_slug);
 		if ( ! $term ) {
 			return false;
 		}

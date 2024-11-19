@@ -85,12 +85,12 @@ class GoogleFontsBlock extends Component {
 		return combinedFonts;
 	}
 
-	searchFonts( nameKey, myArray ){
-    for (var i=0; i < myArray.length; i++) {
-      if (myArray[i].id === nameKey) {
-        return myArray[i];
-      }
-    }
+	searchFonts( nameKey, myArray ) {
+		for (var i=0; i < myArray.length; i++) {
+			if (myArray[i].id === nameKey) {
+				return myArray[i];
+			}
+		}
 	}
 
 	isCustomFont( fontID ) {
@@ -100,11 +100,6 @@ class GoogleFontsBlock extends Component {
 		}
 
 		return false;
-	}
-
-	getCustomFontFamily( fontID ) {
-		const searchResults = this.searchFonts( fontID, Object.values( ogf_custom_fonts_unique ) );
-		return ogf_custom_fonts_unique[fontID] || fontID.replace( /\+/g, ' ' );
 	}
 
 	isSystemFont( fontID ) {
@@ -193,6 +188,26 @@ class GoogleFontsBlock extends Component {
 			}
 		}
 	}
+
+	getFontOutput( fontID ) {
+		if ( this.isSystemFont( fontID ) ) {
+			return fontID.replace( /\-/g, ' ' );
+		}
+
+		else if ( this.isTypekitFont( fontID ) ) {
+			return fontID
+		}
+
+		else if ( this.isCustomFont( fontID ) ) {
+			let fontObject = this.searchFonts( fontID, Object.values( ogf_custom_fonts ) );
+			console.log(fontObject);
+			return fontObject.family || fontID;
+		}
+
+		else {
+			return fontID.replace( /\+/g, ' ' );
+		}
+	};
 
 	/**
 	 * Add Google Font link to head in block editor.
@@ -283,7 +298,7 @@ class GoogleFontsBlock extends Component {
 			variantOptions = this.getVariantsForSelect( fontObject );
 			this.addGoogleFontToHead( fontID, fontObject );
 		}
-
+	
 		const controls = (
 			<InspectorControls>
 				<PanelBody title={ __( 'Font Settings', 'olympus-google-fonts' ) }>
@@ -365,7 +380,7 @@ class GoogleFontsBlock extends Component {
 					style={ {
 						fontSize: fontSize ? fontSize + 'px' : undefined,
 						textAlign: align,
-						fontFamily: this.getCustomFontFamily(fontID),
+						fontFamily: this.getFontOutput(fontID),
 						fontWeight: variant,
 						lineHeight: lineHeight,
 						color: color,
