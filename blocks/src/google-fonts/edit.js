@@ -200,7 +200,6 @@ class GoogleFontsBlock extends Component {
 
 		else if ( this.isCustomFont( fontID ) ) {
 			let fontObject = this.searchFonts( fontID, Object.values( ogf_custom_fonts ) );
-			console.log(fontObject);
 			return fontObject.family || fontID;
 		}
 
