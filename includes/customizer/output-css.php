@@ -204,7 +204,7 @@ function ogf_generate_css( $selector, $option_name ) {
  */
 function ogf_build_font_stack( $font_id ) {
 
-	$stack = 'sans-serif';
+	$stack = '';
 
 	if ( str_starts_with( $font_id, 'sf-' ) !== false ) {
 		$system_fonts = ogf_system_fonts();

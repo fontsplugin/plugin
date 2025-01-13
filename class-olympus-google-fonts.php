@@ -38,7 +38,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.8.3' );
+			define( 'OGF_VERSION', '3.9.0' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -103,15 +103,22 @@ class Olympus_Google_Fonts {
 		$theme_author       = strtolower( esc_attr( $current_theme->get( 'Author' ) ) );
 		$theme_author       = str_replace( ' ', '', $theme_author );
 		$author_compat_path = OGF_DIR_PATH . '/compatibility/' . $theme_author . '.php';
+
 		if ( file_exists( $author_compat_path ) ) {
 			require_once $author_compat_path;
 		}
+
 		if ( ogf_is_woocommerce_activated() ) {
 			require_once OGF_DIR_PATH . '/compatibility/woocommerce.php';
 		}
+
 		if ( ogf_is_memberpress_courses_activated() ) {
 			require_once OGF_DIR_PATH . '/compatibility/memberpress-courses.php';
 		}
+
+		require_once OGF_DIR_PATH . '/compatibility/elementor.php';
+		require_once OGF_DIR_PATH . '/compatibility/divi-builder.php';
+
 	}
 
 	/**
