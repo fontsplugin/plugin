@@ -1,3 +1,7 @@
+= 3.9.1 =
+
+* Apply font-weight, font-size and line-height from Customizer to Classic Editor
+
 = 3.9.0 =
 
 * Improve integration with Divi Builder and Elementor
