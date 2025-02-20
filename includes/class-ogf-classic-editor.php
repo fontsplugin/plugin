@@ -99,12 +99,22 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		 * @return array Modified Tiny MCE options.
 		 */
 		public function tinymce_custom_options( $opt ) {
-			$base_type     = get_theme_mod( 'ogf_body_font' );
-			$headings_type = get_theme_mod( 'ogf_headings_font' );
+			$base_type             = get_theme_mod( 'ogf_body_font' );
+			$base_font_size        = get_theme_mod( 'ogf_body_font_size', false );
+			$base_font_weight      = get_theme_mod( 'ogf_body_font_weight', false );
+			$base_font_line_height = get_theme_mod( 'ogf_body_line_height', false );
+
+			$content_type             = get_theme_mod( 'ogf_post_page_content_font' );
+			$content_font_size        = get_theme_mod( 'ogf_post_page_content_font_size', false );
+			$content_font_weight      = get_theme_mod( 'ogf_post_page_content_font_weight', false );
+			$content_font_line_height = get_theme_mod( 'ogf_post_page_content_line_height', false );
+
+			$headings_type        = get_theme_mod( 'ogf_headings_font' );
+			$headings_font_weight = get_theme_mod( 'ogf_headings_font_weight', false );
 
 			if ( ogf_is_custom_font( $base_type ) ) {
-				$name = str_replace( 'cf-', '', $base_type );
-				$font = OGF_Fonts_Taxonomy::get_by_name($name);
+				$name      = str_replace( 'cf-', '', $base_type );
+				$font      = OGF_Fonts_Taxonomy::get_by_name( $name );
 				$base_type = ! empty( $font['family'] ) ? $font['family'] : $name;
 			} elseif ( ogf_is_system_font( $base_type ) ) {
 				$base_type = str_replace( 'sf-', '', $base_type );
@@ -115,9 +125,22 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 				$base_type = $this->typekit_fonts[ $base_type ]['stack'] ?? $base_type;
 			}
 
+			if ( ogf_is_custom_font( $content_type ) ) {
+				$name         = str_replace( 'cf-', '', $content_type );
+				$font         = OGF_Fonts_Taxonomy::get_by_name( $name );
+				$content_type = ! empty( $font['family'] ) ? $font['family'] : $name;
+			} elseif ( ogf_is_system_font( $content_type ) ) {
+				$content_type = str_replace( 'sf-', '', $content_type );
+				$content_type = $this->typekit_fonts[ $content_type ]['stack'] ?? $content_type;
+			} elseif ( ogf_is_google_font( $content_type ) ) {
+				$content_type = $this->ogf_fonts->get_font_name( $content_type );
+			} elseif ( ogf_is_typekit_font( $content_type ) ) {
+				$content_type = $this->typekit_fonts[ $content_type ]['stack'] ?? $content_type;
+			}
+
 			if ( ogf_is_custom_font( $headings_type ) ) {
-				$name = str_replace( 'cf-', '', $headings_type );
-				$font = OGF_Fonts_Taxonomy::get_by_name($name);
+				$name          = str_replace( 'cf-', '', $headings_type );
+				$font          = OGF_Fonts_Taxonomy::get_by_name( $name );
 				$headings_type = ! empty( $font['family'] ) ? $font['family'] : $name;
 			} elseif ( ogf_is_system_font( $headings_type ) ) {
 				$headings_type = str_replace( 'sf-', '', $headings_type );
@@ -134,12 +157,46 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 				$opt['content_style'] = '';
 			}
 
+			$opt['content_style'] .= 'body#tinymce, body#tinymce p { ';
+
 			if ( $base_type !== 'default' ) {
-				$opt['content_style'] .= 'body#tinymce, body#tinymce p { font-family: ' . str_replace( '"', '\'', $base_type ) . ' !important; }';
+				$opt['content_style'] .= ' font-family: ' . str_replace( '"', '\'', $base_type ) . ' !important;';
 			}
+			if ( $base_font_size ) {
+				$opt['content_style'] .= ' font-size: ' . $base_font_size . 'px !important;';
+			}
+			if ( $base_font_weight ) {
+				$opt['content_style'] .= ' font-weight: ' . $base_font_weight . ' !important;';
+			}
+			if ( $base_font_line_height ) {
+				$opt['content_style'] .= ' line-height: ' . $base_font_line_height . ' !important;';
+			}
+
+			if ( $content_type !== 'default' ) {
+				$opt['content_style'] .= ' font-family: ' . str_replace( '"', '\'', $content_type ) . ' !important;';
+			}
+			if ( $content_font_size ) {
+				$opt['content_style'] .= ' font-size: ' . $content_font_size . 'px !important;';
+			}
+			if ( $content_font_weight ) {
+				$opt['content_style'] .= ' font-weight: ' . $content_font_weight . ' !important;';
+			}
+			if ( $content_font_line_height ) {
+				$opt['content_style'] .= ' line-height: ' . $content_font_line_height . ' !important;';
+			}
+
+			$opt['content_style'] .= '}';
+
+			$opt['content_style'] .= '#tinymce h1, #tinymce h2, #tinymce h3, #tinymce h4, #tinymce h5, #tinymce h6 {';
+
 			if ( $headings_type !== 'default' ) {
-				$opt['content_style'] .= '#tinymce h1, #tinymce h2, #tinymce h3, #tinymce h4, #tinymce h5, #tinymce h6 { font-family: ' . str_replace( '"', '\'', $headings_type ) . ' !important; }';
+				$opt['content_style'] .= ' font-family: ' . str_replace( '"', '\'', $headings_type ) . ' !important;';
 			}
+			if ( $headings_font_weight ) {
+				$opt['content_style'] .= ' font-weight: ' . $headings_font_weight . ' !important;';
+			}
+
+			$opt['content_style'] .= '}';
 
 			$opt['content_style'] .= ogf_return_custom_font_css();
 			return $opt;
