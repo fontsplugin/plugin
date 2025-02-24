@@ -236,14 +236,15 @@
 					const sliderMaxValue = parseInt( slider.attr( 'slider-max-value' ) );
 
 					// Make sure our manual input value doesn't exceed the minimum & maxmium values
-					if ( resetValue < sliderMinValue ) {
+					if ( resetValue && resetValue < sliderMinValue ) {
 						resetValue = sliderMinValue;
 						jQuery( this ).val( resetValue );
 					}
-					if ( resetValue > sliderMaxValue ) {
+					if ( resetValue && resetValue > sliderMaxValue ) {
 						resetValue = sliderMaxValue;
 						jQuery( this ).val( resetValue );
 					}
+
 					jQuery( this ).parent().find( '.slider' ).slider( 'value', resetValue );
 				} );
 			},
