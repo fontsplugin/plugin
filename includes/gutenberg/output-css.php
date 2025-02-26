@@ -43,6 +43,11 @@ function ogf_gutenberg_output_css() {
 }
 add_action( 'admin_head', 'ogf_gutenberg_output_css' );
 
+/**
+ * Build the CSS rules for the Gutenberg editor.
+ *
+ * @return string The compiled CSS rules.
+ */
 function ogf_gutenberg_build_css() {
 	$elements = array(
 		'ogf_body'              => array(

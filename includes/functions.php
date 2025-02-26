@@ -160,7 +160,11 @@ function ogf_get_elements() {
  * @return array All Google Fonts.
  */
 function ogf_fonts_array() {
-	$fonts = array();
+	static $fonts = array();
+
+	if ( ! empty( $fonts ) ) {
+		return $fonts;
+	}
 
 	$fonts_json = file_get_contents( OGF_DIR_PATH . '/blocks/src/google-fonts/fonts.json' );
 
@@ -439,4 +443,14 @@ function ogf_is_fpp_activated() {
 	} else {
 		return false;
 	}
+}
+
+function ogf_build_font_stack($font_id) {
+	$google_fonts = ogf_fonts_array(); // Already cached at source
+	
+	if (isset($google_fonts[$font_id]['f'])) {
+		return '"' . $google_fonts[$font_id]['f'] . '"';
+	}
+	
+	return '';
 }
