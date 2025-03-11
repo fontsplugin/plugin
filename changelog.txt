@@ -1,3 +1,7 @@
+= 3.9.2 =
+
+* Add control panel for Elementor (headings/buttons)
+
 = 3.9.1 =
 
 * Apply font-weight, font-size and line-height from Customizer to Classic Editor
