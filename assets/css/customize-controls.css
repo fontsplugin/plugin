@@ -6,6 +6,7 @@
 #customize-theme-controls #sub-accordion-section-ogf_basic,
 #customize-theme-controls #sub-accordion-section-ogf_theme,
 #customize-theme-controls #sub-accordion-section-ogf_woocommerce,
+#customize-theme-controls #sub-accordion-section-ogf_elementor,
 #customize-theme-controls #sub-accordion-section-ogf_wc_shop,
 #customize-theme-controls #sub-accordion-section-ogf_wc_single,
 #customize-theme-controls #sub-accordion-section-ogf_wc_block,
@@ -27,7 +28,9 @@
 }
 
 #customize-control-ogf_headings_typography .typography-font-size,
-#customize-control-ogf_headings_typography .typography-line-height {
+#customize-control-ogf_headings_typography .typography-line-height,
+#customize-control-ogf_elementor_heading_typography .typography-font-size,
+#customize-control-ogf_elementor_heading_typography .typography-line-height {
 	display: none;
 }
 

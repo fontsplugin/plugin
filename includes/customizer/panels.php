@@ -212,7 +212,7 @@ function ogf_panels_customize_register( $wp_customize ) {
 		);
 	}
 
-	if ( ogf_is_memberpress_courses_activated() ) {
+	if ( ogf_is_elementor_activated() ) {
 		$ogf_memberspress_courses_panel = new OGF_Customize_Panel(
 			$wp_customize,
 			'ogf_memberpress',
@@ -225,10 +225,22 @@ function ogf_panels_customize_register( $wp_customize ) {
 		$wp_customize->add_panel( $ogf_memberspress_courses_panel );
 
 		$wp_customize->add_section(
-			'ogf_memberpress_courses',
+			'ogf_elementor',
 			array(
 				'title' => esc_html__( 'MemberPress Courses', 'olympus-google-fonts' ),
 				'panel' => 'ogf_memberpress',
+			)
+		);
+	}
+
+	if ( ogf_is_elementor_activated() ) {
+
+		$wp_customize->add_section(
+			'ogf_elementor',
+			array(
+				'title'       => esc_html__( 'Elementor', 'olympus-google-fonts' ),
+				'description' => __( 'These styles only apply to elements added using the Elementor plugin.', 'olympus-google-fonts' ),
+				'panel'       => 'ogf_google_fonts',
 			)
 		);
 	}

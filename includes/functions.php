@@ -435,6 +435,16 @@ function ogf_is_memberpress_courses_activated() {
 }
 
 /**
+ * Check if MemberPress Courses is activated.
+ */
+function ogf_is_elementor_activated() {
+	if ( defined( 'ELEMENTOR_VERSION' ) ) {
+		return true;
+	}
+	return false;
+}
+
+/**
  * Check if Fonts Plugin Pro is activated.
  */
 function ogf_is_fpp_activated() {
@@ -443,14 +453,4 @@ function ogf_is_fpp_activated() {
 	} else {
 		return false;
 	}
-}
-
-function ogf_build_font_stack($font_id) {
-	$google_fonts = ogf_fonts_array(); // Already cached at source
-	
-	if (isset($google_fonts[$font_id]['f'])) {
-		return '"' . $google_fonts[$font_id]['f'] . '"';
-	}
-	
-	return '';
 }

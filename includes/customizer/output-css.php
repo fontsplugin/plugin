@@ -241,7 +241,6 @@ function ogf_build_font_stack( $font_id ) {
 			$stack = $typekit_fonts[ $font_id ]['stack'];
 		}
 	} else {
-
 		$google_fonts = ogf_fonts_array();
 
 		if ( array_key_exists( $font_id, $google_fonts ) ) {
