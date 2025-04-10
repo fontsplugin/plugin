@@ -34,7 +34,7 @@ register_block_type(
 			),
 			'variant'    => array(
 				'type'    => 'string',
-				'default' => 'normal',
+				'default' => '',
 			),
 			'fontSize'   => array(
 				'type' => 'number',
