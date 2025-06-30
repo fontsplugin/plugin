@@ -1,3 +1,7 @@
+= 3.9.4 =
+
+* Add Fonts Plugin fonts to Gutenberg (if the theme supports it).
+
 = 3.9.3 =
 
 * Don't default to adding 'font-weight:normal' to Fonts Plugin block.

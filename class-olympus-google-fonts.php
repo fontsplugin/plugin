@@ -38,7 +38,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.9.3' );
+			define( 'OGF_VERSION', '3.9.4' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -57,6 +57,7 @@ class Olympus_Google_Fonts {
 		// Required files for the Gutenberg editor.
 		require_once OGF_DIR_PATH . 'blocks/init.php';
 		require_once OGF_DIR_PATH . 'includes/gutenberg/output-css.php';
+		require_once OGF_DIR_PATH . 'includes/gutenberg/class-ogf-gutenberg-filters.php';
 
 		// Custom uploads functionality.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-fonts-taxonomy.php';
