@@ -149,8 +149,8 @@ class OGF_Typekit {
 	public function get_kits() {
 
 		// Reset the data if the user has clicked the button.
-		if ( current_user_can('administrator') && isset( $_GET['action'] ) && $_GET['action'] === 'reset' ) {
-			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-reset')) {
+		if ( current_user_can('administrator') && isset( $_GET['action'] ) && sanitize_text_field( $_GET['action'] ) === 'reset' ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ), 'ogf-typekit-reset')) {
 				return;
 			}
 
@@ -238,9 +238,11 @@ class OGF_Typekit {
 			return;
 		}
 
+		$action = sanitize_text_field( $_GET['action'] );
+
 		// Reset the data if the user has clicked the button.
-		if ( $_GET['action'] === 'disable' && isset( $_GET['kit_id'] ) ) {
-			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-disable')) {
+		if ( $action === 'disable' && isset( $_GET['kit_id'] ) ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ), 'ogf-typekit-disable')) {
 				return;
 			}
 
@@ -251,8 +253,8 @@ class OGF_Typekit {
 		}
 
 		// Reset the data if the user has clicked the button.
-		if ( $_GET['action'] === 'enable' && isset( $_GET['kit_id'] ) ) {
-			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-enable')) {
+		if ( $action === 'enable' && isset( $_GET['kit_id'] ) ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( $_GET['_wpnonce'] ), 'ogf-typekit-enable')) {
 				return;
 			}
 

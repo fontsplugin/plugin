@@ -80,7 +80,7 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 		 * Backup method to remove notice.
 		 */
 		public function dismiss_notice_backup() {
-			if ( isset( $_GET['dismiss_ogf_welcome'] ) ) {
+			if ( isset( $_GET['dismiss_ogf_welcome'] ) && isset( $_GET['_wpnonce'] ) && wp_verify_nonce( $_GET['_wpnonce'], 'ogf_dismiss_notice' ) ) {
 				update_option( 'dismissed-' . $this->slug, true );
 			}
 		}

@@ -409,8 +409,13 @@ class OGF_Upload_Fonts_Screen {
 	 * @param int $term_id current term id.
 	 */
 	public function save_metadata( $term_id ) {
-		if ( isset( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) ) {// phpcs:ignore WordPress.Security.NonceVerification.Missing
-			$value = array_map( 'esc_attr', $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		// Verify nonce for security
+		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], 'update-tag_' . $term_id ) ) {
+			return;
+		}
+
+		if ( isset( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) ) {
+			$value = array_map( 'esc_attr', $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] );
 			OGF_Fonts_Taxonomy::update_font_data( $value, $term_id );
 		}
 	}
