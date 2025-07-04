@@ -175,7 +175,7 @@ class OGF_Typekit {
 		$curl_args = array();
 		$response  = wp_remote_request( $url . '?token=' . esc_attr( $this->get_api_key() ), $curl_args );
 
-		if ( wp_remote_retrieve_response_code( $response ) != '200' ) {
+		if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
 			return;
 		}
 

@@ -37,23 +37,29 @@ class OGF_Fonts {
 	 * Get the users font choices.
 	 */
 	public function get_choices() {
+		// Get all theme mods in one database call instead of multiple calls
+		$all_theme_mods = get_theme_mods();
+		
 		$elements = array_keys( ogf_get_elements() );
 
 		foreach ( $elements as $element ) {
-			if ( get_theme_mod( $element . '_font' ) && get_theme_mod( $element . '_font' ) !== 'default' ) {
-				$this->choices[] = get_theme_mod( $element . '_font' );
+			$font_mod_key = $element . '_font';
+			if ( isset( $all_theme_mods[ $font_mod_key ] ) && $all_theme_mods[ $font_mod_key ] !== 'default' ) {
+				$this->choices[] = $all_theme_mods[ $font_mod_key ];
 			}
 		}
 
 		$elements = array_keys( ogf_get_custom_elements() );
 
 		foreach ( $elements as $element ) {
-			if ( get_theme_mod( $element . '_font' ) && get_theme_mod( $element . '_font' ) !== 'default' ) {
-				$this->choices[] = get_theme_mod( $element . '_font' );
+			$font_mod_key = $element . '_font';
+			if ( isset( $all_theme_mods[ $font_mod_key ] ) && $all_theme_mods[ $font_mod_key ] !== 'default' ) {
+				$this->choices[] = $all_theme_mods[ $font_mod_key ];
 			}
 		}
 
-		$load_fonts_css = get_theme_mod( 'ogf_load_fonts', array() );
+		// Use cached theme mods data instead of separate call
+		$load_fonts_css = isset( $all_theme_mods['ogf_load_fonts'] ) ? $all_theme_mods['ogf_load_fonts'] : array();
 
 		if ( is_array( $load_fonts_css ) ) {
 			foreach ( $load_fonts_css as $key => $value ) {
@@ -202,9 +208,18 @@ class OGF_Fonts {
 
 		if ( false === ( $external_font_css ) ) {
 			// It wasn't there, so regenerate the data and save the transient.
-			$external_font_css  = '/* Cached: ' . date( 'F j, Y \a\t g:ia' ) . ' */' . PHP_EOL;
-			$external_font_css .= $this->get_remote_url_contents( $url ) . PHP_EOL;
-			set_transient( 'ogf_external_font_css_' . $url_to_id, $external_font_css, DAY_IN_SECONDS );
+			$remote_css = $this->get_remote_url_contents( $url );
+			
+			// Only cache if we successfully retrieved CSS content
+			if ( ! empty( $remote_css ) ) {
+				$external_font_css  = '/* Cached: ' . date( 'F j, Y \a\t g:ia' ) . ' */' . PHP_EOL;
+				$external_font_css .= $remote_css . PHP_EOL;
+				set_transient( 'ogf_external_font_css_' . $url_to_id, $external_font_css, DAY_IN_SECONDS );
+			} else {
+				// Don't cache empty/failed responses - try again next time
+				// Return fallback import statement instead
+				$external_font_css = "@import url('" . esc_url( $url ) . "');" . PHP_EOL;
+			}
 		}
 
 		return $external_font_css;

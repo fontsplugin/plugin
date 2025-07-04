@@ -166,10 +166,30 @@ function ogf_fonts_array() {
 		return $fonts;
 	}
 
-	$fonts_json = file_get_contents( OGF_DIR_PATH . '/blocks/src/google-fonts/fonts.json' );
+	$fonts_file = OGF_DIR_PATH . '/blocks/src/google-fonts/fonts.json';
+	
+	// Check if file exists and is readable before attempting to read it
+	if ( ! file_exists( $fonts_file ) || ! is_readable( $fonts_file ) ) {
+		error_log( 'Olympus Google Fonts: fonts.json file is missing or unreadable at ' . $fonts_file );
+		return array(); // Return empty array instead of causing fatal error
+	}
+	
+	$fonts_json = file_get_contents( $fonts_file );
+	
+	// Validate that file_get_contents succeeded
+	if ( false === $fonts_json ) {
+		error_log( 'Olympus Google Fonts: Failed to read fonts.json file' );
+		return array();
+	}
 
 	// Change the object to a multidimensional array.
 	$fonts_array = json_decode( $fonts_json, true );
+	
+	// Validate JSON decode was successful
+	if ( null === $fonts_array || JSON_ERROR_NONE !== json_last_error() ) {
+		error_log( 'Olympus Google Fonts: Invalid JSON in fonts.json file. Error: ' . json_last_error_msg() );
+		return array();
+	}
 
 	// Format the variants array for easier use.
 	foreach ( $fonts_array as $key => $font ) {
