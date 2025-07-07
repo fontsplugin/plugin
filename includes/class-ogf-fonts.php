@@ -49,14 +49,7 @@ class OGF_Fonts {
 	 * External plugins/code can still use 'new OGF_Fonts()'.
 	 */
 	public function __construct() {
-		// If this is not the singleton instance, just initialize normally for backward compatibility.
-		if ( null !== self::$instance && self::$instance !== $this ) {
-			// This is a separate instance for backward compatibility.
-			$this->initialize();
-			return;
-		}
-
-		// This is the singleton instance.
+		// Initialize the instance (works for both singleton and backward compatibility instances).
 		$this->initialize();
 	}
 
