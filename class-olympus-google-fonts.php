@@ -38,7 +38,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '3.9.4' );
+			define( 'OGF_VERSION', '3.9.5' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -133,7 +133,7 @@ class Olympus_Google_Fonts {
 	 * Enqueue the Google Fonts URL.
 	 */
 	public function enqueue() {
-		$fonts = new OGF_Fonts();
+		$fonts = OGF_Fonts::get_instance();
 
 		if ( ! $fonts->has_google_fonts() ) {
 			return;
@@ -164,7 +164,7 @@ class Olympus_Google_Fonts {
 			return $urls;
 		}
 
-		$fonts = new OGF_Fonts();
+		$fonts = OGF_Fonts::get_instance();
 
 		// If no Google Fonts are being used we don't need this.
 		if ( ! $fonts->has_google_fonts() ) {

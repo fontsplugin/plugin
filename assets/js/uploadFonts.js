@@ -50,8 +50,6 @@
       			// Finally, open the modal
 				file_frame.open();
 			});
-			var file_frame;
-			window.inputWrapper = '';
 		},
 	}
 

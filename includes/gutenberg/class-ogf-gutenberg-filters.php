@@ -35,7 +35,7 @@ class OGF_Gutenberg_Filters {
 			);
 		}
 
-		$fonts = new OGF_Fonts();
+		$fonts = OGF_Fonts::get_instance();
 		$fonts = $fonts->choices;
 
 		if ( ! empty( $fonts ) ) {

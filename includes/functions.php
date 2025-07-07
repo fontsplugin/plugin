@@ -155,6 +155,17 @@ function ogf_get_elements() {
 }
 
 /**
+ * Get the OGF_Fonts singleton instance.
+ *
+ * @return OGF_Fonts The singleton instance.
+ */
+function ogf_get_fonts_instance() {
+	return OGF_Fonts::get_instance();
+}
+
+
+
+/**
  * Return an array of all available Google Fonts.
  *
  * @return array All Google Fonts.
@@ -166,20 +177,26 @@ function ogf_fonts_array() {
 		return $fonts;
 	}
 
-	$fonts_json = file_get_contents( OGF_DIR_PATH . '/blocks/src/google-fonts/fonts.json' );
+	$fonts_file = OGF_DIR_PATH . '/blocks/src/google-fonts/fonts.json';
 
-	// Change the object to a multidimensional array.
-	$fonts_array = json_decode( $fonts_json, true );
-
-	// Format the variants array for easier use.
-	foreach ( $fonts_array as $key => $font ) {
-		$fonts_array[ $key ] = $font;
+	if ( ! file_exists( $fonts_file ) ) {
+		return array();
 	}
 
-	// Change the array key to the font's ID.
+	$fonts_json = file_get_contents( $fonts_file );
+	if ( false === $fonts_json ) {
+		return array();
+	}
+
+	$fonts_array = json_decode( $fonts_json, true );
+	if ( null === $fonts_array ) {
+		return array();
+	}
+
+	// Existing processing logic...
 	foreach ( $fonts_array as $font ) {
-		$id                = trim( strtolower( str_replace( ' ', '-', $font['f'] ) ) );
-		$fonts[ $id ]      = $font;
+		$id = trim( strtolower( str_replace( ' ', '-', $font['f'] ) ) );
+		$fonts[ $id ] = $font;
 		$fonts[ $id ]['v'] = array_flip( $fonts[ $id ]['v'] );
 	}
 

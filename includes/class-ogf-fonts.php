@@ -26,11 +26,63 @@ class OGF_Fonts {
 	public $choices = array();
 
 	/**
-	 * Let's get started.
+	 * Single instance of the class.
+	 *
+	 * @var OGF_Fonts|null
+	 */
+	private static $instance = null;
+
+	/**
+	 * Get the singleton instance.
+	 *
+	 * @return OGF_Fonts
+	 */
+	public static function get_instance() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * Constructor - made public for backward compatibility.
+	 * External plugins/code can still use 'new OGF_Fonts()'.
 	 */
 	public function __construct() {
-		self::$google_fonts = ogf_fonts_array();
+		// If this is not the singleton instance, just initialize normally for backward compatibility.
+		if ( null !== self::$instance && self::$instance !== $this ) {
+			// This is a separate instance for backward compatibility.
+			$this->initialize();
+			return;
+		}
+
+		// This is the singleton instance.
+		$this->initialize();
+	}
+
+	/**
+	 * Initialize the font data and choices.
+	 */
+	private function initialize() {
+		// Only load fonts array if not already loaded.
+		if ( empty( self::$google_fonts ) ) {
+			self::$google_fonts = ogf_fonts_array();
+		}
 		$this->get_choices();
+	}
+
+	/**
+	 * Prevent cloning of the instance.
+	 */
+	private function __clone() {}
+
+	/**
+	 * Prevent unserialization of the instance.
+	 *
+	 * @throws Exception When attempting to unserialize.
+	 */
+	public function __wakeup() {
+		throw new Exception( 'Cannot unserialize singleton' );
 	}
 
 	/**
@@ -77,6 +129,16 @@ class OGF_Fonts {
 	 * @param string $font_id The font ID.
 	 */
 	public function get_font_weights( $font_id ) {
+		// Check if font exists in the array.
+		if ( ! array_key_exists( $font_id, self::$google_fonts ) ) {
+			return array();
+		}
+
+		// Check if the font has variants data.
+		if ( ! isset( self::$google_fonts[ $font_id ]['v'] ) ) {
+			return array();
+		}
+
 		$weights = self::$google_fonts[ $font_id ]['v'];
 
 		if ( ! is_array( $weights ) ) {
@@ -94,6 +156,16 @@ class OGF_Fonts {
 	 * @param string $font_id The font ID.
 	 */
 	public function get_font_subsets( $font_id ) {
+		// Check if font exists in the array.
+		if ( ! array_key_exists( $font_id, self::$google_fonts ) ) {
+			return array();
+		}
+
+		// Check if the font has subsets data.
+		if ( ! isset( self::$google_fonts[ $font_id ]['s'] ) ) {
+			return array();
+		}
+
 		$subsets = self::$google_fonts[ $font_id ]['s'];
 
 		if ( ! is_array( $subsets ) ) {
@@ -112,7 +184,7 @@ class OGF_Fonts {
 	 * @param string $font_id The font ID.
 	 */
 	public function get_font_name( $font_id ) {
-		if ( array_key_exists( $font_id, self::$google_fonts ) ) {
+		if ( array_key_exists( $font_id, self::$google_fonts ) && isset( self::$google_fonts[ $font_id ]['f'] ) ) {
 			return self::$google_fonts[ $font_id ]['f'];
 		} else {
 			return __( 'Font Missing', 'olympus-google-fonts' );
@@ -202,7 +274,7 @@ class OGF_Fonts {
 
 		if ( false === ( $external_font_css ) ) {
 			// It wasn't there, so regenerate the data and save the transient.
-			$external_font_css  = '/* Cached: ' . date( 'F j, Y \a\t g:ia' ) . ' */' . PHP_EOL;
+			$external_font_css  = '/* Cached: ' . gmdate( 'F j, Y \a\t g:ia' ) . ' */' . PHP_EOL;
 			$external_font_css .= $this->get_remote_url_contents( $url ) . PHP_EOL;
 			set_transient( 'ogf_external_font_css_' . $url_to_id, $external_font_css, DAY_IN_SECONDS );
 		}

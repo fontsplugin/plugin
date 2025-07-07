@@ -96,7 +96,8 @@ class OGF_Upload_Fonts_Screen {
 		if ( 'edit-tags.php?taxonomy=' . OGF_Fonts_Taxonomy::$taxonomy_slug === $submenu_file ) {
 			$parent_file = $this->parent_menu_slug; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 		}
-		if ( get_current_screen()->id != 'edit-' . OGF_Fonts_Taxonomy::$taxonomy_slug ) {
+		$screen = get_current_screen();
+		if ( ! $screen || $screen->id != 'edit-' . OGF_Fonts_Taxonomy::$taxonomy_slug ) {
 			return;
 		}
 
@@ -117,6 +118,9 @@ class OGF_Upload_Fonts_Screen {
 	 */
 	public function manage_columns( $columns ) {
 		$screen = get_current_screen();
+		if ( ! $screen || $screen->id != 'edit-' . OGF_Fonts_Taxonomy::$taxonomy_slug ) {
+			return;
+		}
 		// If current screen is add new custom fonts screen.
 		if ( isset( $screen->base ) && 'edit-tags' == $screen->base ) {
 			$old_columns = $columns;
@@ -416,19 +420,42 @@ class OGF_Upload_Fonts_Screen {
 	}
 
 	/**
+	 * Get the correct MIME type for a font file extension.
+	 *
+	 * @param string $extension The file extension.
+	 * @return string The MIME type.
+	 */
+	private function get_font_mime_type( $extension ) {
+		switch ( $extension ) {
+			case 'ttf':
+				$php_7_ttf_mime_type = PHP_VERSION_ID >= 70300 ? 'application/font-sfnt' : 'application/x-font-ttf';
+				return PHP_VERSION_ID >= 70400 ? 'font/sfnt' : $php_7_ttf_mime_type;
+
+			case 'otf':
+				return 'application/vnd.ms-opentype';
+
+			case 'woff':
+				return PHP_VERSION_ID >= 80112 ? 'font/woff' : 'application/font-woff';
+
+			case 'woff2':
+				return PHP_VERSION_ID >= 80112 ? 'font/woff2' : 'application/font-woff2';
+
+			default:
+				return '';
+		}
+	}
+
+	/**
 	 * Add WOFF and WOFF2 to the allowed mime types.
 	 *
 	 * @param array $mimes Current array of mime types.
 	 * @return array $mimes Updated array of mime types.
 	 */
 	public function add_to_allowed_mimes( $mimes ) {
-
-		$php_7_ttf_mime_type = PHP_VERSION_ID >= 70300 ? 'application/font-sfnt' : 'application/x-font-ttf';
-
-		$mimes['otf']   = 'application/vnd.ms-opentype';
-		$mimes['ttf']   = PHP_VERSION_ID >= 70400 ? 'font/sfnt' : $php_7_ttf_mime_type;
-		$mimes['woff']  = PHP_VERSION_ID >= 80112 ? 'font/woff' : 'application/font-woff';
-		$mimes['woff2'] = PHP_VERSION_ID >= 80112 ? 'font/woff2' : 'application/font-woff2';
+		$mimes['otf']   = $this->get_font_mime_type( 'otf' );
+		$mimes['ttf']   = $this->get_font_mime_type( 'ttf' );
+		$mimes['woff']  = $this->get_font_mime_type( 'woff' );
+		$mimes['woff2'] = $this->get_font_mime_type( 'woff2' );
 
 		return $mimes;
 	}
@@ -444,14 +471,14 @@ class OGF_Upload_Fonts_Screen {
 	 * @return Array File data array containing 'ext', 'type', and
 	 */
 	public function update_mime_types( $defaults, $file, $filename ) {
-		if ( 'ttf' === pathinfo( $filename, PATHINFO_EXTENSION ) ) {
-			$defaults['type'] = 'application/x-font-ttf';
-			$defaults['ext']  = 'ttf';
-		}
+		$extension = strtolower( pathinfo( $filename, PATHINFO_EXTENSION ) );
 
-		if ( 'otf' === pathinfo( $filename, PATHINFO_EXTENSION ) ) {
-			$defaults['type'] = 'application/x-font-otf';
-			$defaults['ext']  = 'otf';
+		// Get the MIME type using the same logic as add_to_allowed_mimes().
+		$mime_type = $this->get_font_mime_type( $extension );
+
+		if ( ! empty( $mime_type ) ) {
+			$defaults['type'] = $mime_type;
+			$defaults['ext']  = $extension;
 		}
 
 		return $defaults;

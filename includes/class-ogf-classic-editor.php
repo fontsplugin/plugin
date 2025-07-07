@@ -49,7 +49,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 				return;
 			}
 
-			$this->ogf_fonts     = new OGF_Fonts();
+			$this->ogf_fonts     = OGF_Fonts::get_instance();
 			$this->system_fonts  = ogf_system_fonts();
 			$this->custom_fonts  = ogf_custom_fonts();
 			$this->typekit_fonts = ogf_typekit_fonts();

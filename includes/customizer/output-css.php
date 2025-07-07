@@ -207,7 +207,6 @@ function ogf_build_font_stack( $font_id ) {
 	// Try to get cached font stack first.
 	$cache_key    = 'ogf_font_stack_' . md5( $font_id );
 	$cached_stack = wp_cache_get( $cache_key );
-	
 	if ( $cached_stack !== false ) {
 		return $cached_stack;
 	}
@@ -215,14 +214,14 @@ function ogf_build_font_stack( $font_id ) {
 	// Initialize stack.
 	$stack = '';
 
-	if ( str_starts_with( $font_id, 'sf-' ) !== false ) {
+	if ( 0 === strpos( $font_id, 'sf-' ) ) {
 		$system_fonts = ogf_system_fonts();
 		$font_id      = str_replace( 'sf-', '', $font_id );
 
 		if ( array_key_exists( $font_id, $system_fonts ) ) {
 			$stack = $system_fonts[ $font_id ]['stack'];
 		}
-	} elseif ( str_starts_with( $font_id, 'cf-' ) !== false ) {
+	} elseif ( 0 === strpos( $font_id, 'cf-' ) ) {
 		$custom_fonts = ogf_custom_fonts();
 		$font_id      = str_replace( 'cf-', '', $font_id );
 
@@ -234,7 +233,7 @@ function ogf_build_font_stack( $font_id ) {
 			}
 			$stack = '"' . $font . '"';
 		}
-	} elseif ( str_starts_with( $font_id, 'tk-' ) !== false ) {
+	} elseif ( 0 === strpos( $font_id, 'tk-' ) ) {
 		$typekit_fonts = ogf_typekit_fonts();
 
 		if ( array_key_exists( $font_id, $typekit_fonts ) ) {
@@ -249,8 +248,7 @@ function ogf_build_font_stack( $font_id ) {
 	}
 
 	// Cache the result.
-    wp_cache_set( $cache_key, $stack, 'ogf_font_stacks', HOUR_IN_SECONDS );
-    
+	wp_cache_set( $cache_key, $stack, 'ogf_font_stacks', HOUR_IN_SECONDS );
 	// Allow filtering of the final stack.
 	return apply_filters( "ogf_{$font_id}_stack", $stack );
 }

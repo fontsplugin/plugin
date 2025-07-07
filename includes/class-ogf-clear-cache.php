@@ -89,7 +89,7 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 		 * Perform the Cache Clear.
 		 */
 		public function clear() {
-			$fonts = new OGF_Fonts();
+			$fonts = OGF_Fonts::get_instance();
 
 			if ( $fonts->has_google_fonts() ) {
 				$url       = $fonts->build_url();

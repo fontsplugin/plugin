@@ -275,7 +275,7 @@ class GoogleFontsBlock extends Component {
 				label: __('Medium', 'olympus-google-fonts' ),
 			},
 			{
-				value: '500',
+				value: '600',
 				label: __('Semi Bold', 'olympus-google-fonts' ),
 			},
 			{

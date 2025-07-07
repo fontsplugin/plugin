@@ -137,7 +137,8 @@ class OGF_Typekit {
 	 * Quickly add inline CSS styles.
 	 */
 	public function css_styles() {
-		if ( get_current_screen()->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
+		$screen = get_current_screen();
+		if ( ! $screen || $screen->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
 			return;
 		}
 		echo '<style>.fp-typekit-results > ul {padding: 0 0 .5rem .5rem}</style>';
@@ -158,7 +159,8 @@ class OGF_Typekit {
 		}
 
 		// Only perform action on the Fonts Plugin Typekit Page.
-		if ( get_current_screen()->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
+		$screen = get_current_screen();
+		if ( ! $screen || $screen->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
 			return;
 		}
 
@@ -230,7 +232,8 @@ class OGF_Typekit {
 	 */
 	public function manage_kits() {
 		// Only perform action on the Fonts Plugin Typekit Page.
-		if ( get_current_screen()->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
+		$screen = get_current_screen();
+		if ( ! $screen || $screen->id !== 'fonts-plugin_page_fonts-plugin-typekit' ) {
 			return;
 		}
 

@@ -1,3 +1,11 @@
+  = 3.9.5 =
+  
+  * Fix error when use Blubrry podcast plugin
+  * Fix null reference errors when get_current_screen() returns null
+  * Fix memory leak by implementing singleton pattern for font loading with backward compatibility
+  * Fix PHP 8.0+ compatibility by replacing str_starts_with() with strpos()
+  * Fix inconsistent MIME type handling for font file uploads
+
 = 3.9.4 =
 
 * Add Fonts Plugin fonts to Gutenberg (if the theme supports it).
