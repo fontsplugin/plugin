@@ -1,5 +1,9 @@
-  = 3.9.5 =
-  
+= 3.9.6 =
+
+* Fix issue where if all theme fonts are removed, an error is thrown.
+
+= 3.9.5 =
+
   * Fix error when use Blubrry podcast plugin
   * Fix null reference errors when get_current_screen() returns null
   * Fix memory leak by implementing singleton pattern for font loading with backward compatibility

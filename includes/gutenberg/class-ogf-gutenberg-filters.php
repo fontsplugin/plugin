@@ -16,7 +16,7 @@ class OGF_Gutenberg_Filters {
 	 * Constructor.
 	 */
 	public function __construct() {
-		add_filter( 'wp_theme_json_data_user', array( $this, 'add_font_families' ), 10, 1 );
+		add_filter( 'wp_theme_json_data_default', array( $this, 'add_font_families' ), 10, 1 );
 	}
 
 	/**

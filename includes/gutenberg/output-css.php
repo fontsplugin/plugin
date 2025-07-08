@@ -21,7 +21,7 @@ function ogf_gutenberg_enqueue_fonts() {
 add_action( 'enqueue_block_editor_assets', 'ogf_gutenberg_enqueue_fonts' );
 
 /**
- * Output the font CSS to wp_head.
+ * Output the font CSS to admin_head.
  */
 function ogf_gutenberg_output_css() {
 	// Only load on Gutenberg-enabled pages.
