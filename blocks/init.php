@@ -60,13 +60,24 @@ register_block_type(
  * Enqueue Gutenberg block assets for backend editor.
  */
 function olympus_google_fonts_block_js() {
+	$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
+	
 	wp_enqueue_script(
 		'olympus-google-fonts-block-js',
-		plugins_url( '/dist/blocks.build.js', __FILE__ ),
-		array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-block-editor' ),
-		OGF_VERSION,
+		plugins_url( '/build/index.js', __FILE__ ),
+		$asset_file['dependencies'],
+		$asset_file['version'],
 		false
 	);
+	
+	// Enqueue editor styles
+	wp_enqueue_style(
+		'olympus-google-fonts-block-editor-css',
+		plugins_url( '/build/index.css', __FILE__ ),
+		array( 'wp-edit-blocks' ),
+		$asset_file['version']
+	);
+	
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts_unique', ogf_custom_fonts_unique() );
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts', ogf_custom_fonts() );
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_typekit_fonts', ogf_typekit_fonts() );

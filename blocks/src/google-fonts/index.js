@@ -2,11 +2,11 @@
  * BLOCK: Google Fonts
  */
 
+import { __ } from '@wordpress/i18n';
+import { registerBlockType } from '@wordpress/blocks';
+
 import edit from './edit';
 import transforms from './transforms';
-
-const { __ } = wp.i18n;
-const { registerBlockType } = wp.blocks;
 
 registerBlockType( 'olympus-google-fonts/google-fonts', {
 	title: __( 'Fonts Plugin', 'olympus-google-fonts' ),

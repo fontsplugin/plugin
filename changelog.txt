@@ -1,3 +1,17 @@
+= 3.9.7 =
+
+* Migrate build system from cgb-scripts to @wordpress/scripts for improved compatibility
+* Fix TypeError in RangeControl components by using numeric props instead of strings
+* Add type safety to prevent toFixed() errors in block editor
+* Improve Gutenberg font family management with better deduplication and merging logic
+* Add custom font CSS injection to Gutenberg block editor iframe
+* Enhance font slug sanitization using sanitize_title() for better compatibility
+* Improve error handling in font registration with defensive array checking
+* Prevent duplicate font families in Gutenberg font picker
+* Modernize block development workflow with hot reloading and better tooling
+* Update asset management to use automatic dependency injection
+* Replace dist/ directory with build/ directory following WordPress standards
+
 = 3.9.6 =
 
 * Fix issue where if all theme fonts are removed, an error is thrown.

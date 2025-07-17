@@ -3,10 +3,11 @@
  */
 import fontsJson from './fonts.json';
 import systemFontsJson from './systemFonts.json';
-const { __ } = wp.i18n;
-const { Component, Fragment } = wp.element;
-const { SelectControl, RangeControl, PanelBody } = wp.components;
-const { RichText, InspectorControls, BlockControls, AlignmentToolbar, PanelColorSettings } = wp.blockEditor;
+
+import { __ } from '@wordpress/i18n';
+import { Component, Fragment } from '@wordpress/element';
+import { SelectControl, RangeControl, PanelBody } from '@wordpress/components';
+import { RichText, InspectorControls, BlockControls, AlignmentToolbar, PanelColorSettings } from '@wordpress/block-editor';
 
 class GoogleFontsBlock extends Component {
 
@@ -336,17 +337,17 @@ class GoogleFontsBlock extends Component {
 						value={ fontSize }
 						onChange={ ( value ) => setAttributes( { fontSize: value } ) }
 						allowReset={ true }
-						min="10"
-						max="150"
+						min={ 10 }
+						max={ 150 }
 					/>
 					<RangeControl
 						label={ __( 'Line Height', 'olympus-google-fonts' ) }
 						value={ lineHeight }
 						onChange={ ( value ) => setAttributes( { lineHeight: value } ) }
 						allowReset={ true }
-						min="1"
-						max="3"
-						step="0.1"
+						min={ 1 }
+						max={ 3 }
+						step={ 0.1 }
 					/>
 					<PanelColorSettings
 						title={ __( 'Color Settings', 'olympus-google-fonts' ) }
@@ -377,11 +378,11 @@ class GoogleFontsBlock extends Component {
 					value={ content }
 					onChange={ ( value ) => setAttributes( { content: value } ) }
 					style={ {
-						fontSize: fontSize ? fontSize + 'px' : undefined,
+						fontSize: fontSize ? Number( fontSize ) + 'px' : undefined,
 						textAlign: align,
 						fontFamily: this.getFontOutput(fontID),
 						fontWeight: variant,
-						lineHeight: lineHeight,
+						lineHeight: lineHeight ? Number( lineHeight ) : undefined,
 						color: color,
 					} }
 					placeholder={ __( 'Add some content...', 'olympus-google-fonts' ) }

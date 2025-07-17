@@ -220,7 +220,7 @@ function ogf_custom_fonts() {
  */
 function ogf_custom_fonts_unique() {
 	$fonts = OGF_Fonts_Taxonomy::get_fonts();
-	$new_fonts = [];
+	$new_fonts = array();
 	foreach ( $fonts as $key => $value ) {
 		if ( $value['family'] ) {
 			$new_fonts[$key] = $value['family'];
