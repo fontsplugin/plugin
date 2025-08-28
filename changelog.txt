@@ -1,3 +1,7 @@
+= 3.9.8 =
+
+* Add new font weights to the Customizer
+
 = 3.9.7 =
 
 * Migrate build system from cgb-scripts to @wordpress/scripts for improved compatibility
