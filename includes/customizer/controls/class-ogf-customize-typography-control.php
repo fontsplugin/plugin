@@ -242,8 +242,15 @@ class OGF_Customize_Typography_Control extends WP_Customize_Control {
 
 		$choices = array(
 			'0'   => esc_html__( '- Default -', 'olympus-google-fonts' ),
+			'100' => esc_html__( 'Thin', 'olympus-google-fonts' ),
+			'200' => esc_html__( 'Extra Light', 'olympus-google-fonts' ),
+			'300' => esc_html__( 'Light', 'olympus-google-fonts' ),
 			'400' => esc_html__( 'Normal', 'olympus-google-fonts' ),
+			'500' => esc_html__( 'Medium', 'olympus-google-fonts' ),
+			'600' => esc_html__( 'Semi Bold', 'olympus-google-fonts' ),
 			'700' => esc_html__( 'Bold', 'olympus-google-fonts' ),
+			'800' => esc_html__( 'Extra Bold', 'olympus-google-fonts' ),
+			'900' => esc_html__( 'Ultra Bold', 'olympus-google-fonts' ),
 		);
 
 		return apply_filters( 'ogf_default_font_weight_choices', $choices );
