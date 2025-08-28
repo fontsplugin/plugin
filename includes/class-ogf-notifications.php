@@ -77,24 +77,31 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		 */
 		public function seconds_to_words( $seconds ) {
 			// Get the years.
-			$years = absint( $seconds / YEAR_IN_SECONDS ) % 100;
+			$years = absint( $seconds / YEAR_IN_SECONDS );
 			if ( $years > 0 ) {
 				/* translators: Number of years */
-				return sprintf( _n( 'a year', '%s years', $years, 'olympus-google-fonts' ), $years );
+				return sprintf( _n( '%s year', '%s years', $years, 'olympus-google-fonts' ), $years );
+			}
+			// Get the months (approximate 30 days).
+			$months = absint( intval( $seconds ) / ( DAY_IN_SECONDS * 30 ) );
+			if ( $months > 0 ) {
+				/* translators: Number of months */
+				return sprintf( _n( '%s month', '%s months', $months, 'olympus-google-fonts' ), $months );
 			}
 			// Get the weeks.
-			$weeks = absint( intval( $seconds ) / WEEK_IN_SECONDS ) % 52;
-			if ( $weeks > 1 ) {
+			$weeks = absint( intval( $seconds ) / WEEK_IN_SECONDS );
+			if ( $weeks > 0 ) {
 				/* translators: Number of weeks */
-				return sprintf( _n( 'a week', '%s weeks', $weeks, 'olympus-google-fonts' ), $weeks );
+				return sprintf( _n( '%s week', '%s weeks', $weeks, 'olympus-google-fonts' ), $weeks );
 			}
 			// Get the days.
-			$days = absint( intval( $seconds ) / DAY_IN_SECONDS ) % 7;
-			if ( $days > 1 ) {
+			$days = absint( intval( $seconds ) / DAY_IN_SECONDS );
+			if ( $days > 0 ) {
 				/* translators: Number of days */
 				return sprintf( _n( '%s day', '%s days', $days, 'olympus-google-fonts' ), $days );
 			}
 
+			/* translators: Number of seconds */
 			return sprintf( _n( '%s second', '%s seconds', $seconds, 'olympus-google-fonts' ), intval( $seconds ) );
 		}
 
@@ -243,7 +250,7 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 		 */
 		public function set_no_bug() {
 			// Bail out if not on correct page.
-			if ( ! isset( $_GET['_wpnonce'] ) || ( ! wp_verify_nonce( $_GET['_wpnonce'], 'ogf-notification-nonce' ) || ! is_admin() || ! isset( $_GET[ $this->nobug_option ] ) || ! current_user_can( 'manage_options' ) ) ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'ogf-notification-nonce' ) || ! is_admin() || ! isset( $_GET[ $this->nobug_option ] ) || ! current_user_can( 'manage_options' ) ) ) {
 				return;
 			}
 			add_site_option( $this->nobug_option, true );
