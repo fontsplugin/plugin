@@ -1,3 +1,7 @@
+= 3.9.9 =
+
+* Update fonts list
+
 = 3.9.8 =
 
 * Add new font weights to the Customizer
