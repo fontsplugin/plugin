@@ -100,6 +100,7 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 			if ( class_exists( 'FPP_Host_Google_Fonts_Locally' ) ) {
 				$loader = new FPP_Host_Google_Fonts_Locally();
 				$loader->delete_fonts_folder();
+				delete_site_option( 'downloaded_font_files' );
 			}
 		}
 	}

@@ -70,13 +70,16 @@ function olympus_google_fonts_block_js() {
 		false
 	);
 	
-	// Enqueue editor styles
-	wp_enqueue_style(
-		'olympus-google-fonts-block-editor-css',
-		plugins_url( '/build/index.css', __FILE__ ),
-		array( 'wp-edit-blocks' ),
-		$asset_file['version']
-	);
+	/**
+	 * Currently this plugin is not adding any editor styles.
+	 *
+	 * wp_enqueue_style(
+	 *  'olympus-google-fonts-block-editor',
+	 *  plugins_url( '/build/index.css', __FILE__ ),
+	 *  array( 'wp-edit-blocks' ),
+	 *  $asset_file['version']
+	 * );
+	 */
 	
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts_unique', ogf_custom_fonts_unique() );
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts', ogf_custom_fonts() );

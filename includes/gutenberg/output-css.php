@@ -51,16 +51,16 @@ add_action( 'admin_head', 'ogf_gutenberg_output_css' );
 function ogf_gutenberg_build_css() {
 	$elements = array(
 		'ogf_body'              => array(
-			'selectors' => '.editor-styles-wrapper p, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6, #editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input',
+			'selectors' => '.editor-styles-wrapper p, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6, wp-block-post-title',
 		),
 		'ogf_headings'          => array(
-			'selectors' => '#editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input, .editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6',
+			'selectors' => 'wp-block-post-title, .editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6',
 		),
 		'ogf_post_page_content' => array(
 			'selectors' => '.editor-styles-wrapper p',
 		),
 		'ogf_post_page_h1'      => array(
-			'selectors' => '#editor .editor-styles-wrapper .editor-post-title__block .editor-post-title__input, .editor-styles-wrapper h1',
+			'selectors' => 'wp-block-post-title, .editor-styles-wrapper h1',
 		),
 		'ogf_post_page_h2'      => array(
 			'selectors' => '.editor-styles-wrapper h2',

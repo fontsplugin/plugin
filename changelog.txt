@@ -1,3 +1,8 @@
+= 4.0.0 =
+
+* Fix issue with legacy Google Fonts URLs not being downloaded correctly in Pro version
+* Remove unused editor styles from Gutenberg block editor
+
 = 3.9.9 =
 
 * Update fonts list
