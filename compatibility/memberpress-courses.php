@@ -39,19 +39,19 @@ add_filter( 'mpcs_classroom_style_handles', 'ogf_mb_courses_filter' );
  */
 function ogf_memberpress_courses_controls( $elements ) {
 	$new = array(
-		'ogc_mbc_base' => array(
+		'ogc_mbc_base'          => array(
 			'label'       => esc_html__( 'Base Font', 'olympus-google-fonts' ),
 			'description' => '',
 			'section'     => 'ogf_memberpress_courses',
 			'selectors'   => '.mpcs-classroom, .mpcs-classroom .entry-content',
 		),
-		'ogc_mbc_headings' => array(
+		'ogc_mbc_headings'      => array(
 			'label'       => esc_html__( 'Heading Font', 'olympus-google-fonts' ),
 			'description' => '',
 			'section'     => 'ogf_memberpress_courses',
 			'selectors'   => '.mpcs-classroom h1, .mpcs-classroom h2, .mpcs-classroom h3, .mpcs-classroom h4, .mpcs-classroom h5, .mpcs-classroom h6',
 		),
-		'ogc_mbc_sidebar' => array(
+		'ogc_mbc_sidebar'       => array(
 			'label'       => esc_html__( 'Sidebar Font', 'olympus-google-fonts' ),
 			'description' => '',
 			'section'     => 'ogf_memberpress_courses',
@@ -63,13 +63,13 @@ function ogf_memberpress_courses_controls( $elements ) {
 			'section'     => 'ogf_memberpress_courses',
 			'selectors'   => '.mpcs-section-title-text',
 		),
-		'ogc_mbc_lesson_nav' => array(
+		'ogc_mbc_lesson_nav'    => array(
 			'label'       => esc_html__( 'Navigation Font', 'olympus-google-fonts' ),
 			'description' => '',
 			'section'     => 'ogf_memberpress_courses',
 			'selectors'   => '#mpcs-lesson-navigation, #mpcs-lesson-navigation button',
 		),
-		'ogc_mbc_buttons' => array(
+		'ogc_mbc_buttons'       => array(
 			'label'       => esc_html__( 'Button Font', 'olympus-google-fonts' ),
 			'description' => '',
 			'section'     => 'ogf_memberpress_courses',

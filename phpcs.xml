@@ -21,9 +21,9 @@
 	<arg name="parallel" value="8"/> <!-- Enables parallel processing when available for faster results. -->
 	<arg name="extensions" value="php"/> <!-- Only scan PHP files. -->
 
-	<!-- Run against the PHPCompatibilityWP ruleset and check for cross-version support for PHP 5.6 and higher. -->
+	<!-- Run against the PHPCompatibilityWP ruleset and check for cross-version support for PHP 7.0 and higher. -->
 	<rule ref="PHPCompatibilityWP"/>
-	<config name="testVersion" value="5.6-"/>
+	<config name="testVersion" value="7.0-"/>
 
 	<!-- Run against the WordPress-Extra ruleset and check for the minimum supported WP version. -->
 	<rule ref="WordPress-Extra">

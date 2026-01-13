@@ -60,8 +60,8 @@ register_block_type(
  * Enqueue Gutenberg block assets for backend editor.
  */
 function olympus_google_fonts_block_js() {
-	$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
-	
+	$asset_file = include plugin_dir_path( __FILE__ ) . 'build/index.asset.php';
+
 	wp_enqueue_script(
 		'olympus-google-fonts-block-js',
 		plugins_url( '/build/index.js', __FILE__ ),
@@ -69,18 +69,18 @@ function olympus_google_fonts_block_js() {
 		$asset_file['version'],
 		false
 	);
-	
+
 	/**
 	 * Currently this plugin is not adding any editor styles.
 	 *
-	 * wp_enqueue_style(
+	 * Wp_enqueue_style(
 	 *  'olympus-google-fonts-block-editor',
 	 *  plugins_url( '/build/index.css', __FILE__ ),
 	 *  array( 'wp-edit-blocks' ),
 	 *  $asset_file['version']
 	 * );
 	 */
-	
+
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts_unique', ogf_custom_fonts_unique() );
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_custom_fonts', ogf_custom_fonts() );
 	wp_localize_script( 'olympus-google-fonts-block-js', 'ogf_typekit_fonts', ogf_typekit_fonts() );
@@ -124,7 +124,7 @@ function olympus_google_fonts_block_render( $attributes ) {
 
 			$font_family = esc_attr( str_replace( '+', ' ', $font_id ) );
 		} elseif ( $is_custom_font ) {
-			$font_family = $is_custom_font['family'] ?: $font_id;
+			$font_family = ! empty( $is_custom_font['family'] ) ? $is_custom_font['family'] : $font_id;
 		} elseif ( $is_system_font ) {
 			$font_family = esc_attr( str_replace( '-', ' ', $font_id ) );
 		} else {

@@ -195,8 +195,8 @@ function ogf_fonts_array() {
 
 	// Existing processing logic...
 	foreach ( $fonts_array as $font ) {
-		$id = trim( strtolower( str_replace( ' ', '-', $font['f'] ) ) );
-		$fonts[ $id ] = $font;
+		$id                = trim( strtolower( str_replace( ' ', '-', $font['f'] ) ) );
+		$fonts[ $id ]      = $font;
 		$fonts[ $id ]['v'] = array_flip( $fonts[ $id ]['v'] );
 	}
 
@@ -219,13 +219,13 @@ function ogf_custom_fonts() {
  * @return array User uploaded fonts.
  */
 function ogf_custom_fonts_unique() {
-	$fonts = OGF_Fonts_Taxonomy::get_fonts();
+	$fonts     = OGF_Fonts_Taxonomy::get_fonts();
 	$new_fonts = array();
 	foreach ( $fonts as $key => $value ) {
 		if ( $value['family'] ) {
-			$new_fonts[$key] = $value['family'];
+			$new_fonts[ $key ] = $value['family'];
 		} else {
-			$new_fonts[$key] = $value['label'];
+			$new_fonts[ $key ] = $value['label'];
 		}
 	}
 	return array_unique( $new_fonts );

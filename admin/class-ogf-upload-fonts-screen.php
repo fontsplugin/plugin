@@ -166,7 +166,7 @@ class OGF_Upload_Fonts_Screen {
 		$this->font_file_edit_field( 'otf', __( 'Font .otf', 'olympus-google-fonts' ), $data['otf'], __( 'Upload the font\'s .otf file or enter the URL.', 'olympus-google-fonts' ) );
 		$this->font_weight_edit_field( 'weight', __( 'Font Weight', 'olympus-google-fonts' ), $data['weight'] );
 		$this->font_style_edit_field( 'style', __( 'Font Weight', 'olympus-google-fonts' ), $data['style'] );
-		$this->font_preload_edit_field( 'preload', __( 'Preload Font', 'olympus-google-fonts' ), $data['preload'],  __( 'Preloading is a <a href="https://fontsplugin.com/pro-upgrade">Fonts Plugin Pro</a> feature.', 'olympus-google-fonts' )  );
+		$this->font_preload_edit_field( 'preload', __( 'Preload Font', 'olympus-google-fonts' ), $data['preload'], __( 'Preloading is a <a href="https://fontsplugin.com/pro-upgrade">Fonts Plugin Pro</a> feature.', 'olympus-google-fonts' ) );
 	}
 
 
@@ -396,7 +396,7 @@ class OGF_Upload_Fonts_Screen {
 				</label>
 			</th>
 			<td>
-				<?php if( defined('OGF_PRO') ) : ?>
+				<?php if ( defined( 'OGF_PRO' ) ) : ?>
 					<input type="checkbox" id="metadata-<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( OGF_Fonts_Taxonomy::$taxonomy_slug ); ?>[<?php echo esc_attr( $id ); ?>]" <?php checked( $value, 1 ); ?> value="1">
 				<?php else : ?>
 					<p class="description"><?php echo wp_kses_post( $description ); ?></p>
@@ -413,8 +413,10 @@ class OGF_Upload_Fonts_Screen {
 	 * @param int $term_id current term id.
 	 */
 	public function save_metadata( $term_id ) {
-		if ( isset( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) ) {// phpcs:ignore WordPress.Security.NonceVerification.Missing
-			$value = array_map( 'esc_attr', $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WordPress term save action.
+		if ( isset( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized below.
+			$value = array_map( 'esc_attr', wp_unslash( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) );
 			OGF_Fonts_Taxonomy::update_font_data( $value, $term_id );
 		}
 	}

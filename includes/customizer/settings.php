@@ -297,8 +297,8 @@ function ogf_customize_register( $wp_customize ) {
 		)
 	);
 
-			$fonts   = OGF_Fonts::get_instance();
-	$subsets = array();
+			$fonts = OGF_Fonts::get_instance();
+	$subsets       = array();
 
 	if ( $fonts->has_google_fonts() ) {
 

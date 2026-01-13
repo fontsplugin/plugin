@@ -127,20 +127,19 @@ class OGF_Fonts_Taxonomy {
 			self::$fonts = array();
 
 			$terms = get_terms(
-				self::$taxonomy_slug,
 				array(
+					'taxonomy'   => self::$taxonomy_slug,
 					'hide_empty' => false,
 				)
 			);
 
 			if ( ! empty( $terms ) ) {
 				foreach ( $terms as $term ) {
-					self::$fonts[ $term->slug ]['id']    = $term->slug;
-					self::$fonts[ $term->slug ]['label'] = $term->name;
-					self::$fonts[ $term->slug ]['stack'] = $term->slug;
-					self::$fonts[ $term->slug ]['files'] = self::get_font_data( $term->term_id );
+					self::$fonts[ $term->slug ]['id']     = $term->slug;
+					self::$fonts[ $term->slug ]['label']  = $term->name;
+					self::$fonts[ $term->slug ]['stack']  = $term->slug;
+					self::$fonts[ $term->slug ]['files']  = self::get_font_data( $term->term_id );
 					self::$fonts[ $term->slug ]['family'] = self::$fonts[ $term->slug ]['files']['family'];
-
 				}
 			}
 		}
@@ -155,7 +154,7 @@ class OGF_Fonts_Taxonomy {
 	 */
 	public static function get_by_name( $name ) {
 
-		$term = get_term_by('slug', $name, self::$taxonomy_slug);
+		$term = get_term_by( 'slug', $name, self::$taxonomy_slug );
 		if ( ! $term ) {
 			return false;
 		}

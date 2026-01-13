@@ -234,7 +234,6 @@ function ogf_panels_customize_register( $wp_customize ) {
 	}
 
 	if ( ogf_is_elementor_activated() ) {
-
 		$wp_customize->add_section(
 			'ogf_elementor',
 			array(

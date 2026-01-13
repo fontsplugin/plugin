@@ -231,8 +231,15 @@ if ( ! class_exists( 'OGF_Notifications' ) ) :
 						<h3><?php echo esc_html__( 'Are you enjoying using Google Fonts?', 'olympus-google-fonts' ); ?></h3>
 						<p>
 							<?php
-							/* translators: 1. Name, 2. Time */
-							printf( __( 'You have been using <strong>%1$s</strong> for %2$s now! Could you please do me a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?', 'olympus-google-fonts' ), esc_html( $this->name ), esc_html( $time ) );
+							echo wp_kses(
+								sprintf(
+									/* translators: 1. Plugin name, 2. Time duration */
+									__( 'You have been using <strong>%1$s</strong> for %2$s now! Could you please do me a BIG favor and give it a 5-star rating on WordPress to help us spread the word and boost our motivation?', 'olympus-google-fonts' ),
+									esc_html( $this->name ),
+									esc_html( $time )
+								),
+								array( 'strong' => array() )
+							);
 							?>
 						</p>
 					</div>

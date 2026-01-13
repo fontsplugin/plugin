@@ -82,8 +82,11 @@ class OGF_Welcome_Screen {
 						<p><?php esc_html_e( 'To help you get the most out of the Google Fonts plugin we’ve put together a free quickstart guide.', 'olympus-google-fonts' ); ?></p>
 						<p><?php esc_html_e( 'In this beautifully-formatted, easy-to-read PDF you will learn:', 'olympus-google-fonts' ); ?>
 						<ul>
+							<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
 							<li><?php printf( esc_html__( 'How to %1$seasily%2$s customize your typography.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
+							<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
 							<li><?php printf( esc_html__( 'How to host fonts %1$slocally%2$s for speed, GDPR & DSGVO.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
+							<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
 							<li><?php printf( esc_html__( 'How to use Google Fonts without %1$sslowing down%2$s your website.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
 						</ul>
 						<p><?php esc_html_e( 'Download your free copy today.', 'olympus-google-fonts' ); ?></p>

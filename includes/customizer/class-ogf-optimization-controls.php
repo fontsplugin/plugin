@@ -72,6 +72,7 @@ class OGF_Optimization_Controls {
 			'ogf_host_locally',
 			array(
 				'label'       => esc_html__( 'Host Google Fonts Locally', 'olympus-google-fonts' ),
+				/* translators: %s: URL where fonts will be served from */
 				'description' => sprintf( esc_html__( 'Fonts will be served from %s instead of fonts.googleapis.com.', 'olympus-google-fonts' ), $url ),
 				'section'     => 'ogf_optimization',
 				'type'        => 'checkbox',

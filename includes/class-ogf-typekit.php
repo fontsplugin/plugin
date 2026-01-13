@@ -59,7 +59,7 @@ class OGF_Typekit {
 		settings_fields( 'fonts-plugin' );
 		do_settings_sections( 'fonts-plugin-typekit' );
 		if ( get_option( 'fp-typekit-data', false ) ) {
-			echo '<a class="button button-primary" href="' . wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=reset' ), 'ogf-typekit-reset' ) . '">' . esc_html__( 'Refresh Fonts', 'olympus-google-fonts' ) . '</a>';
+			echo '<a class="button button-primary" href="' . esc_url( wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=reset' ), 'ogf-typekit-reset' ) ) . '">' . esc_html__( 'Refresh Fonts', 'olympus-google-fonts' ) . '</a>';
 		}
 		?>
 		</form>
@@ -70,7 +70,13 @@ class OGF_Typekit {
 	 * Render the settings intro section of the Typekit page.
 	 */
 	public function render_config_section() {
-		_e( '<p>You can retrieve your Adobe Fonts API Key here: <a target="_blank" href="https://fonts.adobe.com/account/tokens">https://fonts.adobe.com/account/tokens</a></p>', 'olympus-google-fonts' );
+		echo '<p>';
+		printf(
+			/* translators: %s: URL to Adobe Fonts tokens page */
+			esc_html__( 'You can retrieve your Adobe Fonts API Key here: %s', 'olympus-google-fonts' ),
+			'<a target="_blank" href="https://fonts.adobe.com/account/tokens">https://fonts.adobe.com/account/tokens</a>'
+		);
+		echo '</p>';
 	}
 
 	/**
@@ -105,15 +111,15 @@ class OGF_Typekit {
 
 			$status = ( $kit['enabled'] ? esc_html__( 'Enabled', 'olympus-google-fonts' ) : esc_html__( 'Disabled', 'olympus-google-fonts' ) );
 
-			echo '<li><strong>Status:</strong> ' . $status . '</li>';
+			echo '<li><strong>Status:</strong> ' . esc_html( $status ) . '</li>';
 			foreach ( $kit['families'] as $family ) {
 				echo '<li><strong>' . esc_html__( 'Font Family: ', 'olympus-google-fonts' ) . '</strong>' . esc_attr( $family['label'] ) . '</li>';
 			}
 
 			if ( $kit['enabled'] ) {
-				echo '<li><a href="' . wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=disable&kit_id=' . $id ), 'ogf-typekit-disable' ) . '">' . esc_html__( 'Disable Kit', 'olympus-google-fonts' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=disable&kit_id=' . $id ), 'ogf-typekit-disable' ) ) . '">' . esc_html__( 'Disable Kit', 'olympus-google-fonts' ) . '</a></li>';
 			} else {
-				echo '<li><a href="' . wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=enable&kit_id=' . $id ), 'ogf-typekit-enable' ) . '">' . esc_html__( 'Enable Kit', 'olympus-google-fonts' ) . '</a></li>';
+				echo '<li><a href="' . esc_url( wp_nonce_url( admin_url( 'admin.php?page=fonts-plugin-typekit&action=enable&kit_id=' . $id ), 'ogf-typekit-enable' ) ) . '">' . esc_html__( 'Enable Kit', 'olympus-google-fonts' ) . '</a></li>';
 			}
 			echo '</ul>';
 		}
@@ -150,8 +156,8 @@ class OGF_Typekit {
 	public function get_kits() {
 
 		// Reset the data if the user has clicked the button.
-		if ( current_user_can('administrator') && isset( $_GET['action'] ) && $_GET['action'] === 'reset' ) {
-			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-reset')) {
+		if ( current_user_can( 'manage_options' ) && isset( $_GET['action'] ) && $_GET['action'] === 'reset' ) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'ogf-typekit-reset' ) ) {
 				return;
 			}
 
@@ -177,7 +183,7 @@ class OGF_Typekit {
 		$curl_args = array();
 		$response  = wp_remote_request( $url . '?token=' . esc_attr( $this->get_api_key() ), $curl_args );
 
-		if ( wp_remote_retrieve_response_code( $response ) != '200' ) {
+		if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
 			return;
 		}
 
@@ -241,25 +247,25 @@ class OGF_Typekit {
 			return;
 		}
 
-		// Reset the data if the user has clicked the button.
+		// Disable a kit if the user has clicked the button.
 		if ( $_GET['action'] === 'disable' && isset( $_GET['kit_id'] ) ) {
-			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-disable')) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'ogf-typekit-disable' ) ) {
 				return;
 			}
 
-			$kit_id = sanitize_text_field( $_GET['kit_id'] );
+			$kit_id                     = sanitize_text_field( wp_unslash( $_GET['kit_id'] ) );
 			$data                       = get_option( 'fp-typekit-data', array() );
 			$data[ $kit_id ]['enabled'] = false;
 			update_option( 'fp-typekit-data', $data );
 		}
 
-		// Reset the data if the user has clicked the button.
+		// Enable a kit if the user has clicked the button.
 		if ( $_GET['action'] === 'enable' && isset( $_GET['kit_id'] ) ) {
-			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce($_GET['_wpnonce'], 'ogf-typekit-enable')) {
+			if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'ogf-typekit-enable' ) ) {
 				return;
 			}
 
-			$kit_id = sanitize_text_field( $_GET['kit_id'] );
+			$kit_id                     = sanitize_text_field( wp_unslash( $_GET['kit_id'] ) );
 			$data                       = get_option( 'fp-typekit-data', array() );
 			$data[ $kit_id ]['enabled'] = true;
 			update_option( 'fp-typekit-data', $data );

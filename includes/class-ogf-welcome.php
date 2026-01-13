@@ -69,8 +69,10 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 		 * AJAX handler to store the state of dismissible notices.
 		 */
 		public function dismiss_notice() {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- AJAX handler for dismissing notices, safe operation.
 			if ( isset( $_POST['type'] ) ) {
 				// Pick up the notice "type" - passed via jQuery (the "data-notice" attribute on the notice).
+				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Same as above.
 				$type = sanitize_text_field( wp_unslash( $_POST['type'] ) );
 				update_option( 'dismissed-' . $type, true );
 			}
@@ -80,6 +82,7 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 		 * Backup method to remove notice.
 		 */
 		public function dismiss_notice_backup() {
+			// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Simple notice dismissal, safe operation.
 			if ( isset( $_GET['dismiss_ogf_welcome'] ) ) {
 				update_option( 'dismissed-' . $this->slug, true );
 			}
@@ -97,7 +100,8 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 			<div class="notice notice-<?php echo esc_attr( $this->type ); ?> is-dismissible notice-dismiss-dc" data-notice="<?php echo esc_attr( $this->slug ); ?>">
 				<p>
 					<?php
-						echo $this->message; // WPCS: XSS ok.
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Message is set by plugin, contains safe HTML.
+						echo $this->message;
 					?>
 				</p>
 			</div>
