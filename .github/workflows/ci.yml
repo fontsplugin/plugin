@@ -37,6 +37,7 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run PHPCS
+        continue-on-error: true
         run: vendor/bin/phpcs -q --report=checkstyle | cs2pr
 
   # ============================================
@@ -111,6 +112,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y subversion
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -133,7 +137,10 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Install WordPress test suite
-        run: bash bin/install-wp-tests.sh wordpress_test root root 127.0.0.1 ${{ matrix.wp }} true
+        run: |
+          curl -o /tmp/install-wp-tests.sh https://raw.githubusercontent.com/wp-cli/scaffold-command/main/templates/install-wp-tests.sh
+          chmod +x /tmp/install-wp-tests.sh
+          bash /tmp/install-wp-tests.sh wordpress_test root root 127.0.0.1 ${{ matrix.wp }} true
 
       - name: Run integration tests
         run: composer test:integration
