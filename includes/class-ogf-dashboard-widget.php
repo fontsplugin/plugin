@@ -55,7 +55,7 @@ class OGF_Dashboard_Widget {
 	public function display_rss_dashboard_widget() {
 		// check if the user has chosen not to display this widget through screen options.
 		$current_screen = get_current_screen();
-		$hidden_widgets = get_user_meta( get_current_user_id(), 'metaboxhidden_' . $current_screen->id );
+		$hidden_widgets = get_user_meta( get_current_user_id(), 'metaboxhidden_' . $current_screen->id, false );
 		if ( $hidden_widgets && count( $hidden_widgets ) > 0 && is_array( $hidden_widgets[0] ) && in_array( 'ogf-rss-feed', $hidden_widgets[0], true ) ) {
 			return;
 		}

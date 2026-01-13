@@ -182,12 +182,11 @@ function ogf_generate_css_gutenberg( $selector, $option_name ) {
 /**
  * Modify the Editor settings by adding custom styles.
  *
- * @param array  $editor_settings An array containing the current Editor settings.
- * @param string $editor_context  The context of the editor.
+ * @param array $editor_settings An array containing the current Editor settings.
  *
  * @return array Modified editor settings with the added custom CSS style.
  */
-function ogf_add_styles_to_site_editor( $editor_settings, $editor_context ) {
+function ogf_add_styles_to_site_editor( $editor_settings ) {
 	$editor_settings['styles'][] = array(
 		'css' => ogf_gutenberg_build_css(),
 	);

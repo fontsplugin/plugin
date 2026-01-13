@@ -118,11 +118,10 @@ class OGF_Gutenberg_Filters {
 	/**
 	 * Add custom (uploaded) fonts to Gutenberg block editor iframe using block_editor_settings_all filter.
 	 *
-	 * @param array  $editor_settings An array containing the current Editor settings.
-	 * @param string $editor_context  The context of the editor.
+	 * @param array $editor_settings An array containing the current Editor settings.
 	 * @return array Modified editor settings with the added custom CSS style.
 	 */
-	public function add_custom_fonts( $editor_settings, $editor_context ) {
+	public function add_custom_fonts( $editor_settings ) {
 		// Define CSS for Gutenberg block editor.
 		$custom_css = ogf_return_custom_font_css();
 

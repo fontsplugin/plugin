@@ -183,6 +183,7 @@ function ogf_fonts_array() {
 		return array();
 	}
 
+	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- Local file, not remote URL.
 	$fonts_json = file_get_contents( $fonts_file );
 	if ( false === $fonts_json ) {
 		return array();

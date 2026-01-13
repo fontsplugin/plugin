@@ -90,13 +90,13 @@ class OGF_Customize_Repeater_Control extends WP_Customize_Control {
 	/**
 	 * Iterate through the array of values.
 	 *
-	 * @param array $array The array.
+	 * @param array $items The items array.
 	 */
-	private function iterate_array( $array = array() ) {
+	private function iterate_array( $items = array() ) {
 		// Counter that helps checking if the box is first and should have the delete button disabled.
 		$count = 0;
-		if ( ! empty( $array ) ) {
-			foreach ( $array as $icon ) {
+		if ( ! empty( $items ) ) {
+			foreach ( $items as $icon ) {
 				?>
 				<div class="customizer-repeater-general-control-repeater-container">
 					<?php $this->input_control( $icon, $count ); ?>

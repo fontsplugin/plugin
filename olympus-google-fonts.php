@@ -42,6 +42,7 @@ register_activation_hook( __FILE__, 'ogf_activate' );
 function ogf_redirect() {
 	if ( get_option( 'ogf_do_activation_redirect', false ) ) {
 		delete_option( 'ogf_do_activation_redirect' );
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Activation redirect, no form data processed.
 		if ( ! isset( $_GET['activate-multi'] ) && ! is_network_admin() ) {
 			wp_safe_redirect( 'admin.php?page=fonts-plugin' );
 			exit;
