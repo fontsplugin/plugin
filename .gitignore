@@ -1,0 +1,43 @@
+# Dependencies
+/vendor/
+/node_modules/
+/blocks/node_modules/
+
+# Composer
+composer.lock
+
+# Testing
+/coverage/
+.phpunit.result.cache
+
+# Build artifacts (uncomment if you don't want to commit built blocks)
+# /blocks/build/
+
+# IDE and editors
+.idea/
+.vscode/
+*.code-workspace
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Local environment
+.env
+.env.local
+wp-config.php
+
+# Debug
+debug.log
+error_log

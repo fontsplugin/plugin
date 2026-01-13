@@ -1,33 +1,41 @@
-# A set of files you probably don't want in your WordPress.org distribution
-/.wordpress-org
-/.git
+# Files to exclude from distribution packages
+# Used by release workflow to create clean plugin zip
+
+# Development files
 /.github
-.distignore
-.gitattributes
-.editorconfig
-.git
-.gitignore
-.gitlab-ci.yml
-.travis.yml
+/.git
+/.gitignore
+/.distignore
+
+# Testing
+/tests
+/bin
+/phpunit.xml.dist
+/phpcs.xml
+/composer.json
+/composer.lock
+/vendor
+
+# Block development
+/blocks/node_modules
+/blocks/src
+/blocks/package.json
+/blocks/package-lock.json
+
+# Documentation (not needed in plugin)
+/README.md
+/TESTING.md
+/CHANGELOG.md
+
+# IDE and editor files
+/.vscode
+/.idea
+*.code-workspace
 .DS_Store
 Thumbs.db
-behat.yml
-bin
-circle.yml
-composer.json
-composer.lock
-Gruntfile.js
-package.json
-phpunit.xml
-phpunit.xml.dist
-multisite.xml
-multisite.xml.dist
-phpcs.ruleset.xml
-README.md
-wp-cli.local.yml
-tests
-.github
-node_modules
-*.sql
-*.tar.gz
-*.zip
+
+# Misc
+*.log
+*.bak
+*.swp
+*~
