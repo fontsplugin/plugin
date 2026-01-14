@@ -10,6 +10,12 @@ composer.lock
 /coverage/
 .phpunit.result.cache
 
+# E2E Testing
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/.wp-env/
+
 # Build artifacts (uncomment if you don't want to commit built blocks)
 # /blocks/build/
 

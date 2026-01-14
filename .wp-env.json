@@ -1,0 +1,16 @@
+{
+  "core": "WordPress/WordPress#6.4",
+  "plugins": [
+    "."
+  ],
+  "config": {
+    "WP_DEBUG": true,
+    "SCRIPT_DEBUG": true
+  },
+  "mappings": {
+    "wp-content/mu-plugins": "./tests/e2e/mu-plugins"
+  },
+  "lifecycleScripts": {
+    "afterStart": "wp-env run cli wp theme activate twentytwentyfour"
+  }
+}

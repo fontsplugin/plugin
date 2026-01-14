@@ -16,6 +16,15 @@
 /composer.lock
 /vendor
 
+# E2E Testing
+/playwright.config.ts
+/.wp-env.json
+/package.json
+/package-lock.json
+/node_modules
+/test-results
+/playwright-report
+
 # Block development
 /blocks/node_modules
 /blocks/src
