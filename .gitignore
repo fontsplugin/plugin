@@ -9,6 +9,10 @@ composer.lock
 # Testing
 /coverage/
 .phpunit.result.cache
+/test-results/
+/playwright-report/
+/playwright/.cache/
+/artifacts/
 
 # Build artifacts (uncomment if you don't want to commit built blocks)
 # /blocks/build/

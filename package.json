@@ -1,0 +1,20 @@
+{
+  "name": "olympus-google-fonts",
+  "version": "4.0.0",
+  "private": true,
+  "scripts": {
+    "env:start": "npx wp-env start",
+    "env:stop": "npx wp-env stop",
+    "env:clean": "npx wp-env clean all",
+    "env:destroy": "npx wp-env destroy",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@wordpress/e2e-test-utils-playwright": "^1.0.0",
+    "@wordpress/env": "^10.0.0",
+    "@wordpress/scripts": "^27.0.0"
+  }
+}

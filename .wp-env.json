@@ -1,0 +1,13 @@
+{
+	"core": "WordPress/WordPress",
+	"plugins": [
+		"."
+	],
+	"themes": [
+		"WordPress/twentytwentyfour"
+	],
+	"config": {
+		"WP_DEBUG": true,
+		"SCRIPT_DEBUG": true
+	}
+}
