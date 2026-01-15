@@ -15,6 +15,6 @@
     "@playwright/test": "^1.40.0",
     "@wordpress/e2e-test-utils-playwright": "^1.0.0",
     "@wordpress/env": "^10.0.0",
-    "@wordpress/scripts": "^27.0.0"
+    "@wordpress/scripts": "^31.2.0"
   }
 }
