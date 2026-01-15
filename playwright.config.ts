@@ -17,7 +17,12 @@ const config = defineConfig( {
 	/* Opt out of parallel tests on CI. */
 	workers: process.env.CI ? 1 : undefined,
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
-	reporter: 'html',
+	reporter: process.env.CI
+		? [
+				['list'],
+				['html', { outputFolder: 'playwright-report' }],
+			]
+		: 'html',
 	// 1. Run the setup file
 	globalSetup: require.resolve('./tests/e2e/global-setup.ts'),
 		

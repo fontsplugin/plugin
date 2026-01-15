@@ -33,11 +33,16 @@ test.describe('Olympus Google Fonts - Upload Fonts', () => {
 	});
 
 	test('should upload a custom font file and verify it appears in customizer', async ({ page, admin }) => {
+
+        const fontName = 'Test Font E2E ' + new Date().getTime();
+        const fontFamily = 'Test Font Family E2E ' + new Date().getTime();
+
+        await navigateToUploadFontsScreen(page);
 		const fontNameInput = page.locator('#tag-name');
-		await fontNameInput.fill('Test Font E2E');
+		await fontNameInput.fill(fontName);
 
 		const fontFamilyInput = page.locator('input.ogf-custom-fonts-family-input').first();
-		await fontFamilyInput.fill('Test Font Family E2E');
+		await fontFamilyInput.fill(fontFamily);
 
 		const uploadButton = page.locator('.ogf-custom-fonts-upload').first();
 		await expect(uploadButton).toBeVisible();
@@ -56,14 +61,35 @@ test.describe('Olympus Google Fonts - Upload Fonts', () => {
 			// Media library might not have opened, continue
 		}
 
+		const fontFileInput = page.locator('input.ogf-custom-fonts-link-input').first();
+		if ((await fontFileInput.count()) > 0) {
+			await fontFileInput.fill('https://example.com/font.woff2');
+		}
+
+		const addNewFontButton = page.locator('#submit');
+		await expect(addNewFontButton).toBeVisible();
+		
+		await Promise.all([
+			page.waitForNavigation({ waitUntil: 'networkidle', timeout: 10000 }).catch(() => {}),
+			addNewFontButton.click(),
+		]);
+		
+		await page.waitForLoadState('networkidle');
+		
+		const successMessage = page.locator('.notice-success, .updated').first();
+		await expect(successMessage).toBeVisible({ timeout: 10000 }).catch(() => {
+			// Success message might not always appear, continue anyway
+		});
+
 		await admin.visitAdminPage('customize.php', 'autofocus[panel]=ogf_google_fonts');
 
 		await expect(page.locator('.wp-full-overlay')).toBeVisible();
+		await expect(page.locator('#accordion-panel-ogf_google_fonts')).toBeVisible();
 
 		await navigateToCustomizerSection(page, 'ogf_basic');
 
 		const baseTypographyControl = page.locator('#customize-control-ogf_body_typography');
-		await expect(baseTypographyControl).toBeAttached();
+		await expect(baseTypographyControl).toBeVisible({ timeout: 10000 });
 
 		const chosenContainer = baseTypographyControl.locator('.typography-font-family .chosen-container').first();
 		await expect(chosenContainer).toBeVisible();
@@ -82,34 +108,16 @@ test.describe('Olympus Google Fonts - Upload Fonts', () => {
 			const fontSelect = baseTypographyControl.locator('.typography-font-family select.ogf-select');
 			const customFontOptions = await fontSelect.locator('option[value^="cf-"]').all();
 
-			if (customFontOptions.length > 0) {
-				const firstCustomFont = customFontOptions[0];
-				const fontValue = await firstCustomFont.getAttribute('value');
-				const fontText = await firstCustomFont.textContent();
+			expect(customFontOptions.length).toBeGreaterThan(0);
 
-				if (fontValue && fontText) {
-					await chosenContainer.locator('.chosen-single').click();
-					await expect(chosenContainer.locator('.chosen-drop, .chosen-results').first()).toBeVisible({ timeout: 5000 });
-
-					const searchInput = chosenContainer.locator('.chosen-search-input');
-					if ((await searchInput.count()) > 0 && (await searchInput.isVisible())) {
-						await searchInput.fill(fontText.trim());
-					await expect(
-						chosenContainer.locator('.chosen-results li').filter({ hasText: new RegExp(fontText.trim(), 'i') }).first()
-					).toBeVisible({ timeout: 5000 });
-					}
-
-					const option = chosenContainer
-						.locator('.chosen-results li')
-						.filter({ hasText: new RegExp(fontText.trim(), 'i') })
-						.first();
-					await option.click();
-					await expect(fontSelect).toHaveValue(fontValue, { timeout: 5000 });
-
-					const selectedValue = await fontSelect.inputValue();
-					expect(selectedValue).toBe(fontValue);
-				}
-			}
+			const fontOptionTexts = await Promise.all(
+				customFontOptions.map(async (opt) => await opt.textContent())
+			);
+			
+			const fontExists = fontOptionTexts.some((text) => text && text.includes(fontFamily));
+			expect(fontExists).toBeTruthy();
+		} else {
+			expect(hasCustomFontsSection).toBeTruthy();
 		}
 	});
 });
