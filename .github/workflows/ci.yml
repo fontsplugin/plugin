@@ -194,6 +194,28 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps chromium
 
+      - name: Create artifacts directory
+        run: mkdir -p artifacts/storage-states
+
+      - name: Start wp-env
+        run: npx wp-env start
+        env:
+          CI: true
+
+      - name: Wait for WordPress to be ready
+        run: |
+          echo "Waiting for WordPress to be ready..."
+          for i in {1..60}; do
+            if curl -f -s http://localhost:8888 > /dev/null 2>&1; then
+              echo "WordPress is ready!"
+              exit 0
+            fi
+            echo "Waiting... ($i/60)"
+            sleep 2
+          done
+          echo "WordPress failed to start"
+          exit 1
+
       - name: Run E2E tests
         env:
           CI: true
@@ -214,3 +236,11 @@ jobs:
           name: test-results
           path: test-results/
           retention-days: 7
+
+      - name: Stop wp-env
+        if: always()
+        run: npx wp-env stop
+
+      - name: Destroy wp-env
+        if: always()
+        run: npx wp-env destroy

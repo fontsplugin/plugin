@@ -42,12 +42,15 @@ const config = defineConfig( {
 	],
 
 	/* Run your local dev server before starting the tests */
-	webServer: {
-		command: 'npx wp-env start',
-		url: process.env.WP_BASE_URL || 'http://localhost:8888',
-		reuseExistingServer: !process.env.CI,
-		timeout: 120 * 1000,
-	},
+	/* In CI, wp-env is started manually in the GitHub Actions workflow */
+	webServer: process.env.CI
+		? undefined
+		: {
+				command: 'npx wp-env start',
+				url: process.env.WP_BASE_URL || 'http://localhost:8888',
+				reuseExistingServer: true,
+				timeout: 120 * 1000,
+			},
 } );
 
 export default config;
