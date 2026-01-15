@@ -200,6 +200,9 @@ jobs:
       - name: Install WordPress and start the server
         run: npm run env:start
 
+      - name: Wait for WordPress to be ready
+        run: npx wait-on http://localhost:8888 --timeout 60000
+
       - name: Run E2E tests
         env:
           CI: true
