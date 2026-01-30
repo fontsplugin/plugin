@@ -18,11 +18,15 @@
 /composer.lock
 /vendor
 
-# Block development
+# Block development (exclude build tooling but keep font data used by customizer/blocks)
 /blocks/node_modules
-/blocks/src
 /blocks/package.json
 /blocks/package-lock.json
+/blocks/src/google-fonts/edit.js
+/blocks/src/google-fonts/index.js
+/blocks/src/google-fonts/transforms.js
+/blocks/src/index.js
+/blocks/src/common.scss
 
 # Root JS dev files
 /package.json
