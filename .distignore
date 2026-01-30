@@ -12,6 +12,8 @@
 /bin
 /phpunit.xml.dist
 /phpcs.xml
+/playwright.config.ts
+/.wp-env.json
 /composer.json
 /composer.lock
 /vendor
@@ -21,6 +23,10 @@
 /blocks/src
 /blocks/package.json
 /blocks/package-lock.json
+
+# Root JS dev files
+/package.json
+/package-lock.json
 
 # Documentation (not needed in plugin)
 /README.md
