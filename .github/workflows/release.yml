@@ -19,10 +19,14 @@ jobs:
         run: |
           TAG=$(git tag --points-at "${{ github.event.workflow_run.head_sha }}" | head -n 1)
           echo "tag=$TAG" >> $GITHUB_OUTPUT
+      - name: Checkout tag
+        if: ${{ steps.tag.outputs.tag != '' }}
+        run: git checkout "${{ steps.tag.outputs.tag }}"
       - name: WordPress Plugin Deploy
         if: ${{ steps.tag.outputs.tag != '' }}
         uses: 10up/action-wordpress-plugin-deploy@stable
         env:
           SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
           SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          VERSION: ${{ steps.tag.outputs.tag }}
           SLUG: olympus-google-fonts # optional, remove if GitHub repo name matches SVN slug, including capitalization
