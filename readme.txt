@@ -5,7 +5,7 @@ Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 6.9
 License: GPLv2 or later
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 
 The easiest to customize fonts in WordPress. Optimized for Speed. 1000+ font choices. Supports Google Fonts, Adobe Fonts and Upload Fonts.
 
@@ -72,6 +72,7 @@ For more info on Fonts Plugin, check out the following:
 * [Font Combinations](https://fontsplugin.com/font-combinations/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [Google Fonts Checker](https://fontsplugin.com/google-fonts-checker/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
 * [How to Use Google Fonts in WordPress](https://fontsplugin.com/wordpress-google-fonts/?utm_source=wporg&utm_medium=readme&utm_campaign=docs)
+* [Website Font Checker](https://fontsplugin.com/website-font-checker/)
 
 = Bugs =
 If you find an issue with Fonts Plugin, let us know [here](https://wordpress.org/support/plugin/olympus-google-fonts#new-post)!
