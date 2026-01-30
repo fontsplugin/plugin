@@ -1,19 +1,25 @@
 name: Deploy to WordPress.org
 on:
-  push:
-    tags:
-    - "*"
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
 jobs:
   tag:
     name: New tag
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Build # Remove or modify this step as needed
+    - name: Get tag for SHA
+      id: tag
       run: |
-        npm install
-        npm run build
+        TAG=$(git tag --points-at "${{ github.event.workflow_run.head_sha }}" | head -n 1)
+        echo "tag=$TAG" >> $GITHUB_OUTPUT
+    - name: Build # Remove or modify this step as needed
+      if: ${{ steps.tag.outputs.tag != '' }}
     - name: WordPress Plugin Deploy
+      if: ${{ steps.tag.outputs.tag != '' }}
       uses: 10up/action-wordpress-plugin-deploy@stable
       env:
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
