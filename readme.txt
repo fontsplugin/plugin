@@ -1,10 +1,10 @@
-=== Fonts Plugin | Google Fonts, Adobe Fonts & Custom Fonts for WordPress ===
+=== Fonts Plugin | Google Fonts, Adobe Fonts & Upload Fonts ===
 Contributors: DannyCooper, googlefonts, fontsplugin
 Tags: google fonts, adobe fonts, custom fonts, upload fonts, typography
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 6.9.1
-Stable tag: 4.0.7
+Stable tag: 4.0.8
 License: GPLv2 or later
  
 Add Google Fonts, Adobe Fonts or custom fonts to WordPress. No coding required. Live preview. 200,000+ active installs.
