@@ -1,3 +1,7 @@
+= 4.0.7 =
+
+* Update readme
+
 = 4.0.6 =
 
 * Fix issue with repeater control not saving values correctly
