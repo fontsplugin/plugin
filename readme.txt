@@ -7,7 +7,7 @@ Tested up to: 6.9.1
 Stable tag: 4.0.8
 License: GPLv2 or later
  
-Add Google Fonts, Adobe Fonts or custom fonts to WordPress. No coding required. Live preview. 200,000+ active installs.
+Instantly change your entire website's typography with Google Fonts, Adobe Fonts, or custom fonts — no coding required. Live preview your changes.
 
 == Description ==
  
