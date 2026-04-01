@@ -3,23 +3,19 @@ Contributors: DannyCooper, googlefonts, fontsplugin
 Tags: google fonts, adobe fonts, custom fonts, upload fonts, typography
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
-Tested up to: 6.9.1
-Stable tag: 4.0.8
+Tested up to: 6.9
+Stable tag: 4.0.9
 License: GPLv2 or later
  
 Instantly change your entire website's typography with Google Fonts, Adobe Fonts, or custom fonts — no coding required. Live preview your changes.
 
 == Description ==
  
-Fonts Plugin is the most widely used Google Fonts plugin for WordPress, with over 200,000 active installations and a 5-star rating from more than 1,200 verified users. It gives website owners instant access to all 1,455 fonts in the Google Fonts library — directly inside the WordPress Customizer — without touching a single line of code. Install the plugin, open the Customizer, choose your fonts, and see the result live on your actual website before publishing. It takes less than two minutes from installation to a completely new look.
+Fonts Plugin is the most widely used Google Fonts plugin for WordPress, with over 200,000 active installations and a 5-star rating from more than 1,200 verified users. It gives website owners instant access to all 1,455 fonts in the [Google Fonts](https://fontsplugin.com/?utm_source=wporg&utm_medium=readme&utm_campaign=intro) library — directly inside the WordPress Customizer — without touching a single line of code. Install the plugin, open the Customizer, choose your fonts, and see the result live on your actual website before publishing. It takes less than two minutes from installation to a completely new look.
  
 = What Can You Do With Fonts Plugin? =
  
 Fonts Plugin lets you apply different fonts to different parts of your website. Choose one typeface for headings and a completely different one for body text, then fine-tune size, weight, colour, line height, and letter spacing — all from the same screen. The live preview updates instantly as you make changes, so you never have to guess what a font will look like on your content. Once you are happy with the result, click Save and the changes go live. The plugin works with every WordPress theme — from Twenty Twenty-Five to Genesis to Elementor — and requires no changes to your theme files.
- 
-= Is Fonts Plugin GDPR Compliant? =
- 
-Yes. Fonts Plugin Pro includes a built-in local hosting option that downloads font files directly from Google and serves them from your own domain. This means no requests are ever sent to Google's servers when a visitor loads your page. Enabling local hosting also improves your Google PageSpeed score by removing a render-blocking third-party request. For European website owners or anyone running a GDPR-compliant site, local font hosting is the recommended setting — and it is available in Fonts Plugin Pro.
  
 = What Fonts Are Available? =
  
@@ -29,7 +25,7 @@ Fonts Plugin gives you access to three distinct font libraries. The Google Fonts
  
 **Free Features**
 * Live Customizer Preview — see fonts on your real site before saving
-* 1,455 Google Fonts — the complete library, always up to date
+* 1,455 Google Fonts — the [complete library](https://fonts.google.com), always up to date
 * Adobe Fonts (Typekit) integration
 * Upload Custom Fonts — use your own .ttf, .otf, or .woff2 files
 * Works with any WordPress theme — no coding required
@@ -37,16 +33,17 @@ Fonts Plugin gives you access to three distinct font libraries. The Google Fonts
 * WooCommerce support
 * Translated into 25+ languages
 * SSL / HTTPS compatible
+* **SEO-Friendly** (Search Engine Optimization).
 * Tested with PHP 7 and PHP 8
  
 **[Pro Features](https://fontsplugin.com/pro-upgrade/?utm_source=wporg&utm_medium=readme&utm_campaign=upsell)**
 * Host Google Fonts Locally — GDPR-compliant, no data sent to Google
 * Selective Font Loading — load only the exact font weights used, up to 400% faster
 * Preconnect Resource Hints — improve font loading performance
-* Font Size control per element
-* Font Colour control per element
-* Line-Height control per element
-* Letter Spacing control per element
+* Font Size Control
+* Font Colour Control
+* Line-Height Control
+* Letter Spacing Control
 * Text Transform (uppercase, capitalize, lowercase)
 * Custom Elements — define your own CSS selectors and build controls for them
 * Priority email support — responses within 24 hours
