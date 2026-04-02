@@ -4,7 +4,7 @@ Tags: google fonts, adobe fonts, custom fonts, upload fonts, typography
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 6.9
-Stable tag: 4.0.9
+Stable tag: 4.1.0
 License: GPLv2 or later
  
 Instantly change your entire website's typography with Google Fonts, Adobe Fonts, or custom fonts — no coding required. Live preview your changes.
@@ -19,7 +19,7 @@ Fonts Plugin lets you apply different fonts to different parts of your website. 
  
 = What Fonts Are Available? =
  
-Fonts Plugin gives you access to three distinct font libraries. The Google Fonts library contains 1,455 unique, professionally designed typefaces — all free to use on personal and commercial websites. The Adobe Fonts (Typekit) integration connects your Adobe Creative Cloud subscription to your WordPress site, unlocking thousands of premium Adobe typefaces. You can also upload your own font files in any standard format, giving you complete typographic freedom. Whether you need a clean sans-serif for a corporate site, a warm serif for a blog, or a distinctive display font for a landing page, Fonts Plugin covers every use case without requiring multiple plugins.
+Fonts Plugin gives you access to three distinct font libraries. The Google Fonts library contains 1,455 unique, professionally designed typefaces — all free to use on personal and commercial websites. The [Adobe Fonts](https://docs.fontsplugin.com/integrations/adobe-fonts) (Typekit) integration connects your Adobe Creative Cloud subscription to your WordPress site, unlocking thousands of premium Adobe typefaces. You can also (upload your own font files)[https://docs.fontsplugin.com/custom-font-uploads/custom-font-uploads] in any standard format, giving you complete typographic freedom. Whether you need a clean sans-serif for a corporate site, a warm serif for a blog, or a distinctive display font for a landing page, Fonts Plugin covers every use case without requiring multiple plugins.
  
 = Plugin Features =
  
@@ -53,7 +53,7 @@ Fonts Plugin gives you access to three distinct font libraries. The Google Fonts
  
 = Why Choose Fonts Plugin Over Other Font Plugins? =
  
-Fonts Plugin is the only WordPress font plugin that combines Google Fonts, Adobe Fonts, and custom font uploads in a single, lightweight plugin — with a live preview built directly into the WordPress Customizer. Unlike page builder-specific typography tools, it works with every theme and every builder. Unlike GDPR-focused font plugins that only localise existing fonts, Fonts Plugin lets you choose, preview, and change fonts too. With over 200,000 active installs and 1,200+ five-star reviews, it is the most trusted all-in-one typography solution in the WordPress ecosystem.
+Fonts Plugin is the only WordPress font plugin that combines Google Fonts, Adobe Fonts, and custom font uploads in a single, lightweight plugin — with a live preview built directly into the WordPress Customizer. Unlike page builder-specific typography tools, it works with every theme and every builder. Unlike GDPR-focused font plugins that only localize existing fonts, Fonts Plugin lets you choose, preview, and change fonts too. With over 200,000 active installs and 1,200+ five-star reviews, it is the most trusted all-in-one typography solution in the WordPress ecosystem.
  
 = Plugin Compatibility =
  
@@ -133,7 +133,7 @@ Install and activate Fonts Plugin, then go to **Appearance → Customize**. You 
  
 = How is Fonts Plugin different from other Google Fonts plugins? =
  
-Most Google Fonts plugins do one thing: add fonts. Fonts Plugin combines font selection, live preview, Adobe Fonts integration, and custom font uploads — all in a single plugin. Fonts Plugin Pro goes further, adding GDPR-compliant local hosting, granular per-element controls (size, colour, line height, letter spacing, text transform), and up to 400% faster font loading through optimised weight selection and font preloading. You don't need a separate plugin for each concern.
+Most Google Fonts plugins do one thing: add fonts. Fonts Plugin combines font selection, live preview, Adobe Fonts integration, and custom font uploads — all in a single plugin. Fonts Plugin Pro goes further, adding GDPR-compliant local hosting, granular per-element controls (size, colour, line height, letter spacing, text transform), and up to 400% faster font loading through optimized weight selection and font preloading. You don't need a separate plugin for each concern.
  
 = Does Fonts Plugin support Adobe Fonts (Typekit)? =
  
@@ -145,11 +145,11 @@ Yes. Fonts Plugin lets you upload font files in standard formats (including .wof
  
 = Will Fonts Plugin slow down my website? =
  
-Any tool that outputs extra CSS or loads font files adds a small amount of work for the browser, so you may see a minor impact compared to using only [system fonts](https://fontsplugin.com/web-safe-system-fonts/). Fonts Plugin is built to keep that impact as low as possible. With Pro, Local Hosting, Selective Font Loading and Optimised Font Loading (which strips unused font weights) can improve font delivery speed by up to 400%.
+Any tool that outputs extra CSS or loads font files adds a small amount of work for the browser, so you may see a minor impact compared to using only [system fonts](https://fontsplugin.com/web-safe-system-fonts/). Fonts Plugin is built to keep that impact as low as possible. With Pro, Local Hosting, Selective Font Loading and Optimized Font Loading (which strips unused font weights) can improve font delivery speed by up to 400%.
  
 = What is the difference between the free version and Fonts Plugin Pro? =
  
-The free version covers everything you need to add and display Google Fonts, Adobe Fonts, or custom fonts on your WordPress site. Fonts Plugin Pro adds GDPR-compliant local font hosting, per-element typography controls (font size, colour, line height, letter spacing, text transform), custom element targeting, Font Preloading, Optimised Font Loading for maximum speed, and priority email support with responses within 24 hours. [See the full comparison →](https://fontsplugin.com/free-vs-pro/?utm_source=wporg&utm_medium=readme&utm_campaign=faq)
+The free version covers everything you need to add and display Google Fonts, Adobe Fonts, or custom fonts on your WordPress site. Fonts Plugin Pro adds GDPR-compliant local font hosting, per-element typography controls (font size, colour, line height, letter spacing, text transform), custom element targeting, Font Preloading, Optimized Font Loading for maximum speed, and priority email support with responses within 24 hours. [See the full comparison →](https://fontsplugin.com/free-vs-pro/?utm_source=wporg&utm_medium=readme&utm_campaign=faq)
  
 = How do I host Google Fonts locally for GDPR compliance? =
  
