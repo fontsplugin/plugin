@@ -117,8 +117,13 @@ class Olympus_Google_Fonts {
 			require_once OGF_DIR_PATH . '/compatibility/memberpress-courses.php';
 		}
 
-		require_once OGF_DIR_PATH . '/compatibility/elementor.php';
-		require_once OGF_DIR_PATH . '/compatibility/divi-builder.php';
+		if ( ogf_is_elementor_activated() ) {
+			require_once OGF_DIR_PATH . '/compatibility/elementor.php';
+		}
+
+		if ( defined( 'ET_BUILDER_VERSION' ) ) {
+			require_once OGF_DIR_PATH . '/compatibility/divi-builder.php';
+		}
 	}
 
 	/**
@@ -143,9 +148,10 @@ class Olympus_Google_Fonts {
 		}
 
 		$url = $fonts->build_url();
-		if ( $fonts->stored_css( $url ) ) {
+		$css = $fonts->stored_css( $url );
+		if ( $css ) {
 			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- CSS is stored/retrieved safely.
-			echo $fonts->stored_css( $url );
+			echo $css;
 		} else {
 			echo "@import url('" . esc_url( $url ) . "');" . PHP_EOL;
 		}
@@ -159,8 +165,8 @@ class Olympus_Google_Fonts {
 	 * @return array $urls           URLs to print for resource hints.
 	 */
 	public function resource_hints( $urls, $relation_type ) {
-		// If we are using local fonts we don't need this.
-		if ( get_theme_mod( 'fpp_host_locally' ) === true ) {
+		// If we are using local fonts we don't need this (match enqueue() gating).
+		if ( ogf_is_fpp_activated() && (bool) get_theme_mod( 'fpp_host_locally', false ) === true ) {
 			return $urls;
 		}
 
@@ -221,17 +227,17 @@ class Olympus_Google_Fonts {
 
 		$settings_link = '<a href="' . esc_url( $customizer_url ) . '">' . esc_html__( 'Settings', 'olympus-google-fonts' ) . '</a>';
 
-		array_push( $links, $settings_link );
+		$links[] = $settings_link;
 
 		$docs_link = '<a href="https://docs.fontsplugin.com">' . esc_html__( 'Documentation', 'olympus-google-fonts' ) . '</a>';
 
-		array_push( $links, $docs_link );
+		$links[] = $docs_link;
 
 		if ( ! defined( 'OGF_PRO' ) ) {
 			// Upgrade Link.
 			$pro_link = '<a href="https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=wpadmin&utm_campaign=upsell">' . esc_html__( 'Upgrade to Pro', 'olympus-google-fonts' ) . '</a>';
 
-			array_push( $links, $pro_link );
+			$links[] = $pro_link;
 		}
 
 		return $links;

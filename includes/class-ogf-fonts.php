@@ -82,19 +82,20 @@ class OGF_Fonts {
 	 * Get the users font choices.
 	 */
 	public function get_choices() {
-		$elements = array_keys( ogf_get_elements() );
-
-		foreach ( $elements as $element ) {
-			if ( get_theme_mod( $element . '_font' ) && get_theme_mod( $element . '_font' ) !== 'default' ) {
-				$this->choices[] = get_theme_mod( $element . '_font' );
+		foreach ( array_keys( ogf_get_elements() ) as $element ) {
+			$font = get_theme_mod( $element . '_font' );
+			if ( $font && 'default' !== $font ) {
+				$this->choices[] = $font;
 			}
 		}
 
-		$elements = array_keys( ogf_get_custom_elements() );
-
-		foreach ( $elements as $element ) {
-			if ( get_theme_mod( $element . '_font' ) && get_theme_mod( $element . '_font' ) !== 'default' ) {
-				$this->choices[] = get_theme_mod( $element . '_font' );
+		$custom = ogf_get_custom_elements();
+		if ( ! empty( $custom ) ) {
+			foreach ( array_keys( $custom ) as $element ) {
+				$font = get_theme_mod( $element . '_font' );
+				if ( $font && 'default' !== $font ) {
+					$this->choices[] = $font;
+				}
 			}
 		}
 
@@ -287,17 +288,22 @@ class OGF_Fonts {
 			return false;
 		}
 
-		$fonts = array_unique( $this->choices );
-
-		foreach ( $fonts as $font_id ) {
-			// Check the users choice is a real font.
-			if ( array_key_exists( $font_id, self::$google_fonts ) ) {
-				$font_id_for_url = $this->get_font_id( self::$google_fonts[ $font_id ]['f'] );
-
-				$weights = $this->filter_selected_weights( $font_id, self::$google_fonts[ $font_id ]['v'] );
-
-				$families[] = $font_id_for_url . ':' . implode( ',', array_keys( $weights ) );
+		$seen = array();
+		foreach ( $this->choices as $font_id ) {
+			if ( isset( $seen[ $font_id ] ) ) {
+				continue;
 			}
+			$seen[ $font_id ] = true;
+
+			if ( ! array_key_exists( $font_id, self::$google_fonts ) ) {
+				continue;
+			}
+
+			$font_id_for_url = $this->get_font_id( self::$google_fonts[ $font_id ]['f'] );
+
+			$weights = $this->filter_selected_weights( $font_id, self::$google_fonts[ $font_id ]['v'] );
+
+			$families[] = $font_id_for_url . ':' . implode( ',', array_keys( $weights ) );
 		}
 
 		$query_args = array(

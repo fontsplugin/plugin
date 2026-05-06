@@ -51,6 +51,12 @@ add_action( 'admin_head', 'ogf_gutenberg_output_css' );
  * @return string The compiled CSS rules.
  */
 function ogf_gutenberg_build_css() {
+	static $built = null;
+
+	if ( null !== $built ) {
+		return $built;
+	}
+
 	$elements = array(
 		'ogf_body'              => array(
 			'selectors' => '.editor-styles-wrapper p, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4, .editor-styles-wrapper h5, .editor-styles-wrapper h6, wp-block-post-title',
@@ -93,7 +99,8 @@ function ogf_gutenberg_build_css() {
 		$array[] = ogf_generate_css_gutenberg( $values['selectors'], $id );
 	}
 
-	return implode( ' ', $array );
+	$built = implode( ' ', $array );
+	return $built;
 }
 
 /**

@@ -18,6 +18,7 @@ composer.lock
 # /blocks/build/
 
 # IDE and editors
+.cursor/
 .idea/
 .vscode/
 *.code-workspace

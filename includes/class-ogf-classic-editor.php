@@ -58,8 +58,10 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 			add_filter( 'mce_buttons', array( $this, 'tinymce_add_buttons' ), 1 );
 			add_filter( 'tiny_mce_before_init', array( $this, 'tinymce_custom_options' ), 100 );
 			add_filter( 'ogf_classic_font_formats', array( $this, 'tinymce_add_fonts' ), 100 );
-			add_action( 'admin_init', array( $this, 'google_fonts_enqueue' ) );
-			add_action( 'admin_init', array( $this, 'typekit_fonts_enqueue' ) );
+
+			// Push editor styles now: we may bootstrap on current_screen (after admin_init).
+			$this->google_fonts_enqueue();
+			$this->typekit_fonts_enqueue();
 		}
 
 		/**
@@ -118,7 +120,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 				$base_type = ! empty( $font['family'] ) ? $font['family'] : $name;
 			} elseif ( ogf_is_system_font( $base_type ) ) {
 				$base_type = str_replace( 'sf-', '', $base_type );
-				$base_type = $this->typekit_fonts[ $base_type ]['stack'] ?? $base_type;
+				$base_type = $this->system_fonts[ $base_type ]['stack'] ?? $base_type;
 			} elseif ( ogf_is_google_font( $base_type ) ) {
 				$base_type = $this->ogf_fonts->get_font_name( $base_type );
 			} elseif ( ogf_is_typekit_font( $base_type ) ) {
@@ -131,7 +133,7 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 				$content_type = ! empty( $font['family'] ) ? $font['family'] : $name;
 			} elseif ( ogf_is_system_font( $content_type ) ) {
 				$content_type = str_replace( 'sf-', '', $content_type );
-				$content_type = $this->typekit_fonts[ $content_type ]['stack'] ?? $content_type;
+				$content_type = $this->system_fonts[ $content_type ]['stack'] ?? $content_type;
 			} elseif ( ogf_is_google_font( $content_type ) ) {
 				$content_type = $this->ogf_fonts->get_font_name( $content_type );
 			} elseif ( ogf_is_typekit_font( $content_type ) ) {
@@ -211,9 +213,17 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 		public function tinymce_add_fonts( $old_default ) {
 			$new_default = '';
 			$choices     = $this->ogf_fonts->choices;
-			foreach ( array_unique( $choices ) as $font ) {
+			// Same font ID can appear more than once in $choices (different elements reuse one face).
+			// Keys here are font IDs we already appended to TinyMCE's format string — skip repeats.
+			$seen_choice = array();
+			foreach ( $choices as $font ) {
+				if ( isset( $seen_choice[ $font ] ) ) {
+					continue;
+				}
+				$seen_choice[ $font ] = true;
 				if ( ogf_is_google_font( $font ) ) {
-					$new_default .= $this->ogf_fonts->get_font_name( $font ) . '=' . $this->ogf_fonts->get_font_name( $font ) . ';';
+					$name = $this->ogf_fonts->get_font_name( $font );
+					$new_default .= $name . '=' . $name . ';';
 				}
 			}
 
@@ -265,7 +275,91 @@ if ( ! class_exists( 'OGF_Classic_Editor' ) ) :
 	}
 endif;
 
-/*
- * Instantiate the OGF_Classic_Editor class.
+/**
+ * Whether the current admin screen should load Classic / TinyMCE integration.
+ *
+ * @param WP_Screen $screen Current screen.
+ * @return bool
  */
-new OGF_Classic_Editor();
+function ogf_screen_needs_classic_editor_integration( $screen ) {
+	if ( ! $screen instanceof WP_Screen ) {
+		return false;
+	}
+
+	/**
+	 * Short-circuit Classic Editor integration for a screen.
+	 *
+	 * @param bool|null $load   Return true to force load, false to skip, null to use default logic.
+	 * @param WP_Screen $screen Current screen.
+	 */
+	$forced = apply_filters( 'ogf_load_classic_editor_integration', null, $screen );
+	if ( true === $forced ) {
+		return true;
+	}
+	if ( false === $forced ) {
+		return false;
+	}
+
+	// Post / page / CPT screens: only when the block editor is not used for this post type.
+	if ( 'post' === $screen->base ) {
+		$post_type = $screen->post_type;
+		if ( empty( $post_type ) ) {
+			return true;
+		}
+		if ( function_exists( 'use_block_editor_for_post_type' ) ) {
+			return ! use_block_editor_for_post_type( $post_type );
+		}
+		return true;
+	}
+
+	// Legacy widgets screen (TinyMCE in text widgets).
+	if ( 'widgets' === $screen->id ) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Load Classic Editor integration only when needed (skip front-end and most admin screens).
+ *
+ * @return void
+ */
+function ogf_init_classic_editor_integration() {
+	if ( true === get_theme_mod( 'ogf_disable_post_level_controls', false ) ) {
+		return;
+	}
+
+	if ( ! is_admin() ) {
+		return;
+	}
+
+	static $registered = false;
+	if ( $registered ) {
+		return;
+	}
+	$registered = true;
+
+	// admin-ajax.php does not run set_current_screen(); keep previous behavior for AJAX.
+	if ( wp_doing_ajax() ) {
+		new OGF_Classic_Editor();
+		return;
+	}
+
+	add_action(
+		'current_screen',
+		static function ( $screen ) {
+			static $booted = false;
+			if ( $booted ) {
+				return;
+			}
+			if ( ! ogf_screen_needs_classic_editor_integration( $screen ) ) {
+				return;
+			}
+			$booted = true;
+			new OGF_Classic_Editor();
+		},
+		0
+	);
+}
+add_action( 'admin_init', 'ogf_init_classic_editor_integration', 0 );

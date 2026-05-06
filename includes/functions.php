@@ -13,10 +13,17 @@
  * @return array An array of user-defined elements.
  */
 function ogf_get_custom_elements() {
+	static $cached = null;
+
+	if ( null !== $cached ) {
+		return $cached;
+	}
+
 	$theme_mod = get_theme_mod( 'ogf_custom_selectors', false );
 
 	if ( ! $theme_mod ) {
-		return array();
+		$cached = array();
+		return $cached;
 	}
 
 	$custom_selectors = json_decode( $theme_mod, true );
@@ -25,7 +32,8 @@ function ogf_get_custom_elements() {
 		$selector['section'] = 'ogf_advanced__custom';
 	}
 
-	return $custom_selectors;
+	$cached = $custom_selectors;
+	return $cached;
 }
 
 /**
@@ -220,16 +228,26 @@ function ogf_custom_fonts() {
  * @return array User uploaded fonts.
  */
 function ogf_custom_fonts_unique() {
-	$fonts     = OGF_Fonts_Taxonomy::get_fonts();
-	$new_fonts = array();
-	foreach ( $fonts as $key => $value ) {
-		if ( $value['family'] ) {
-			$new_fonts[ $key ] = $value['family'];
-		} else {
-			$new_fonts[ $key ] = $value['label'];
-		}
+	static $cached = null;
+
+	if ( null !== $cached ) {
+		return $cached;
 	}
-	return array_unique( $new_fonts );
+
+	$fonts       = OGF_Fonts_Taxonomy::get_fonts();
+	$new_fonts   = array();
+	$seen_family = array();
+	foreach ( $fonts as $key => $value ) {
+		$fam = ! empty( $value['family'] ) ? $value['family'] : $value['label'];
+		if ( isset( $seen_family[ $fam ] ) ) {
+			continue;
+		}
+		$seen_family[ $fam ] = true;
+		$new_fonts[ $key ]  = $fam;
+	}
+
+	$cached = $new_fonts;
+	return $cached;
 }
 
 /**
@@ -325,9 +343,7 @@ function ogf_system_fonts() {
 		),
 	);
 
-	$filtered_system_fonts = apply_filters( 'ogf_system_fonts', $system_fonts );
-
-	return $filtered_system_fonts;
+	return apply_filters( 'ogf_system_fonts', $system_fonts );
 }
 
 /**
@@ -432,24 +448,18 @@ function ogf_is_google_font( $font_id ) {
  * Check if WooCommerce is activated.
  */
 function ogf_is_woocommerce_activated() {
-	if ( class_exists( 'woocommerce' ) ) {
-		return true;
-	} else {
-		return false;
-	}
+	return class_exists( 'woocommerce' );
 }
 
 /**
  * Check if MemberPress Courses is activated.
  */
 function ogf_is_memberpress_courses_activated() {
-	include_once ABSPATH . 'wp-admin/includes/plugin.php';
-
-	if ( is_plugin_active( 'memberpress-courses/main.php' ) ) {
-		return true;
-	} else {
-		return false;
+	if ( ! function_exists( 'is_plugin_active' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/plugin.php';
 	}
+
+	return is_plugin_active( 'memberpress-courses/main.php' );
 }
 
 /**
@@ -466,9 +476,5 @@ function ogf_is_elementor_activated() {
  * Check if Fonts Plugin Pro is activated.
  */
 function ogf_is_fpp_activated() {
-	if ( function_exists( 'fonts_plugin_pro_init' ) ) {
-		return true;
-	} else {
-		return false;
-	}
+	return function_exists( 'fonts_plugin_pro_init' );
 }
