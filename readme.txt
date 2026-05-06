@@ -4,7 +4,7 @@ Tags: google fonts, adobe fonts, custom fonts, upload fonts, typography
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
 Tested up to: 6.9
-Stable tag: 4.1.0
+Stable tag: 4.1.1
 License: GPLv2 or later
  
 Instantly change your entire website's typography with Google Fonts, Adobe Fonts, or custom fonts — no coding required. Live preview your changes.
