@@ -21,6 +21,7 @@ composer.lock
 .cursor/
 .idea/
 .vscode/
+.claude/
 *.code-workspace
 *.sublime-project
 *.sublime-workspace
