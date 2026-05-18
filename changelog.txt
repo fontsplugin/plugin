@@ -1,3 +1,7 @@
+= 4.1.2 =
+
+* Prevent database cleaner plugins (e.g. WP Sweep, WP-Optimize) from deleting custom font taxonomy terms. Those terms were stored with a count of zero because they are not attached to posts, so cleaners treated them as unused; term counts are now kept so custom fonts stay in the database.
+
 = 4.1.1 =
 
 * Speed optimizations
