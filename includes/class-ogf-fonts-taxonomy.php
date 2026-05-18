@@ -55,6 +55,8 @@ class OGF_Fonts_Taxonomy {
 	 */
 	public function __construct() {
 		$this->register_fonts_taxonomy();
+		add_action( 'created_ogf_custom_fonts', array( $this, 'set_initial_count' ) );
+		$this->maybe_fix_term_counts();
 	}
 
 	/**
@@ -77,14 +79,15 @@ class OGF_Fonts_Taxonomy {
 		);
 
 		$args = array(
-			'hierarchical'      => false,
-			'labels'            => $labels,
-			'public'            => false,
-			'show_in_nav_menus' => false,
-			'show_ui'           => true,
-			'capabilities'      => array( self::$capability ),
-			'query_var'         => false,
-			'rewrite'           => false,
+			'hierarchical'          => false,
+			'labels'                => $labels,
+			'public'                => false,
+			'show_in_nav_menus'     => false,
+			'show_ui'               => true,
+			'capabilities'          => array( self::$capability ),
+			'query_var'             => false,
+			'rewrite'               => false,
+			'update_count_callback' => array( __CLASS__, 'update_font_count' ),
 		);
 
 		register_taxonomy(
@@ -191,6 +194,58 @@ class OGF_Fonts_Taxonomy {
 			}
 		}
 		update_option( 'taxonomy_' . self::$taxonomy_slug . "_{$term_id}", $data );
+	}
+
+	/**
+	 * Custom count callback to prevent recounts from resetting count to 0.
+	 *
+	 * @param array  $terms    List of term taxonomy IDs.
+	 * @param object $taxonomy Current taxonomy object.
+	 */
+	public static function update_font_count( $terms, $taxonomy ) {
+		global $wpdb;
+		foreach ( (array) $terms as $term_id ) {
+			$wpdb->update(
+				$wpdb->term_taxonomy,
+				array( 'count' => 1 ),
+				array( 'term_id' => $term_id, 'taxonomy' => $taxonomy->name )
+			);
+		}
+		clean_term_cache( $terms, $taxonomy->name, false );
+	}
+
+	/**
+	 * Set count to 1 when a new font term is created.
+	 *
+	 * @param int $term_id Term ID.
+	 */
+	public function set_initial_count( $term_id ) {
+		global $wpdb;
+		$wpdb->update(
+			$wpdb->term_taxonomy,
+			array( 'count' => 1 ),
+			array( 'term_id' => $term_id, 'taxonomy' => self::$taxonomy_slug )
+		);
+		clean_term_cache( $term_id, self::$taxonomy_slug, false );
+	}
+
+	/**
+	 * One-time fix for existing terms that have count = 0.
+	 */
+	private function maybe_fix_term_counts() {
+		if ( get_option( 'ogf_font_counts_fixed' ) ) {
+			return;
+		}
+
+		global $wpdb;
+		$wpdb->query(
+			$wpdb->prepare(
+				"UPDATE {$wpdb->term_taxonomy} SET count = 1 WHERE taxonomy = %s AND count = 0",
+				self::$taxonomy_slug
+			)
+		);
+
+		update_option( 'ogf_font_counts_fixed', 1, true );
 	}
 }
 
