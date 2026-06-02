@@ -111,8 +111,12 @@ class OGF_Welcome_Screen {
 	 * AJAX handler to store the state of dismissible notices.
 	 */
 	public function dismiss_guide() {
-		// Store it in the options table.
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'insufficient_permissions' );
+		}
+
 		update_option( 'ogf_dismiss_guide', true );
+		wp_send_json_success();
 	}
 }
 

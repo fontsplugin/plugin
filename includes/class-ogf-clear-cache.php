@@ -72,12 +72,12 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 		 * The Clear Cache AJAX request handler.
 		 */
 		public function ajax_customizer_clear_cache() {
-			if ( ! $this->wp_customize->is_preview() ) {
-				wp_send_json_error( 'not_preview' );
-			}
-
 			if ( ! check_ajax_referer( 'ogf_clear_cache', 'security' ) ) {
 				wp_send_json_error( 'invalid_nonce' );
+			}
+
+			if ( ! current_user_can( 'edit_theme_options' ) ) {
+				wp_send_json_error( 'insufficient_permissions' );
 			}
 
 			$this->clear();
