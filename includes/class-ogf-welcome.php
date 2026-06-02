@@ -69,9 +69,12 @@ if ( ! class_exists( 'OGF_Welcome' ) ) :
 		 * AJAX handler to store the state of dismissible notices.
 		 */
 		public function dismiss_notice() {
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( 'insufficient_permissions' );
+			}
+
 			// phpcs:ignore WordPress.Security.NonceVerification.Missing -- AJAX handler for dismissing notices, safe operation.
 			if ( isset( $_POST['type'] ) ) {
-				// Pick up the notice "type" - passed via jQuery (the "data-notice" attribute on the notice).
 				// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Same as above.
 				$type = sanitize_text_field( wp_unslash( $_POST['type'] ) );
 				update_option( 'dismissed-' . $type, true );

@@ -41,7 +41,7 @@ function ogf_return_custom_font_css() {
 	$css = '';
 
 	foreach ( $fonts as $font => $data ) {
-		$font_family = $data['files']['family'] ? esc_attr( $data['files']['family'] ) : $font;
+		$font_family = $data['files']['family'] ? esc_html( $data['files']['family'] ) : $font;
 		$files       = $data['files'];
 
 		if ( $files['woff'] || $files['woff2'] || $files['ttf'] || $files['otf'] ) {

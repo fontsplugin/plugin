@@ -412,7 +412,7 @@ class OGF_Upload_Fonts_Screen {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Nonce verified by WordPress term save action.
 		if ( isset( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) ) {
 			// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized below.
-			$value = array_map( 'esc_attr', wp_unslash( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) );
+			$value = array_map( 'sanitize_text_field', wp_unslash( $_POST[ OGF_Fonts_Taxonomy::$taxonomy_slug ] ) );
 			OGF_Fonts_Taxonomy::update_font_data( $value, $term_id );
 		}
 	}

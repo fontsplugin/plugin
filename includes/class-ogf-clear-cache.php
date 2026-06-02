@@ -80,6 +80,10 @@ if ( ! class_exists( 'OGF_Clear_Cache' ) ) :
 				wp_send_json_error( 'invalid_nonce' );
 			}
 
+			if ( ! current_user_can( 'edit_theme_options' ) ) {
+				wp_send_json_error( 'insufficient_permissions' );
+			}
+
 			$this->clear();
 
 			wp_send_json_success();
