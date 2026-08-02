@@ -61,7 +61,26 @@ class OGF_Welcome_Screen {
 	public function enqueue() {
 
 		if ( get_current_screen()->id === 'toplevel_page_fonts-plugin' ) {
-			wp_enqueue_style( 'olympus-google-fonts-admin', plugins_url( 'admin/style.css', __DIR__ ), false, '1.0.0' );
+			wp_enqueue_style( 'ogf-admin-page', plugins_url( 'admin/admin-page.css', __DIR__ ), array(), OGF_VERSION );
+			wp_enqueue_script( 'ogf-admin-page', plugins_url( 'admin/admin-page.js', __DIR__ ), array(), OGF_VERSION, true );
+			wp_localize_script(
+				'ogf-admin-page',
+				'ogfAdmin',
+				array(
+					'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
+					'nonce'      => wp_create_nonce( 'ogf_admin_nonce' ),
+					'isPro'      => defined( 'OGF_PRO' ),
+					'upgradeUrl' => 'https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=admin_page',
+					'i18n'       => array(
+						'saved'             => __( 'Settings saved.', 'olympus-google-fonts' ),
+						'error'             => __( 'Something went wrong.', 'olympus-google-fonts' ),
+						'cleared'           => __( 'Cache cleared.', 'olympus-google-fonts' ),
+						'clearCacheConfirm' => __( 'Are you sure you want to clear the font cache?', 'olympus-google-fonts' ),
+						'resetFontsConfirm' => __( 'This will reset all fonts to their defaults. This action cannot be reversed.', 'olympus-google-fonts' ),
+						'resetDone'         => __( 'All fonts have been reset.', 'olympus-google-fonts' ),
+					),
+				)
+			);
 		}
 
 		wp_enqueue_script( 'ogf-admin', esc_url( OGF_DIR_URL . 'assets/js/admin.js' ), 'jquery', OGF_VERSION, false );
@@ -71,43 +90,11 @@ class OGF_Welcome_Screen {
 	 * Options page callback
 	 */
 	public function render_welcome_page() {
-		?>
-			<div class="eb-wrap">
-				<div class="eb-content">
-					<div class="eb-content__header">
-						<h1><?php esc_html_e( 'Your Quickstart Guide', 'olympus-google-fonts' ); ?></h1>
-					</div>
-					<div class="eb-content__inner">
-						<img class="ebook-cover" src="<?php echo esc_url( plugins_url( 'admin/fonts-plugin-quickstart-guide.png', __DIR__ ) ); ?>">
-						<p><?php esc_html_e( 'To help you get the most out of the Google Fonts plugin we’ve put together a free quickstart guide.', 'olympus-google-fonts' ); ?></p>
-						<p><?php esc_html_e( 'In this beautifully-formatted, easy-to-read PDF you will learn:', 'olympus-google-fonts' ); ?>
-						<ul>
-							<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
-							<li><?php printf( esc_html__( 'How to %1$seasily%2$s customize your typography.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
-							<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
-							<li><?php printf( esc_html__( 'How to host fonts %1$slocally%2$s for speed, GDPR & DSGVO.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
-							<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
-							<li><?php printf( esc_html__( 'How to use Google Fonts without %1$sslowing down%2$s your website.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
-						</ul>
-						<p><?php esc_html_e( 'Download your free copy today.', 'olympus-google-fonts' ); ?></p>
+		global $ogf_admin_page;
 
-						<?php if ( get_option( 'ogf_dismiss_guide', false ) === false ) : ?>
-							<form action="https://fontsplugin.email/subscribe" method="post" class="validate" target="_blank" novalidate>
-								<input type="email" value="" placeholder="<?php esc_attr_e( 'Your email address...', 'olympus-google-fonts' ); ?>" name="email" class="required email" id="mce-EMAIL">
-								<input type="hidden" name="list" value="2guyf8U56tOENOh6892lBQ6w"/>
-		<input type="hidden" name="subform" value="yes"/>
-								<input type="submit" value="<?php esc_attr_e( 'Send My Guide!', 'olympus-google-fonts' ); ?>" name="submit" class="ogf-send-guide-button button">
-							</form>
-						<?php else : ?>
-
-							<a class="ogf-send-guide-button button" href="https://fontsplugin.com/wp-content/uploads/qs-guide.pdf" target="_blank"><?php esc_html_e( 'Read Guide', 'olympus-google-fonts' ); ?></a>
-
-						<?php endif; ?>
-
-					</div>
-				</div>
-			</div>
-			<?php
+		if ( $ogf_admin_page instanceof OGF_Admin_Page ) {
+			$ogf_admin_page->render();
+		}
 	}
 
 	/**

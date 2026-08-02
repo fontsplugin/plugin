@@ -93,6 +93,7 @@ class Olympus_Google_Fonts {
 		require_once OGF_DIR_PATH . 'includes/class-ogf-dashboard-widget.php';
 
 		// Admin sidebar page(s).
+		require_once OGF_DIR_PATH . 'admin/class-ogf-admin-page.php';
 		require_once OGF_DIR_PATH . 'admin/class-ogf-welcome-screen.php';
 	}
 
