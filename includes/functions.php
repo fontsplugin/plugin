@@ -243,7 +243,7 @@ function ogf_custom_fonts_unique() {
 			continue;
 		}
 		$seen_family[ $fam ] = true;
-		$new_fonts[ $key ]  = $fam;
+		$new_fonts[ $key ]   = $fam;
 	}
 
 	$cached = $new_fonts;

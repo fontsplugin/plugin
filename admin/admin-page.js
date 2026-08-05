@@ -43,6 +43,7 @@
 	 */
 	function showToast( message ) {
 		var toast = document.getElementById( 'ogf-toast' );
+		var msgEl = document.getElementById( 'ogf-toast-msg' );
 		if ( ! toast ) {
 			return;
 		}
@@ -51,7 +52,8 @@
 			clearTimeout( toastTimer );
 		}
 
-		toast.textContent = message;
+		// Write into the message span so the leading icon survives.
+		( msgEl || toast ).textContent = message;
 		toast.classList.add( 'visible' );
 
 		toastTimer = setTimeout( function() {
@@ -64,7 +66,7 @@
 	 * Tab switching
 	 * ------------------------------------------------------------- */
 	function initTabs() {
-		var buttons = document.querySelectorAll( '.ogf-tab-btn' );
+		var buttons = document.querySelectorAll( '.ogf-nav-item' );
 		var panels  = document.querySelectorAll( '.ogf-tab-panel' );
 
 		function activateTab( name ) {
@@ -81,6 +83,16 @@
 				var tab = btn.getAttribute( 'data-tab' );
 				activateTab( tab );
 				window.location.hash = '#' + tab;
+			} );
+		} );
+
+		// Controls elsewhere on the page that jump to a tab.
+		document.querySelectorAll( '[data-goto-tab]' ).forEach( function( el ) {
+			el.addEventListener( 'click', function() {
+				var target = el.getAttribute( 'data-goto-tab' );
+				activateTab( target );
+				window.location.hash = '#' + target;
+				window.scrollTo( 0, 0 );
 			} );
 		} );
 
@@ -342,6 +354,392 @@
 	}
 
 	/* ---------------------------------------------------------------
+	 * Copy diagnostics for support
+	 * ------------------------------------------------------------- */
+
+	/**
+	 * Build a plain-text report from the rendered Diagnostics panel.
+	 *
+	 * Read off the DOM rather than duplicated in PHP, so a row added to the
+	 * panel shows up in the report without anyone remembering to add it twice.
+	 *
+	 * @return {string} Report ready to paste into a ticket.
+	 */
+	function buildDiagnosticsReport() {
+		var panel = document.getElementById( 'ogf-tab-diagnostics' );
+		var lines = [];
+
+		if ( ! panel ) {
+			return '';
+		}
+
+		panel.querySelectorAll( '.ogf-card' ).forEach( function( card ) {
+			var rows = card.querySelectorAll( '.ogf-diag-item' );
+			if ( ! rows.length ) {
+				return;
+			}
+
+			var heading = card.querySelector( '.ogf-card-header' );
+			lines.push( '## ' + ( heading ? heading.textContent.trim() : '' ) );
+
+			rows.forEach( function( row ) {
+				var key = row.querySelector( '.ogf-diag-key' );
+				var val = row.querySelector( '.ogf-diag-val, .ogf-diag-status' );
+				if ( key && val ) {
+					lines.push( key.textContent.trim() + ': ' + val.textContent.trim() );
+				}
+			} );
+
+			lines.push( '' );
+		} );
+
+		if ( ! lines.length ) {
+			return '';
+		}
+
+		return 'Fonts Plugin diagnostics\n' +
+			'Generated: ' + new Date().toISOString().replace( 'T', ' ' ).slice( 0, 19 ) + ' UTC\n\n' +
+			lines.join( '\n' ).trim() + '\n';
+	}
+
+	/**
+	 * Copy via a temporary selection. Works without a secure context and
+	 * without the document holding focus.
+	 *
+	 * @param {string} text Text to place on the clipboard.
+	 * @return {Promise} Resolves when the copy succeeds.
+	 */
+	function legacyCopy( text ) {
+		return new Promise( function( resolve, reject ) {
+			var field = document.createElement( 'textarea' );
+			field.value = text;
+			field.setAttribute( 'readonly', '' );
+			field.style.position = 'fixed';
+			field.style.top = '-1000px';
+			document.body.appendChild( field );
+			field.select();
+
+			try {
+				if ( document.execCommand( 'copy' ) ) {
+					resolve();
+				} else {
+					reject();
+				}
+			} catch ( e ) {
+				reject();
+			} finally {
+				document.body.removeChild( field );
+			}
+		} );
+	}
+
+	/**
+	 * Copy text to the clipboard.
+	 *
+	 * The async API is tried first, but it rejects in more situations than
+	 * "unsupported" — a document that lost focus, a restrictive permissions
+	 * policy, an embedded frame. Fall through to the legacy path on rejection
+	 * rather than only when the API is missing, since it still succeeds in
+	 * several of those cases.
+	 *
+	 * @param {string} text Text to place on the clipboard.
+	 * @return {Promise} Resolves when the copy succeeds.
+	 */
+	function copyText( text ) {
+		if ( navigator.clipboard && window.isSecureContext ) {
+			return navigator.clipboard.writeText( text ).catch( function() {
+				return legacyCopy( text );
+			} );
+		}
+
+		return legacyCopy( text );
+	}
+
+	function initCopyDiagnostics() {
+		var button = document.getElementById( 'ogf-copy-diagnostics' );
+		if ( ! button ) {
+			return;
+		}
+
+		button.addEventListener( 'click', function() {
+			var report = buildDiagnosticsReport();
+
+			if ( ! report ) {
+				showToast( ogfAdmin.i18n.error );
+				return;
+			}
+
+			copyText( report )
+				.then( function() {
+					showToast( ogfAdmin.i18n.diagnosticsCopied );
+				} )
+				.catch( function() {
+					showToast( ogfAdmin.i18n.copyFailed );
+				} );
+		} );
+	}
+
+	/* ---------------------------------------------------------------
+	 * Shared helpers for the Upload / Adobe Fonts tabs
+	 * ------------------------------------------------------------- */
+
+	/**
+	 * Reload the page, landing back on the given tab.
+	 *
+	 * @param {string} tab Tab slug.
+	 */
+	function reloadToTab( tab ) {
+		window.location.hash = '#' + tab;
+		window.location.reload();
+	}
+
+	/**
+	 * Put a button into its loading state. Returns a restore function.
+	 *
+	 * @param {Element} button Button element.
+	 * @param {string}  label  Text to show while busy.
+	 * @return {Function} Call to restore the original label.
+	 */
+	function setBusy( button, label ) {
+		var original = button.textContent;
+		button.disabled = true;
+		button.textContent = label;
+
+		return function() {
+			button.disabled = false;
+			button.textContent = original;
+		};
+	}
+
+	/**
+	 * Read every [data-field] control inside a form wrapper.
+	 *
+	 * @param {Element} form The .ogf-cf-form wrapper.
+	 * @return {Object} Payload for the AJAX request.
+	 */
+	function collectFontForm( form ) {
+		var payload = { term_id: form.getAttribute( 'data-term-id' ) || 0 };
+
+		form.querySelectorAll( '[data-field]' ).forEach( function( el ) {
+			var field = el.getAttribute( 'data-field' );
+
+			if ( 'BUTTON' === el.tagName ) {
+				payload[ field ] = el.classList.contains( 'on' ) ? 1 : 0;
+			} else {
+				payload[ field ] = el.value;
+			}
+		} );
+
+		return payload;
+	}
+
+	/* ---------------------------------------------------------------
+	 * Upload Fonts tab
+	 * ------------------------------------------------------------- */
+	var mediaFrame = null;
+
+	/**
+	 * Open the media library and write the chosen URL into an input.
+	 *
+	 * @param {Element} input The text input to fill.
+	 */
+	function openFontPicker( input ) {
+		if ( ! window.wp || ! window.wp.media ) {
+			return;
+		}
+
+		if ( ! mediaFrame ) {
+			mediaFrame = window.wp.media( {
+				title: ogfAdmin.i18n.selectFontFile,
+				button: { text: ogfAdmin.i18n.useFontFile },
+				multiple: false,
+			} );
+		}
+
+		// Rebind on every open so the URL lands in the input that was clicked.
+		mediaFrame.off( 'select' );
+		mediaFrame.on( 'select', function() {
+			var attachment = mediaFrame.state().get( 'selection' ).first().toJSON();
+			input.value = attachment.url;
+		} );
+
+		mediaFrame.open();
+	}
+
+	function initCustomFonts() {
+		var panel = document.getElementById( 'ogf-tab-upload' );
+		if ( ! panel ) {
+			return;
+		}
+
+		// Preload toggles are read on save rather than saved individually.
+		panel.querySelectorAll( '.ogf-cf-form .ogf-toggle-sm[data-field]' ).forEach( function( toggle ) {
+			toggle.addEventListener( 'click', function() {
+				toggle.classList.toggle( 'on' );
+			} );
+		} );
+
+		panel.querySelectorAll( '.ogf-cf-upload' ).forEach( function( button ) {
+			button.addEventListener( 'click', function() {
+				openFontPicker( button.parentElement.querySelector( 'input[data-field]' ) );
+			} );
+		} );
+
+		panel.querySelectorAll( '.ogf-cf-edit' ).forEach( function( button ) {
+			button.addEventListener( 'click', function() {
+				var row = button.closest( '.ogf-uploaded-font-row' );
+				var editPanel = row.nextElementSibling;
+
+				if ( editPanel && editPanel.classList.contains( 'ogf-cf-edit-panel' ) ) {
+					editPanel.classList.toggle( 'open' );
+				}
+			} );
+		} );
+
+		panel.querySelectorAll( '.ogf-cf-cancel' ).forEach( function( button ) {
+			button.addEventListener( 'click', function() {
+				button.closest( '.ogf-cf-edit-panel' ).classList.remove( 'open' );
+			} );
+		} );
+
+		panel.querySelectorAll( '.ogf-cf-save' ).forEach( function( button ) {
+			button.addEventListener( 'click', function() {
+				var form = button.closest( '.ogf-cf-form' );
+				var restore = setBusy( button, ogfAdmin.i18n.saving );
+
+				ajaxPost( 'ogf_save_custom_font', collectFontForm( form ) )
+					.then( function( response ) {
+						if ( ! response.success ) {
+							restore();
+							showToast( ( response.data && response.data.message ) || ogfAdmin.i18n.error );
+							return;
+						}
+
+						showToast( ogfAdmin.i18n.fontSaved );
+						reloadToTab( 'upload' );
+					} )
+					.catch( function() {
+						restore();
+						showToast( ogfAdmin.i18n.error );
+					} );
+			} );
+		} );
+
+		panel.querySelectorAll( '.ogf-cf-delete' ).forEach( function( button ) {
+			button.addEventListener( 'click', function() {
+				if ( ! window.confirm( ogfAdmin.i18n.deleteFontConfirm ) ) {
+					return;
+				}
+
+				var row = button.closest( '.ogf-uploaded-font-row' );
+				var restore = setBusy( button, ogfAdmin.i18n.saving );
+
+				ajaxPost( 'ogf_delete_custom_font', { term_id: row.getAttribute( 'data-term-id' ) } )
+					.then( function( response ) {
+						if ( ! response.success ) {
+							restore();
+							showToast( ( response.data && response.data.message ) || ogfAdmin.i18n.error );
+							return;
+						}
+
+						showToast( ogfAdmin.i18n.fontDeleted );
+						reloadToTab( 'upload' );
+					} )
+					.catch( function() {
+						restore();
+						showToast( ogfAdmin.i18n.error );
+					} );
+			} );
+		} );
+	}
+
+	/* ---------------------------------------------------------------
+	 * Adobe Fonts tab
+	 * ------------------------------------------------------------- */
+	function initTypekit() {
+		var keyInput = document.getElementById( 'ogf-typekit-key' );
+		var saveBtn = document.getElementById( 'ogf-typekit-save' );
+		var refreshBtn = document.getElementById( 'ogf-typekit-refresh' );
+
+		/**
+		 * Run a token request and reload so the kit list reflects the result.
+		 *
+		 * @param {Element} button  Button that triggered the request.
+		 * @param {string}  label   Busy label.
+		 * @param {string}  action  WP AJAX action.
+		 * @param {Object}  payload Request body.
+		 */
+		function run( button, label, action, payload ) {
+			var restore = setBusy( button, label );
+
+			ajaxPost( action, payload )
+				.then( function( response ) {
+					if ( ! response.success ) {
+						restore();
+						showToast( ( response.data && response.data.message ) || ogfAdmin.i18n.error );
+						return;
+					}
+
+					showToast( ( response.data && response.data.message ) || ogfAdmin.i18n.saved );
+					reloadToTab( 'adobe' );
+				} )
+				.catch( function() {
+					restore();
+					showToast( ogfAdmin.i18n.error );
+				} );
+		}
+
+		if ( saveBtn && keyInput ) {
+			saveBtn.addEventListener( 'click', function() {
+				run( saveBtn, ogfAdmin.i18n.saving, 'ogf_save_typekit_key', { api_key: keyInput.value } );
+			} );
+		}
+
+		if ( refreshBtn ) {
+			refreshBtn.addEventListener( 'click', function() {
+				run( refreshBtn, ogfAdmin.i18n.refreshing, 'ogf_refresh_typekit', {} );
+			} );
+		}
+
+		document.querySelectorAll( '.ogf-tk-toggle' ).forEach( function( button ) {
+			button.addEventListener( 'click', function() {
+				var enabled = '1' !== button.getAttribute( 'data-enabled' );
+				var restore = setBusy( button, ogfAdmin.i18n.saving );
+
+				ajaxPost( 'ogf_toggle_typekit_kit', {
+					kit_id: button.getAttribute( 'data-kit' ),
+					enabled: enabled ? 1 : 0,
+				} )
+					.then( function( response ) {
+						restore();
+
+						if ( ! response.success ) {
+							showToast( ( response.data && response.data.message ) || ogfAdmin.i18n.error );
+							return;
+						}
+
+						var status = button.parentElement.querySelector( '.ogf-kit-status' );
+
+						button.setAttribute( 'data-enabled', enabled ? '1' : '0' );
+						button.textContent = enabled ? ogfAdmin.i18n.disableKit : ogfAdmin.i18n.enableKit;
+
+						if ( status ) {
+							status.classList.toggle( 'active', enabled );
+							status.classList.toggle( 'inactive', ! enabled );
+							status.textContent = enabled ? ogfAdmin.i18n.kitActive : ogfAdmin.i18n.kitInactive;
+						}
+
+						showToast( ogfAdmin.i18n.kitUpdated );
+					} )
+					.catch( function() {
+						restore();
+						showToast( ogfAdmin.i18n.error );
+					} );
+			} );
+		} );
+	}
+
+	/* ---------------------------------------------------------------
 	 * Boot
 	 * ------------------------------------------------------------- */
 	document.addEventListener( 'DOMContentLoaded', function() {
@@ -352,5 +750,8 @@
 		initFontToggles();
 		initDiagnostics();
 		initSelects();
+		initCustomFonts();
+		initTypekit();
+		initCopyDiagnostics();
 	} );
 } )();

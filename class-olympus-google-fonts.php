@@ -88,6 +88,7 @@ class Olympus_Google_Fonts {
 
 		// Classic Editor class.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-classic-editor.php';
+		require_once OGF_DIR_PATH . 'includes/classic-editor-loader.php';
 
 		// News widget.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-dashboard-widget.php';

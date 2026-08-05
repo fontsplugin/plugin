@@ -205,10 +205,14 @@ class OGF_Fonts_Taxonomy {
 	public static function update_font_count( $terms, $taxonomy ) {
 		global $wpdb;
 		foreach ( (array) $terms as $term_id ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Font terms have no object relationships, so core's recount would zero the count and hide them from get_terms(). No core API sets a count directly; the cache is cleared below.
 			$wpdb->update(
 				$wpdb->term_taxonomy,
 				array( 'count' => 1 ),
-				array( 'term_id' => $term_id, 'taxonomy' => $taxonomy->name )
+				array(
+					'term_id'  => $term_id,
+					'taxonomy' => $taxonomy->name,
+				)
 			);
 		}
 		clean_term_cache( $terms, $taxonomy->name, false );
@@ -221,10 +225,14 @@ class OGF_Fonts_Taxonomy {
 	 */
 	public function set_initial_count( $term_id ) {
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- See update_font_count(); no core API sets a term count directly. The cache is cleared below.
 		$wpdb->update(
 			$wpdb->term_taxonomy,
 			array( 'count' => 1 ),
-			array( 'term_id' => $term_id, 'taxonomy' => self::$taxonomy_slug )
+			array(
+				'term_id'  => $term_id,
+				'taxonomy' => self::$taxonomy_slug,
+			)
 		);
 		clean_term_cache( $term_id, self::$taxonomy_slug, false );
 	}
@@ -238,6 +246,7 @@ class OGF_Fonts_Taxonomy {
 		}
 
 		global $wpdb;
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- One-time bulk repair of counts zeroed by an earlier recount, guarded by the option below. No core API sets a term count directly, and a per-term loop would be needlessly slow here.
 		$wpdb->query(
 			$wpdb->prepare(
 				"UPDATE {$wpdb->term_taxonomy} SET count = 1 WHERE taxonomy = %s AND count = 0",

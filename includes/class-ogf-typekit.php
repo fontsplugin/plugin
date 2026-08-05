@@ -175,8 +175,20 @@ class OGF_Typekit {
 			return;
 		}
 
+		$this->fetch_and_store_kits();
+	}
+
+	/**
+	 * Query the Typekit API for all kits and store the result.
+	 *
+	 * Unlike get_kits() this always talks to the API, so it can be called from
+	 * anywhere (the admin page tab, AJAX) rather than only the Typekit screen.
+	 *
+	 * @return array|WP_Error Kit data on success, WP_Error on failure.
+	 */
+	public function fetch_and_store_kits() {
 		if ( ! $this->get_api_key() ) {
-			return;
+			return new WP_Error( 'ogf_no_api_key', __( 'Enter your Adobe Fonts API token to retrieve your kits.', 'olympus-google-fonts' ) );
 		}
 
 		$url       = 'https://typekit.com/api/v1/json/kits/';
@@ -184,13 +196,13 @@ class OGF_Typekit {
 		$response  = wp_remote_request( $url . '?token=' . esc_attr( $this->get_api_key() ), $curl_args );
 
 		if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
-			return;
+			return new WP_Error( 'ogf_api_error', __( 'There is a problem connecting to the API. Please check your API token.', 'olympus-google-fonts' ) );
 		}
 
 		$response_body = json_decode( wp_remote_retrieve_body( $response ) );
 		$kits          = array();
 
-		if ( is_array( $response_body->kits ) ) {
+		if ( isset( $response_body->kits ) && is_array( $response_body->kits ) ) {
 			// loop through the kits object.
 			foreach ( $response_body->kits as $kit ) {
 				// perform an API request for the individual kit.
@@ -213,6 +225,28 @@ class OGF_Typekit {
 		}
 		// Save the results so we don't need to query the API again.
 		update_option( 'fp-typekit-data', $kits );
+
+		return $kits;
+	}
+
+	/**
+	 * Enable or disable a single kit.
+	 *
+	 * @param string $kit_id  The kit ID.
+	 * @param bool   $enabled Whether the kit should be enabled.
+	 * @return bool True if the kit exists and was updated.
+	 */
+	public static function set_kit_enabled( $kit_id, $enabled ) {
+		$data = get_option( 'fp-typekit-data', array() );
+
+		if ( ! is_array( $data ) || ! isset( $data[ $kit_id ] ) ) {
+			return false;
+		}
+
+		$data[ $kit_id ]['enabled'] = (bool) $enabled;
+		update_option( 'fp-typekit-data', $data );
+
+		return true;
 	}
 
 	/**
