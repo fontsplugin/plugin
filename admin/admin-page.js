@@ -1,6 +1,9 @@
 /**
  * Fonts Plugin (olympus-google-fonts) Admin Page JS.
  *
+ * Domain-specific modules. Generic tab switching, toggle/select auto-save,
+ * and toast notifications are handled by Plinth (window.Plinth).
+ *
  * Relies on localized data from WordPress via window.ogfAdmin.
  *
  * @package suspended
@@ -9,116 +12,11 @@
 ( function() {
 	'use strict';
 
-	var toastTimer = null;
-
-	/**
-	 * POST helper wrapping fetch + FormData.
-	 *
-	 * @param {string} action WP AJAX action name.
-	 * @param {Object} data   Key/value pairs to send.
-	 * @return {Promise}       Parsed JSON response.
-	 */
-	function ajaxPost( action, data ) {
-		var formData = new FormData();
-		formData.append( 'action', action );
-		formData.append( '_ajax_nonce', ogfAdmin.nonce );
-
-		Object.keys( data ).forEach( function( key ) {
-			formData.append( key, data[ key ] );
-		} );
-
-		return fetch( ogfAdmin.ajaxUrl, {
-			method: 'POST',
-			credentials: 'same-origin',
-			body: formData,
-		} ).then( function( response ) {
-			return response.json();
-		} );
-	}
-
-	/**
-	 * Display a toast notification.
-	 *
-	 * @param {string} message Text to show.
-	 */
-	function showToast( message ) {
-		var toast = document.getElementById( 'ogf-toast' );
-		var msgEl = document.getElementById( 'ogf-toast-msg' );
-		if ( ! toast ) {
-			return;
-		}
-
-		if ( toastTimer ) {
-			clearTimeout( toastTimer );
-		}
-
-		// Write into the message span so the leading icon survives.
-		( msgEl || toast ).textContent = message;
-		toast.classList.add( 'visible' );
-
-		toastTimer = setTimeout( function() {
-			toast.classList.remove( 'visible' );
-			toastTimer = null;
-		}, 3000 );
-	}
+	var ajaxPost  = window.Plinth.ajaxPost;
+	var showToast = window.Plinth.showToast;
 
 	/* ---------------------------------------------------------------
-	 * Tab switching
-	 * ------------------------------------------------------------- */
-	function initTabs() {
-		var buttons = document.querySelectorAll( '.ogf-nav-item' );
-		var panels  = document.querySelectorAll( '.ogf-tab-panel' );
-
-		function activateTab( name ) {
-			buttons.forEach( function( btn ) {
-				btn.classList.toggle( 'active', btn.getAttribute( 'data-tab' ) === name );
-			} );
-			panels.forEach( function( panel ) {
-				panel.classList.toggle( 'active', panel.id === 'ogf-tab-' + name );
-			} );
-		}
-
-		buttons.forEach( function( btn ) {
-			btn.addEventListener( 'click', function() {
-				var tab = btn.getAttribute( 'data-tab' );
-				activateTab( tab );
-				window.location.hash = '#' + tab;
-			} );
-		} );
-
-		// Controls elsewhere on the page that jump to a tab.
-		document.querySelectorAll( '[data-goto-tab]' ).forEach( function( el ) {
-			el.addEventListener( 'click', function() {
-				var target = el.getAttribute( 'data-goto-tab' );
-				activateTab( target );
-				window.location.hash = '#' + target;
-				window.scrollTo( 0, 0 );
-			} );
-		} );
-
-		window.addEventListener( 'hashchange', function() {
-			var hash = window.location.hash.replace( '#', '' );
-			if ( hash && document.getElementById( 'ogf-tab-' + hash ) ) {
-				activateTab( hash );
-				window.scrollTo( 0, 0 );
-			}
-		} );
-
-		// Activate tab from hash or fall back to the server default.
-		var wrap = document.querySelector( '.ogf-wrap' );
-		var defaultTab = wrap ? wrap.getAttribute( 'data-default-tab' ) : 'dashboard';
-		var hash = window.location.hash.replace( '#', '' );
-		var tab = hash || defaultTab || 'dashboard';
-
-		if ( ! document.getElementById( 'ogf-tab-' + tab ) ) {
-			tab = defaultTab || 'dashboard';
-		}
-
-		activateTab( tab );
-	}
-
-	/* ---------------------------------------------------------------
-	 * Setting toggles
+	 * Setting toggles (OGF-specific: saves via ogf_save_settings)
 	 * ------------------------------------------------------------- */
 	function initToggles() {
 		document.querySelectorAll( '.ogf-setting-row .ogf-toggle' ).forEach( function( toggle ) {
@@ -148,6 +46,24 @@
 	}
 
 	/* ---------------------------------------------------------------
+	 * Setting selects (OGF-specific: saves via ogf_save_settings)
+	 * ------------------------------------------------------------- */
+	function initSelects() {
+		document.querySelectorAll( '.ogf-setting-select[data-setting]' ).forEach( function( select ) {
+			select.addEventListener( 'change', function() {
+				ajaxPost( 'ogf_save_settings', {
+					setting: select.getAttribute( 'data-setting' ),
+					value: select.value,
+				} ).then( function() {
+					showToast( ogfAdmin.i18n.saved );
+				} ).catch( function() {
+					showToast( ogfAdmin.i18n.error );
+				} );
+			} );
+		} );
+	}
+
+	/* ---------------------------------------------------------------
 	 * Pro feature modal
 	 * ------------------------------------------------------------- */
 	function openProModal( featureTitle, featureDesc ) {
@@ -166,7 +82,6 @@
 			descEl.textContent = featureDesc || '';
 		}
 
-		// Build the campaign slug from the feature title.
 		var slug = ( featureTitle || 'pro' )
 			.toLowerCase()
 			.replace( /[^a-z0-9]+/g, '-' )
@@ -193,7 +108,6 @@
 			return;
 		}
 
-		// Generic pro-feature triggers.
 		document.querySelectorAll( '[data-pro-feature]' ).forEach( function( el ) {
 			el.addEventListener( 'click', function() {
 				openProModal(
@@ -203,7 +117,6 @@
 			} );
 		} );
 
-		// Font loading disabled toggles.
 		document.querySelectorAll( '.ogf-fl-grid-row .ogf-toggle-xs.disabled' ).forEach( function( toggle ) {
 			toggle.addEventListener( 'click', function() {
 				openProModal(
@@ -213,7 +126,6 @@
 			} );
 		} );
 
-		// Recommendation "Fix" buttons.
 		document.querySelectorAll( '[data-pro-trigger]' ).forEach( function( btn ) {
 			btn.addEventListener( 'click', function() {
 				openProModal(
@@ -223,7 +135,6 @@
 			} );
 		} );
 
-		// Disabled settings toggles.
 		document.querySelectorAll( '.ogf-setting-row .ogf-toggle.disabled' ).forEach( function( toggle ) {
 			toggle.addEventListener( 'click', function() {
 				openProModal(
@@ -233,7 +144,6 @@
 			} );
 		} );
 
-		// Disabled Host / Preload toggles on font rows.
 		document.querySelectorAll( '.ogf-font-toggle-group[data-pro-toggle]' ).forEach( function( group ) {
 			var toggle = group.querySelector( '.ogf-toggle-sm' );
 			if ( toggle ) {
@@ -247,7 +157,6 @@
 			}
 		} );
 
-		// Close handlers.
 		modal.addEventListener( 'click', function( e ) {
 			if ( e.target === modal ) {
 				closeProModal();
@@ -271,7 +180,6 @@
 	function initFontRows() {
 		document.querySelectorAll( '.ogf-font-row-header' ).forEach( function( header ) {
 			header.addEventListener( 'click', function( e ) {
-				// Don't toggle when clicking a toggle switch inside the row.
 				if ( e.target.closest( '.ogf-toggle, .ogf-toggle-sm, .ogf-toggle-xs' ) ) {
 					return;
 				}
@@ -348,7 +256,6 @@
 						}
 					} );
 
-					// The existing loader cannot represent zero selected weights.
 					if ( ! selected.length ) {
 						toggle.classList.add( 'on' );
 						return;
@@ -428,37 +335,10 @@
 	}
 
 	/* ---------------------------------------------------------------
-	 * Font display select
-	 * ------------------------------------------------------------- */
-	function initSelects() {
-		document.querySelectorAll( '.ogf-setting-select[data-setting]' ).forEach( function( select ) {
-			select.addEventListener( 'change', function() {
-				ajaxPost( 'ogf_save_settings', {
-					setting: select.getAttribute( 'data-setting' ),
-					value: select.value,
-				} ).then( function() {
-					showToast( ogfAdmin.i18n.saved );
-				} ).catch( function() {
-					showToast( ogfAdmin.i18n.error );
-				} );
-			} );
-		} );
-	}
-
-	/* ---------------------------------------------------------------
 	 * Copy diagnostics for support
 	 * ------------------------------------------------------------- */
-
-	/**
-	 * Build a plain-text report from the rendered Diagnostics panel.
-	 *
-	 * Read off the DOM rather than duplicated in PHP, so a row added to the
-	 * panel shows up in the report without anyone remembering to add it twice.
-	 *
-	 * @return {string} Report ready to paste into a ticket.
-	 */
 	function buildDiagnosticsReport() {
-		var panel = document.getElementById( 'ogf-tab-diagnostics' );
+		var panel = document.getElementById( 'pln-tab-diagnostics' );
 		var lines = [];
 
 		if ( ! panel ) {
@@ -494,13 +374,6 @@
 			lines.join( '\n' ).trim() + '\n';
 	}
 
-	/**
-	 * Copy via a temporary selection. Works without a secure context and
-	 * without the document holding focus.
-	 *
-	 * @param {string} text Text to place on the clipboard.
-	 * @return {Promise} Resolves when the copy succeeds.
-	 */
 	function legacyCopy( text ) {
 		return new Promise( function( resolve, reject ) {
 			var field = document.createElement( 'textarea' );
@@ -525,18 +398,6 @@
 		} );
 	}
 
-	/**
-	 * Copy text to the clipboard.
-	 *
-	 * The async API is tried first, but it rejects in more situations than
-	 * "unsupported" — a document that lost focus, a restrictive permissions
-	 * policy, an embedded frame. Fall through to the legacy path on rejection
-	 * rather than only when the API is missing, since it still succeeds in
-	 * several of those cases.
-	 *
-	 * @param {string} text Text to place on the clipboard.
-	 * @return {Promise} Resolves when the copy succeeds.
-	 */
 	function copyText( text ) {
 		if ( navigator.clipboard && window.isSecureContext ) {
 			return navigator.clipboard.writeText( text ).catch( function() {
@@ -574,24 +435,11 @@
 	/* ---------------------------------------------------------------
 	 * Shared helpers for the Upload / Adobe Fonts tabs
 	 * ------------------------------------------------------------- */
-
-	/**
-	 * Reload the page, landing back on the given tab.
-	 *
-	 * @param {string} tab Tab slug.
-	 */
 	function reloadToTab( tab ) {
 		window.location.hash = '#' + tab;
 		window.location.reload();
 	}
 
-	/**
-	 * Put a button into its loading state. Returns a restore function.
-	 *
-	 * @param {Element} button Button element.
-	 * @param {string}  label  Text to show while busy.
-	 * @return {Function} Call to restore the original label.
-	 */
 	function setBusy( button, label ) {
 		var original = button.textContent;
 		button.disabled = true;
@@ -603,12 +451,6 @@
 		};
 	}
 
-	/**
-	 * Read every [data-field] control inside a form wrapper.
-	 *
-	 * @param {Element} form The .ogf-cf-form wrapper.
-	 * @return {Object} Payload for the AJAX request.
-	 */
 	function collectFontForm( form ) {
 		var payload = { term_id: form.getAttribute( 'data-term-id' ) || 0 };
 
@@ -630,11 +472,6 @@
 	 * ------------------------------------------------------------- */
 	var mediaFrame = null;
 
-	/**
-	 * Open the media library and write the chosen URL into an input.
-	 *
-	 * @param {Element} input The text input to fill.
-	 */
 	function openFontPicker( input ) {
 		if ( ! window.wp || ! window.wp.media ) {
 			return;
@@ -648,7 +485,6 @@
 			} );
 		}
 
-		// Rebind on every open so the URL lands in the input that was clicked.
 		mediaFrame.off( 'select' );
 		mediaFrame.on( 'select', function() {
 			var attachment = mediaFrame.state().get( 'selection' ).first().toJSON();
@@ -659,12 +495,11 @@
 	}
 
 	function initCustomFonts() {
-		var panel = document.getElementById( 'ogf-tab-upload' );
+		var panel = document.getElementById( 'pln-tab-upload' );
 		if ( ! panel ) {
 			return;
 		}
 
-		// Preload toggles are read on save rather than saved individually.
 		panel.querySelectorAll( '.ogf-cf-form .ogf-toggle-sm[data-field]' ).forEach( function( toggle ) {
 			toggle.addEventListener( 'click', function() {
 				toggle.classList.toggle( 'on' );
@@ -753,14 +588,6 @@
 		var saveBtn = document.getElementById( 'ogf-typekit-save' );
 		var refreshBtn = document.getElementById( 'ogf-typekit-refresh' );
 
-		/**
-		 * Run a token request and reload so the kit list reflects the result.
-		 *
-		 * @param {Element} button  Button that triggered the request.
-		 * @param {string}  label   Busy label.
-		 * @param {string}  action  WP AJAX action.
-		 * @param {Object}  payload Request body.
-		 */
 		function run( button, label, action, payload ) {
 			var restore = setBusy( button, label );
 
@@ -835,7 +662,6 @@
 	 * Boot
 	 * ------------------------------------------------------------- */
 	document.addEventListener( 'DOMContentLoaded', function() {
-		initTabs();
 		initToggles();
 		initProModal();
 		initFontRows();

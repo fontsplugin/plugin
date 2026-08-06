@@ -7,6 +7,10 @@
  * @license   http://opensource.org/licenses/gpl-2.0.php GNU Public License
  */
 
+require_once dirname( __DIR__ ) . '/lib/src/Components.php';
+require_once dirname( __DIR__ ) . '/lib/src/Settings.php';
+require_once dirname( __DIR__ ) . '/lib/src/Shell.php';
+
 /**
  * OGF_Admin_Page Class.
  */
@@ -18,6 +22,13 @@ class OGF_Admin_Page {
 	 * @var array
 	 */
 	private $active_fonts = null;
+
+	/**
+	 * Plinth Shell instance (lazy-loaded).
+	 *
+	 * @var \Plinth\Shell|null
+	 */
+	private $shell = null;
 
 	/**
 	 * Constructor.
@@ -35,7 +46,136 @@ class OGF_Admin_Page {
 	}
 
 	/**
-	 * Echo an inline SVG icon.
+	 * Get or create the Plinth Shell instance.
+	 *
+	 * @return \Plinth\Shell
+	 */
+	public function get_shell() {
+		if ( $this->shell ) {
+			return $this->shell;
+		}
+
+		$fonts       = $this->get_active_fonts();
+		$adobe_fonts = ogf_typekit_fonts();
+		$guide_seen  = (bool) get_option( 'ogf_dismiss_guide', false );
+
+		$overview_items = array(
+			array( 'dashboard', __( 'Dashboard', 'olympus-google-fonts' ), 'activity', null ),
+		);
+		if ( ! $guide_seen ) {
+			array_unshift(
+				$overview_items,
+				array( 'guide', __( 'Quickstart', 'olympus-google-fonts' ), 'book', null )
+			);
+		}
+
+		$nav_groups = array(
+			array(
+				'group' => __( 'Overview', 'olympus-google-fonts' ),
+				'items' => $overview_items,
+			),
+			array(
+				'group' => __( 'Typography', 'olympus-google-fonts' ),
+				'items' => array(
+					array( 'fonts', __( 'Active Fonts', 'olympus-google-fonts' ), 'type', count( $fonts ) ),
+					array( 'font-loading', __( 'Font Loading', 'olympus-google-fonts' ), 'zap', null ),
+				),
+			),
+			array(
+				'group' => __( 'Sources', 'olympus-google-fonts' ),
+				'items' => array(
+					array( 'upload', __( 'Upload Fonts', 'olympus-google-fonts' ), 'upload', null ),
+					array( 'adobe', __( 'Adobe Fonts', 'olympus-google-fonts' ), 'adobe', count( $adobe_fonts ) ),
+				),
+			),
+			array(
+				'group' => null,
+				'items' => array(
+					array( 'settings', __( 'Settings', 'olympus-google-fonts' ), 'settings', null ),
+					array( 'diagnostics', __( 'Diagnostics', 'olympus-google-fonts' ), 'pulse', null ),
+				),
+			),
+		);
+
+		$tabs = array();
+
+		if ( ! $guide_seen ) {
+			$tabs['guide'] = array(
+				'label'    => __( 'Quickstart', 'olympus-google-fonts' ),
+				'icon'     => 'book',
+				'callback' => array( $this, 'render_tab_guide' ),
+			);
+		}
+
+		$tabs['dashboard']    = array(
+			'label'    => __( 'Dashboard', 'olympus-google-fonts' ),
+			'icon'     => 'activity',
+			'callback' => array( $this, 'render_tab_dashboard' ),
+		);
+		$tabs['fonts']        = array(
+			'label'    => __( 'Active Fonts', 'olympus-google-fonts' ),
+			'icon'     => 'type',
+			'callback' => array( $this, 'render_tab_fonts' ),
+		);
+		$tabs['font-loading'] = array(
+			'label'    => __( 'Font Loading', 'olympus-google-fonts' ),
+			'icon'     => 'zap',
+			'callback' => array( $this, 'render_tab_font_loading' ),
+		);
+		$tabs['upload']       = array(
+			'label'    => __( 'Upload Fonts', 'olympus-google-fonts' ),
+			'icon'     => 'upload',
+			'callback' => array( $this, 'render_tab_upload' ),
+		);
+		$tabs['adobe']        = array(
+			'label'    => __( 'Adobe Fonts', 'olympus-google-fonts' ),
+			'icon'     => 'adobe',
+			'callback' => array( $this, 'render_tab_adobe' ),
+		);
+		$tabs['settings']     = array(
+			'label'    => __( 'Settings', 'olympus-google-fonts' ),
+			'icon'     => 'settings',
+			'callback' => array( $this, 'render_tab_settings' ),
+		);
+		$tabs['diagnostics']  = array(
+			'label'    => __( 'Diagnostics', 'olympus-google-fonts' ),
+			'icon'     => 'pulse',
+			'callback' => array( $this, 'render_tab_diagnostics' ),
+		);
+
+		$help_html = sprintf(
+			'<strong>%s</strong>%s',
+			esc_html__( 'Need help?', 'olympus-google-fonts' ),
+			sprintf(
+				/* translators: %1$s: documentation link, %2$s: support link */
+				esc_html__( 'Read the %1$s or open a %2$s on WordPress.org.', 'olympus-google-fonts' ),
+				'<a href="https://docs.fontsplugin.com/" target="_blank">' . esc_html__( 'documentation', 'olympus-google-fonts' ) . '</a>',
+				'<a href="https://wordpress.org/support/plugin/olympus-google-fonts/" target="_blank">' . esc_html__( 'support ticket', 'olympus-google-fonts' ) . '</a>'
+			)
+		);
+
+		$this->shell = new \Plinth\Shell( array(
+			'slug'        => 'fonts-plugin',
+			'title'       => __( 'Fonts Plugin', 'olympus-google-fonts' ),
+			'version'     => OGF_VERSION,
+			'icon'        => OGF_DIR_URL . 'admin/icon-128x128.jpg',
+			'tabs'        => $tabs,
+			'default_tab' => $guide_seen ? 'dashboard' : 'guide',
+			'nav_groups'  => $nav_groups,
+			'help'        => $help_html,
+			'after_tabs'  => array( $this, 'render_upgrade_modal' ),
+			'capability'  => 'manage_options',
+		) );
+
+		if ( ! $guide_seen ) {
+			update_option( 'ogf_dismiss_guide', true );
+		}
+
+		return $this->shell;
+	}
+
+	/**
+	 * Echo an inline SVG icon via Plinth Shell.
 	 *
 	 * @param string $name      Icon name.
 	 * @param int    $size      Width/height in pixels.
@@ -43,82 +183,7 @@ class OGF_Admin_Page {
 	 * @param string $classname Optional class attribute.
 	 */
 	private function icon( $name, $size = 16, $stroke = 2, $classname = '' ) {
-		$paths = array(
-			'check'         => '<polyline points="20 6 9 17 4 12"/>',
-			'package'       => '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/>',
-			'zap'           => '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
-			'clock'         => '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
-			'edit'          => '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/>',
-			'upload'        => '<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
-			'book'          => '<path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/>',
-			'chevron-right' => '<path d="M9 18l6-6-6-6"/>',
-			'arrow-right'   => '<path d="M5 12h14"/><path d="M12 5l7 7-7 7"/>',
-			'globe'         => '<path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9"/>',
-			'trash'         => '<path d="M3 6h18"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>',
-			'close'         => '<path d="M18 6L6 18"/><path d="M6 6l12 12"/>',
-			'activity'      => '<path d="M3 12h4l3 8 4-16 3 8h4"/>',
-			'type'          => '<path d="M4 7V5h16v2M12 5v14M9 19h6"/>',
-			'adobe'         => '<path d="M12 3l9 16H3l9-16z"/>',
-			'settings'      => '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 008 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H2a2 2 0 110-4h.09A1.65 1.65 0 004.6 8a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 3.68 1.65 1.65 0 0010 2.17V2a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0020.32 8a1.65 1.65 0 001.51 1H22a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/>',
-			'pulse'         => '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
-			'copy'          => '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
-			'life-buoy'     => '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M4.93 4.93l4.24 4.24"/><path d="M14.83 14.83l4.24 4.24"/><path d="M14.83 9.17l4.24-4.24"/><path d="M4.93 19.07l4.24-4.24"/>',
-		);
-
-		if ( ! isset( $paths[ $name ] ) ) {
-			return;
-		}
-
-		$svg = sprintf(
-			'<svg %1$swidth="%2$d" height="%2$d" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="%3$s" aria-hidden="true" focusable="false">%4$s</svg>',
-			$classname ? 'class="' . esc_attr( $classname ) . '" ' : '',
-			(int) $size,
-			esc_attr( (string) $stroke ),
-			$paths[ $name ]
-		);
-
-		echo wp_kses( $svg, $this->allowed_svg_tags() );
-	}
-
-	/**
-	 * Tags and attributes allowed in the inline icons.
-	 *
-	 * @return array
-	 */
-	private function allowed_svg_tags() {
-		return array(
-			'svg'      => array(
-				'class'        => true,
-				'width'        => true,
-				'height'       => true,
-				'viewbox'      => true,
-				'fill'         => true,
-				'stroke'       => true,
-				'stroke-width' => true,
-				'aria-hidden'  => true,
-				'focusable'    => true,
-			),
-			'path'     => array( 'd' => true ),
-			'polyline' => array( 'points' => true ),
-			'circle'   => array(
-				'cx' => true,
-				'cy' => true,
-				'r'  => true,
-			),
-			'rect'     => array(
-				'x'      => true,
-				'y'      => true,
-				'width'  => true,
-				'height' => true,
-				'rx'     => true,
-			),
-			'line'     => array(
-				'x1' => true,
-				'y1' => true,
-				'x2' => true,
-				'y2' => true,
-			),
-		);
+		$this->get_shell()->icon( $name, $size, $stroke, $classname );
 	}
 
 	/**
@@ -223,143 +288,20 @@ class OGF_Admin_Page {
 	}
 
 	/**
-	 * Render the admin page.
+	 * Render the admin page via Plinth Shell.
 	 */
 	public function render() {
-		$fonts       = $this->get_active_fonts();
-		$adobe_fonts = ogf_typekit_fonts();
-		$guide_seen  = (bool) get_option( 'ogf_dismiss_guide', false );
-		$default_tab = $guide_seen ? 'dashboard' : 'guide';
-
-		$overview_items = array(
-			array( 'dashboard', __( 'Dashboard', 'olympus-google-fonts' ), 'activity', null ),
-		);
-		if ( ! $guide_seen ) {
-			array_unshift(
-				$overview_items,
-				array( 'guide', __( 'Quickstart', 'olympus-google-fonts' ), 'book', null )
-			);
-		}
-
-		// Slug => label, icon, optional count shown at the end of the row.
-		$sections = array(
-			array(
-				'group' => __( 'Overview', 'olympus-google-fonts' ),
-				'items' => $overview_items,
-			),
-			array(
-				'group' => __( 'Typography', 'olympus-google-fonts' ),
-				'items' => array(
-					array( 'fonts', __( 'Active Fonts', 'olympus-google-fonts' ), 'type', count( $fonts ) ),
-					array( 'font-loading', __( 'Font Loading', 'olympus-google-fonts' ), 'zap', null ),
-				),
-			),
-			array(
-				'group' => __( 'Sources', 'olympus-google-fonts' ),
-				'items' => array(
-					array( 'upload', __( 'Upload Fonts', 'olympus-google-fonts' ), 'upload', null ),
-					array( 'adobe', __( 'Adobe Fonts', 'olympus-google-fonts' ), 'adobe', count( $adobe_fonts ) ),
-				),
-			),
-			array(
-				'group' => null,
-				'items' => array(
-					array( 'settings', __( 'Settings', 'olympus-google-fonts' ), 'settings', null ),
-					array( 'diagnostics', __( 'Diagnostics', 'olympus-google-fonts' ), 'pulse', null ),
-				),
-			),
-		);
-		?>
-		<div class="ogf-wrap" data-default-tab="<?php echo esc_attr( $default_tab ); ?>">
-			<nav class="ogf-nav" aria-label="<?php esc_attr_e( 'Fonts Plugin sections', 'olympus-google-fonts' ); ?>">
-				<div class="ogf-nav-head">
-					<div class="ogf-nav-icon">
-						<img src="<?php echo esc_url( OGF_DIR_URL . 'admin/icon-128x128.jpg' ); ?>" alt="<?php esc_attr_e( 'Fonts Plugin', 'olympus-google-fonts' ); ?>" width="34" height="34">
-					</div>
-					<div class="ogf-nav-id">
-						<span class="ogf-nav-name"><?php esc_html_e( 'Fonts Plugin', 'olympus-google-fonts' ); ?></span>
-						<span class="ogf-nav-version">v<?php echo esc_html( OGF_VERSION ); ?></span>
-					</div>
-				</div>
-
-				<div class="ogf-nav-list" role="tablist">
-					<?php foreach ( $sections as $index => $section ) : ?>
-						<?php if ( $section['group'] ) : ?>
-							<div class="ogf-nav-group"><?php echo esc_html( $section['group'] ); ?></div>
-						<?php elseif ( $index > 0 ) : ?>
-							<div class="ogf-nav-rule"></div>
-						<?php endif; ?>
-
-						<?php foreach ( $section['items'] as $item ) : ?>
-							<?php list( $slug, $label, $icon, $count ) = $item; ?>
-							<button class="ogf-nav-item<?php echo $default_tab === $slug ? ' active' : ''; ?>" role="tab" data-tab="<?php echo esc_attr( $slug ); ?>">
-								<?php $this->icon( $icon, 15 ); ?>
-								<span class="ogf-nav-label"><?php echo esc_html( $label ); ?></span>
-								<?php if ( $count ) : ?>
-									<span class="ogf-nav-count"><?php echo esc_html( $count ); ?></span>
-								<?php endif; ?>
-							</button>
-						<?php endforeach; ?>
-					<?php endforeach; ?>
-				</div>
-
-				<div class="ogf-nav-foot">
-					<div class="ogf-help">
-						<strong><?php esc_html_e( 'Need help?', 'olympus-google-fonts' ); ?></strong>
-						<?php
-						printf(
-							/* translators: %s: link to the plugin documentation */
-							esc_html__( 'Read the %1$s or open a %2$s on WordPress.org.', 'olympus-google-fonts' ),
-							'<a href="https://docs.fontsplugin.com/" target="_blank">' . esc_html__( 'documentation', 'olympus-google-fonts' ) . '</a>',
-							'<a href="https://wordpress.org/support/plugin/olympus-google-fonts/" target="_blank">' . esc_html__( 'support ticket', 'olympus-google-fonts' ) . '</a>'
-						);
-						?>
-					</div>
-				</div>
-			</nav>
-
-			<div class="ogf-main">
-				<?php
-				if ( ! $guide_seen ) {
-					$this->render_tab_guide( $default_tab );
-				}
-				$this->render_tab_dashboard( $default_tab );
-				$this->render_tab_fonts();
-				$this->render_tab_font_loading();
-				$this->render_tab_upload();
-				$this->render_tab_adobe();
-				$this->render_tab_settings();
-				$this->render_tab_diagnostics();
-				?>
-			</div>
-
-			<?php $this->render_upgrade_modal(); ?>
-			<div id="ogf-toast" class="ogf-toast">
-				<?php $this->icon( 'check', 16, 2.5 ); ?>
-				<span id="ogf-toast-msg"></span>
-			</div>
-		</div>
-		<?php
-
-		if ( ! $guide_seen ) {
-			update_option( 'ogf_dismiss_guide', true );
-		}
+		$this->get_shell()->render();
 	}
 
 	/**
-	 * Render the heading that opens each section.
-	 *
-	 * With no top bar, this is what tells you where you are, so every panel
-	 * carries its own — which also keeps the heading correct without JS.
+	 * Render the heading that opens each section via Plinth Components.
 	 *
 	 * @param string $title       Section title.
 	 * @param string $description One line of orientation.
 	 */
 	private function render_panel_header( $title, $description ) {
-		?>
-		<h1 class="ogf-page-title"><?php echo esc_html( $title ); ?></h1>
-		<p class="ogf-page-sub"><?php echo esc_html( $description ); ?></p>
-		<?php
+		\Plinth\Components::panel_header( $title, $description );
 	}
 
 	/**
@@ -544,11 +486,11 @@ class OGF_Admin_Page {
 	}
 
 	/**
-	 * Render Dashboard tab.
+	 * Render Dashboard tab content (callback for Plinth Shell).
 	 *
-	 * @param string $default_tab Slug of the tab that should be active on load.
+	 * @param \Plinth\Shell $shell Shell instance.
 	 */
-	private function render_tab_dashboard( $default_tab = 'dashboard' ) {
+	public function render_tab_dashboard( $shell = null ) {
 		$fonts        = $this->get_active_fonts();
 		$total        = count( $fonts );
 		$type_counts  = $this->get_font_type_counts( $fonts );
@@ -561,7 +503,6 @@ class OGF_Admin_Page {
 		$font_display = get_theme_mod( 'ogf_font_display', 'swap' );
 		$delivery     = $this->get_font_delivery_info( $google_count, $custom_count, $adobe_count, $host_locally );
 		?>
-		<div class="ogf-tab-panel<?php echo 'dashboard' === $default_tab ? ' active' : ''; ?>" id="ogf-tab-dashboard">
 			<?php $this->render_panel_header( __( 'Dashboard', 'olympus-google-fonts' ), __( 'See your fonts at a glance and what you might want to change next.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-stats-grid">
 				<div class="ogf-stat-card">
@@ -637,18 +578,17 @@ class OGF_Admin_Page {
 					</a>
 				</div>
 			<?php endif; ?>
-		</div>
+
 		<?php
 	}
 
 	/**
-	 * Render Quickstart Guide tab.
+	 * Render Quickstart Guide tab content (callback for Plinth Shell).
 	 *
-	 * @param string $default_tab Slug of the tab that should be active on load.
+	 * @param \Plinth\Shell $shell Shell instance.
 	 */
-	private function render_tab_guide( $default_tab = 'dashboard' ) {
+	public function render_tab_guide( $shell = null ) {
 		?>
-		<div class="ogf-tab-panel<?php echo 'guide' === $default_tab ? ' active' : ''; ?>" id="ogf-tab-guide">
 			<div class="ogf-card ogf-guide-card">
 				<div class="ogf-card-body">
 					<div class="ogf-guide-layout">
@@ -683,7 +623,6 @@ class OGF_Admin_Page {
 					</div>
 				</div>
 			</div>
-		</div>
 		<?php
 	}
 
@@ -839,13 +778,14 @@ class OGF_Admin_Page {
 	}
 
 	/**
-	 * Render Fonts tab.
+	 * Render Fonts tab content (callback for Plinth Shell).
+	 *
+	 * @param \Plinth\Shell $shell Shell instance.
 	 */
-	private function render_tab_fonts() {
+	public function render_tab_fonts( $shell = null ) {
 		$fonts  = $this->get_active_fonts();
 		$is_pro = ogf_is_pro_active();
 		?>
-		<div class="ogf-tab-panel" id="ogf-tab-fonts">
 			<?php $this->render_panel_header( __( 'Active Fonts', 'olympus-google-fonts' ), __( 'Every font assigned to an element on your site, with the weights and subsets each one loads.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-card">
 				<div class="ogf-card-header">
@@ -872,7 +812,6 @@ class OGF_Admin_Page {
 					<?php endif; ?>
 				</div>
 			</div>
-		</div>
 		<?php
 	}
 
@@ -963,9 +902,11 @@ class OGF_Admin_Page {
 	}
 
 	/**
-	 * Render Font Loading tab.
+	 * Render Font Loading tab content (callback for Plinth Shell).
+	 *
+	 * @param \Plinth\Shell $shell Shell instance.
 	 */
-	private function render_tab_font_loading() {
+	public function render_tab_font_loading( $shell = null ) {
 		$fonts  = $this->get_active_fonts();
 		$is_pro = ogf_is_pro_active();
 
@@ -976,7 +917,6 @@ class OGF_Admin_Page {
 			}
 		);
 		?>
-		<div class="ogf-tab-panel" id="ogf-tab-font-loading">
 			<?php $this->render_panel_header( __( 'Font Loading', 'olympus-google-fonts' ), __( 'Control which weights each font downloads and which subsets are kept globally. Fewer variants means a lighter page.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-card" style="margin-bottom:16px">
 				<div class="ogf-card-body" style="display:flex;align-items:center;justify-content:space-between">
@@ -1005,7 +945,6 @@ class OGF_Admin_Page {
 					<?php $this->render_font_loading_card( $font_id, $font, $is_pro ); ?>
 				<?php endforeach; ?>
 			<?php endif; ?>
-		</div>
 		<?php
 	}
 
@@ -1041,7 +980,11 @@ class OGF_Admin_Page {
 							<button class="ogf-toggle-xs<?php echo esc_attr( $on_class ); ?><?php echo ! $is_pro ? ' disabled' : ''; ?>"
 								data-font="<?php echo esc_attr( $font_id ); ?>"
 								data-kind="weight"
-								data-weight="<?php echo esc_attr( $key ); ?>"></button>
+								data-weight="<?php echo esc_attr( $key ); ?>"
+								<?php if ( ! $is_pro ) : ?>
+									data-feature="<?php esc_attr_e( 'Selective Font Loading', 'olympus-google-fonts' ); ?>"
+									data-desc="<?php esc_attr_e( 'Choose exactly which font weights and subsets to load. Disable unused variants to reduce page weight.', 'olympus-google-fonts' ); ?>"
+								<?php endif; ?>></button>
 							<span class="ogf-fl-grid-label"><?php echo esc_html( $this->weight_label( $key ) ); ?></span>
 						</div>
 					<?php endforeach; ?>
@@ -1057,7 +1000,11 @@ class OGF_Admin_Page {
 							<button class="ogf-toggle-xs<?php echo $is_subset_enabled ? ' on' : ''; ?><?php echo ! $is_pro ? ' disabled' : ''; ?>"
 								data-font="<?php echo esc_attr( $font_id ); ?>"
 								data-kind="subset"
-								data-subset="<?php echo esc_attr( $subset ); ?>"></button>
+								data-subset="<?php echo esc_attr( $subset ); ?>"
+								<?php if ( ! $is_pro ) : ?>
+									data-feature="<?php esc_attr_e( 'Selective Font Loading', 'olympus-google-fonts' ); ?>"
+									data-desc="<?php esc_attr_e( 'Choose exactly which font weights and subsets to load. Disable unused variants to reduce page weight.', 'olympus-google-fonts' ); ?>"
+								<?php endif; ?>></button>
 							<span class="ogf-fl-grid-label"><?php echo esc_html( ucfirst( str_replace( '-', ' ', $subset ) ) ); ?></span>
 						</div>
 					<?php endforeach; ?>
@@ -1077,9 +1024,11 @@ class OGF_Admin_Page {
 	}
 
 	/**
-	 * Render Upload Fonts tab.
+	 * Render Upload Fonts tab content (callback for Plinth Shell).
+	 *
+	 * @param \Plinth\Shell $shell Shell instance.
 	 */
-	private function render_tab_upload() {
+	public function render_tab_upload( $shell = null ) {
 		$terms = get_terms(
 			array(
 				'taxonomy'   => OGF_Fonts_Taxonomy::$taxonomy_slug,
@@ -1091,7 +1040,6 @@ class OGF_Admin_Page {
 			$terms = array();
 		}
 		?>
-		<div class="ogf-tab-panel" id="ogf-tab-upload">
 			<?php $this->render_panel_header( __( 'Upload Fonts', 'olympus-google-fonts' ), __( 'Add your own font files. Uploaded fonts are hosted on your domain and appear alongside Google Fonts.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-card">
 				<div class="ogf-card-header">
@@ -1125,7 +1073,6 @@ class OGF_Admin_Page {
 					<?php $this->render_custom_font_form( 0, null ); ?>
 				</div>
 			</div>
-		</div>
 		<?php
 	}
 
@@ -1284,15 +1231,16 @@ class OGF_Admin_Page {
 	}
 
 	/**
-	 * Render Adobe Fonts tab.
+	 * Render Adobe Fonts tab content (callback for Plinth Shell).
+	 *
+	 * @param \Plinth\Shell $shell Shell instance.
 	 */
-	private function render_tab_adobe() {
+	public function render_tab_adobe( $shell = null ) {
 		$typekit_settings = get_option( 'fp-typekit', array() );
 		$api_key          = is_array( $typekit_settings ) && isset( $typekit_settings['api_key'] ) ? $typekit_settings['api_key'] : '';
 		$kits             = get_option( 'fp-typekit-data', false );
 		$has_kits         = is_array( $kits ) && ! empty( $kits );
 		?>
-		<div class="ogf-tab-panel" id="ogf-tab-adobe">
 			<?php $this->render_panel_header( __( 'Adobe Fonts', 'olympus-google-fonts' ), __( 'Connect an Adobe Fonts (Typekit) account to use the families from your web projects.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-card">
 				<div class="ogf-card-header"><?php esc_html_e( 'Adobe Fonts Configuration', 'olympus-google-fonts' ); ?></div>
@@ -1370,18 +1318,18 @@ class OGF_Admin_Page {
 					</div>
 				</div>
 			<?php endif; ?>
-		</div>
 		<?php
 	}
 
 	/**
-	 * Render Settings tab.
+	 * Render Settings tab content (callback for Plinth Shell).
+	 *
+	 * @param \Plinth\Shell $shell Shell instance.
 	 */
-	private function render_tab_settings() {
+	public function render_tab_settings( $shell = null ) {
 		$is_pro       = ogf_is_pro_active();
 		$font_display = get_theme_mod( 'ogf_font_display', 'swap' );
 		?>
-		<div class="ogf-tab-panel" id="ogf-tab-settings">
 			<?php $this->render_panel_header( __( 'Settings', 'olympus-google-fonts' ), __( 'How the plugin loads fonts and how strongly it overrides your theme.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-card">
 				<div class="ogf-section-label"><?php esc_html_e( 'Performance & Privacy', 'olympus-google-fonts' ); ?></div>
@@ -1481,14 +1429,15 @@ class OGF_Admin_Page {
 					</div>
 				</div>
 			</div>
-		</div>
 		<?php
 	}
 
 	/**
-	 * Render Diagnostics tab.
+	 * Render Diagnostics tab content (callback for Plinth Shell).
+	 *
+	 * @param \Plinth\Shell $shell Shell instance.
 	 */
-	private function render_tab_diagnostics() {
+	public function render_tab_diagnostics( $shell = null ) {
 		$fonts     = $this->get_active_fonts();
 		$is_pro    = ogf_is_pro_active();
 		$theme     = wp_get_theme();
@@ -1508,7 +1457,6 @@ class OGF_Admin_Page {
 		$host_locally = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false );
 		$delivery     = $this->get_font_delivery_info( $google_count, $custom_count, $adobe_count, $host_locally );
 		?>
-		<div class="ogf-tab-panel" id="ogf-tab-diagnostics">
 			<?php $this->render_panel_header( __( 'Diagnostics', 'olympus-google-fonts' ), __( 'Current configuration, environment details, and tools for clearing cached font data.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-diag-grid">
 				<div class="ogf-card">
@@ -1608,14 +1556,13 @@ class OGF_Admin_Page {
 					</div>
 				</div>
 			</div>
-		</div>
 		<?php
 	}
 
 	/**
 	 * Render the upgrade modal.
 	 */
-	private function render_upgrade_modal() {
+	public function render_upgrade_modal( $shell = null ) {
 		?>
 		<div id="ogf-modal" class="ogf-modal">
 			<div class="ogf-modal-card" role="dialog" aria-modal="true" aria-labelledby="ogf-modal-title">

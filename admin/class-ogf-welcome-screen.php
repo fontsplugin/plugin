@@ -70,9 +70,14 @@ class OGF_Welcome_Screen {
 	public function enqueue() {
 
 		if ( get_current_screen()->id === 'toplevel_page_fonts-plugin' ) {
+			global $ogf_admin_page;
+			if ( $ogf_admin_page instanceof OGF_Admin_Page ) {
+				$ogf_admin_page->get_shell()->enqueue( 'toplevel_page_fonts-plugin' );
+			}
+
 			wp_enqueue_media();
-			wp_enqueue_style( 'ogf-admin-page', plugins_url( 'admin/admin-page.css', __DIR__ ), array(), OGF_VERSION );
-			wp_enqueue_script( 'ogf-admin-page', plugins_url( 'admin/admin-page.js', __DIR__ ), array(), OGF_VERSION, true );
+			wp_enqueue_style( 'ogf-admin-page', plugins_url( 'admin/admin-page.css', __DIR__ ), array( 'plinth-shell' ), OGF_VERSION );
+			wp_enqueue_script( 'ogf-admin-page', plugins_url( 'admin/admin-page.js', __DIR__ ), array( 'plinth-shell' ), OGF_VERSION, true );
 			wp_localize_script(
 				'ogf-admin-page',
 				'ogfAdmin',

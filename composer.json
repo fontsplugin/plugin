@@ -16,6 +16,11 @@
 		"wp-coding-standards/wpcs": "^3.0",
 		"phpcompatibility/phpcompatibility-wp": "^2.1"
 	},
+	"autoload": {
+		"psr-4": {
+			"Plinth\\": "lib/src/"
+		}
+	},
 	"autoload-dev": {
 		"psr-4": {
 			"OGF\\Tests\\": "tests/"

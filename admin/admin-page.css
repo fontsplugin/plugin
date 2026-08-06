@@ -4,7 +4,7 @@
 
 /* --- 1. Design Tokens --- */
 
-.ogf-wrap {
+.pln-wrap {
   --ogf-surface: #f0f0f1;
   --ogf-card: #fff;
   --ogf-card-border: #e0e1e3;
@@ -39,22 +39,22 @@
 /* --- 2. Page Layout --- */
 
 /* Scoped reset so admin defaults don't fight the component spacing below. */
-.ogf-wrap,
-.ogf-wrap *,
-.ogf-wrap *::before,
-.ogf-wrap *::after {
+.pln-wrap,
+.pln-wrap *,
+.pln-wrap *::before,
+.pln-wrap *::after {
   box-sizing: border-box;
 }
 /*
  * :where() keeps the reset at zero specificity so component rules below always
- * win. Without it `.ogf-wrap li` (0,1,1) would beat `.ogf-diag-item` (0,1,0)
+ * win. Without it `.pln-wrap li` (0,1,1) would beat `.ogf-diag-item` (0,1,0)
  * and silently strip the padding off list-based rows.
  */
-.ogf-wrap :where(h1, h2, h3, h4, p, ul, li, dl, dd) {
+.pln-wrap :where(h1, h2, h3, h4, p, ul, li, dl, dd) {
   margin: 0;
   padding: 0;
 }
-.ogf-wrap :where(ul) {
+.pln-wrap :where(ul) {
   list-style: none;
 }
 
@@ -76,7 +76,7 @@
  * on #wpcontent and #wpbody-content so the nav sits flush against the
  * WordPress menu and the columns run to the edges.
  */
-.ogf-wrap {
+.pln-wrap {
   display: flex;
   align-items: stretch;
   margin: 0 0 -65px -20px;
@@ -1200,7 +1200,7 @@
   gap: 10px;
   align-items: center;
 }
-.ogf-wrap button.ogf-btn-modal-cancel {
+.pln-wrap button.ogf-btn-modal-cancel {
   appearance: none;
   -webkit-appearance: none;
   display: inline-flex;
@@ -1220,7 +1220,7 @@
   vertical-align: middle;
   transition: border-color 0.15s, color 0.15s;
 }
-.ogf-wrap button.ogf-btn-modal-cancel:hover {
+.pln-wrap button.ogf-btn-modal-cancel:hover {
   border-color: var(--ogf-text-3);
   color: var(--ogf-text-1);
 }
@@ -1264,7 +1264,7 @@
 
 @media (max-width: 960px) {
   /* Sidebar becomes a horizontal strip above the content. */
-  .ogf-wrap { display: block; min-height: 0; }
+  .pln-wrap { display: block; min-height: 0; }
   .ogf-nav {
     width: auto;
     flex: none;
