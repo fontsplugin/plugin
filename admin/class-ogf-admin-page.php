@@ -24,6 +24,7 @@ class OGF_Admin_Page {
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_ogf_save_settings', array( $this, 'ajax_save_settings' ) );
+		add_action( 'wp_ajax_ogf_save_font_loading', array( $this, 'ajax_save_font_loading' ) );
 		add_action( 'wp_ajax_ogf_clear_font_cache', array( $this, 'ajax_clear_font_cache' ) );
 		add_action( 'wp_ajax_ogf_reset_all_fonts', array( $this, 'ajax_reset_all_fonts' ) );
 		add_action( 'wp_ajax_ogf_save_custom_font', array( $this, 'ajax_save_custom_font' ) );
@@ -61,6 +62,7 @@ class OGF_Admin_Page {
 			'settings'      => '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 008 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H2a2 2 0 110-4h.09A1.65 1.65 0 004.6 8a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 3.68 1.65 1.65 0 0010 2.17V2a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0020.32 8a1.65 1.65 0 001.51 1H22a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/>',
 			'pulse'         => '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
 			'copy'          => '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>',
+			'life-buoy'     => '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M4.93 4.93l4.24 4.24"/><path d="M14.83 14.83l4.24 4.24"/><path d="M14.83 9.17l4.24-4.24"/><path d="M4.93 19.07l4.24-4.24"/>',
 		);
 
 		if ( ! isset( $paths[ $name ] ) ) {
@@ -226,14 +228,24 @@ class OGF_Admin_Page {
 	public function render() {
 		$fonts       = $this->get_active_fonts();
 		$adobe_fonts = ogf_typekit_fonts();
+		$guide_seen  = (bool) get_option( 'ogf_dismiss_guide', false );
+		$default_tab = $guide_seen ? 'dashboard' : 'guide';
+
+		$overview_items = array(
+			array( 'dashboard', __( 'Dashboard', 'olympus-google-fonts' ), 'activity', null ),
+		);
+		if ( ! $guide_seen ) {
+			array_unshift(
+				$overview_items,
+				array( 'guide', __( 'Quickstart', 'olympus-google-fonts' ), 'book', null )
+			);
+		}
 
 		// Slug => label, icon, optional count shown at the end of the row.
 		$sections = array(
 			array(
 				'group' => __( 'Overview', 'olympus-google-fonts' ),
-				'items' => array(
-					array( 'dashboard', __( 'Dashboard', 'olympus-google-fonts' ), 'activity', null ),
-				),
+				'items' => $overview_items,
 			),
 			array(
 				'group' => __( 'Typography', 'olympus-google-fonts' ),
@@ -258,10 +270,12 @@ class OGF_Admin_Page {
 			),
 		);
 		?>
-		<div class="ogf-wrap">
+		<div class="ogf-wrap" data-default-tab="<?php echo esc_attr( $default_tab ); ?>">
 			<nav class="ogf-nav" aria-label="<?php esc_attr_e( 'Fonts Plugin sections', 'olympus-google-fonts' ); ?>">
 				<div class="ogf-nav-head">
-					<div class="ogf-nav-icon">Fp</div>
+					<div class="ogf-nav-icon">
+						<img src="<?php echo esc_url( OGF_DIR_URL . 'admin/icon-128x128.jpg' ); ?>" alt="<?php esc_attr_e( 'Fonts Plugin', 'olympus-google-fonts' ); ?>" width="34" height="34">
+					</div>
 					<div class="ogf-nav-id">
 						<span class="ogf-nav-name"><?php esc_html_e( 'Fonts Plugin', 'olympus-google-fonts' ); ?></span>
 						<span class="ogf-nav-version">v<?php echo esc_html( OGF_VERSION ); ?></span>
@@ -278,7 +292,7 @@ class OGF_Admin_Page {
 
 						<?php foreach ( $section['items'] as $item ) : ?>
 							<?php list( $slug, $label, $icon, $count ) = $item; ?>
-							<button class="ogf-nav-item<?php echo 'dashboard' === $slug ? ' active' : ''; ?>" role="tab" data-tab="<?php echo esc_attr( $slug ); ?>">
+							<button class="ogf-nav-item<?php echo $default_tab === $slug ? ' active' : ''; ?>" role="tab" data-tab="<?php echo esc_attr( $slug ); ?>">
 								<?php $this->icon( $icon, 15 ); ?>
 								<span class="ogf-nav-label"><?php echo esc_html( $label ); ?></span>
 								<?php if ( $count ) : ?>
@@ -295,8 +309,9 @@ class OGF_Admin_Page {
 						<?php
 						printf(
 							/* translators: %s: link to the plugin documentation */
-							esc_html__( 'Read the %s or open a support ticket on WordPress.org.', 'olympus-google-fonts' ),
-							'<a href="https://docs.fontsplugin.com/" target="_blank">' . esc_html__( 'documentation', 'olympus-google-fonts' ) . '</a>'
+							esc_html__( 'Read the %1$s or open a %2$s on WordPress.org.', 'olympus-google-fonts' ),
+							'<a href="https://docs.fontsplugin.com/" target="_blank">' . esc_html__( 'documentation', 'olympus-google-fonts' ) . '</a>',
+							'<a href="https://wordpress.org/support/plugin/olympus-google-fonts/" target="_blank">' . esc_html__( 'support ticket', 'olympus-google-fonts' ) . '</a>'
 						);
 						?>
 					</div>
@@ -305,7 +320,10 @@ class OGF_Admin_Page {
 
 			<div class="ogf-main">
 				<?php
-				$this->render_tab_dashboard();
+				if ( ! $guide_seen ) {
+					$this->render_tab_guide( $default_tab );
+				}
+				$this->render_tab_dashboard( $default_tab );
 				$this->render_tab_fonts();
 				$this->render_tab_font_loading();
 				$this->render_tab_upload();
@@ -322,6 +340,10 @@ class OGF_Admin_Page {
 			</div>
 		</div>
 		<?php
+
+		if ( ! $guide_seen ) {
+			update_option( 'ogf_dismiss_guide', true );
+		}
 	}
 
 	/**
@@ -391,20 +413,26 @@ class OGF_Admin_Page {
 				'elements' => $assigned_elements,
 			);
 
-			if ( isset( $google_fonts[ $font_id ] ) ) {
+			if ( ogf_is_custom_font( $font_id ) ) {
+				$lookup_id = substr( $font_id, 3 );
+				if ( isset( $custom_fonts[ $lookup_id ] ) ) {
+					$font_data['type'] = 'custom';
+					$font_data['name'] = isset( $custom_fonts[ $lookup_id ]['label'] ) ? $custom_fonts[ $lookup_id ]['label'] : $lookup_id;
+				}
+			} elseif ( ogf_is_typekit_font( $font_id ) && isset( $typekit_fonts[ $font_id ] ) ) {
+				$font_data['type'] = 'adobe';
+				$font_data['name'] = isset( $typekit_fonts[ $font_id ]['label'] ) ? $typekit_fonts[ $font_id ]['label'] : $font_id;
+			} elseif ( ogf_is_system_font( $font_id ) ) {
+				$lookup_id = substr( $font_id, 3 );
+				if ( isset( $system_fonts[ $lookup_id ] ) ) {
+					$font_data['type'] = 'system';
+					$font_data['name'] = isset( $system_fonts[ $lookup_id ]['label'] ) ? $system_fonts[ $lookup_id ]['label'] : $lookup_id;
+				}
+			} elseif ( isset( $google_fonts[ $font_id ] ) ) {
 				$font_data['type']    = 'google';
 				$font_data['name']    = isset( $google_fonts[ $font_id ]['f'] ) ? $google_fonts[ $font_id ]['f'] : $font_id;
 				$font_data['weights'] = $ogf_fonts->get_font_weights( $font_id );
 				$font_data['subsets'] = $ogf_fonts->get_font_subsets( $font_id );
-			} elseif ( isset( $custom_fonts[ $font_id ] ) ) {
-				$font_data['type'] = 'custom';
-				$font_data['name'] = isset( $custom_fonts[ $font_id ]['label'] ) ? $custom_fonts[ $font_id ]['label'] : $font_id;
-			} elseif ( isset( $typekit_fonts[ $font_id ] ) ) {
-				$font_data['type'] = 'adobe';
-				$font_data['name'] = isset( $typekit_fonts[ $font_id ]['label'] ) ? $typekit_fonts[ $font_id ]['label'] : $font_id;
-			} elseif ( isset( $system_fonts[ $font_id ] ) ) {
-				$font_data['type'] = 'system';
-				$font_data['name'] = isset( $system_fonts[ $font_id ]['label'] ) ? $system_fonts[ $font_id ]['label'] : $font_id;
 			}
 
 			$fonts[ $font_id ] = $font_data;
@@ -415,31 +443,126 @@ class OGF_Admin_Page {
 	}
 
 	/**
-	 * Render Dashboard tab.
+	 * Count active fonts by source type.
+	 *
+	 * @param array $fonts Active fonts from get_active_fonts().
+	 * @return array
 	 */
-	private function render_tab_dashboard() {
-		$fonts        = $this->get_active_fonts();
-		$total        = count( $fonts );
-		$google_count = 0;
-		$custom_count = 0;
-		$adobe_count  = 0;
+	private function get_font_type_counts( $fonts ) {
+		$counts = array(
+			'google' => 0,
+			'custom' => 0,
+			'adobe'  => 0,
+			'system' => 0,
+		);
 
 		foreach ( $fonts as $font ) {
-			if ( 'google' === $font['type'] ) {
-				++$google_count;
-			} elseif ( 'custom' === $font['type'] ) {
-				++$custom_count;
-			} elseif ( 'adobe' === $font['type'] ) {
-				++$adobe_count;
+			if ( isset( $counts[ $font['type'] ] ) ) {
+				++$counts[ $font['type'] ];
 			}
 		}
 
-		$is_pro       = defined( 'OGF_PRO' );
-		$host_locally = $is_pro && get_theme_mod( 'ogf_host_locally', false );
+		return $counts;
+	}
+
+	/**
+	 * Count loaded font variants for Google and custom fonts.
+	 *
+	 * @param array $fonts Active fonts from get_active_fonts().
+	 * @return int
+	 */
+	private function get_loaded_variant_count( $fonts ) {
+		$ogf_fonts = OGF_Fonts::get_instance();
+		$count     = 0;
+
+		foreach ( $fonts as $font ) {
+			if ( 'google' === $font['type'] ) {
+				$weights = $ogf_fonts->filter_selected_weights( $font['id'], $font['weights'] );
+				$count  += is_array( $weights ) ? count( $weights ) : 0;
+			} elseif ( 'custom' === $font['type'] ) {
+				++$count;
+			}
+		}
+
+		return $count;
+	}
+
+	/**
+	 * Build loading-method labels and descriptions for active font sources.
+	 *
+	 * @param int  $google_count Number of active Google fonts.
+	 * @param int  $custom_count Number of active custom fonts.
+	 * @param int  $adobe_count  Number of active Adobe fonts.
+	 * @param bool $host_locally Whether Google fonts are hosted locally.
+	 * @return array
+	 */
+	private function get_font_delivery_info( $google_count, $custom_count, $adobe_count, $host_locally ) {
+		$labels  = array();
+		$sources = array();
+
+		if ( $google_count > 0 ) {
+			if ( $host_locally ) {
+				$labels[]  = __( 'Local', 'olympus-google-fonts' );
+				$sources[] = wp_parse_url( home_url(), PHP_URL_HOST );
+			} else {
+				$labels[]  = __( 'Google CDN', 'olympus-google-fonts' );
+				$sources[] = 'fonts.googleapis.com';
+			}
+		}
+
+		if ( $custom_count > 0 ) {
+			$local_label = __( 'Local', 'olympus-google-fonts' );
+			if ( ! in_array( $local_label, $labels, true ) ) {
+				$labels[] = $local_label;
+			}
+			$domain = wp_parse_url( home_url(), PHP_URL_HOST );
+			if ( ! in_array( $domain, $sources, true ) ) {
+				$sources[] = $domain;
+			}
+		}
+
+		if ( $adobe_count > 0 ) {
+			$labels[]  = __( 'Adobe', 'olympus-google-fonts' );
+			$sources[] = 'use.typekit.com';
+		}
+
+		if ( empty( $labels ) ) {
+			return array(
+				'labels'      => array( __( 'System', 'olympus-google-fonts' ) ),
+				'description' => __( 'Built-in fonts with no external files to download', 'olympus-google-fonts' ),
+			);
+		}
+
+		return array(
+			'labels'      => $labels,
+			'description' => sprintf(
+				/* translators: %s: comma-separated list of font source domains */
+				__( 'Fonts served from %s', 'olympus-google-fonts' ),
+				implode( ', ', $sources )
+			),
+		);
+	}
+
+	/**
+	 * Render Dashboard tab.
+	 *
+	 * @param string $default_tab Slug of the tab that should be active on load.
+	 */
+	private function render_tab_dashboard( $default_tab = 'dashboard' ) {
+		$fonts        = $this->get_active_fonts();
+		$total        = count( $fonts );
+		$type_counts  = $this->get_font_type_counts( $fonts );
+		$google_count = $type_counts['google'];
+		$custom_count = $type_counts['custom'];
+		$adobe_count  = $type_counts['adobe'];
+
+		$is_pro       = ogf_is_pro_active();
+		$host_locally = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false );
 		$font_display = get_theme_mod( 'ogf_font_display', 'swap' );
+		$delivery     = $this->get_font_delivery_info( $google_count, $custom_count, $adobe_count, $host_locally );
 		?>
-		<div class="ogf-tab-panel active" id="ogf-tab-dashboard">
-			<?php $this->render_panel_header( __( 'Dashboard', 'olympus-google-fonts' ), __( 'Your font setup at a glance — what\'s loaded, how it\'s served, and what to improve next.', 'olympus-google-fonts' ) ); ?>
+		<div class="ogf-tab-panel<?php echo 'dashboard' === $default_tab ? ' active' : ''; ?>" id="ogf-tab-dashboard">
+			<?php $this->render_panel_header( __( 'Dashboard', 'olympus-google-fonts' ), __( 'See your fonts at a glance and what you might want to change next.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-stats-grid">
 				<div class="ogf-stat-card">
 					<div class="ogf-stat-label"><?php esc_html_e( 'Fonts Loaded', 'olympus-google-fonts' ); ?></div>
@@ -465,33 +588,8 @@ class OGF_Admin_Page {
 				</div>
 				<div class="ogf-stat-card">
 					<div class="ogf-stat-label"><?php esc_html_e( 'Loading Method', 'olympus-google-fonts' ); ?></div>
-					<div class="ogf-stat-value ogf-stat-value-sm">
-						<?php echo $host_locally ? esc_html__( 'Local', 'olympus-google-fonts' ) : esc_html__( 'Google CDN', 'olympus-google-fonts' ); ?>
-					</div>
-					<div class="ogf-stat-meta">
-						<?php
-						if ( $host_locally ) {
-							esc_html_e( 'Fonts served from your domain', 'olympus-google-fonts' );
-						} else {
-							esc_html_e( 'Fonts served from fonts.googleapis.com', 'olympus-google-fonts' );
-						}
-						?>
-					</div>
-				</div>
-				<div class="ogf-stat-card">
-					<div class="ogf-stat-label"><?php esc_html_e( 'Pro Status', 'olympus-google-fonts' ); ?></div>
-					<div class="ogf-stat-value ogf-stat-value-sm">
-						<?php echo $is_pro ? esc_html__( 'Active', 'olympus-google-fonts' ) : esc_html__( 'Free', 'olympus-google-fonts' ); ?>
-					</div>
-					<div class="ogf-stat-meta">
-						<?php
-						if ( $is_pro ) {
-							esc_html_e( 'All features unlocked', 'olympus-google-fonts' );
-						} else {
-							esc_html_e( 'Upgrade for local hosting & more', 'olympus-google-fonts' );
-						}
-						?>
-					</div>
+					<div class="ogf-stat-value ogf-stat-value-sm"><?php echo esc_html( implode( ', ', $delivery['labels'] ) ); ?></div>
+					<div class="ogf-stat-meta"><?php echo esc_html( $delivery['description'] ); ?></div>
 				</div>
 			</div>
 
@@ -512,6 +610,10 @@ class OGF_Admin_Page {
 						<a href="https://docs.fontsplugin.com/" target="_blank" class="ogf-action-btn">
 							<?php $this->icon( 'book' ); ?>
 							<?php esc_html_e( 'Documentation', 'olympus-google-fonts' ); ?>
+						</a>
+						<a href="https://wordpress.org/support/plugin/olympus-google-fonts/" target="_blank" class="ogf-action-btn">
+							<?php $this->icon( 'life-buoy' ); ?>
+							<?php esc_html_e( 'Support', 'olympus-google-fonts' ); ?>
 						</a>
 					</div>
 				</div>
@@ -540,6 +642,52 @@ class OGF_Admin_Page {
 	}
 
 	/**
+	 * Render Quickstart Guide tab.
+	 *
+	 * @param string $default_tab Slug of the tab that should be active on load.
+	 */
+	private function render_tab_guide( $default_tab = 'dashboard' ) {
+		?>
+		<div class="ogf-tab-panel<?php echo 'guide' === $default_tab ? ' active' : ''; ?>" id="ogf-tab-guide">
+			<div class="ogf-card ogf-guide-card">
+				<div class="ogf-card-body">
+					<div class="ogf-guide-layout">
+						<div class="ogf-guide-content">
+							<h1 class="ogf-page-title"><?php esc_html_e( 'Your Free Quickstart Guide', 'olympus-google-fonts' ); ?></h1>
+							<p><?php esc_html_e( 'To help you get the most out of the Google Fonts plugin we\'ve put together a free quickstart guide.', 'olympus-google-fonts' ); ?></p>
+							<p><?php esc_html_e( 'In this beautifully-formatted, easy-to-read PDF you will learn:', 'olympus-google-fonts' ); ?></p>
+							<ul class="ogf-guide-list">
+								<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
+								<li><?php printf( esc_html__( 'How to %1$seasily%2$s customize your typography.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
+								<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
+								<li><?php printf( esc_html__( 'How to host fonts %1$slocally%2$s for speed, GDPR & DSGVO.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
+								<?php /* translators: %1$s and %2$s are opening and closing strong tags */ ?>
+								<li><?php printf( esc_html__( 'How to use Google Fonts without %1$sslowing down%2$s your website.', 'olympus-google-fonts' ), '<strong>', '</strong>' ); ?></li>
+							</ul>
+							<p><?php esc_html_e( 'Download your free copy today.', 'olympus-google-fonts' ); ?></p>
+
+							<form action="https://fontsplugin.email/subscribe" method="post" class="ogf-guide-form validate" target="_blank" novalidate>
+								<input type="email" value="" placeholder="<?php esc_attr_e( 'Your email address...', 'olympus-google-fonts' ); ?>" name="email" class="required email" id="mce-EMAIL">
+								<input type="hidden" name="list" value="2guyf8U56tOENOh6892lBQ6w"/>
+								<input type="hidden" name="subform" value="yes"/>
+								<input type="submit" value="<?php esc_attr_e( 'Send My Guide!', 'olympus-google-fonts' ); ?>" name="submit" class="ogf-send-guide-button ogf-btn-pro">
+							</form>
+						</div>
+						<img
+							class="ogf-guide-cover"
+							src="<?php echo esc_url( OGF_DIR_URL . 'admin/fonts-plugin-quickstart-guide.png' ); ?>"
+							alt="<?php esc_attr_e( 'Fonts Plugin Quickstart Guide', 'olympus-google-fonts' ); ?>"
+							width="210"
+							height="280"
+						>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
 	 * Render the recommendations section.
 	 *
 	 * @param array $fonts        Active fonts.
@@ -547,9 +695,20 @@ class OGF_Admin_Page {
 	 * @param int   $custom_count Number of custom fonts.
 	 */
 	private function render_recommendations( $fonts, $google_count, $custom_count ) {
-		$is_pro       = defined( 'OGF_PRO' );
+		$is_pro       = ogf_is_pro_active();
+		$host_locally = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false );
 		$font_display = get_theme_mod( 'ogf_font_display', 'swap' );
 		$total        = count( $fonts );
+		$loaded_count = 0;
+
+		foreach ( $fonts as $font ) {
+			if ( in_array( $font['type'], array( 'google', 'custom', 'adobe' ), true ) ) {
+				++$loaded_count;
+			}
+		}
+
+		$variant_count = $this->get_loaded_variant_count( $fonts );
+
 		?>
 		<div class="ogf-card">
 			<div class="ogf-card-header"><?php esc_html_e( 'Recommendations', 'olympus-google-fonts' ); ?></div>
@@ -567,70 +726,112 @@ class OGF_Admin_Page {
 					<div class="ogf-rec-row ogf-rec-low">
 						<div class="ogf-rec-icon"><?php $this->icon( 'check' ); ?></div>
 						<div class="ogf-rec-info">
-							<div class="ogf-rec-title">
-								<?php
-								/* translators: %d: number of fonts */
-								printf( esc_html( _n( '%d font configured', '%d fonts configured', $total, 'olympus-google-fonts' ) ), esc_html( $total ) );
-								?>
-							</div>
+							<div class="ogf-rec-title"><?php esc_html_e( 'Fonts configured', 'olympus-google-fonts' ); ?></div>
 							<div class="ogf-rec-desc"><?php esc_html_e( 'You\'ve customized fonts across your site elements.', 'olympus-google-fonts' ); ?></div>
 						</div>
 					</div>
-				<?php endif; ?>
 
-				<?php // Only meaningful once something actually loads. ?>
-				<?php if ( $total > 0 && 'swap' === $font_display ) : ?>
-					<div class="ogf-rec-row ogf-rec-low">
-						<div class="ogf-rec-icon"><?php $this->icon( 'check' ); ?></div>
-						<div class="ogf-rec-info">
-							<div class="ogf-rec-title"><?php esc_html_e( 'Font display is set to swap', 'olympus-google-fonts' ); ?></div>
-							<div class="ogf-rec-desc"><?php esc_html_e( 'Text remains visible while fonts load. This is the recommended setting.', 'olympus-google-fonts' ); ?></div>
-						</div>
-					</div>
-				<?php endif; ?>
-
-				<?php if ( $custom_count > 0 ) : ?>
-					<div class="ogf-rec-row ogf-rec-low">
-						<div class="ogf-rec-icon"><?php $this->icon( 'check' ); ?></div>
-						<div class="ogf-rec-info">
-							<div class="ogf-rec-title"><?php esc_html_e( 'Custom font uploaded', 'olympus-google-fonts' ); ?></div>
-							<div class="ogf-rec-desc"><?php esc_html_e( 'Custom fonts are hosted on your domain automatically.', 'olympus-google-fonts' ); ?></div>
-						</div>
-					</div>
-				<?php endif; ?>
-
-				<?php if ( ! $is_pro && $google_count > 0 ) : ?>
-					<div class="ogf-rec-row ogf-rec-medium">
-						<div class="ogf-rec-icon"><?php $this->icon( 'package' ); ?></div>
-						<div class="ogf-rec-info">
-							<div class="ogf-rec-title"><?php esc_html_e( 'Reduce unused font weights', 'olympus-google-fonts' ); ?> <span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span></div>
-							<div class="ogf-rec-desc"><?php esc_html_e( 'You may be loading font weights that aren\'t used. Disabling unused weights reduces page size.', 'olympus-google-fonts' ); ?></div>
-						</div>
-						<button class="ogf-rec-action" data-pro-trigger data-feature="<?php esc_attr_e( 'Selective Font Loading', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Choose exactly which font weights and subsets to load. Disable unused variants to reduce page weight.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
-					</div>
-
-					<div class="ogf-rec-row ogf-rec-high">
-						<div class="ogf-rec-icon"><?php $this->icon( 'zap' ); ?></div>
-						<div class="ogf-rec-info">
-							<div class="ogf-rec-title"><?php esc_html_e( 'Host fonts locally', 'olympus-google-fonts' ); ?> <span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span></div>
-							<div class="ogf-rec-desc">
-								<?php
-								/* translators: %d: number of Google fonts */
-								printf( esc_html( _n( '%d Google Font is loaded from Google\'s CDN. Hosting locally improves privacy (GDPR) and can reduce latency.', '%d Google Fonts are loaded from Google\'s CDN. Hosting locally improves privacy (GDPR) and can reduce latency.', $google_count, 'olympus-google-fonts' ) ), esc_html( $google_count ) );
-								?>
+					<?php if ( 'swap' === $font_display ) : ?>
+						<div class="ogf-rec-row ogf-rec-low">
+							<div class="ogf-rec-icon"><?php $this->icon( 'check' ); ?></div>
+							<div class="ogf-rec-info">
+								<div class="ogf-rec-title"><?php esc_html_e( 'Font display is set to swap', 'olympus-google-fonts' ); ?></div>
+								<div class="ogf-rec-desc"><?php esc_html_e( 'Text remains visible while fonts load. This is the recommended setting.', 'olympus-google-fonts' ); ?></div>
 							</div>
 						</div>
-						<button class="ogf-rec-action" data-pro-trigger data-feature="<?php esc_attr_e( 'Host Fonts Locally', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Download and serve Google Fonts from your own domain. Eliminates external requests, improving GDPR compliance and page load speed.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
-					</div>
+					<?php endif; ?>
 
-					<div class="ogf-rec-row ogf-rec-high">
-						<div class="ogf-rec-icon"><?php $this->icon( 'clock' ); ?></div>
-						<div class="ogf-rec-info">
-							<div class="ogf-rec-title"><?php esc_html_e( 'Enable preloading', 'olympus-google-fonts' ); ?> <span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span></div>
-							<div class="ogf-rec-desc"><?php esc_html_e( 'Add preload hints so the browser fetches font files earlier, reducing layout shift and improving Core Web Vitals.', 'olympus-google-fonts' ); ?></div>
+					<?php if ( $custom_count > 0 ) : ?>
+						<div class="ogf-rec-row ogf-rec-low">
+							<div class="ogf-rec-icon"><?php $this->icon( 'check' ); ?></div>
+							<div class="ogf-rec-info">
+								<div class="ogf-rec-title"><?php esc_html_e( 'Custom font uploaded', 'olympus-google-fonts' ); ?></div>
+								<div class="ogf-rec-desc"><?php esc_html_e( 'Custom fonts are hosted on your domain automatically.', 'olympus-google-fonts' ); ?></div>
+							</div>
 						</div>
-						<button class="ogf-rec-action" data-pro-trigger data-feature="<?php esc_attr_e( 'Preload Fonts', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Add preload resource hints so the browser begins downloading fonts before they\'re needed, reducing layout shift.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
-					</div>
+					<?php endif; ?>
+
+					<?php if ( $is_pro && $host_locally && $google_count > 0 ) : ?>
+						<div class="ogf-rec-row ogf-rec-low">
+							<div class="ogf-rec-icon"><?php $this->icon( 'check' ); ?></div>
+							<div class="ogf-rec-info">
+								<div class="ogf-rec-title"><?php esc_html_e( 'Fonts hosted locally', 'olympus-google-fonts' ); ?></div>
+								<div class="ogf-rec-desc"><?php esc_html_e( 'Google Fonts are served from your domain for better privacy and performance.', 'olympus-google-fonts' ); ?></div>
+							</div>
+						</div>
+					<?php endif; ?>
+
+					<?php if ( $loaded_count > 3 ) : ?>
+						<div class="ogf-rec-row ogf-rec-medium">
+							<div class="ogf-rec-icon"><?php $this->icon( 'type' ); ?></div>
+							<div class="ogf-rec-info">
+								<div class="ogf-rec-title"><?php esc_html_e( 'Too many font families', 'olympus-google-fonts' ); ?></div>
+								<div class="ogf-rec-desc">
+									<?php
+									printf(
+										/* translators: %d: number of font families */
+										esc_html( _n( 'You are loading %d font family. Most sites perform best with three or fewer.', 'You are loading %d font families. Most sites perform best with three or fewer.', $loaded_count, 'olympus-google-fonts' ) ),
+										esc_html( $loaded_count )
+									);
+									?>
+								</div>
+							</div>
+							<button type="button" class="ogf-rec-action" data-goto-tab="fonts"><?php esc_html_e( 'Review', 'olympus-google-fonts' ); ?></button>
+						</div>
+					<?php endif; ?>
+
+					<?php if ( $variant_count > 10 && $google_count > 0 ) : ?>
+						<div class="ogf-rec-row ogf-rec-medium">
+							<div class="ogf-rec-icon"><?php $this->icon( 'package' ); ?></div>
+							<div class="ogf-rec-info">
+								<div class="ogf-rec-title">
+									<?php esc_html_e( 'Reduce unused font weights', 'olympus-google-fonts' ); ?>
+									<?php if ( ! $is_pro ) : ?>
+										<span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span>
+									<?php endif; ?>
+								</div>
+								<div class="ogf-rec-desc">
+									<?php
+									printf(
+										/* translators: %d: number of font variants */
+										esc_html( _n( 'You are loading %d font variant. Disabling unused weights reduces page size.', 'You are loading %d font variants. Disabling unused weights reduces page size.', $variant_count, 'olympus-google-fonts' ) ),
+										esc_html( $variant_count )
+									);
+									?>
+								</div>
+							</div>
+							<?php if ( $is_pro ) : ?>
+								<button type="button" class="ogf-rec-action" data-goto-tab="font-loading"><?php esc_html_e( 'Review', 'olympus-google-fonts' ); ?></button>
+							<?php else : ?>
+								<button class="ogf-rec-action" data-pro-trigger data-feature="<?php esc_attr_e( 'Selective Font Loading', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Choose exactly which font weights and subsets to load. Disable unused variants to reduce page weight.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
+
+					<?php if ( ! $is_pro && $google_count > 0 ) : ?>
+						<div class="ogf-rec-row ogf-rec-high">
+							<div class="ogf-rec-icon"><?php $this->icon( 'zap' ); ?></div>
+							<div class="ogf-rec-info">
+								<div class="ogf-rec-title"><?php esc_html_e( 'Host fonts locally', 'olympus-google-fonts' ); ?> <span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span></div>
+								<div class="ogf-rec-desc">
+									<?php
+									/* translators: %d: number of Google fonts */
+									printf( esc_html( _n( '%d Google Font is loaded from Google\'s CDN. Hosting locally improves privacy (GDPR) and can help pages load faster.', '%d Google Fonts are loaded from Google\'s CDN. Hosting locally improves privacy (GDPR) and can help pages load faster.', $google_count, 'olympus-google-fonts' ) ), esc_html( $google_count ) );
+									?>
+								</div>
+							</div>
+							<button class="ogf-rec-action" data-pro-trigger data-feature="<?php esc_attr_e( 'Host Fonts Locally', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Download and serve Google Fonts from your own domain. Eliminates external requests, improving privacy (GDPR) and page load speed.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
+						</div>
+
+						<div class="ogf-rec-row ogf-rec-high">
+							<div class="ogf-rec-icon"><?php $this->icon( 'clock' ); ?></div>
+							<div class="ogf-rec-info">
+								<div class="ogf-rec-title"><?php esc_html_e( 'Enable preloading', 'olympus-google-fonts' ); ?> <span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span></div>
+								<div class="ogf-rec-desc"><?php esc_html_e( 'Add preload hints so the browser fetches font files earlier, reducing layout shift and improving Core Web Vitals.', 'olympus-google-fonts' ); ?></div>
+							</div>
+							<button class="ogf-rec-action" data-pro-trigger data-feature="<?php esc_attr_e( 'Preload Fonts', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Add preload resource hints so the browser begins downloading fonts before they\'re needed, reducing layout shift.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
+						</div>
+					<?php endif; ?>
 				<?php endif; ?>
 			</div>
 		</div>
@@ -642,7 +843,7 @@ class OGF_Admin_Page {
 	 */
 	private function render_tab_fonts() {
 		$fonts  = $this->get_active_fonts();
-		$is_pro = defined( 'OGF_PRO' );
+		$is_pro = ogf_is_pro_active();
 		?>
 		<div class="ogf-tab-panel" id="ogf-tab-fonts">
 			<?php $this->render_panel_header( __( 'Active Fonts', 'olympus-google-fonts' ), __( 'Every font assigned to an element on your site, with the weights and subsets each one loads.', 'olympus-google-fonts' ) ); ?>
@@ -666,7 +867,7 @@ class OGF_Admin_Page {
 						</div>
 					<?php else : ?>
 						<?php foreach ( $fonts as $font_id => $font ) : ?>
-							<?php $this->render_font_row( $font_id, $font, $is_pro ); ?>
+							<?php $this->render_font_row( $font, $is_pro ); ?>
 						<?php endforeach; ?>
 					<?php endif; ?>
 				</div>
@@ -678,11 +879,10 @@ class OGF_Admin_Page {
 	/**
 	 * Render a single font row.
 	 *
-	 * @param string $font_id Font ID.
-	 * @param array  $font    Font data.
-	 * @param bool   $is_pro  Whether Pro is active.
+	 * @param array $font    Font data.
+	 * @param bool  $is_pro  Whether Pro is active.
 	 */
-	private function render_font_row( $font_id, $font, $is_pro ) {
+	private function render_font_row( $font, $is_pro ) {
 		$badge_class = 'ogf-badge-google';
 		$badge_label = __( 'Google', 'olympus-google-fonts' );
 		if ( 'custom' === $font['type'] ) {
@@ -697,10 +897,14 @@ class OGF_Admin_Page {
 		}
 
 		// Badge reports every variant that loads; the detail row lists upright weights.
-		$weight_count         = is_array( $font['weights'] ) ? count( $font['weights'] ) : 0;
-		$weight_labels        = $this->upright_weight_labels( is_array( $font['weights'] ) ? array_keys( $font['weights'] ) : array() );
-		$host_toggle_disabled = ! $is_pro && 'custom' !== $font['type'];
-		$is_custom_hosted     = 'custom' === $font['type'];
+		$weight_count    = is_array( $font['weights'] ) ? count( $font['weights'] ) : 0;
+		$weight_labels   = $this->upright_weight_labels( is_array( $font['weights'] ) ? array_keys( $font['weights'] ) : array() );
+		$show_toggles    = in_array( $font['type'], array( 'google', 'custom' ), true );
+		$host_enabled    = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false );
+		$preload_enabled = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_preloading' ), false );
+		$toggle_disabled = ! $is_pro;
+		$host_title      = $is_pro ? __( 'Controls hosting globally for all Google Fonts. Custom fonts remain locally hosted.', 'olympus-google-fonts' ) : __( 'Local hosting is available in Fonts Plugin Pro.', 'olympus-google-fonts' );
+		$preload_title   = $is_pro ? __( 'Controls preloading globally for all active fonts.', 'olympus-google-fonts' ) : __( 'Font preloading is available in Fonts Plugin Pro.', 'olympus-google-fonts' );
 		?>
 		<div class="ogf-font-row">
 			<div class="ogf-font-row-header">
@@ -716,23 +920,18 @@ class OGF_Admin_Page {
 							?>
 						</span>
 					<?php endif; ?>
-					<div class="ogf-font-toggles">
-						<?php if ( $is_custom_hosted ) : ?>
-							<div class="ogf-font-toggle-group">
+					<?php if ( $show_toggles ) : ?>
+						<div class="ogf-font-toggles">
+							<div class="ogf-font-toggle-group" <?php echo $toggle_disabled ? 'data-pro-toggle data-feature="' . esc_attr__( 'Host Fonts Locally', 'olympus-google-fonts' ) . '" data-desc="' . esc_attr__( 'Download and serve Google Fonts from your own domain instead of the CDN.', 'olympus-google-fonts' ) . '"' : ''; ?>>
 								<span class="ogf-font-toggle-label"><?php esc_html_e( 'Host', 'olympus-google-fonts' ); ?></span>
-								<button class="ogf-toggle-sm on" style="opacity:1;cursor:default" title="<?php esc_attr_e( 'Custom fonts are always locally hosted', 'olympus-google-fonts' ); ?>"></button>
+								<button type="button" class="ogf-toggle-sm<?php echo $toggle_disabled ? ' disabled' : ''; ?><?php echo $host_enabled ? ' on' : ''; ?>" data-setting="ogf_host_locally" title="<?php echo esc_attr( $host_title ); ?>" aria-label="<?php esc_attr_e( 'Toggle global font hosting', 'olympus-google-fonts' ); ?>"></button>
 							</div>
-						<?php else : ?>
-							<div class="ogf-font-toggle-group" <?php echo $host_toggle_disabled ? 'data-pro-toggle data-feature="' . esc_attr__( 'Host Fonts Locally', 'olympus-google-fonts' ) . '" data-desc="' . esc_attr__( 'Download and serve this font from your own domain instead of the CDN. Improves privacy compliance (GDPR/DSGVO) and can reduce latency.', 'olympus-google-fonts' ) . '"' : ''; ?>>
-								<span class="ogf-font-toggle-label"><?php esc_html_e( 'Host', 'olympus-google-fonts' ); ?></span>
-								<button class="ogf-toggle-sm<?php echo $host_toggle_disabled ? ' disabled' : ''; ?><?php echo $is_pro && get_theme_mod( 'ogf_host_locally', false ) ? ' on' : ''; ?>" data-font="<?php echo esc_attr( $font_id ); ?>" data-setting="host"></button>
+							<div class="ogf-font-toggle-group" <?php echo $toggle_disabled ? 'data-pro-toggle data-feature="' . esc_attr__( 'Preload Fonts', 'olympus-google-fonts' ) . '" data-desc="' . esc_attr__( 'Add preload resource hints for active fonts.', 'olympus-google-fonts' ) . '"' : ''; ?>>
+								<span class="ogf-font-toggle-label"><?php esc_html_e( 'Preload', 'olympus-google-fonts' ); ?></span>
+								<button type="button" class="ogf-toggle-sm<?php echo $toggle_disabled ? ' disabled' : ''; ?><?php echo $preload_enabled ? ' on' : ''; ?>" data-setting="ogf_preloading" title="<?php echo esc_attr( $preload_title ); ?>" aria-label="<?php esc_attr_e( 'Toggle global font preloading', 'olympus-google-fonts' ); ?>"></button>
 							</div>
-						<?php endif; ?>
-						<div class="ogf-font-toggle-group" <?php echo ! $is_pro ? 'data-pro-toggle data-feature="' . esc_attr__( 'Preload Font', 'olympus-google-fonts' ) . '" data-desc="' . esc_attr__( 'Add a preload resource hint for this font so the browser begins downloading it before it\'s needed, reducing layout shift.', 'olympus-google-fonts' ) . '"' : ''; ?>>
-							<span class="ogf-font-toggle-label"><?php esc_html_e( 'Preload', 'olympus-google-fonts' ); ?></span>
-							<button class="ogf-toggle-sm<?php echo ! $is_pro ? ' disabled' : ''; ?><?php echo $is_pro && get_theme_mod( 'ogf_preloading', false ) ? ' on' : ''; ?>" data-font="<?php echo esc_attr( $font_id ); ?>" data-setting="preload"></button>
 						</div>
-					</div>
+					<?php endif; ?>
 				</div>
 			</div>
 			<div class="ogf-font-details">
@@ -768,7 +967,7 @@ class OGF_Admin_Page {
 	 */
 	private function render_tab_font_loading() {
 		$fonts  = $this->get_active_fonts();
-		$is_pro = defined( 'OGF_PRO' );
+		$is_pro = ogf_is_pro_active();
 
 		$google_fonts = array_filter(
 			$fonts,
@@ -778,7 +977,7 @@ class OGF_Admin_Page {
 		);
 		?>
 		<div class="ogf-tab-panel" id="ogf-tab-font-loading">
-			<?php $this->render_panel_header( __( 'Font Loading', 'olympus-google-fonts' ), __( 'Control which weights and subsets each font downloads. Fewer variants means a lighter page.', 'olympus-google-fonts' ) ); ?>
+			<?php $this->render_panel_header( __( 'Font Loading', 'olympus-google-fonts' ), __( 'Control which weights each font downloads and which subsets are kept globally. Fewer variants means a lighter page.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-card" style="margin-bottom:16px">
 				<div class="ogf-card-body" style="display:flex;align-items:center;justify-content:space-between">
 					<div>
@@ -789,7 +988,7 @@ class OGF_Admin_Page {
 							<?php endif; ?>
 						</div>
 						<div class="ogf-setting-desc" style="margin-top:4px">
-							<?php esc_html_e( 'Choose exactly which weights and subsets to load per font. Reduce page weight by disabling unused variants.', 'olympus-google-fonts' ); ?>
+						<?php esc_html_e( 'Choose which weights to load per font and which language subsets to keep globally. Reduce page weight by disabling unused variants.', 'olympus-google-fonts' ); ?>
 						</div>
 					</div>
 				</div>
@@ -798,7 +997,7 @@ class OGF_Admin_Page {
 			<?php if ( empty( $google_fonts ) ) : ?>
 				<div class="ogf-card">
 					<div class="ogf-card-body">
-						<p><?php esc_html_e( 'No Google Fonts are currently loaded. Add fonts via the Customizer to configure weight loading.', 'olympus-google-fonts' ); ?></p>
+						<p><?php esc_html_e( 'No Google Fonts are currently loaded. Add fonts in the Customizer first, then come back here to choose which styles to load.', 'olympus-google-fonts' ); ?></p>
 					</div>
 				</div>
 			<?php else : ?>
@@ -819,7 +1018,10 @@ class OGF_Admin_Page {
 	 */
 	private function render_font_loading_card( $font_id, $font, $is_pro ) {
 		$selected_weights = get_theme_mod( $font_id . '_weights', false );
-		$toggle_class     = $is_pro ? 'ogf-toggle-xs on' : 'ogf-toggle-xs on disabled';
+		$disabled_subsets = $is_pro ? get_theme_mod( 'fpp_disable_subsets', array() ) : array();
+		if ( ! is_array( $disabled_subsets ) ) {
+			$disabled_subsets = array();
+		}
 		?>
 		<div class="ogf-fl-card">
 			<div class="ogf-fl-header">
@@ -838,20 +1040,23 @@ class OGF_Admin_Page {
 						<div class="ogf-fl-grid-row">
 							<button class="ogf-toggle-xs<?php echo esc_attr( $on_class ); ?><?php echo ! $is_pro ? ' disabled' : ''; ?>"
 								data-font="<?php echo esc_attr( $font_id ); ?>"
+								data-kind="weight"
 								data-weight="<?php echo esc_attr( $key ); ?>"></button>
-							<span class="ogf-fl-grid-label"><?php echo esc_html( $key . ' ' . $this->weight_label( $key ) ); ?></span>
+							<span class="ogf-fl-grid-label"><?php echo esc_html( $this->weight_label( $key ) ); ?></span>
 						</div>
 					<?php endforeach; ?>
 				</div>
 			<?php endif; ?>
 
 			<?php if ( ! empty( $font['subsets'] ) ) : ?>
-				<div class="ogf-fl-section-title"><?php esc_html_e( 'Subsets', 'olympus-google-fonts' ); ?></div>
+				<div class="ogf-fl-section-title"><?php esc_html_e( 'Subsets (global)', 'olympus-google-fonts' ); ?></div>
 				<div class="ogf-fl-grid">
 					<?php foreach ( $font['subsets'] as $subset ) : ?>
+						<?php $is_subset_enabled = ! in_array( $subset, $disabled_subsets, true ); ?>
 						<div class="ogf-fl-grid-row">
-							<button class="ogf-toggle-xs on<?php echo ! $is_pro ? ' disabled' : ''; ?>"
+							<button class="ogf-toggle-xs<?php echo $is_subset_enabled ? ' on' : ''; ?><?php echo ! $is_pro ? ' disabled' : ''; ?>"
 								data-font="<?php echo esc_attr( $font_id ); ?>"
+								data-kind="subset"
 								data-subset="<?php echo esc_attr( $subset ); ?>"></button>
 							<span class="ogf-fl-grid-label"><?php echo esc_html( ucfirst( str_replace( '-', ' ', $subset ) ) ); ?></span>
 						</div>
@@ -889,16 +1094,6 @@ class OGF_Admin_Page {
 		<div class="ogf-tab-panel" id="ogf-tab-upload">
 			<?php $this->render_panel_header( __( 'Upload Fonts', 'olympus-google-fonts' ), __( 'Add your own font files. Uploaded fonts are hosted on your domain and appear alongside Google Fonts.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-card">
-				<div class="ogf-card-header"><?php esc_html_e( 'Upload a Custom Font', 'olympus-google-fonts' ); ?></div>
-				<div class="ogf-card-body">
-					<p style="margin-bottom:18px">
-						<?php esc_html_e( 'Add a font file for each weight and style you need. Uploaded fonts are hosted on your domain and appear in the Customizer alongside Google Fonts.', 'olympus-google-fonts' ); ?>
-					</p>
-					<?php $this->render_custom_font_form( 0, null ); ?>
-				</div>
-			</div>
-
-			<div class="ogf-card">
 				<div class="ogf-card-header">
 					<?php esc_html_e( 'Custom Fonts', 'olympus-google-fonts' ); ?>
 					<span class="ogf-card-header-meta">
@@ -918,6 +1113,16 @@ class OGF_Admin_Page {
 							<?php $this->render_custom_font_row( $term ); ?>
 						<?php endforeach; ?>
 					<?php endif; ?>
+				</div>
+			</div>
+
+			<div class="ogf-card">
+				<div class="ogf-card-header"><?php esc_html_e( 'Upload a Custom Font', 'olympus-google-fonts' ); ?></div>
+				<div class="ogf-card-body">
+					<p style="margin-bottom:18px">
+						<?php esc_html_e( 'Add a font file for each weight and style you need. Uploaded fonts are hosted on your domain and appear in the Customizer alongside Google Fonts.', 'olympus-google-fonts' ); ?>
+					</p>
+					<?php $this->render_custom_font_form( 0, null ); ?>
 				</div>
 			</div>
 		</div>
@@ -986,7 +1191,7 @@ class OGF_Admin_Page {
 		$data   = $term_id ? OGF_Fonts_Taxonomy::get_font_data( $term_id ) : OGF_Fonts_Taxonomy::get_font_data( 0 );
 		$name   = $term ? $term->name : '';
 		$is_new = ! $term_id;
-		$is_pro = defined( 'OGF_PRO' );
+		$is_pro = ogf_is_pro_active();
 
 		$weights = array(
 			''    => __( 'All', 'olympus-google-fonts' ),
@@ -1109,7 +1314,7 @@ class OGF_Admin_Page {
 							if ( is_array( $kits ) ) {
 								esc_html_e( 'No kits were found for this token.', 'olympus-google-fonts' );
 							} else {
-								esc_html_e( 'There is a problem connecting to the API. Please check your API token.', 'olympus-google-fonts' );
+								esc_html_e( 'We could not connect to Adobe Fonts. Please check your token and try again.', 'olympus-google-fonts' );
 							}
 							?>
 						</p>
@@ -1173,13 +1378,23 @@ class OGF_Admin_Page {
 	 * Render Settings tab.
 	 */
 	private function render_tab_settings() {
-		$is_pro       = defined( 'OGF_PRO' );
+		$is_pro       = ogf_is_pro_active();
 		$font_display = get_theme_mod( 'ogf_font_display', 'swap' );
 		?>
 		<div class="ogf-tab-panel" id="ogf-tab-settings">
 			<?php $this->render_panel_header( __( 'Settings', 'olympus-google-fonts' ), __( 'How the plugin loads fonts and how strongly it overrides your theme.', 'olympus-google-fonts' ) ); ?>
 			<div class="ogf-card">
 				<div class="ogf-section-label"><?php esc_html_e( 'Performance & Privacy', 'olympus-google-fonts' ); ?></div>
+
+				<div class="ogf-setting-row">
+					<div class="ogf-setting-info">
+						<div class="ogf-setting-label"><?php esc_html_e( 'Use WOFF2 File Format', 'olympus-google-fonts' ); ?></div>
+						<div class="ogf-setting-desc"><?php esc_html_e( 'Use the WOFF2 file format instead of WOFF.', 'olympus-google-fonts' ); ?></div>
+					</div>
+					<div class="ogf-setting-control">
+						<button class="ogf-toggle<?php echo get_theme_mod( $this->get_setting_key( 'ogf_use_woff2' ), false ) ? ' on' : ''; ?>" data-setting="ogf_use_woff2"></button>
+					</div>
+				</div>
 
 				<div class="ogf-setting-row">
 					<div class="ogf-setting-info">
@@ -1193,7 +1408,7 @@ class OGF_Admin_Page {
 					</div>
 					<div class="ogf-setting-control">
 						<?php if ( $is_pro ) : ?>
-							<button class="ogf-toggle<?php echo get_theme_mod( 'ogf_removal', false ) ? ' on' : ''; ?>" data-setting="ogf_removal"></button>
+								<button class="ogf-toggle<?php echo get_theme_mod( $this->get_setting_key( 'ogf_removal' ), false ) ? ' on' : ''; ?>" data-setting="ogf_removal"></button>
 						<?php else : ?>
 							<button class="ogf-toggle disabled" data-setting="ogf_removal" data-pro-feature data-feature="<?php esc_attr_e( 'Remove External Fonts', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Remove Google Fonts loaded by other plugins and your theme to reduce external requests and improve page speed.', 'olympus-google-fonts' ); ?>"></button>
 						<?php endif; ?>
@@ -1212,7 +1427,7 @@ class OGF_Admin_Page {
 					</div>
 					<div class="ogf-setting-control">
 						<?php if ( $is_pro ) : ?>
-							<button class="ogf-toggle<?php echo get_theme_mod( 'ogf_rewrite', false ) ? ' on' : ''; ?>" data-setting="ogf_rewrite"></button>
+								<button class="ogf-toggle<?php echo get_theme_mod( $this->get_setting_key( 'ogf_rewrite' ), false ) ? ' on' : ''; ?>" data-setting="ogf_rewrite"></button>
 						<?php else : ?>
 							<button class="ogf-toggle disabled" data-setting="ogf_rewrite" data-pro-feature data-feature="<?php esc_attr_e( 'Rewrite External Fonts', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Automatically rewrite Google Fonts URLs from your theme and plugins to serve from your domain, improving privacy and performance.', 'olympus-google-fonts' ); ?>"></button>
 						<?php endif; ?>
@@ -1247,7 +1462,7 @@ class OGF_Admin_Page {
 						<div class="ogf-setting-desc"><?php esc_html_e( 'Use pixel values for font sizes instead of em units.', 'olympus-google-fonts' ); ?></div>
 					</div>
 					<div class="ogf-setting-control">
-						<button class="ogf-toggle<?php echo 'true' === get_theme_mod( 'ogf_use_px', 'true' ) ? ' on' : ''; ?>" data-setting="ogf_use_px"></button>
+						<button class="ogf-toggle<?php echo wp_validate_boolean( get_theme_mod( 'ogf_use_px', true ) ) ? ' on' : ''; ?>" data-setting="ogf_use_px"></button>
 					</div>
 				</div>
 
@@ -1275,7 +1490,7 @@ class OGF_Admin_Page {
 	 */
 	private function render_tab_diagnostics() {
 		$fonts     = $this->get_active_fonts();
-		$is_pro    = defined( 'OGF_PRO' );
+		$is_pro    = ogf_is_pro_active();
 		$theme     = wp_get_theme();
 		$ogf_fonts = OGF_Fonts::get_instance();
 		$has_cache = false;
@@ -1286,18 +1501,12 @@ class OGF_Admin_Page {
 			$has_cache = false !== get_transient( 'ogf_external_font_css_' . $url_to_id );
 		}
 
-		$google_count = 0;
-		$custom_count = 0;
-		$adobe_count  = 0;
-		foreach ( $fonts as $font ) {
-			if ( 'google' === $font['type'] ) {
-				++$google_count;
-			} elseif ( 'custom' === $font['type'] ) {
-				++$custom_count;
-			} elseif ( 'adobe' === $font['type'] ) {
-				++$adobe_count;
-			}
-		}
+		$type_counts  = $this->get_font_type_counts( $fonts );
+		$google_count = $type_counts['google'];
+		$custom_count = $type_counts['custom'];
+		$adobe_count  = $type_counts['adobe'];
+		$host_locally = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false );
+		$delivery     = $this->get_font_delivery_info( $google_count, $custom_count, $adobe_count, $host_locally );
 		?>
 		<div class="ogf-tab-panel" id="ogf-tab-diagnostics">
 			<?php $this->render_panel_header( __( 'Diagnostics', 'olympus-google-fonts' ), __( 'Current configuration, environment details, and tools for clearing cached font data.', 'olympus-google-fonts' ) ); ?>
@@ -1308,15 +1517,7 @@ class OGF_Admin_Page {
 						<ul class="ogf-diag-list">
 							<li class="ogf-diag-item">
 								<span class="ogf-diag-key"><?php esc_html_e( 'Loading Method', 'olympus-google-fonts' ); ?></span>
-								<span class="ogf-diag-val">
-									<?php
-									if ( $is_pro && get_theme_mod( 'ogf_host_locally', false ) ) {
-										esc_html_e( 'Local', 'olympus-google-fonts' );
-									} else {
-										esc_html_e( 'Google CDN', 'olympus-google-fonts' );
-									}
-									?>
-								</span>
+								<span class="ogf-diag-val"><?php echo esc_html( implode( ', ', $delivery['labels'] ) ); ?></span>
 							</li>
 							<li class="ogf-diag-item">
 								<span class="ogf-diag-key"><?php esc_html_e( 'Font Display', 'olympus-google-fonts' ); ?></span>
@@ -1363,7 +1564,7 @@ class OGF_Admin_Page {
 								<span class="ogf-diag-val"><?php echo esc_html( OGF_VERSION ); ?></span>
 							</li>
 							<li class="ogf-diag-item">
-								<span class="ogf-diag-key"><?php esc_html_e( 'Pro Status', 'olympus-google-fonts' ); ?></span>
+								<span class="ogf-diag-key"><?php esc_html_e( 'Version Status', 'olympus-google-fonts' ); ?></span>
 								<?php if ( $is_pro ) : ?>
 									<span class="ogf-diag-status ok"><?php esc_html_e( 'Active', 'olympus-google-fonts' ); ?></span>
 								<?php else : ?>
@@ -1433,7 +1634,7 @@ class OGF_Admin_Page {
 					</ul>
 				</div>
 				<div class="ogf-modal-footer">
-					<button class="ogf-btn-modal-cancel ogf-modal-close"><?php esc_html_e( 'Maybe later', 'olympus-google-fonts' ); ?></button>
+					<button type="button" class="ogf-btn-modal-cancel ogf-modal-close"><?php esc_html_e( 'Maybe later', 'olympus-google-fonts' ); ?></button>
 					<a id="ogf-modal-link" href="https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=admin_page" target="_blank" class="ogf-btn-pro">
 						<?php esc_html_e( 'Upgrade to Pro', 'olympus-google-fonts' ); ?>
 						<?php $this->icon( 'arrow-right', 14, 2.5 ); ?>
@@ -1455,6 +1656,7 @@ class OGF_Admin_Page {
 			'ogf_disable_post_level_controls',
 			'ogf_use_px',
 			'ogf_font_display',
+			'ogf_use_woff2',
 		);
 
 		$pro_settings = array(
@@ -1464,11 +1666,34 @@ class OGF_Admin_Page {
 			'ogf_rewrite',
 		);
 
-		if ( defined( 'OGF_PRO' ) ) {
+		if ( ogf_is_pro_active() ) {
 			return array_merge( $free_settings, $pro_settings );
 		}
 
 		return $free_settings;
+	}
+
+	/**
+	 * Resolve a free-plugin setting to the corresponding Pro setting when Pro
+	 * is active.
+	 *
+	 * @param string $setting Free-plugin setting name.
+	 * @return string Setting name used by the active implementation.
+	 */
+	private function get_setting_key( $setting ) {
+		if ( ! ogf_is_pro_active() ) {
+			return $setting;
+		}
+
+		$pro_settings = array(
+			'ogf_host_locally' => 'fpp_host_locally',
+			'ogf_preloading'   => 'fpp_preloading',
+			'ogf_removal'      => 'fpp_removal',
+			'ogf_rewrite'      => 'fpp_rewrite',
+			'ogf_use_woff2'    => 'fpp_use_woff2',
+		);
+
+		return isset( $pro_settings[ $setting ] ) ? $pro_settings[ $setting ] : $setting;
 	}
 
 	/**
@@ -1497,11 +1722,103 @@ class OGF_Admin_Page {
 			}
 			set_theme_mod( $setting, $value );
 		} elseif ( 'ogf_use_px' === $setting ) {
-			set_theme_mod( $setting, '1' === $value ? 'true' : 'false' );
-		} else {
 			set_theme_mod( $setting, '1' === $value );
+		} else {
+			set_theme_mod( $this->get_setting_key( $setting ), '1' === $value );
 		}
 
+		wp_send_json_success();
+	}
+
+	/**
+	 * AJAX handler: save selective font loading settings.
+	 *
+	 * Weight selections are stored per Google font. Subset exclusions are a
+	 * single Pro setting shared by all Google fonts, so subset requests update
+	 * that global list one value at a time.
+	 */
+	public function ajax_save_font_loading() {
+		check_ajax_referer( 'ogf_admin_nonce' );
+
+		if ( ! current_user_can( 'edit_theme_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'You do not have permission to do that.', 'olympus-google-fonts' ) ) );
+		}
+
+		if ( ! ogf_is_pro_active() ) {
+			wp_send_json_error( array( 'message' => __( 'Selective font loading is a Pro feature.', 'olympus-google-fonts' ) ) );
+		}
+
+		$font_id = isset( $_POST['font_id'] ) ? sanitize_key( wp_unslash( $_POST['font_id'] ) ) : '';
+		$kind    = isset( $_POST['kind'] ) ? sanitize_key( wp_unslash( $_POST['kind'] ) ) : '';
+
+		if ( ! $font_id || ! ogf_is_google_font( $font_id ) || ! in_array( $kind, array( 'weight', 'subset' ), true ) ) {
+			wp_send_json_error( array( 'message' => __( 'That font loading setting is not valid.', 'olympus-google-fonts' ) ) );
+		}
+
+		$fonts = OGF_Fonts::get_instance();
+
+		if ( 'weight' === $kind ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- JSON array; each entry is sanitized after decode.
+			$raw_values = isset( $_POST['values'] ) ? wp_unslash( $_POST['values'] ) : '';
+
+			if ( ! is_string( $raw_values ) ) {
+				wp_send_json_error( array( 'message' => __( 'The selected weights are not valid.', 'olympus-google-fonts' ) ) );
+			}
+
+			$values = json_decode( $raw_values, true );
+
+			if ( ! is_array( $values ) ) {
+				wp_send_json_error( array( 'message' => __( 'The selected weights are not valid.', 'olympus-google-fonts' ) ) );
+			}
+
+			$selected = array();
+			foreach ( $values as $value ) {
+				if ( is_scalar( $value ) ) {
+					$selected[] = sanitize_text_field( (string) $value );
+				}
+			}
+
+			$available = array_keys( $fonts->get_font_weights( $font_id ) );
+			$selected  = array_values( array_unique( array_intersect( $selected, $available ) ) );
+
+			if ( empty( $selected ) ) {
+				wp_send_json_error( array( 'message' => __( 'Select at least one weight.', 'olympus-google-fonts' ) ) );
+			}
+
+			if ( count( $selected ) === count( $available ) ) {
+				remove_theme_mod( $font_id . '_weights' );
+			} else {
+				set_theme_mod( $font_id . '_weights', $selected );
+			}
+
+			wp_send_json_success();
+		}
+
+		$subset            = isset( $_POST['subset'] ) ? sanitize_text_field( wp_unslash( $_POST['subset'] ) ) : '';
+		$enabled           = ! empty( $_POST['enabled'] );
+		$available_subsets = array();
+
+		foreach ( $fonts->choices as $choice ) {
+			if ( ogf_is_google_font( $choice ) ) {
+				$available_subsets = array_merge( $available_subsets, array_keys( $fonts->get_font_subsets( $choice ) ) );
+			}
+		}
+		$available_subsets = array_values( array_unique( $available_subsets ) );
+
+		if ( ! $subset || ! in_array( $subset, $available_subsets, true ) ) {
+			wp_send_json_error( array( 'message' => __( 'That font subset is not valid.', 'olympus-google-fonts' ) ) );
+		}
+
+		$disabled = get_theme_mod( 'fpp_disable_subsets', array() );
+		$disabled = is_array( $disabled ) ? $disabled : array();
+
+		if ( $enabled ) {
+			$disabled = array_values( array_diff( $disabled, array( $subset ) ) );
+		} elseif ( ! in_array( $subset, $disabled, true ) ) {
+			$disabled[] = $subset;
+		}
+
+		set_theme_mod( 'fpp_disable_subsets', array_values( array_unique( $disabled ) ) );
 		wp_send_json_success();
 	}
 

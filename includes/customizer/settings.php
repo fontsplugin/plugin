@@ -285,7 +285,7 @@ function ogf_customize_register( $wp_customize ) {
 		'ogf_font_display',
 		array(
 			'label'       => esc_html__( 'Font Display', 'olympus-google-fonts' ),
-			'description' => '<a href = "https: //fontsplugin.com/google-fonts-font-display-swap/#values">' . esc_html__( 'Learn more →', 'olympus-google-fonts' ) . '</a>',
+			'description' => '<a href="https://fontsplugin.com/google-fonts-font-display-swap/#values">' . esc_html__( 'Learn more →', 'olympus-google-fonts' ) . '</a>',
 			'type'        => 'select',
 			'section'     => 'ogf_debugging',
 			'choices'     => array(
@@ -330,7 +330,7 @@ function ogf_customize_register( $wp_customize ) {
 
 			$input_attrs = array();
 
-			if ( ! defined( 'OGF_PRO' ) ) {
+			if ( ! ogf_is_pro_active() ) {
 				$input_attrs = array(
 					'disabled' => false,
 				);
@@ -361,13 +361,13 @@ function ogf_customize_register( $wp_customize ) {
 			)
 		);
 
-		if ( defined( 'OGF_PRO' ) ) {
+		if ( ogf_is_pro_active() ) {
 			$wp_customize->add_control(
 				new OGF_Customize_Multiple_Checkbox_Control(
 					$wp_customize,
 					'fpp_disable_subsets',
 					array(
-						'label'   => 'Remove Subsets',
+						'label'   => esc_html__( 'Remove Subsets', 'olympus-google-fonts' ),
 						'section' => 'ogf_font_subsets',
 						'choices' => array_unique( $subsets ),
 						'type'    => 'ogf-multiple-checkbox',
@@ -391,7 +391,7 @@ function ogf_customize_register( $wp_customize ) {
 	);
 
 	foreach ( $upsell_locations as $loc ) {
-		if ( defined( 'OGF_PRO' ) ) {
+		if ( ogf_is_pro_active() ) {
 			return;
 		}
 

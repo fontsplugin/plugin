@@ -15,8 +15,17 @@ class OGF_Welcome_Screen {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'add_plugin_page' ), 1 );
+		add_action( 'load-toplevel_page_fonts-plugin', array( $this, 'suppress_admin_notices' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		add_action( 'wp_ajax_ogf_dismiss_guide', array( $this, 'dismiss_guide' ) );
+	}
+
+	/**
+	 * Remove wp-admin notices on the custom dashboard screen.
+	 */
+	public function suppress_admin_notices() {
+		remove_all_actions( 'admin_notices' );
+		remove_all_actions( 'all_admin_notices' );
 	}
 
 	/**
@@ -70,7 +79,7 @@ class OGF_Welcome_Screen {
 				array(
 					'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
 					'nonce'      => wp_create_nonce( 'ogf_admin_nonce' ),
-					'isPro'      => defined( 'OGF_PRO' ),
+					'isPro'      => ogf_is_pro_active(),
 					'upgradeUrl' => 'https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=admin_page',
 					'i18n'       => array(
 						'saved'             => __( 'Settings saved.', 'olympus-google-fonts' ),

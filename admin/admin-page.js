@@ -96,9 +96,25 @@
 			} );
 		} );
 
-		// Activate tab from hash or fall back to dashboard.
+		window.addEventListener( 'hashchange', function() {
+			var hash = window.location.hash.replace( '#', '' );
+			if ( hash && document.getElementById( 'ogf-tab-' + hash ) ) {
+				activateTab( hash );
+				window.scrollTo( 0, 0 );
+			}
+		} );
+
+		// Activate tab from hash or fall back to the server default.
+		var wrap = document.querySelector( '.ogf-wrap' );
+		var defaultTab = wrap ? wrap.getAttribute( 'data-default-tab' ) : 'dashboard';
 		var hash = window.location.hash.replace( '#', '' );
-		activateTab( hash || 'dashboard' );
+		var tab = hash || defaultTab || 'dashboard';
+
+		if ( ! document.getElementById( 'ogf-tab-' + tab ) ) {
+			tab = defaultTab || 'dashboard';
+		}
+
+		activateTab( tab );
 	}
 
 	/* ---------------------------------------------------------------
@@ -117,7 +133,11 @@
 				var value   = toggle.classList.contains( 'on' ) ? 1 : 0;
 
 				ajaxPost( 'ogf_save_settings', { setting: setting, value: value } )
-					.then( function() {
+					.then( function( response ) {
+						if ( ! response.success ) {
+							throw new Error( 'Could not save setting' );
+						}
+						syncFontToggles( setting, value );
 						showToast( ogfAdmin.i18n.saved );
 					} )
 					.catch( function() {
@@ -183,20 +203,6 @@
 			} );
 		} );
 
-		// Pro toggle groups.
-		document.querySelectorAll( '.ogf-font-toggle-group[data-pro-toggle]' ).forEach( function( group ) {
-			var toggle = group.querySelector( '.ogf-toggle-sm' );
-			if ( toggle ) {
-				toggle.addEventListener( 'click', function( e ) {
-					e.stopPropagation();
-					openProModal(
-						group.getAttribute( 'data-feature' ) || '',
-						group.getAttribute( 'data-desc' ) || ''
-					);
-				} );
-			}
-		} );
-
 		// Font loading disabled toggles.
 		document.querySelectorAll( '.ogf-fl-grid-row .ogf-toggle-xs.disabled' ).forEach( function( toggle ) {
 			toggle.addEventListener( 'click', function() {
@@ -225,6 +231,20 @@
 					toggle.getAttribute( 'data-desc' ) || ''
 				);
 			} );
+		} );
+
+		// Disabled Host / Preload toggles on font rows.
+		document.querySelectorAll( '.ogf-font-toggle-group[data-pro-toggle]' ).forEach( function( group ) {
+			var toggle = group.querySelector( '.ogf-toggle-sm' );
+			if ( toggle ) {
+				toggle.addEventListener( 'click', function( e ) {
+					e.stopPropagation();
+					openProModal(
+						group.getAttribute( 'data-feature' ) || 'Pro Feature',
+						group.getAttribute( 'data-desc' ) || ''
+					);
+				} );
+			}
 		} );
 
 		// Close handlers.
@@ -261,38 +281,110 @@
 	}
 
 	/* ---------------------------------------------------------------
-	 * Per-font HOST / PRELOAD toggles
+	 * Global Host / Preload toggles shown on active font rows
 	 * ------------------------------------------------------------- */
-	function initFontToggles() {
-		document.querySelectorAll( '.ogf-font-toggle-group:not([data-pro-toggle])' ).forEach( function( group ) {
-			var toggle = group.querySelector( '.ogf-toggle-sm' );
-			if ( ! toggle ) {
-				return;
+	function syncFontToggles( setting, value ) {
+		document.querySelectorAll( '.ogf-font-toggles .ogf-toggle-sm[data-setting]' ).forEach( function( toggle ) {
+			if ( toggle.getAttribute( 'data-setting' ) === setting ) {
+				toggle.classList.toggle( 'on', 1 === Number( value ) );
 			}
+		} );
+	}
 
+	function initFontToggles() {
+		document.querySelectorAll( '.ogf-font-toggles .ogf-toggle-sm[data-setting]' ).forEach( function( toggle ) {
 			toggle.addEventListener( 'click', function( e ) {
 				e.stopPropagation();
 
-				var fontId  = toggle.getAttribute( 'data-font' ) || '';
-				var setting = toggle.getAttribute( 'data-setting' ) || '';
-
-				// Allow for custom fonts (already hosted) or Pro users.
-				var isCustom = fontId && fontId.indexOf( 'cf-' ) === 0;
-				if ( ! ogfAdmin.isPro && ! isCustom ) {
+				if ( toggle.classList.contains( 'disabled' ) ) {
 					return;
 				}
 
-				toggle.classList.toggle( 'on' );
+				var setting = toggle.getAttribute( 'data-setting' ) || '';
+				var value   = toggle.classList.contains( 'on' ) ? 0 : 1;
 
-				ajaxPost( 'ogf_save_font_settings', {
+				toggle.classList.toggle( 'on', 1 === value );
+
+				ajaxPost( 'ogf_save_settings', { setting: setting, value: value } )
+					.then( function( response ) {
+						if ( ! response.success ) {
+							throw new Error( 'Could not save setting' );
+						}
+						syncFontToggles( setting, value );
+						showToast( ogfAdmin.i18n.saved );
+					} )
+					.catch( function() {
+						toggle.classList.toggle( 'on', 1 !== value );
+						showToast( ogfAdmin.i18n.error );
+					} );
+			} );
+		} );
+	}
+
+	/* ---------------------------------------------------------------
+	 * Selective font loading
+	 * ------------------------------------------------------------- */
+	function initFontLoading() {
+		document.querySelectorAll( '.ogf-fl-grid-row .ogf-toggle-xs:not(.disabled)' ).forEach( function( toggle ) {
+			toggle.addEventListener( 'click', function() {
+				var card      = toggle.closest( '.ogf-fl-card' );
+				var kind      = toggle.getAttribute( 'data-kind' ) || '';
+				var fontId    = toggle.getAttribute( 'data-font' ) || '';
+				var wasOn     = toggle.classList.contains( 'on' );
+				var isEnabled = ! wasOn;
+
+				toggle.classList.toggle( 'on', isEnabled );
+
+				var payload = {
 					font_id: fontId,
-					setting: setting,
-					value: toggle.classList.contains( 'on' ) ? 1 : 0,
-				} ).then( function() {
-					showToast( ogfAdmin.i18n.saved );
-				} ).catch( function() {
-					showToast( ogfAdmin.i18n.error );
-				} );
+					kind: kind,
+				};
+
+				if ( 'weight' === kind ) {
+					var selected = [];
+					card.querySelectorAll( '[data-kind="weight"]' ).forEach( function( weightToggle ) {
+						if ( weightToggle.classList.contains( 'on' ) ) {
+							selected.push( weightToggle.getAttribute( 'data-weight' ) );
+						}
+					} );
+
+					// The existing loader cannot represent zero selected weights.
+					if ( ! selected.length ) {
+						toggle.classList.add( 'on' );
+						return;
+					}
+
+					payload.values = JSON.stringify( selected );
+				} else if ( 'subset' === kind ) {
+					payload.subset  = toggle.getAttribute( 'data-subset' ) || '';
+					payload.enabled = isEnabled ? 1 : 0;
+				} else {
+					toggle.classList.toggle( 'on', wasOn );
+					return;
+				}
+
+				ajaxPost( 'ogf_save_font_loading', payload )
+					.then( function( response ) {
+						if ( ! response.success ) {
+							toggle.classList.toggle( 'on', wasOn );
+							showToast( ( response.data && response.data.message ) || ogfAdmin.i18n.error );
+							return;
+						}
+
+						if ( 'subset' === kind ) {
+							document.querySelectorAll( '[data-kind="subset"]' ).forEach( function( subsetToggle ) {
+								if ( subsetToggle.getAttribute( 'data-subset' ) === payload.subset ) {
+									subsetToggle.classList.toggle( 'on', isEnabled );
+								}
+							} );
+						}
+
+						showToast( ogfAdmin.i18n.saved );
+					} )
+					.catch( function() {
+						toggle.classList.toggle( 'on', wasOn );
+						showToast( ogfAdmin.i18n.error );
+					} );
 			} );
 		} );
 	}
@@ -748,6 +840,7 @@
 		initProModal();
 		initFontRows();
 		initFontToggles();
+		initFontLoading();
 		initDiagnostics();
 		initSelects();
 		initCustomFonts();

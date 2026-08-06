@@ -17,7 +17,7 @@ class OGF_Optimization_Controls {
 	 */
 	public function __construct() {
 
-		if ( DEFINED( 'OGF_PRO' ) ) {
+		if ( ogf_is_pro_active() ) {
 			return;
 		}
 

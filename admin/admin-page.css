@@ -60,10 +60,16 @@
 
 /*
  * This stylesheet only loads on the plugin's own screen, so hiding the admin
- * footer here does not affect the rest of wp-admin. It frees the 65px that
- * #wpbody-content reserves for it, letting the layout reach the bottom.
+ * footer and notices here does not affect the rest of wp-admin. The footer
+ * rule frees the 65px that #wpbody-content reserves for it, letting the
+ * layout reach the bottom.
  */
 #wpfooter { display: none; }
+
+#wpbody-content > .notice,
+#wpbody-content > .update-nag {
+  display: none;
+}
 
 /*
  * Full-bleed two-column shell. The negative margins cancel wp-admin's padding
@@ -110,14 +116,14 @@
   width: 34px;
   height: 34px;
   flex-shrink: 0;
-  background: var(--ogf-brand);
   border-radius: 9px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  font-weight: 700;
-  font-size: 15px;
-  letter-spacing: -0.02em;
+  overflow: hidden;
+}
+.ogf-nav-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .ogf-nav-id { min-width: 0; }
 .ogf-nav-name {
@@ -215,6 +221,7 @@
 .ogf-main {
   flex: 1;
   min-width: 0;
+  max-width: 840px;
   padding: 28px 28px 48px;
 }
 .ogf-page-title {
@@ -271,7 +278,7 @@
 
 .ogf-stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
   margin-bottom: 16px;
 }
@@ -386,6 +393,88 @@
   color: var(--ogf-brand);
 }
 .ogf-action-btn svg { flex-shrink: 0; }
+
+/* --- 8b. Quickstart Guide --- */
+
+.ogf-guide-card {
+  margin-top: 0;
+  max-width: 760px;
+}
+.ogf-guide-card .ogf-card-body {
+  padding: 48px;
+}
+.ogf-guide-card .ogf-page-title {
+  margin-bottom: 1rem;
+}
+.ogf-guide-layout {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+}
+.ogf-guide-content {
+  flex: 1;
+  min-width: 0;
+}
+.ogf-guide-content p {
+  font-size: 14px;
+  color: var(--ogf-text-2);
+  margin-bottom: 12px;
+  line-height: 1.6;
+}
+.ogf-guide-list {
+  list-style: disc;
+  margin: 0 0 14px 20px;
+}
+.ogf-guide-list li {
+  font-size: 14px;
+  color: var(--ogf-text-2);
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+.ogf-guide-list strong { color: var(--ogf-text-1); }
+.ogf-guide-cover {
+  flex-shrink: 0;
+  width: 210px;
+  height: auto;
+}
+.ogf-guide-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+.ogf-guide-form input[type="email"],
+.ogf-guide-form .ogf-btn-pro {
+  height: 40px;
+  min-height: 40px;
+  box-sizing: border-box;
+  margin: 0;
+}
+.ogf-guide-form input[type="email"] {
+  min-width: 200px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ogf-text-1);
+  background: var(--ogf-card);
+  border: 1px solid var(--ogf-border);
+  border-radius: 6px;
+  padding: 0 14px;
+  line-height: normal;
+}
+.ogf-guide-form input[type="email"]:focus {
+  border-color: var(--ogf-brand);
+  box-shadow: 0 0 0 1px var(--ogf-brand);
+  outline: none;
+}
+.ogf-guide-form .ogf-btn-pro {
+  padding: 0 20px;
+}
+.ogf-guide-form .ogf-btn-pro,
+.ogf-guide-content > .ogf-btn-pro {
+  flex-shrink: 0;
+}
 
 /* --- 9. Pro CTA --- */
 
@@ -1111,19 +1200,36 @@
   gap: 10px;
   align-items: center;
 }
-.ogf-btn-modal-cancel {
+.ogf-wrap button.ogf-btn-modal-cancel {
+  appearance: none;
+  -webkit-appearance: none;
+  display: inline-flex;
+  align-items: center;
   font-family: inherit;
   font-size: 13px;
   font-weight: 500;
-  color: var(--ogf-text-3);
-  background: none;
+  line-height: normal;
+  color: var(--ogf-text-2);
+  background: var(--ogf-card);
   border: 1px solid var(--ogf-border);
   border-radius: 6px;
-  padding: 9px 18px;
+  padding: 10px 20px;
   cursor: pointer;
-  transition: color 0.15s;
+  box-shadow: none;
+  text-shadow: none;
+  vertical-align: middle;
+  transition: border-color 0.15s, color 0.15s;
 }
-.ogf-btn-modal-cancel:hover { color: var(--ogf-text-1); }
+.ogf-wrap button.ogf-btn-modal-cancel:hover {
+  border-color: var(--ogf-text-3);
+  color: var(--ogf-text-1);
+}
+.ogf-modal-footer .ogf-modal-close {
+  padding: 10px 20px;
+  line-height: normal;
+  border: 1px solid var(--ogf-border);
+  border-radius: 6px;
+}
 
 /* --- 19. Toast --- */
 
@@ -1205,6 +1311,11 @@
   .ogf-cf-edit-panel.open { padding: 4px 16px 16px; }
   .ogf-uploaded-font-row { padding: 16px; }
   .ogf-adobe-kit-card { flex-wrap: wrap; }
+  .ogf-guide-layout { flex-direction: column-reverse; }
+  .ogf-guide-cover { width: 140px; margin: 0 auto; }
+  .ogf-guide-form { flex-direction: column; align-items: stretch; }
+  .ogf-guide-form input[type="email"] { min-width: 0; }
+  .ogf-guide-form .ogf-btn-pro { justify-content: center; }
 }
 
 @media (max-width: 480px) {

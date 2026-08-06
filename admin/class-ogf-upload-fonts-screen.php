@@ -392,7 +392,7 @@ class OGF_Upload_Fonts_Screen {
 				</label>
 			</th>
 			<td>
-				<?php if ( defined( 'OGF_PRO' ) ) : ?>
+				<?php if ( ogf_is_pro_active() ) : ?>
 					<input type="checkbox" id="metadata-<?php echo esc_attr( $id ); ?>" name="<?php echo esc_attr( OGF_Fonts_Taxonomy::$taxonomy_slug ); ?>[<?php echo esc_attr( $id ); ?>]" <?php checked( $value, 1 ); ?> value="1">
 				<?php else : ?>
 					<p class="description"><?php echo wp_kses_post( $description ); ?></p>

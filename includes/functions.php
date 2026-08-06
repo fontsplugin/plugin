@@ -476,5 +476,5 @@ function ogf_is_elementor_activated() {
  * Check if Fonts Plugin Pro is activated.
  */
 function ogf_is_fpp_activated() {
-	return function_exists( 'fonts_plugin_pro_init' );
+	return function_exists( 'fonts_plugin_pro_init' ) && ogf_is_pro_active();
 }
