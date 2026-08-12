@@ -3,8 +3,8 @@ Contributors: DannyCooper, googlefonts, fontsplugin
 Tags: google fonts, fonts, typography, adobe fonts, custom fonts
 Donate link: https://fontsplugin.com/#pricing
 Requires at least: 4.0
-Tested up to: 6.9
-Stable tag: 4.2.0
+Tested up to: 7.0
+Stable tag: 4.2.1
 License: GPLv2 or later
 
 The #1 fonts plugin for WordPress. 1,400+ Google Fonts, Adobe Fonts and your own font files. Live preview, no code required.

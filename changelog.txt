@@ -1,3 +1,7 @@
+= 4.2.1 =
+
+* Tested with WP7.0
+
 = 4.2.0 =
 
 * New interface
