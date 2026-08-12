@@ -82,6 +82,9 @@ class Olympus_Google_Fonts {
 		// Welcome notice class.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-welcome.php';
 
+		// Disable WordPress core Font Library UI.
+		require_once OGF_DIR_PATH . 'includes/class-ogf-font-library.php';
+
 		// Reset class.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-reset.php';
 		require_once OGF_DIR_PATH . 'includes/class-ogf-clear-cache.php';

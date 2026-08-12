@@ -84,7 +84,6 @@ class OGF_Welcome_Screen {
 				array(
 					'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
 					'nonce'      => wp_create_nonce( 'ogf_admin_nonce' ),
-					'isPro'      => ogf_is_pro_active(),
 					'upgradeUrl' => 'https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=admin_page',
 					'i18n'       => array(
 						'saved'             => __( 'Settings saved.', 'olympus-google-fonts' ),
@@ -98,7 +97,6 @@ class OGF_Welcome_Screen {
 						'deleteFontConfirm' => __( 'Delete this font variant? This cannot be undone.', 'olympus-google-fonts' ),
 						'selectFontFile'    => __( 'Select a font file', 'olympus-google-fonts' ),
 						'useFontFile'       => __( 'Use this file', 'olympus-google-fonts' ),
-						'tokenSaved'        => __( 'API token saved.', 'olympus-google-fonts' ),
 						'kitUpdated'        => __( 'Kit updated.', 'olympus-google-fonts' ),
 						'enableKit'         => __( 'Enable', 'olympus-google-fonts' ),
 						'disableKit'        => __( 'Disable', 'olympus-google-fonts' ),

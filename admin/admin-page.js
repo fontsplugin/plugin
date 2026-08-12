@@ -12,54 +12,28 @@
 ( function() {
 	'use strict';
 
-	var ajaxPost  = window.Plinth.ajaxPost;
+	var ogfConfig = window.ogfAdmin || {};
 	var showToast = window.Plinth.showToast;
 
-	/* ---------------------------------------------------------------
-	 * Setting toggles (OGF-specific: saves via ogf_save_settings)
-	 * ------------------------------------------------------------- */
-	function initToggles() {
-		document.querySelectorAll( '.ogf-setting-row .ogf-toggle' ).forEach( function( toggle ) {
-			toggle.addEventListener( 'click', function() {
-				if ( toggle.classList.contains( 'disabled' ) ) {
-					return;
-				}
+	// Local AJAX wrapper that uses the OGF nonce (ogf_admin_nonce), not the
+	// Plinth nonce (fonts-plugin_plinth_nonce). Font-row toggles and other
+	// domain-specific handlers verify the OGF nonce on the server side.
+	// Settings tab toggles use Plinth's own ajaxPost with its own nonce.
+	function ajaxPost( action, data ) {
+		var formData = new FormData();
+		formData.append( 'action', action );
+		formData.append( '_ajax_nonce', ogfConfig.nonce );
 
-				toggle.classList.toggle( 'on' );
-
-				var setting = toggle.getAttribute( 'data-setting' );
-				var value   = toggle.classList.contains( 'on' ) ? 1 : 0;
-
-				ajaxPost( 'ogf_save_settings', { setting: setting, value: value } )
-					.then( function( response ) {
-						if ( ! response.success ) {
-							throw new Error( 'Could not save setting' );
-						}
-						syncFontToggles( setting, value );
-						showToast( ogfAdmin.i18n.saved );
-					} )
-					.catch( function() {
-						showToast( ogfAdmin.i18n.error );
-					} );
-			} );
+		Object.keys( data ).forEach( function( key ) {
+			formData.append( key, data[ key ] );
 		} );
-	}
 
-	/* ---------------------------------------------------------------
-	 * Setting selects (OGF-specific: saves via ogf_save_settings)
-	 * ------------------------------------------------------------- */
-	function initSelects() {
-		document.querySelectorAll( '.ogf-setting-select[data-setting]' ).forEach( function( select ) {
-			select.addEventListener( 'change', function() {
-				ajaxPost( 'ogf_save_settings', {
-					setting: select.getAttribute( 'data-setting' ),
-					value: select.value,
-				} ).then( function() {
-					showToast( ogfAdmin.i18n.saved );
-				} ).catch( function() {
-					showToast( ogfAdmin.i18n.error );
-				} );
-			} );
+		return fetch( ogfConfig.ajaxUrl, {
+			method: 'POST',
+			credentials: 'same-origin',
+			body: formData,
+		} ).then( function( response ) {
+			return response.json();
 		} );
 	}
 
@@ -135,15 +109,6 @@
 			} );
 		} );
 
-		document.querySelectorAll( '.ogf-setting-row .ogf-toggle.disabled' ).forEach( function( toggle ) {
-			toggle.addEventListener( 'click', function() {
-				openProModal(
-					toggle.getAttribute( 'data-feature' ) || 'Pro Feature',
-					toggle.getAttribute( 'data-desc' ) || ''
-				);
-			} );
-		} );
-
 		document.querySelectorAll( '.ogf-font-toggle-group[data-pro-toggle]' ).forEach( function( group ) {
 			var toggle = group.querySelector( '.ogf-toggle-sm' );
 			if ( toggle ) {
@@ -180,7 +145,7 @@
 	function initFontRows() {
 		document.querySelectorAll( '.ogf-font-row-header' ).forEach( function( header ) {
 			header.addEventListener( 'click', function( e ) {
-				if ( e.target.closest( '.ogf-toggle, .ogf-toggle-sm, .ogf-toggle-xs' ) ) {
+				if ( e.target.closest( '.ogf-toggle-sm, .ogf-toggle-xs' ) ) {
 					return;
 				}
 				header.closest( '.ogf-font-row' ).classList.toggle( 'open' );
@@ -345,18 +310,18 @@
 			return '';
 		}
 
-		panel.querySelectorAll( '.ogf-card' ).forEach( function( card ) {
-			var rows = card.querySelectorAll( '.ogf-diag-item' );
+		panel.querySelectorAll( '.pln-card' ).forEach( function( card ) {
+			var rows = card.querySelectorAll( '.pln-diag__item' );
 			if ( ! rows.length ) {
 				return;
 			}
 
-			var heading = card.querySelector( '.ogf-card-header' );
+			var heading = card.querySelector( '.pln-card__header' );
 			lines.push( '## ' + ( heading ? heading.textContent.trim() : '' ) );
 
 			rows.forEach( function( row ) {
-				var key = row.querySelector( '.ogf-diag-key' );
-				var val = row.querySelector( '.ogf-diag-val, .ogf-diag-status' );
+				var key = row.querySelector( '.pln-diag__key' );
+				var val = row.querySelector( '.pln-diag__val, .pln-diag__status' );
 				if ( key && val ) {
 					lines.push( key.textContent.trim() + ': ' + val.textContent.trim() );
 				}
@@ -662,13 +627,11 @@
 	 * Boot
 	 * ------------------------------------------------------------- */
 	document.addEventListener( 'DOMContentLoaded', function() {
-		initToggles();
 		initProModal();
 		initFontRows();
 		initFontToggles();
 		initFontLoading();
 		initDiagnostics();
-		initSelects();
 		initCustomFonts();
 		initTypekit();
 		initCopyDiagnostics();

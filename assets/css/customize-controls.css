@@ -837,21 +837,58 @@
 
 .ogf-upsell {
 	background: white;
-	padding: 25px;
+	padding: 20px;
 	margin-top: 25px;
-	box-shadow: 0px 2px 6px 2px #00000017;
-	border-top: 2px solid #bd3737;
+	border-radius: 4px;
+	border: 1px solid #dcdcde;
+	border-top: 3px solid #bd3737;
 }
 
 .upsell__title {
-	margin-top: 0;
-	font-size: 14px;
+	margin: 0 0 12px;
+	font-size: 13px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	text-transform: uppercase;
+	color: #1d2327;
+}
+
+.upsell__list {
+	margin: 0 0 16px;
+	padding: 0;
+	list-style: none;
+}
+
+.upsell__list li {
+	position: relative;
+	padding-left: 20px;
+	margin-bottom: 6px;
+	font-size: 13px;
+	color: #50575e;
+	line-height: 1.5;
+}
+
+.upsell__list li::before {
+	content: "\2713";
+	position: absolute;
+	left: 0;
+	color: #bd3737;
+	font-weight: 700;
 }
 
 .upsell__button {
-	margin-top: 1em !important;
+	display: inline-block;
 	background: #bd3737 !important;
-  border-color: #bd3737 !important;
+	border-color: #a33030 !important;
+	border-radius: 4px !important;
+	font-size: 13px !important;
+	font-weight: 500 !important;
+	text-decoration: none !important;
+}
+
+.upsell__button:hover,
+.upsell__button:focus {
+	background: #a33030 !important;
 }
 
 /** Customizer Icon **/

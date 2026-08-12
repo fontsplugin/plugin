@@ -1,5 +1,9 @@
 /* ==========================================================================
    Fonts Plugin — Admin Page Styles (olympus-google-fonts)
+
+   Generic shell, card, stats, recommendation, diagnostics, settings-row,
+   button, and toast styles live in plinth.css.  This file keeps only the
+   OGF brand tokens and domain-specific UI components.
    ========================================================================== */
 
 /* --- 1. Design Tokens --- */
@@ -9,6 +13,7 @@
   --ogf-card: #fff;
   --ogf-card-border: #e0e1e3;
   --ogf-brand: #bd3737;
+  --pln-toggle-on: var(--ogf-brand);
   --ogf-brand-light: #f9eeee;
   --ogf-brand-hover: #a52f2f;
   --ogf-text-1: #1d2327;
@@ -30,380 +35,21 @@
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
-/*
- * No prefers-color-scheme override: wp-admin does not follow the OS colour
- * scheme, so a dark palette here would put dark cards and light text on the
- * light admin chrome.
- */
-
-/* --- 2. Page Layout --- */
-
-/* Scoped reset so admin defaults don't fight the component spacing below. */
-.pln-wrap,
-.pln-wrap *,
-.pln-wrap *::before,
-.pln-wrap *::after {
-  box-sizing: border-box;
-}
-/*
- * :where() keeps the reset at zero specificity so component rules below always
- * win. Without it `.pln-wrap li` (0,1,1) would beat `.ogf-diag-item` (0,1,0)
- * and silently strip the padding off list-based rows.
- */
-.pln-wrap :where(h1, h2, h3, h4, p, ul, li, dl, dd) {
-  margin: 0;
-  padding: 0;
-}
-.pln-wrap :where(ul) {
-  list-style: none;
-}
-
-/*
- * This stylesheet only loads on the plugin's own screen, so hiding the admin
- * footer and notices here does not affect the rest of wp-admin. The footer
- * rule frees the 65px that #wpbody-content reserves for it, letting the
- * layout reach the bottom.
- */
-#wpfooter { display: none; }
-
-#wpbody-content > .notice,
-#wpbody-content > .update-nag {
-  display: none;
-}
-
-/*
- * Full-bleed two-column shell. The negative margins cancel wp-admin's padding
- * on #wpcontent and #wpbody-content so the nav sits flush against the
- * WordPress menu and the columns run to the edges.
- */
-.pln-wrap {
-  display: flex;
-  align-items: stretch;
-  margin: 0 0 -65px -20px;
-  min-height: calc(100vh - 32px);
-  font-family: var(--ogf-font);
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--ogf-text-1);
-  -webkit-font-smoothing: antialiased;
-}
-
-/* --- 3. Section Navigation --- */
-
-.ogf-nav {
-  width: 214px;
-  flex: 0 0 214px;
-  background: var(--ogf-card);
-  border-right: 1px solid var(--ogf-card-border);
-  display: flex;
-  flex-direction: column;
-  /* Sticks below the admin bar so the nav and its help box stay reachable on
-     long pages instead of scrolling away with the content. */
-  position: sticky;
-  top: 32px;
-  align-self: flex-start;
-  height: calc(100vh - 32px);
-  overflow-y: auto;
-}
-.ogf-nav-head {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 18px 18px 16px;
-  border-bottom: 1px solid var(--ogf-card-border);
-}
-.ogf-nav-icon {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  border-radius: 9px;
-  overflow: hidden;
-}
-.ogf-nav-icon img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.ogf-nav-id { min-width: 0; }
-.ogf-nav-name {
-  display: block;
-  font-size: 14px;
-  font-weight: 650;
-  line-height: 1.25;
-  color: var(--ogf-text-1);
-}
-.ogf-nav-version {
-  display: block;
-  font-size: 11px;
-  color: var(--ogf-text-3);
-  font-variant-numeric: tabular-nums;
-}
-
-.ogf-nav-list { flex: 1; padding: 14px 10px; }
-.ogf-nav-group {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--ogf-text-4);
-  padding: 0 8px;
-  margin: 14px 0 5px;
-}
-.ogf-nav-list > .ogf-nav-group:first-child { margin-top: 0; }
-.ogf-nav-rule {
-  height: 1px;
-  background: var(--ogf-card-border);
-  margin: 14px 8px;
-}
-.ogf-nav-item {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  width: 100%;
-  appearance: none;
-  -webkit-appearance: none;
-  border: none;
-  background: none;
-  border-radius: 6px;
-  padding: 7px 8px;
-  font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 500;
-  color: var(--ogf-text-2);
-  text-align: left;
-  cursor: pointer;
-  transition: background 0.12s, color 0.12s;
-}
-.ogf-nav-item svg { flex-shrink: 0; }
-.ogf-nav-label { min-width: 0; }
-.ogf-nav-item:hover { background: var(--ogf-surface); color: var(--ogf-text-1); }
-/* Replace the admin's default button focus ring, don't just remove it. */
-.ogf-nav-item:focus { outline: none; box-shadow: none; }
-.ogf-nav-item:focus-visible {
-  outline: 2px solid var(--ogf-brand);
-  outline-offset: -2px;
-  color: var(--ogf-text-1);
-}
-.ogf-nav-item.active {
-  background: var(--ogf-brand-light);
-  color: var(--ogf-brand);
-  font-weight: 600;
-}
-.ogf-nav-count {
-  margin-left: auto;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--ogf-text-4);
-  font-variant-numeric: tabular-nums;
-}
-.ogf-nav-item.active .ogf-nav-count { color: var(--ogf-brand); }
-
-.ogf-nav-foot { padding: 14px; border-top: 1px solid var(--ogf-card-border); }
-.ogf-help {
-  background: var(--ogf-surface);
-  border-radius: 7px;
-  padding: 12px;
-  font-size: 12px;
-  line-height: 1.5;
-  color: var(--ogf-text-2);
-}
-.ogf-help strong {
-  display: block;
-  font-size: 12.5px;
-  color: var(--ogf-text-1);
-  margin-bottom: 3px;
-}
-.ogf-help a { color: var(--ogf-blue); }
-
-/* --- 4. Content Column --- */
-
-.ogf-main {
-  flex: 1;
-  min-width: 0;
-  max-width: 840px;
-  padding: 28px 28px 48px;
-}
-.ogf-page-title {
-  font-size: 21px;
-  font-weight: 650;
-  line-height: 1.3;
-  letter-spacing: -0.018em;
-  color: var(--ogf-text-1);
-  margin-bottom: 5px;
-  padding: 0;
-}
-.ogf-page-sub {
-  font-size: 13.5px;
-  color: var(--ogf-text-2);
-  margin-bottom: 22px;
-  max-width: 68ch;
-}
-
-.ogf-tab-panel { display: none; }
-.ogf-tab-panel.active { display: block; }
-
-/* --- 5. Cards --- */
-
-.ogf-card {
-  background: var(--ogf-card);
-  border: 1px solid var(--ogf-card-border);
-  border-radius: var(--ogf-radius);
-  box-shadow: var(--ogf-shadow-sm);
-}
-.ogf-card + .ogf-card { margin-top: 16px; }
-.ogf-card-header {
-  padding: 18px 22px;
-  border-bottom: 1px solid var(--ogf-card-border);
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--ogf-text-1);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-.ogf-card-header-meta {
-  font-weight: 400;
-  font-size: 12px;
-  color: var(--ogf-text-3);
-}
-.ogf-card-body { padding: 22px; }
-.ogf-card-body p {
-  font-size: 13px;
-  color: var(--ogf-text-2);
-}
-
-/* --- 6. Stats Grid --- */
-
-.ogf-stats-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
-  margin-bottom: 16px;
-}
-.ogf-stat-card {
-  background: var(--ogf-card);
-  border: 1px solid var(--ogf-card-border);
-  border-radius: var(--ogf-radius);
-  padding: 20px 22px;
-  box-shadow: var(--ogf-shadow-sm);
-}
-.ogf-stat-label {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ogf-text-3);
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  margin-bottom: 6px;
-}
-.ogf-stat-value {
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--ogf-text-1);
-  letter-spacing: -0.02em;
-  font-variant-numeric: tabular-nums;
-}
-.ogf-stat-value-sm {
-  font-size: 20px;
-  padding-top: 4px;
-}
-.ogf-stat-meta {
-  font-size: 12px;
-  color: var(--ogf-text-3);
-  margin-top: 4px;
-}
-
-/* --- 7. Recommendations --- */
-
-.ogf-rec-row {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 14px 22px;
-  border-bottom: 1px solid var(--ogf-card-border);
-}
-.ogf-rec-row:last-child { border-bottom: none; }
-.ogf-rec-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-}
-.ogf-rec-low .ogf-rec-icon    { background: var(--ogf-green-light);  color: var(--ogf-green); }
-.ogf-rec-medium .ogf-rec-icon { background: var(--ogf-orange-light); color: var(--ogf-orange); }
-.ogf-rec-high .ogf-rec-icon   { background: var(--ogf-brand-light);  color: var(--ogf-brand); }
-.ogf-rec-info { flex: 1; min-width: 0; }
-.ogf-rec-title {
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ogf-text-1);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-.ogf-rec-desc {
-  font-size: 12px;
-  color: var(--ogf-text-3);
-  margin-top: 2px;
-  line-height: 1.5;
-}
-.ogf-rec-action {
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--ogf-brand);
-  background: none;
-  text-decoration: none;
-  border: 1px solid var(--ogf-brand);
-  border-radius: 5px;
-  padding: 4px 12px;
-  flex-shrink: 0;
-  align-self: center;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-.ogf-rec-action:hover { background: var(--ogf-brand); color: #fff; }
-
-/* --- 8. Quick Actions --- */
-
-.ogf-actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
-.ogf-action-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ogf-text-2);
-  background: var(--ogf-card);
-  border: 1px solid var(--ogf-border);
-  border-radius: 6px;
-  padding: 9px 16px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.15s, color 0.15s;
-}
-.ogf-action-btn:hover {
-  border-color: var(--ogf-brand);
-  color: var(--ogf-brand);
-}
-.ogf-action-btn svg { flex-shrink: 0; }
-
-/* --- 8b. Quickstart Guide --- */
+/* --- 2. Quickstart Guide --- */
 
 .ogf-guide-card {
   margin-top: 0;
   max-width: 760px;
 }
-.ogf-guide-card .ogf-card-body {
+.ogf-guide-card .pln-card__body {
   padding: 48px;
 }
 .ogf-guide-card .ogf-page-title {
+  font-size: 21px;
+  font-weight: 650;
+  line-height: 1.3;
+  letter-spacing: -0.018em;
+  color: var(--ogf-text-1);
   margin-bottom: 1rem;
 }
 .ogf-guide-layout {
@@ -476,7 +122,7 @@
   flex-shrink: 0;
 }
 
-/* --- 9. Pro CTA --- */
+/* --- 3. Pro CTA --- */
 
 .ogf-pro-cta {
   background: var(--ogf-brand-light);
@@ -531,37 +177,7 @@
 .ogf-btn-pro:hover { background: var(--ogf-brand-hover); color: #fff; }
 .ogf-btn-pro:focus { color: #fff; }
 
-/* --- 10. Toggle Switches --- */
-
-.ogf-toggle {
-  position: relative;
-  width: 44px;
-  height: 24px;
-  background: var(--ogf-toggle-track);
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  flex-shrink: 0;
-  padding: 0;
-  appearance: none;
-  -webkit-appearance: none;
-  transition: background 0.2s;
-}
-.ogf-toggle::after {
-  content: "";
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  width: 18px;
-  height: 18px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s;
-}
-.ogf-toggle.on { background: var(--ogf-brand); }
-.ogf-toggle.on::after { transform: translateX(20px); }
-.ogf-toggle.disabled { opacity: 0.45; cursor: not-allowed; }
+/* --- 4. Toggle Switches --- */
 
 .ogf-toggle-sm {
   position: relative;
@@ -623,38 +239,8 @@
 .ogf-toggle-xs.on::after { transform: translateX(14px); }
 .ogf-toggle-xs.disabled { opacity: 0.45; cursor: not-allowed; }
 
-/* --- 11. Settings Rows --- */
+/* --- 5. Settings (OGF-specific) --- */
 
-.ogf-setting-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 18px 22px;
-  border-bottom: 1px solid var(--ogf-card-border);
-}
-.ogf-setting-row:last-child { border-bottom: none; }
-.ogf-setting-info { flex: 1; min-width: 0; }
-.ogf-setting-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--ogf-text-1);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.ogf-setting-desc {
-  font-size: 12px;
-  color: var(--ogf-text-3);
-  margin-top: 3px;
-}
-.ogf-setting-control {
-  padding-top: 2px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
 .ogf-pro-badge {
   display: inline-flex;
   align-items: center;
@@ -691,17 +277,7 @@
   box-shadow: 0 0 0 1px var(--ogf-brand);
 }
 
-.ogf-section-label {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ogf-text-3);
-  padding: 14px 22px 6px;
-  border-bottom: 1px solid var(--ogf-card-border);
-}
-
-/* --- 12. Font Rows (Fonts Tab) --- */
+/* --- 6. Font Rows (Active Fonts Tab) --- */
 
 .ogf-font-row {
   border-bottom: 1px solid var(--ogf-card-border);
@@ -818,7 +394,7 @@
   padding: 1px 7px;
 }
 
-/* --- 13. Font Loading Tab --- */
+/* --- 7. Font Loading Tab --- */
 
 .ogf-fl-card {
   background: var(--ogf-card);
@@ -878,7 +454,7 @@
   gap: 6px;
 }
 
-/* --- 14. Upload Tab --- */
+/* --- 8. Upload Tab --- */
 
 .ogf-uploaded-font-row {
   display: flex;
@@ -911,7 +487,7 @@
 .ogf-cf-btn.ogf-cf-delete:hover { background: var(--ogf-brand-light); color: var(--ogf-brand-hover); }
 .ogf-cf-btn[disabled] { opacity: 0.5; cursor: default; }
 
-/* --- 14b. Custom Font Form --- */
+/* --- 8b. Custom Font Form --- */
 
 .ogf-cf-edit-panel { display: none; }
 .ogf-cf-edit-panel.open {
@@ -965,7 +541,7 @@
 .ogf-field-select { width: 100%; padding-top: 8px; padding-bottom: 8px; }
 .ogf-file-row { display: flex; gap: 8px; }
 .ogf-file-row .ogf-input { flex: 1; min-width: 0; }
-.ogf-file-row .ogf-btn-outline { flex-shrink: 0; }
+.ogf-file-row .pln-btn--outline { flex-shrink: 0; }
 
 .ogf-cf-form-actions {
   display: flex;
@@ -975,12 +551,10 @@
 }
 .ogf-cf-form-actions button[disabled] { opacity: 0.6; cursor: default; }
 
-/* --- 15b. Adobe kit actions --- */
+/* --- 9. Adobe Fonts Tab --- */
 
 .ogf-tk-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .ogf-tk-actions button[disabled] { opacity: 0.6; cursor: default; }
-
-/* --- 15. Adobe Fonts Tab --- */
 
 .ogf-adobe-input-group {
   display: flex;
@@ -1004,6 +578,14 @@
 }
 .ogf-tk-link { font-size: 12px; color: var(--ogf-blue); text-decoration: none; }
 .ogf-tk-link:hover { text-decoration: underline; }
+
+.ogf-adobe-intro { margin-bottom: 14px; }
+
+.ogf-upload-intro { margin-bottom: 18px; }
+
+.ogf-diag-intro { margin-bottom: 14px; }
+
+.ogf-card--spaced { margin-top: 16px; }
 
 .ogf-adobe-kit-card {
   display: flex;
@@ -1041,89 +623,7 @@
 }
 .ogf-adobe-font-row:last-child { border-bottom: none; }
 
-/* --- 16. Diagnostics Tab --- */
-
-.ogf-diag-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-/* Grid gap already separates these, so cancel the stacked-card margin —
-   otherwise the second card sits 16px lower than the first. */
-.ogf-diag-grid > .ogf-card + .ogf-card { margin-top: 0; }
-
-/* Rows run the full width of the card, matching every other list on the page. */
-.ogf-diag-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 22px;
-  border-bottom: 1px solid var(--ogf-card-border);
-  font-size: 13px;
-}
-.ogf-diag-item:last-child { border-bottom: none; }
-.ogf-diag-key { color: var(--ogf-text-2); }
-.ogf-diag-val {
-  font-weight: 500;
-  color: var(--ogf-text-1);
-  text-align: right;
-  word-break: break-word;
-  font-variant-numeric: tabular-nums;
-}
-.ogf-diag-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  font-weight: 500;
-  padding: 2px 9px;
-  border-radius: 4px;
-  white-space: nowrap;
-}
-.ogf-diag-status.ok   { background: var(--ogf-green-light);  color: var(--ogf-green); }
-.ogf-diag-status.warn { background: var(--ogf-orange-light); color: var(--ogf-orange); }
-
-.ogf-diag-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-
-/* --- 17. Buttons --- */
-
-.ogf-btn-outline,
-.ogf-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ogf-text-2);
-  background: var(--ogf-card);
-  border: 1px solid var(--ogf-border);
-  border-radius: 6px;
-  padding: 8px 16px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: border-color 0.15s, color 0.15s;
-}
-.ogf-btn-outline:hover,
-.ogf-btn-secondary:hover {
-  border-color: var(--ogf-text-3);
-  color: var(--ogf-text-1);
-}
-.ogf-btn-outline svg,
-.ogf-btn-secondary svg { flex-shrink: 0; }
-
-.ogf-btn-danger {
-  color: var(--ogf-brand);
-  border-color: var(--ogf-brand);
-}
-.ogf-btn-danger:hover {
-  background: var(--ogf-brand-light);
-  border-color: var(--ogf-brand);
-  color: var(--ogf-brand-hover);
-}
-
-/* --- 18. Upgrade Modal --- */
+/* --- 10. Upgrade Modal --- */
 
 .ogf-modal {
   position: fixed;
@@ -1231,81 +731,12 @@
   border-radius: 6px;
 }
 
-/* --- 19. Toast --- */
-
-.ogf-toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 100001;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--ogf-card);
-  background: var(--ogf-text-1);
-  border-radius: 8px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-  transform: translateY(80px);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
-}
-.ogf-toast.visible {
-  transform: translateY(0);
-  opacity: 1;
-  pointer-events: auto;
-}
-.ogf-toast svg { color: var(--ogf-green); flex-shrink: 0; }
-
-/* --- 20. Responsive --- */
-
-@media (max-width: 960px) {
-  /* Sidebar becomes a horizontal strip above the content. */
-  .pln-wrap { display: block; min-height: 0; }
-  .ogf-nav {
-    width: auto;
-    flex: none;
-    height: auto;
-    position: static;
-    overflow: visible;
-    border-right: none;
-    border-bottom: 1px solid var(--ogf-card-border);
-  }
-  .ogf-nav-list {
-    display: flex;
-    gap: 4px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding: 10px 12px;
-  }
-  .ogf-nav-list::-webkit-scrollbar { display: none; }
-  .ogf-nav-item { width: auto; white-space: nowrap; }
-  .ogf-nav-group,
-  .ogf-nav-rule,
-  .ogf-nav-foot { display: none; }
-  .ogf-nav-count { margin-left: 2px; }
-  .ogf-main { padding: 20px 16px 40px; }
-}
+/* --- 11. Responsive --- */
 
 @media (max-width: 782px) {
-  .ogf-stats-grid,
-  .ogf-diag-grid,
   .ogf-fl-grid { grid-template-columns: 1fr; }
   .ogf-font-meta { gap: 10px; }
   .ogf-font-row-header { padding: 12px 16px; }
-  .ogf-setting-row { padding: 14px 16px; }
-  .ogf-card-body { padding: 16px; }
-  .ogf-card-header { padding: 16px; }
-  .ogf-section-label { padding: 14px 16px 6px; }
-  .ogf-rec-row { padding: 14px 16px; }
-  .ogf-diag-item { padding: 12px 16px; }
-  .ogf-font-details { padding-left: 36px; }
-  .ogf-actions-row { flex-direction: column; }
-  .ogf-action-btn { justify-content: center; }
   .ogf-adobe-input-group { flex-direction: column; }
   .ogf-field-grid { grid-template-columns: 1fr; gap: 0; }
   .ogf-cf-edit-panel.open { padding: 4px 16px 16px; }
@@ -1319,9 +750,6 @@
 }
 
 @media (max-width: 480px) {
-  .ogf-main { padding: 16px 12px 36px; }
-  .ogf-stat-value { font-size: 22px; }
   .ogf-font-meta { flex-wrap: wrap; gap: 6px; }
   .ogf-modal-card { width: 95%; }
-  .ogf-toast { left: 12px; right: 12px; bottom: 12px; }
 }

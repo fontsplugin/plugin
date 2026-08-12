@@ -1,53 +1,124 @@
 <?php
+/**
+ * Plinth Components — static helper methods for common UI elements.
+ *
+ * Each method outputs HTML directly. Use these inside tab callbacks to
+ * build cards, stat grids, diagnostics tables, and recommendation rows
+ * with consistent markup and BEM class names.
+ *
+ * @package Plinth
+ */
 
 namespace Plinth;
 
+/**
+ * Static helper methods for common UI elements.
+ */
 class Components {
 
+	/**
+	 * Render a page header with title and optional description.
+	 *
+	 * @param string $title       Page title.
+	 * @param string $description Optional subtitle text.
+	 * @return void
+	 */
 	public static function panel_header( $title, $description = '' ) {
 		?>
-		<h1 class="pln-page-title"><?php echo esc_html( $title ); ?></h1>
+		<h1 class="pln-page__title"><?php echo esc_html( $title ); ?></h1>
 		<?php if ( $description ) : ?>
-			<p class="pln-page-sub"><?php echo esc_html( $description ); ?></p>
+			<p class="pln-page__sub"><?php echo esc_html( $description ); ?></p>
 		<?php endif; ?>
 		<?php
 	}
 
+	/**
+	 * Render a stat card with label, value, and optional meta text.
+	 *
+	 * @param string $label Stat label.
+	 * @param string $value Stat value.
+	 * @param string $meta  Optional meta text below the value.
+	 * @return void
+	 */
 	public static function stat_card( $label, $value, $meta = '' ) {
 		?>
-		<div class="pln-stat-card">
-			<div class="pln-stat-label"><?php echo esc_html( $label ); ?></div>
-			<div class="pln-stat-value"><?php echo esc_html( $value ); ?></div>
+		<div class="pln-stat">
+			<div class="pln-stat__label"><?php echo esc_html( $label ); ?></div>
+			<div class="pln-stat__value"><?php echo esc_html( $value ); ?></div>
 			<?php if ( $meta ) : ?>
-				<div class="pln-stat-meta"><?php echo esc_html( $meta ); ?></div>
+				<div class="pln-stat__meta"><?php echo esc_html( $meta ); ?></div>
 			<?php endif; ?>
 		</div>
 		<?php
 	}
 
-	public static function card( $title, $content = null, $header_meta = '' ) {
-		echo '<div class="pln-card">';
+	/**
+	 * Render a card with optional title and body content.
+	 *
+	 * @param string               $title   Card title, or empty to omit the header.
+	 * @param callable|string|null $content Callback or HTML string for the body, or null.
+	 * @param array|string         $options Header meta string, or options array:
+	 *                                    - header_meta (string)
+	 *                                    - wrap_body (bool) Wrap content in pln-card__body. Default true.
+	 *                                    - class (string) Extra classes on the card element.
+	 * @return void
+	 */
+	public static function card( $title, $content = null, $options = '' ) {
+		if ( is_string( $options ) ) {
+			$options = array( 'header_meta' => $options );
+		} elseif ( ! is_array( $options ) ) {
+			$options = array();
+		}
+
+		$options = array_merge(
+			array(
+				'header_meta' => '',
+				'wrap_body'   => true,
+				'class'       => '',
+			),
+			$options
+		);
+
+		$class = 'pln-card';
+		if ( $options['class'] ) {
+			$class .= ' ' . $options['class'];
+		}
+
+		echo '<div class="' . esc_attr( trim( $class ) ) . '">';
 
 		if ( $title ) {
-			echo '<div class="pln-card-header">';
+			echo '<div class="pln-card__header">';
 			echo esc_html( $title );
-			if ( $header_meta ) {
-				echo '<span class="pln-card-header-meta">' . esc_html( $header_meta ) . '</span>';
+			if ( $options['header_meta'] ) {
+				echo '<span class="pln-card__header-meta">' . esc_html( $options['header_meta'] ) . '</span>';
 			}
 			echo '</div>';
 		}
 
 		if ( is_callable( $content ) ) {
-			echo '<div class="pln-card-body">';
-			call_user_func( $content );
-			echo '</div>';
+			if ( $options['wrap_body'] ) {
+				echo '<div class="pln-card__body">';
+				call_user_func( $content );
+				echo '</div>';
+			} else {
+				call_user_func( $content );
+			}
 		} elseif ( is_string( $content ) ) {
-			echo '<div class="pln-card-body">' . wp_kses_post( $content ) . '</div>';
+			if ( $options['wrap_body'] ) {
+				echo '<div class="pln-card__body">' . wp_kses_post( $content ) . '</div>';
+			} else {
+				echo wp_kses_post( $content );
+			}
 		}
+
+		echo '</div>';
 	}
 
+	/**
+	 * @deprecated Cards auto-close since Plinth 0.1. No longer needed.
+	 * @return void
+	 */
 	public static function card_close() {
-		echo '</div>';
 	}
 
 	/**
@@ -59,6 +130,7 @@ class Components {
 	 * @param string $desc       Row description.
 	 * @param string $action     Action button HTML (pre-escaped), or empty for no action.
 	 * @param string $badge_html Optional badge HTML to append after the title (e.g. PRO badge).
+	 * @return void
 	 */
 	public static function recommendation_row( $severity, $icon, $title, $desc, $action = '', $badge_html = '' ) {
 		$valid = array( 'low', 'medium', 'high' );
@@ -76,8 +148,8 @@ class Components {
 			$icon = $icon_map[ $severity ];
 		}
 		?>
-		<div class="pln-rec-row pln-rec-<?php echo esc_attr( $severity ); ?>">
-			<div class="pln-rec-icon">
+		<div class="pln-rec pln-rec-<?php echo esc_attr( $severity ); ?>">
+			<div class="pln-rec__icon">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
 					<?php
 					$paths = array(
@@ -93,8 +165,8 @@ class Components {
 					?>
 				</svg>
 			</div>
-			<div class="pln-rec-info">
-				<div class="pln-rec-title">
+			<div class="pln-rec__info">
+				<div class="pln-rec__title">
 					<?php echo esc_html( $title ); ?>
 					<?php
 					if ( $badge_html ) {
@@ -102,7 +174,7 @@ class Components {
 					}
 					?>
 				</div>
-				<div class="pln-rec-desc"><?php echo esc_html( $desc ); ?></div>
+				<div class="pln-rec__desc"><?php echo esc_html( $desc ); ?></div>
 			</div>
 			<?php if ( $action ) : ?>
 				<?php echo wp_kses_post( $action ); ?>
@@ -111,51 +183,99 @@ class Components {
 		<?php
 	}
 
+	/**
+	 * Render a diagnostics key-value row.
+	 *
+	 * @param string $key   Row label.
+	 * @param string $value Row value.
+	 * @return void
+	 */
 	public static function diagnostics_row( $key, $value ) {
 		?>
-		<li class="pln-diag-item">
-			<span class="pln-diag-key"><?php echo esc_html( $key ); ?></span>
-			<span class="pln-diag-val"><?php echo esc_html( $value ); ?></span>
+		<li class="pln-diag__item">
+			<span class="pln-diag__key"><?php echo esc_html( $key ); ?></span>
+			<span class="pln-diag__val"><?php echo esc_html( $value ); ?></span>
 		</li>
 		<?php
 	}
 
+	/**
+	 * Render a diagnostics status row with ok/warn indicator.
+	 *
+	 * @param string $key   Row label.
+	 * @param string $label Status text.
+	 * @param bool   $ok    True for ok, false for warn.
+	 * @return void
+	 */
 	public static function diagnostics_status( $key, $label, $ok = true ) {
 		?>
-		<li class="pln-diag-item">
-			<span class="pln-diag-key"><?php echo esc_html( $key ); ?></span>
-			<span class="pln-diag-status <?php echo $ok ? 'ok' : 'warn'; ?>"><?php echo esc_html( $label ); ?></span>
+		<li class="pln-diag__item">
+			<span class="pln-diag__key"><?php echo esc_html( $key ); ?></span>
+			<span class="pln-diag__status <?php echo $ok ? 'ok' : 'warn'; ?>"><?php echo esc_html( $label ); ?></span>
 		</li>
 		<?php
 	}
 
+	/**
+	 * Open a stats grid container.
+	 *
+	 * @return void
+	 */
 	public static function stats_grid_open() {
-		echo '<div class="pln-stats-grid">';
+		echo '<div class="pln-stats">';
 	}
 
+	/**
+	 * Close a stats grid container.
+	 *
+	 * @return void
+	 */
 	public static function stats_grid_close() {
 		echo '</div>';
 	}
 
+	/**
+	 * Open a diagnostics grid container.
+	 *
+	 * @return void
+	 */
 	public static function diag_grid_open() {
 		echo '<div class="pln-diag-grid">';
 	}
 
+	/**
+	 * Close a diagnostics grid container.
+	 *
+	 * @return void
+	 */
 	public static function diag_grid_close() {
 		echo '</div>';
 	}
 
+	/**
+	 * Render a section label divider.
+	 *
+	 * @param string $label Section label text.
+	 * @return void
+	 */
 	public static function section_label( $label ) {
-		echo '<div class="pln-section-label">' . esc_html( $label ) . '</div>';
+		echo '<div class="pln-section__label">' . esc_html( $label ) . '</div>';
 	}
 
+	/**
+	 * Render a button element.
+	 *
+	 * @param string $label Button text.
+	 * @param array  $attrs HTML attributes as name => value pairs.
+	 * @return void
+	 */
 	public static function button( $label, $attrs = array() ) {
 		$defaults = array(
 			'type'  => 'button',
-			'class' => 'pln-btn-outline',
+			'class' => 'pln-btn--outline',
 			'id'    => '',
 		);
-		$attrs = array_merge( $defaults, $attrs );
+		$attrs    = array_merge( $defaults, $attrs );
 
 		$attr_str = '';
 		foreach ( $attrs as $name => $val ) {

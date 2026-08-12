@@ -1,13 +1,48 @@
 <?php
+/**
+ * Plinth Shell — WordPress admin page framework.
+ *
+ * Renders a full-page admin UI: sidebar navigation, tab panels, toast
+ * notifications, and optional auto-rendered settings tabs.
+ *
+ * Usage:
+ *   1. Create a Shell with your config (slug, title, tabs, etc.).
+ *   2. Call register_menu() to add the page to the WordPress admin menu.
+ *   3. Define tabs as 'callback' (you render) or 'type' => 'settings'
+ *      (Plinth renders from your definitions).
+ *
+ * CSS class names follow BEM: block, block__element, block--modifier.
+ * All classes use the "pln-" prefix.
+ *
+ * @package Plinth
+ */
 
 namespace Plinth;
 
+/**
+ * Admin page shell with sidebar navigation, tab panels, and toast.
+ */
 class Shell {
 
+	/**
+	 * Merged configuration array.
+	 *
+	 * @var array
+	 */
 	private $config = array();
 
+	/**
+	 * Settings instance for auto-rendered settings tabs.
+	 *
+	 * @var Settings
+	 */
 	private $settings;
 
+	/**
+	 * Built-in SVG icon paths keyed by name.
+	 *
+	 * @var array
+	 */
 	private $icons = array(
 		'check'         => '<polyline points="20 6 9 17 4 12"/>',
 		'package'       => '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/>',
@@ -30,6 +65,13 @@ class Shell {
 		'life-buoy'     => '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M4.93 4.93l4.24 4.24"/><path d="M14.83 14.83l4.24 4.24"/><path d="M14.83 9.17l4.24-4.24"/><path d="M4.93 19.07l4.24-4.24"/>',
 	);
 
+	/**
+	 * Build the admin shell.
+	 *
+	 * @param array $config Shell configuration: slug, title, version, icon, tabs,
+	 *                      default_tab, capability, help, nav_groups, after_tabs,
+	 *                      and an optional pre-built Settings instance.
+	 */
 	public function __construct( array $config ) {
 		$defaults = array(
 			'slug'        => '',
@@ -44,45 +86,82 @@ class Shell {
 			'after_tabs'  => null,
 		);
 
-		$this->config   = array_merge( $defaults, $config );
-		$this->settings = new Settings( $this->config['slug'] );
+		$this->config = array_merge( $defaults, $config );
+
+		// Accept a pre-built Settings instance from the consumer. The consumer
+		// must create Settings early (in its constructor) so the AJAX handler
+		// registers on every admin request. Shell only instantiates on the
+		// plugin page, which is too late for AJAX.
+		if ( isset( $config['settings'] ) && $config['settings'] instanceof Settings ) {
+			$this->settings = $config['settings'];
+		} else {
+			$this->settings = new Settings( $this->config['slug'], $this->config['capability'] );
+		}
 	}
 
+	/**
+	 * Get the Settings instance.
+	 *
+	 * @return Settings
+	 */
 	public function settings() {
 		return $this->settings;
 	}
 
+	/**
+	 * Register setting definitions with the Settings instance.
+	 *
+	 * @param array $definitions Setting definitions keyed by setting name.
+	 * @return void
+	 */
 	public function register_settings( array $definitions ) {
 		$this->settings->register( $definitions );
 	}
 
+	/**
+	 * Add the admin page to the WordPress menu and enqueue assets.
+	 *
+	 * @param string|null $parent Parent menu slug, or null for a top-level page.
+	 * @return void
+	 */
 	public function register_menu( $parent = null ) {
-		add_action( 'admin_menu', function () use ( $parent ) {
-			if ( $parent ) {
-				add_submenu_page(
-					$parent,
-					$this->config['title'],
-					$this->config['title'],
-					$this->config['capability'],
-					$this->config['slug'],
-					array( $this, 'render' )
-				);
-			} else {
-				add_menu_page(
-					$this->config['title'],
-					$this->config['title'],
-					$this->config['capability'],
-					$this->config['slug'],
-					array( $this, 'render' ),
-					$this->config['icon'] ? $this->config['icon'] : 'dashicons-admin-generic'
-				);
+		add_action(
+			'admin_menu',
+			function () use ( $parent ) {
+				if ( $parent ) {
+					add_submenu_page(
+						$parent,
+						$this->config['title'],
+						$this->config['title'],
+						$this->config['capability'],
+						$this->config['slug'],
+						array( $this, 'render' )
+					);
+				} else {
+					add_menu_page(
+						$this->config['title'],
+						$this->config['title'],
+						$this->config['capability'],
+						$this->config['slug'],
+						array( $this, 'render' ),
+						$this->config['icon'] ? $this->config['icon'] : 'dashicons-admin-generic'
+					);
+				}
 			}
-		} );
+		);
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue' ) );
 		$this->settings->register_ajax();
 	}
 
+	/**
+	 * Enqueue Plinth assets. Plinth JS uses its own nonce (slug_plinth_nonce)
+	 * for settings auto-save. The consumer enqueues its own assets and nonce
+	 * separately for domain-specific AJAX actions.
+	 *
+	 * @param string $hook The current admin page hook suffix.
+	 * @return void
+	 */
 	public function enqueue( $hook ) {
 		$slug   = $this->config['slug'];
 		$suffix = $slug;
@@ -108,17 +187,26 @@ class Shell {
 			true
 		);
 
-		wp_localize_script( 'plinth-shell', 'plinthAdmin', array(
-			'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-			'nonce'   => wp_create_nonce( $slug . '_plinth_nonce' ),
-			'slug'    => $slug,
-			'i18n'    => array(
-				'saved' => __( 'Saved', 'plinth' ),
-				'error' => __( 'Something went wrong', 'plinth' ),
-			),
-		) );
+		wp_localize_script(
+			'plinth-shell',
+			'plinthAdmin',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( $slug . '_plinth_nonce' ),
+				'slug'    => $slug,
+				'i18n'    => array(
+					'saved' => __( 'Saved', 'plinth' ),
+					'error' => __( 'Something went wrong', 'plinth' ),
+				),
+			)
+		);
 	}
 
+	/**
+	 * Get the URL to the Plinth lib/ directory.
+	 *
+	 * @return string
+	 */
 	private function get_lib_url() {
 		$lib_dir  = dirname( __DIR__ );
 		$abs_path = wp_normalize_path( ABSPATH );
@@ -128,6 +216,11 @@ class Shell {
 		return site_url( '/' . $relative . '/' );
 	}
 
+	/**
+	 * Render the full admin page: sidebar, tab panels, and toast.
+	 *
+	 * @return void
+	 */
 	public function render() {
 		$tabs        = $this->config['tabs'];
 		$default_tab = $this->config['default_tab'];
@@ -140,19 +233,19 @@ class Shell {
 		?>
 		<div class="pln-wrap" data-default-tab="<?php echo esc_attr( $default_tab ); ?>">
 			<nav class="pln-nav" aria-label="<?php echo esc_attr( $this->config['title'] ); ?>">
-				<div class="pln-nav-head">
+				<div class="pln-nav__head">
 					<?php if ( $this->config['icon'] ) : ?>
-						<div class="pln-nav-icon">
+						<div class="pln-nav__icon">
 							<img src="<?php echo esc_url( $this->config['icon'] ); ?>" alt="" width="34" height="34">
 						</div>
 					<?php endif; ?>
-					<div class="pln-nav-id">
-						<span class="pln-nav-name"><?php echo esc_html( $this->config['title'] ); ?></span>
-						<span class="pln-nav-version">v<?php echo esc_html( $this->config['version'] ); ?></span>
+					<div class="pln-nav__id">
+						<span class="pln-nav__name"><?php echo esc_html( $this->config['title'] ); ?></span>
+						<span class="pln-nav__version">v<?php echo esc_html( $this->config['version'] ); ?></span>
 					</div>
 				</div>
 
-				<div class="pln-nav-list" role="tablist">
+				<div class="pln-nav__list" role="tablist">
 					<?php
 					if ( $nav_groups ) {
 						$this->render_nav_groups( $nav_groups, $default_tab );
@@ -163,7 +256,7 @@ class Shell {
 				</div>
 
 				<?php if ( $this->config['help'] ) : ?>
-					<div class="pln-nav-foot">
+					<div class="pln-nav__foot">
 						<div class="pln-help">
 							<?php echo wp_kses_post( $this->config['help'] ); ?>
 						</div>
@@ -202,21 +295,28 @@ class Shell {
 
 			<div id="pln-toast" class="pln-toast">
 				<?php $this->icon( 'check', 16, 2.5 ); ?>
-				<span id="pln-toast-msg"></span>
+				<span id="pln-toast__msg"></span>
 			</div>
 		</div>
 		<?php
 	}
 
+	/**
+	 * Render grouped navigation items with optional labels and dividers.
+	 *
+	 * @param array  $groups      Array of group arrays with 'group' and 'items' keys.
+	 * @param string $default_tab Slug of the default active tab.
+	 * @return void
+	 */
 	private function render_nav_groups( array $groups, $default_tab ) {
 		foreach ( $groups as $index => $group ) {
 			$label = isset( $group['group'] ) ? $group['group'] : null;
 			$items = isset( $group['items'] ) ? $group['items'] : array();
 
 			if ( $label ) {
-				echo '<div class="pln-nav-group">' . esc_html( $label ) . '</div>';
+				echo '<div class="pln-nav__group">' . esc_html( $label ) . '</div>';
 			} elseif ( $index > 0 ) {
-				echo '<div class="pln-nav-rule"></div>';
+				echo '<div class="pln-nav__rule"></div>';
 			}
 
 			foreach ( $items as $item ) {
@@ -225,6 +325,13 @@ class Shell {
 		}
 	}
 
+	/**
+	 * Render a flat list of navigation items from the tabs config.
+	 *
+	 * @param array  $tabs        Tabs configuration keyed by slug.
+	 * @param string $default_tab Slug of the default active tab.
+	 * @return void
+	 */
 	private function render_nav_flat( array $tabs, $default_tab ) {
 		foreach ( $tabs as $slug => $tab ) {
 			$this->render_nav_item(
@@ -239,23 +346,39 @@ class Shell {
 		}
 	}
 
+	/**
+	 * Render a single navigation button.
+	 *
+	 * @param array  $item        Item array: [ slug, label, icon, count ].
+	 * @param string $default_tab Slug of the default active tab.
+	 * @return void
+	 */
 	private function render_nav_item( array $item, $default_tab ) {
 		list( $slug, $label, $icon, $count ) = array_pad( $item, 4, null );
 		?>
-		<button class="pln-nav-item<?php echo $default_tab === $slug ? ' active' : ''; ?>" role="tab" data-tab="<?php echo esc_attr( $slug ); ?>">
+		<button class="pln-nav__item<?php echo $default_tab === $slug ? ' active' : ''; ?>" role="tab" data-tab="<?php echo esc_attr( $slug ); ?>">
 			<?php
 			if ( $icon ) {
 				$this->icon( $icon, 15 );
 			}
 			?>
-			<span class="pln-nav-label"><?php echo esc_html( $label ); ?></span>
+			<span class="pln-nav__label"><?php echo esc_html( $label ); ?></span>
 			<?php if ( $count ) : ?>
-				<span class="pln-nav-count"><?php echo esc_html( $count ); ?></span>
+				<span class="pln-nav__count"><?php echo esc_html( $count ); ?></span>
 			<?php endif; ?>
 		</button>
 		<?php
 	}
 
+	/**
+	 * Output an inline SVG icon by name.
+	 *
+	 * @param string    $name      Icon name from the built-in icon set.
+	 * @param int       $size      Width and height in pixels.
+	 * @param int|float $stroke    SVG stroke-width value.
+	 * @param string    $classname Optional CSS class for the SVG element.
+	 * @return void
+	 */
 	public function icon( $name, $size = 16, $stroke = 2, $classname = '' ) {
 		if ( ! isset( $this->icons[ $name ] ) ) {
 			return;
@@ -272,10 +395,22 @@ class Shell {
 		echo wp_kses( $svg, $this->allowed_svg_tags() );
 	}
 
+	/**
+	 * Add a custom icon to the icon set.
+	 *
+	 * @param string $name Icon name.
+	 * @param string $path SVG path markup (inner elements only, no wrapping svg tag).
+	 * @return void
+	 */
 	public function add_icon( $name, $path ) {
 		$this->icons[ $name ] = $path;
 	}
 
+	/**
+	 * Get the allowed HTML tags and attributes for wp_kses SVG output.
+	 *
+	 * @return array
+	 */
 	private function allowed_svg_tags() {
 		return array(
 			'svg'      => array(
