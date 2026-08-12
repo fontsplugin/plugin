@@ -213,92 +213,8 @@ function ogf_customize_register( $wp_customize ) {
 	ogf_build_customizer_controls( ogf_get_elements() );
 	ogf_build_customizer_controls( ogf_get_custom_elements() );
 
-	$wp_customize->add_setting(
-		'ogf_force_styles',
-		array(
-			'default'           => '',
-			'transport'         => 'refresh',
-			'sanitize_callback' => 'wp_validate_boolean',
-		)
-	);
-
-	$wp_customize->add_control(
-		'force_styles',
-		array(
-			'label'       => esc_html__( 'Force Styles?', 'olympus-google-fonts' ),
-			'description' => esc_html__( 'If your choices are not displaying correctly, check this box.', 'olympus-google-fonts' ),
-			'section'     => 'ogf_debugging',
-			'settings'    => 'ogf_force_styles',
-			'type'        => 'checkbox',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'ogf_disable_post_level_controls',
-		array(
-			'default'           => '',
-			'transport'         => 'postMessage',
-			'sanitize_callback' => 'wp_validate_boolean',
-		)
-	);
-
-	$wp_customize->add_control(
-		'ogf_disable_post_level_controls',
-		array(
-			'label'       => esc_html__( 'Disable Editor Controls', 'olympus-google-fonts' ),
-			'description' => esc_html__( 'Remove font controls from the individual post editor screen (Gutenberg and Classic).', 'olympus-google-fonts' ),
-			'section'     => 'ogf_debugging',
-			'settings'    => 'ogf_disable_post_level_controls',
-			'type'        => 'checkbox',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'ogf_use_px',
-		array(
-			'default'           => 'true',
-			'transport'         => 'postMessage',
-			'sanitize_callback' => 'wp_validate_boolean',
-		)
-	);
-
-	$wp_customize->add_control(
-		'ogf_use_px',
-		array(
-			'label'       => esc_html__( 'Use px Font Sizes', 'olympus-google-fonts' ),
-			'description' => esc_html__( 'Replace the default (pt) font sizes with px values in the Classic Editor.', 'olympus-google-fonts' ),
-			'section'     => 'ogf_debugging',
-			'settings'    => 'ogf_use_px',
-			'type'        => 'checkbox',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'ogf_font_display',
-		array(
-			'sanitize_callback' => 'ogf_sanitize_select',
-			'default'           => 'swap',
-		)
-	);
-
-	$wp_customize->add_control(
-		'ogf_font_display',
-		array(
-			'label'       => esc_html__( 'Font Display', 'olympus-google-fonts' ),
-			'description' => '<a href="https://fontsplugin.com/google-fonts-font-display-swap/#values">' . esc_html__( 'Learn more →', 'olympus-google-fonts' ) . '</a>',
-			'type'        => 'select',
-			'section'     => 'ogf_debugging',
-			'choices'     => array(
-				'swap'     => esc_html__( 'Swap', 'olympus-google-fonts' ),
-				'block'    => esc_html__( 'Block', 'olympus-google-fonts' ),
-				'fallback' => esc_html__( 'Fallback', 'olympus-google-fonts' ),
-				'optional' => esc_html__( 'Optional', 'olympus-google-fonts' ),
-			),
-		)
-	);
-
-			$fonts = OGF_Fonts::get_instance();
-	$subsets       = array();
+	$fonts   = OGF_Fonts::get_instance();
+	$subsets = array();
 
 	if ( $fonts->has_google_fonts() ) {
 
@@ -332,7 +248,7 @@ function ogf_customize_register( $wp_customize ) {
 
 			if ( ! ogf_is_pro_active() ) {
 				$input_attrs = array(
-					'disabled' => false,
+					'disabled' => 'disabled',
 				);
 			}
 
@@ -386,28 +302,25 @@ function ogf_customize_register( $wp_customize ) {
 		'ogf_advanced__sidebar',
 		'ogf_advanced__footer',
 		'ogf_font_loading',
-		'ogf_debugging',
 		'ogf_optimization',
 	);
 
-	foreach ( $upsell_locations as $loc ) {
-		if ( ogf_is_pro_active() ) {
-			return;
-		}
+	if ( ! ogf_is_pro_active() && ! ogf_is_pro_plugin_installed() ) {
+		foreach ( $upsell_locations as $loc ) {
+			$wp_customize->add_setting( 'ogf_upsell_' . $loc );
 
-		$wp_customize->add_setting( 'ogf_upsell_' . $loc );
-
-		$wp_customize->add_control(
-			new OGF_Customize_Upsell_Control(
-				$wp_customize,
-				'ogf_upsell_' . $loc,
-				array(
-					'section'  => $loc,
-					'priority' => 120,
-					'type'     => 'ogf-upsell',
+			$wp_customize->add_control(
+				new OGF_Customize_Upsell_Control(
+					$wp_customize,
+					'ogf_upsell_' . $loc,
+					array(
+						'section'  => $loc,
+						'priority' => 120,
+						'type'     => 'ogf-upsell',
+					)
 				)
-			)
-		);
+			);
+		}
 	}
 }
 add_action( 'customize_register', 'ogf_customize_register', 20 );

@@ -38,7 +38,7 @@ class Olympus_Google_Fonts {
 	 */
 	public function constants() {
 		if ( ! defined( 'OGF_VERSION' ) ) {
-			define( 'OGF_VERSION', '4.1.3' );
+			define( 'OGF_VERSION', '4.2.0' );
 		}
 
 		if ( ! defined( 'OGF_DIR_PATH' ) ) {
@@ -84,10 +84,6 @@ class Olympus_Google_Fonts {
 
 		// Disable WordPress core Font Library UI.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-font-library.php';
-
-		// Reset class.
-		require_once OGF_DIR_PATH . 'includes/class-ogf-reset.php';
-		require_once OGF_DIR_PATH . 'includes/class-ogf-clear-cache.php';
 
 		// Classic Editor class.
 		require_once OGF_DIR_PATH . 'includes/class-ogf-classic-editor.php';

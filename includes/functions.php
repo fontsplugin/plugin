@@ -473,6 +473,15 @@ function ogf_is_elementor_activated() {
 }
 
 /**
+ * Check whether the Pro plugin is installed (regardless of license status).
+ *
+ * @return bool
+ */
+function ogf_is_pro_plugin_installed() {
+	return defined( 'FPP_VERSION' );
+}
+
+/**
  * Check if Fonts Plugin Pro is activated.
  */
 function ogf_is_fpp_activated() {

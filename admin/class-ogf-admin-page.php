@@ -74,16 +74,17 @@ class OGF_Admin_Page {
 		$is_pro   = defined( 'OGF_PRO' );
 		$settings = new \Plinth\Settings( 'fonts-plugin', 'edit_theme_options' );
 
-		$woff2_key   = $is_pro ? 'fpp_use_woff2' : 'ogf_use_woff2';
+		$woff2_key   = 'fpp_use_woff2';
 		$removal_key = 'fpp_removal';
 		$rewrite_key = 'fpp_rewrite';
 
 		$settings->register( array(
 			$woff2_key                      => array(
-				'type'    => 'boolean',
-				'storage' => 'theme_mod',
-				'label'   => __( 'Use WOFF2 File Format', 'olympus-google-fonts' ),
-				'desc'    => __( 'Use the WOFF2 file format instead of WOFF.', 'olympus-google-fonts' ),
+				'type'     => 'boolean',
+				'storage'  => 'theme_mod',
+				'label'    => __( 'Use WOFF2 File Format', 'olympus-google-fonts' ),
+				'desc'     => __( 'Use the WOFF2 file format instead of WOFF.', 'olympus-google-fonts' ),
+				'disabled' => ! $is_pro,
 			),
 			$removal_key                    => array(
 				'type'     => 'boolean',
@@ -155,7 +156,7 @@ class OGF_Admin_Page {
 	 * @return string
 	 */
 	public function filter_setting_label( $html, $key, $def ) {
-		$pro_settings = array( 'fpp_removal', 'fpp_rewrite' );
+		$pro_settings = array( 'fpp_use_woff2', 'fpp_removal', 'fpp_rewrite' );
 
 		if ( in_array( $key, $pro_settings, true ) && ! defined( 'OGF_PRO' ) ) {
 			$badge = ' <span class="ogf-pro-badge">' . esc_html__( 'PRO', 'olympus-google-fonts' ) . '</span>';
@@ -180,8 +181,9 @@ class OGF_Admin_Page {
 	 */
 	public function filter_setting_control( $html, $key, $def ) {
 		$pro_descs = array(
-			'fpp_removal' => __( 'Remove Google Fonts loaded by other plugins and your theme to reduce external requests and improve page speed.', 'olympus-google-fonts' ),
-			'fpp_rewrite' => __( 'Automatically rewrite Google Fonts URLs from your theme and plugins to serve from your domain, improving privacy and performance.', 'olympus-google-fonts' ),
+			'fpp_use_woff2' => __( 'Serve locally hosted fonts in the WOFF2 format for smaller file sizes and faster loading.', 'olympus-google-fonts' ),
+			'fpp_removal'   => __( 'Remove Google Fonts loaded by other plugins and your theme to reduce external requests and improve page speed.', 'olympus-google-fonts' ),
+			'fpp_rewrite'   => __( 'Automatically rewrite Google Fonts URLs from your theme and plugins to serve from your domain, improving privacy and performance.', 'olympus-google-fonts' ),
 		);
 
 		if ( isset( $pro_descs[ $key ] ) && ! defined( 'OGF_PRO' ) ) {
@@ -293,7 +295,7 @@ class OGF_Admin_Page {
 				'performance' => array(
 					'label'    => __( 'Performance & Privacy', 'olympus-google-fonts' ),
 					'settings' => array(
-						defined( 'OGF_PRO' ) ? 'fpp_use_woff2' : 'ogf_use_woff2',
+						'fpp_use_woff2',
 						'fpp_removal',
 						'fpp_rewrite',
 					),
@@ -632,6 +634,42 @@ class OGF_Admin_Page {
 	}
 
 	/**
+	 * Get details for active plugins.
+	 *
+	 * @return array[] Each item has 'name' and 'version' keys.
+	 */
+	private function get_active_plugins() {
+		if ( ! function_exists( 'get_plugins' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+
+		$all_plugins    = get_plugins();
+		$active_files   = (array) get_option( 'active_plugins', array() );
+		$active_plugins = array();
+
+		foreach ( $active_files as $plugin_file ) {
+			if ( ! isset( $all_plugins[ $plugin_file ] ) ) {
+				continue;
+			}
+
+			$plugin = $all_plugins[ $plugin_file ];
+			$active_plugins[] = array(
+				'name'    => $plugin['Name'],
+				'version' => $plugin['Version'],
+			);
+		}
+
+		usort(
+			$active_plugins,
+			function( $a, $b ) {
+				return strcasecmp( $a['name'], $b['name'] );
+			}
+		);
+
+		return $active_plugins;
+	}
+
+	/**
 	 * Render Dashboard tab content (callback for Plinth Shell).
 	 *
 	 * @param \Plinth\Shell $shell Shell instance.
@@ -681,7 +719,7 @@ class OGF_Admin_Page {
 				</div>
 			</div>
 
-			<?php $this->render_recommendations( $shell, $fonts, $google_count, $custom_count ); ?>
+			<?php $this->render_recommendations( $fonts, $google_count, $custom_count ); ?>
 
 			<?php
 			\Plinth\Components::card(
@@ -782,16 +820,12 @@ class OGF_Admin_Page {
 	/**
 	 * Render the recommendations section.
 	 *
-	 * @param \Plinth\Shell $shell        Plinth shell instance.
-	 * @param array         $fonts        Active fonts.
-	 * @param int           $google_count Number of Google fonts.
-	 * @param int           $custom_count Number of custom fonts.
+	 * @param array $fonts        Active fonts.
+	 * @param int   $google_count Number of Google fonts.
+	 * @param int   $custom_count Number of custom fonts.
 	 */
-	private function render_recommendations( $shell, $fonts, $google_count, $custom_count ) {
-		$is_pro       = ogf_is_pro_active();
-		$host_locally = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false );
-		$font_display = get_theme_mod( 'ogf_font_display', 'swap' );
-		$total        = count( $fonts );
+	private function render_recommendations( $fonts, $google_count, $custom_count ) {
+		$is_pro = ogf_is_pro_active();
 		$loaded_count = 0;
 
 		foreach ( $fonts as $font ) {
@@ -800,136 +834,240 @@ class OGF_Admin_Page {
 			}
 		}
 
-		$variant_count = $this->get_loaded_variant_count( $fonts );
+		$context = array(
+			'is_pro'        => $is_pro,
+			'needs_license' => ogf_is_pro_plugin_installed() && ! $is_pro,
+			'host_locally'  => $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false ),
+			'font_display'  => get_theme_mod( 'ogf_font_display', 'swap' ),
+			'total'         => count( $fonts ),
+			'google_count'  => $google_count,
+			'custom_count'  => $custom_count,
+			'loaded_count'  => $loaded_count,
+			'variant_count' => $this->get_loaded_variant_count( $fonts ),
+		);
 
 		\Plinth\Components::card(
 			__( 'Recommendations', 'olympus-google-fonts' ),
-			function() use ( $shell, $total, $font_display, $custom_count, $is_pro, $host_locally, $google_count, $loaded_count, $variant_count ) {
-				if ( 0 === $total ) :
-					?>
-					<div class="pln-rec pln-rec--high">
-						<div class="pln-rec__icon"><?php $shell->icon( 'edit' ); ?></div>
-						<div class="pln-rec__info">
-							<div class="pln-rec__title"><?php esc_html_e( 'Choose your first font', 'olympus-google-fonts' ); ?></div>
-							<div class="pln-rec__desc"><?php esc_html_e( 'No fonts are assigned yet, so your theme\'s default typography is still in use. Pick a font for your headings and body text to get started.', 'olympus-google-fonts' ); ?></div>
-						</div>
-						<a href="<?php echo esc_url( admin_url( 'customize.php?autofocus[panel]=ogf_google_fonts' ) ); ?>" class="pln-rec__action"><?php esc_html_e( 'Choose', 'olympus-google-fonts' ); ?></a>
-					</div>
-				<?php else : ?>
-					<div class="pln-rec pln-rec--low">
-						<div class="pln-rec__icon"><?php $shell->icon( 'check' ); ?></div>
-						<div class="pln-rec__info">
-							<div class="pln-rec__title"><?php esc_html_e( 'Fonts configured', 'olympus-google-fonts' ); ?></div>
-							<div class="pln-rec__desc"><?php esc_html_e( 'You\'ve customized fonts across your site elements.', 'olympus-google-fonts' ); ?></div>
-						</div>
-					</div>
-
-					<?php if ( 'swap' === $font_display ) : ?>
-						<div class="pln-rec pln-rec--low">
-							<div class="pln-rec__icon"><?php $shell->icon( 'check' ); ?></div>
-							<div class="pln-rec__info">
-								<div class="pln-rec__title"><?php esc_html_e( 'Font display is set to swap', 'olympus-google-fonts' ); ?></div>
-								<div class="pln-rec__desc"><?php esc_html_e( 'Text remains visible while fonts load. This is the recommended setting.', 'olympus-google-fonts' ); ?></div>
-							</div>
-						</div>
-					<?php endif; ?>
-
-					<?php if ( $custom_count > 0 ) : ?>
-						<div class="pln-rec pln-rec--low">
-							<div class="pln-rec__icon"><?php $shell->icon( 'check' ); ?></div>
-							<div class="pln-rec__info">
-								<div class="pln-rec__title"><?php esc_html_e( 'Custom font uploaded', 'olympus-google-fonts' ); ?></div>
-								<div class="pln-rec__desc"><?php esc_html_e( 'Custom fonts are hosted on your domain automatically.', 'olympus-google-fonts' ); ?></div>
-							</div>
-						</div>
-					<?php endif; ?>
-
-					<?php if ( $is_pro && $host_locally && $google_count > 0 ) : ?>
-						<div class="pln-rec pln-rec--low">
-							<div class="pln-rec__icon"><?php $shell->icon( 'check' ); ?></div>
-							<div class="pln-rec__info">
-								<div class="pln-rec__title"><?php esc_html_e( 'Fonts hosted locally', 'olympus-google-fonts' ); ?></div>
-								<div class="pln-rec__desc"><?php esc_html_e( 'Google Fonts are served from your domain for better privacy and performance.', 'olympus-google-fonts' ); ?></div>
-							</div>
-						</div>
-					<?php endif; ?>
-
-					<?php if ( $loaded_count > 3 ) : ?>
-						<div class="pln-rec pln-rec--medium">
-							<div class="pln-rec__icon"><?php $shell->icon( 'type' ); ?></div>
-							<div class="pln-rec__info">
-								<div class="pln-rec__title"><?php esc_html_e( 'Too many font families', 'olympus-google-fonts' ); ?></div>
-								<div class="pln-rec__desc">
-									<?php
-									printf(
-										/* translators: %d: number of font families */
-										esc_html( _n( 'You are loading %d font family. Most sites perform best with three or fewer.', 'You are loading %d font families. Most sites perform best with three or fewer.', $loaded_count, 'olympus-google-fonts' ) ),
-										esc_html( $loaded_count )
-									);
-									?>
-								</div>
-							</div>
-							<button type="button" class="pln-rec__action" data-goto-tab="fonts"><?php esc_html_e( 'Review', 'olympus-google-fonts' ); ?></button>
-						</div>
-					<?php endif; ?>
-
-					<?php if ( $variant_count > 10 && $google_count > 0 ) : ?>
-						<div class="pln-rec pln-rec--medium">
-							<div class="pln-rec__icon"><?php $shell->icon( 'package' ); ?></div>
-							<div class="pln-rec__info">
-								<div class="pln-rec__title">
-									<?php esc_html_e( 'Reduce unused font weights', 'olympus-google-fonts' ); ?>
-									<?php if ( ! $is_pro ) : ?>
-										<span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span>
-									<?php endif; ?>
-								</div>
-								<div class="pln-rec__desc">
-									<?php
-									printf(
-										/* translators: %d: number of font variants */
-										esc_html( _n( 'You are loading %d font variant. Disabling unused weights reduces page size.', 'You are loading %d font variants. Disabling unused weights reduces page size.', $variant_count, 'olympus-google-fonts' ) ),
-										esc_html( $variant_count )
-									);
-									?>
-								</div>
-							</div>
-							<?php if ( $is_pro ) : ?>
-								<button type="button" class="pln-rec__action" data-goto-tab="font-loading"><?php esc_html_e( 'Review', 'olympus-google-fonts' ); ?></button>
-							<?php else : ?>
-								<button class="pln-rec__action" data-pro-trigger data-feature="<?php esc_attr_e( 'Selective Font Loading', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Choose exactly which font weights and subsets to load. Disable unused variants to reduce page weight.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
-
-					<?php if ( ! $is_pro && $google_count > 0 ) : ?>
-						<div class="pln-rec pln-rec--high">
-							<div class="pln-rec__icon"><?php $shell->icon( 'zap' ); ?></div>
-							<div class="pln-rec__info">
-								<div class="pln-rec__title"><?php esc_html_e( 'Host fonts locally', 'olympus-google-fonts' ); ?> <span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span></div>
-								<div class="pln-rec__desc">
-									<?php
-									/* translators: %d: number of Google fonts */
-									printf( esc_html( _n( '%d Google Font is loaded from Google\'s CDN. Hosting locally improves privacy (GDPR) and can help pages load faster.', '%d Google Fonts are loaded from Google\'s CDN. Hosting locally improves privacy (GDPR) and can help pages load faster.', $google_count, 'olympus-google-fonts' ) ), esc_html( $google_count ) );
-									?>
-								</div>
-							</div>
-							<button class="pln-rec__action" data-pro-trigger data-feature="<?php esc_attr_e( 'Host Fonts Locally', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Download and serve Google Fonts from your own domain. Eliminates external requests, improving privacy (GDPR) and page load speed.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
-						</div>
-
-						<div class="pln-rec pln-rec--high">
-							<div class="pln-rec__icon"><?php $shell->icon( 'clock' ); ?></div>
-							<div class="pln-rec__info">
-								<div class="pln-rec__title"><?php esc_html_e( 'Enable preloading', 'olympus-google-fonts' ); ?> <span class="ogf-pro-badge"><?php esc_html_e( 'PRO', 'olympus-google-fonts' ); ?></span></div>
-								<div class="pln-rec__desc"><?php esc_html_e( 'Add preload hints so the browser fetches font files earlier, reducing layout shift and improving Core Web Vitals.', 'olympus-google-fonts' ); ?></div>
-							</div>
-							<button class="pln-rec__action" data-pro-trigger data-feature="<?php esc_attr_e( 'Preload Fonts', 'olympus-google-fonts' ); ?>" data-desc="<?php esc_attr_e( 'Add preload resource hints so the browser begins downloading fonts before they\'re needed, reducing layout shift.', 'olympus-google-fonts' ); ?>"><?php esc_html_e( 'Fix', 'olympus-google-fonts' ); ?></button>
-						</div>
-					<?php endif; ?>
-				<?php endif; ?>
-				<?php
+			function() use ( $context ) {
+				$this->render_recommendation_rows( $context );
 			},
 			array( 'wrap_body' => false )
 		);
+	}
+
+	/**
+	 * Render recommendation rows inside the recommendations card.
+	 *
+	 * @param array $context Recommendation context data.
+	 */
+	private function render_recommendation_rows( array $context ) {
+		$pro_badge = $this->get_pro_badge_html();
+
+		if ( $context['needs_license'] ) {
+			\Plinth\Components::recommendation_row(
+				'high',
+				'settings',
+				__( 'Activate license', 'olympus-google-fonts' ),
+				__( 'Please add your Fonts Plugin Pro license key to use Pro features.', 'olympus-google-fonts' ),
+				$this->get_rec_link_action(
+					admin_url( 'admin.php?page=fpp_license_page' ),
+					__( 'Add License', 'olympus-google-fonts' )
+				)
+			);
+		}
+
+		if ( 0 === $context['total'] ) {
+			\Plinth\Components::recommendation_row(
+				'high',
+				'edit',
+				__( 'Choose your first font', 'olympus-google-fonts' ),
+				__( 'No fonts are assigned yet, so your theme\'s default typography is still in use. Pick a font for your headings and body text to get started.', 'olympus-google-fonts' ),
+				$this->get_rec_link_action(
+					admin_url( 'customize.php?autofocus[panel]=ogf_google_fonts' ),
+					__( 'Choose', 'olympus-google-fonts' )
+				)
+			);
+			return;
+		}
+
+		\Plinth\Components::recommendation_row(
+			'low',
+			'check',
+			__( 'Fonts configured', 'olympus-google-fonts' ),
+			__( 'You\'ve customized fonts across your site elements.', 'olympus-google-fonts' )
+		);
+
+		if ( 'swap' === $context['font_display'] ) {
+			\Plinth\Components::recommendation_row(
+				'low',
+				'check',
+				__( 'Font display is set to swap', 'olympus-google-fonts' ),
+				__( 'Text remains visible while fonts load. This is the recommended setting.', 'olympus-google-fonts' )
+			);
+		}
+
+		if ( $context['custom_count'] > 0 ) {
+			\Plinth\Components::recommendation_row(
+				'low',
+				'check',
+				__( 'Custom font uploaded', 'olympus-google-fonts' ),
+				__( 'Custom fonts are hosted on your domain automatically.', 'olympus-google-fonts' )
+			);
+		}
+
+		if ( $context['is_pro'] && $context['host_locally'] && $context['google_count'] > 0 ) {
+			\Plinth\Components::recommendation_row(
+				'low',
+				'check',
+				__( 'Fonts hosted locally', 'olympus-google-fonts' ),
+				__( 'Google Fonts are served from your domain for better privacy and performance.', 'olympus-google-fonts' )
+			);
+		}
+
+		if ( $context['loaded_count'] > 3 ) {
+			\Plinth\Components::recommendation_row(
+				'medium',
+				'type',
+				__( 'Too many font families', 'olympus-google-fonts' ),
+				sprintf(
+					/* translators: %d: number of font families */
+					_n(
+						'You are loading %d font family. Most sites perform best with three or fewer.',
+						'You are loading %d font families. Most sites perform best with three or fewer.',
+						$context['loaded_count'],
+						'olympus-google-fonts'
+					),
+					$context['loaded_count']
+				),
+				$this->get_rec_button_action(
+					__( 'Review', 'olympus-google-fonts' ),
+					array( 'data-goto-tab' => 'fonts' )
+				)
+			);
+		}
+
+		if ( $context['variant_count'] > 10 && $context['google_count'] > 0 ) {
+			$variant_action = $context['is_pro']
+				? $this->get_rec_button_action(
+					__( 'Review', 'olympus-google-fonts' ),
+					array( 'data-goto-tab' => 'font-loading' )
+				)
+				: $this->get_rec_button_action(
+					__( 'Fix', 'olympus-google-fonts' ),
+					array(
+						'data-pro-trigger' => '',
+						'data-feature'     => __( 'Selective Font Loading', 'olympus-google-fonts' ),
+						'data-desc'        => __( 'Choose exactly which font weights and subsets to load. Disable unused variants to reduce page weight.', 'olympus-google-fonts' ),
+					)
+				);
+
+			\Plinth\Components::recommendation_row(
+				'medium',
+				'package',
+				__( 'Reduce unused font weights', 'olympus-google-fonts' ),
+				sprintf(
+					/* translators: %d: number of font variants */
+					_n(
+						'You are loading %d font variant. Disabling unused weights reduces page size.',
+						'You are loading %d font variants. Disabling unused weights reduces page size.',
+						$context['variant_count'],
+						'olympus-google-fonts'
+					),
+					$context['variant_count']
+				),
+				$variant_action,
+				$context['is_pro'] ? '' : $pro_badge
+			);
+		}
+
+		if ( ! $context['is_pro'] && $context['google_count'] > 0 ) {
+			\Plinth\Components::recommendation_row(
+				'high',
+				'zap',
+				__( 'Host fonts locally', 'olympus-google-fonts' ),
+				sprintf(
+					/* translators: %d: number of Google fonts */
+					_n(
+						'%d Google Font is loaded from Google\'s CDN. Hosting locally improves privacy (GDPR) and can help pages load faster.',
+						'%d Google Fonts are loaded from Google\'s CDN. Hosting locally improves privacy (GDPR) and can help pages load faster.',
+						$context['google_count'],
+						'olympus-google-fonts'
+					),
+					$context['google_count']
+				),
+				$this->get_rec_button_action(
+					__( 'Fix', 'olympus-google-fonts' ),
+					array(
+						'data-pro-trigger' => '',
+						'data-feature'     => __( 'Host Fonts Locally', 'olympus-google-fonts' ),
+						'data-desc'        => __( 'Download and serve Google Fonts from your own domain. Eliminates external requests, improving privacy (GDPR) and page load speed.', 'olympus-google-fonts' ),
+					)
+				),
+				$pro_badge
+			);
+
+			\Plinth\Components::recommendation_row(
+				'high',
+				'clock',
+				__( 'Enable preloading', 'olympus-google-fonts' ),
+				__( 'Add preload hints so the browser fetches font files earlier, reducing layout shift and improving Core Web Vitals.', 'olympus-google-fonts' ),
+				$this->get_rec_button_action(
+					__( 'Fix', 'olympus-google-fonts' ),
+					array(
+						'data-pro-trigger' => '',
+						'data-feature'     => __( 'Preload Fonts', 'olympus-google-fonts' ),
+						'data-desc'        => __( 'Add preload resource hints so the browser begins downloading fonts before they\'re needed, reducing layout shift.', 'olympus-google-fonts' ),
+					)
+				),
+				$pro_badge
+			);
+		}
+	}
+
+	/**
+	 * HTML for the Pro badge shown on recommendation rows.
+	 *
+	 * @return string
+	 */
+	private function get_pro_badge_html() {
+		return '<span class="ogf-pro-badge">' . esc_html__( 'PRO', 'olympus-google-fonts' ) . '</span>';
+	}
+
+	/**
+	 * HTML for a recommendation row link action.
+	 *
+	 * @param string $url   Link URL.
+	 * @param string $label Link label.
+	 * @return string
+	 */
+	private function get_rec_link_action( $url, $label ) {
+		return sprintf(
+			'<a href="%s" class="pln-rec__action">%s</a>',
+			esc_url( $url ),
+			esc_html( $label )
+		);
+	}
+
+	/**
+	 * HTML for a recommendation row button action.
+	 *
+	 * @param string $label      Button label.
+	 * @param array  $attributes Optional button attributes.
+	 * @return string
+	 */
+	private function get_rec_button_action( $label, $attributes = array() ) {
+		$attr_string = ' type="button" class="pln-rec__action"';
+
+		foreach ( $attributes as $key => $value ) {
+			if ( '' === $value ) {
+				$attr_string .= ' ' . esc_attr( $key );
+				continue;
+			}
+
+			$attr_string .= sprintf( ' %s="%s"', esc_attr( $key ), esc_attr( $value ) );
+		}
+
+		return sprintf( '<button%s>%s</button>', $attr_string, esc_html( $label ) );
 	}
 
 	/**
@@ -1520,12 +1658,14 @@ class OGF_Admin_Page {
 			$has_cache = false !== get_transient( 'ogf_external_font_css_' . $url_to_id );
 		}
 
-		$type_counts  = $this->get_font_type_counts( $fonts );
-		$google_count = $type_counts['google'];
-		$custom_count = $type_counts['custom'];
-		$adobe_count  = $type_counts['adobe'];
-		$host_locally = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false );
-		$delivery     = $this->get_font_delivery_info( $google_count, $custom_count, $adobe_count, $host_locally );
+		$type_counts     = $this->get_font_type_counts( $fonts );
+		$google_count    = $type_counts['google'];
+		$custom_count    = $type_counts['custom'];
+		$adobe_count     = $type_counts['adobe'];
+		$host_locally    = $is_pro && get_theme_mod( $this->get_setting_key( 'ogf_host_locally' ), false );
+		$delivery        = $this->get_font_delivery_info( $google_count, $custom_count, $adobe_count, $host_locally );
+		$active_plugins  = $this->get_active_plugins();
+		$active_plugins_count = count( $active_plugins );
 		?>
 			<?php \Plinth\Components::panel_header( __( 'Diagnostics', 'olympus-google-fonts' ), __( 'Current configuration, environment details, and tools for clearing cached font data.', 'olympus-google-fonts' ) ); ?>
 			<div class="pln-diag-grid">
@@ -1579,7 +1719,7 @@ class OGF_Admin_Page {
 
 				\Plinth\Components::card(
 					__( 'System', 'olympus-google-fonts' ),
-					function() use ( $is_pro, $theme ) {
+					function() use ( $is_pro, $theme, $active_plugins, $active_plugins_count ) {
 						?>
 						<ul class="pln-diag-list">
 							<li class="pln-diag__item">
@@ -1606,7 +1746,18 @@ class OGF_Admin_Page {
 								<span class="pln-diag__key"><?php esc_html_e( 'Active Theme', 'olympus-google-fonts' ); ?></span>
 								<span class="pln-diag__val"><?php echo esc_html( $theme->get( 'Name' ) . ' ' . $theme->get( 'Version' ) ); ?></span>
 							</li>
+							<li class="pln-diag__item">
+								<span class="pln-diag__key"><?php esc_html_e( 'Active Plugins', 'olympus-google-fonts' ); ?></span>
+								<span class="pln-diag__val"><?php echo esc_html( $active_plugins_count ); ?></span>
+							</li>
 						</ul>
+						<?php if ( $active_plugins_count > 0 ) : ?>
+							<ul class="ogf-diag-plugins-report" hidden aria-hidden="true">
+								<?php foreach ( $active_plugins as $plugin ) : ?>
+									<li><?php echo esc_html( $plugin['name'] . ' ' . $plugin['version'] ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						<?php endif; ?>
 						<?php
 					},
 					array( 'wrap_body' => false )
@@ -1646,30 +1797,43 @@ class OGF_Admin_Page {
 	 * Render the upgrade modal.
 	 */
 	public function render_upgrade_modal( $shell = null ) {
-		$shell = $shell ? $shell : $this->get_shell();
+		$shell          = $shell ? $shell : $this->get_shell();
+		$needs_license  = ogf_is_pro_plugin_installed() && ! ogf_is_pro_active();
+		$license_url    = admin_url( 'admin.php?page=fpp_license_page' );
+		$upgrade_url    = 'https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=admin_page';
 		?>
 		<div id="ogf-modal" class="ogf-modal">
 			<div class="ogf-modal-card" role="dialog" aria-modal="true" aria-labelledby="ogf-modal-title">
 				<div class="ogf-modal-header">
-					<h2 id="ogf-modal-title"></h2>
+					<h2 id="ogf-modal-title"><?php echo $needs_license ? esc_html__( 'Inactive License', 'olympus-google-fonts' ) : ''; ?></h2>
 					<button class="ogf-modal-close" aria-label="<?php esc_attr_e( 'Close', 'olympus-google-fonts' ); ?>">
 						<?php $shell->icon( 'close', 20 ); ?>
 					</button>
 				</div>
 				<div class="ogf-modal-body">
-					<p id="ogf-modal-desc"></p>
+					<p id="ogf-modal-desc"><?php echo $needs_license ? esc_html__( 'Please add your Fonts Plugin Pro license key to use this feature.', 'olympus-google-fonts' ) : ''; ?></p>
+					<?php if ( ! $needs_license ) : ?>
 					<ul class="ogf-modal-benefits">
 						<li><?php $shell->icon( 'check', 14, 2.5 ); ?><?php esc_html_e( 'One-click activation', 'olympus-google-fonts' ); ?></li>
 						<li><?php $shell->icon( 'check', 14, 2.5 ); ?><?php esc_html_e( 'Works with all themes', 'olympus-google-fonts' ); ?></li>
 						<li><?php $shell->icon( 'check', 14, 2.5 ); ?><?php esc_html_e( 'Priority support included', 'olympus-google-fonts' ); ?></li>
 					</ul>
+					<?php endif; ?>
 				</div>
 				<div class="ogf-modal-footer">
+					<?php if ( ! $needs_license ) : ?>
 					<button type="button" class="ogf-btn-modal-cancel ogf-modal-close"><?php esc_html_e( 'Maybe later', 'olympus-google-fonts' ); ?></button>
-					<a id="ogf-modal-link" href="https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=admin_page" target="_blank" class="ogf-btn-pro">
+					<?php endif; ?>
+					<?php if ( $needs_license ) : ?>
+					<a id="ogf-modal-link" href="<?php echo esc_url( $license_url ); ?>" class="ogf-btn-pro">
+						<?php esc_html_e( 'Add License', 'olympus-google-fonts' ); ?>
+					</a>
+					<?php else : ?>
+					<a id="ogf-modal-link" href="<?php echo esc_url( $upgrade_url ); ?>" target="_blank" class="ogf-btn-pro">
 						<?php esc_html_e( 'Upgrade to Pro', 'olympus-google-fonts' ); ?>
 						<?php $shell->icon( 'arrow-right', 14, 2.5 ); ?>
 					</a>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>

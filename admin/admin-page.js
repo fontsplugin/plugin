@@ -49,11 +49,20 @@
 		var titleEl = document.getElementById( 'ogf-modal-title' );
 		var descEl  = document.getElementById( 'ogf-modal-desc' );
 
-		if ( titleEl ) {
-			titleEl.textContent = featureTitle || '';
-		}
-		if ( descEl ) {
-			descEl.textContent = featureDesc || '';
+		if ( ogfAdmin.needsLicense && ogfAdmin.i18n ) {
+			if ( titleEl ) {
+				titleEl.textContent = ogfAdmin.i18n.inactiveLicenseTitle || 'Inactive License';
+			}
+			if ( descEl ) {
+				descEl.textContent = ogfAdmin.i18n.inactiveLicenseDesc || '';
+			}
+		} else {
+			if ( titleEl ) {
+				titleEl.textContent = featureTitle || '';
+			}
+			if ( descEl ) {
+				descEl.textContent = featureDesc || '';
+			}
 		}
 
 		var slug = ( featureTitle || 'pro' )
@@ -62,8 +71,24 @@
 			.replace( /^-|-$/g, '' );
 
 		var link = document.getElementById( 'ogf-modal-link' );
-		if ( link && ogfAdmin.upgradeUrl ) {
-			link.href = ogfAdmin.upgradeUrl + '&utm_campaign=' + encodeURIComponent( slug );
+		var benefits = modal.querySelector( '.ogf-modal-benefits' );
+
+		if ( link ) {
+			if ( ogfAdmin.needsLicense && ogfAdmin.licenseUrl ) {
+				link.href = ogfAdmin.licenseUrl;
+				link.removeAttribute( 'target' );
+				link.removeAttribute( 'rel' );
+				link.textContent = ( ogfAdmin.i18n && ogfAdmin.i18n.addLicense ) || 'Add License';
+				if ( benefits ) {
+					benefits.style.display = 'none';
+				}
+			} else if ( ogfAdmin.upgradeUrl ) {
+				link.href = ogfAdmin.upgradeUrl + '&utm_campaign=' + encodeURIComponent( slug );
+				link.setAttribute( 'target', '_blank' );
+				if ( benefits ) {
+					benefits.style.display = '';
+				}
+			}
 		}
 
 		modal.classList.add( 'visible' );
@@ -325,6 +350,10 @@
 				if ( key && val ) {
 					lines.push( key.textContent.trim() + ': ' + val.textContent.trim() );
 				}
+			} );
+
+			card.querySelectorAll( '.ogf-diag-plugins-report li' ).forEach( function( pluginLine ) {
+				lines.push( '- ' + pluginLine.textContent.trim() );
 			} );
 
 			lines.push( '' );

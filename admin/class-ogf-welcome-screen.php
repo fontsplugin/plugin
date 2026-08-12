@@ -82,10 +82,12 @@ class OGF_Welcome_Screen {
 				'ogf-admin-page',
 				'ogfAdmin',
 				array(
-					'ajaxUrl'    => admin_url( 'admin-ajax.php' ),
-					'nonce'      => wp_create_nonce( 'ogf_admin_nonce' ),
-					'upgradeUrl' => 'https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=admin_page',
-					'i18n'       => array(
+					'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
+					'nonce'        => wp_create_nonce( 'ogf_admin_nonce' ),
+					'upgradeUrl'   => 'https://fontsplugin.com/pro-upgrade/?utm_source=plugin&utm_medium=admin_page',
+					'needsLicense' => ogf_is_pro_plugin_installed() && ! ogf_is_pro_active(),
+					'licenseUrl'   => admin_url( 'admin.php?page=fpp_license_page' ),
+					'i18n'         => array(
 						'saved'             => __( 'Settings saved.', 'olympus-google-fonts' ),
 						'error'             => __( 'Something went wrong.', 'olympus-google-fonts' ),
 						'cleared'           => __( 'Cache cleared.', 'olympus-google-fonts' ),
@@ -105,7 +107,10 @@ class OGF_Welcome_Screen {
 						'saving'            => __( 'Saving…', 'olympus-google-fonts' ),
 						'refreshing'        => __( 'Refreshing…', 'olympus-google-fonts' ),
 						'diagnosticsCopied' => __( 'Diagnostics copied to clipboard.', 'olympus-google-fonts' ),
-						'copyFailed'        => __( 'Could not copy. Select the text and copy it manually.', 'olympus-google-fonts' ),
+						'copyFailed'          => __( 'Could not copy. Select the text and copy it manually.', 'olympus-google-fonts' ),
+						'inactiveLicenseTitle' => __( 'Inactive License', 'olympus-google-fonts' ),
+						'inactiveLicenseDesc'  => __( 'Please add your Fonts Plugin Pro license key to use this feature.', 'olympus-google-fonts' ),
+						'addLicense'           => __( 'Add License', 'olympus-google-fonts' ),
 					),
 				)
 			);

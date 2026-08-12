@@ -904,3 +904,124 @@
 .customize-control-ogf-typography .customize-control-title {
 	font-size: 13px;
 }
+
+/** Pro-locked Customizer controls **/
+
+.customize-control.ogf-pro-locked {
+	cursor: pointer;
+	opacity: 0.7;
+}
+
+.customize-control.ogf-pro-locked input,
+.customize-control.ogf-pro-locked label {
+	pointer-events: none;
+}
+
+.customize-control.ogf-pro-locked .customize-control-title::after {
+	content: "PRO";
+	margin-left: 8px;
+	padding: 1px 6px;
+	border-radius: 3px;
+	background: #bd3737;
+	color: #fff;
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	vertical-align: middle;
+}
+
+/** Customizer Pro modal **/
+
+.ogf-customizer-modal {
+	position: fixed;
+	inset: 0;
+	z-index: 500001;
+	display: none;
+	place-items: center;
+	background: rgba(0, 0, 0, 0.55);
+}
+
+.ogf-customizer-modal.visible {
+	display: grid;
+}
+
+.ogf-customizer-modal__card {
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+	width: 90%;
+	max-width: 440px;
+	overflow: hidden;
+}
+
+.ogf-customizer-modal__header {
+	padding: 20px 20px 0;
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+}
+
+.ogf-customizer-modal__header h2 {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: #1d2327;
+}
+
+.ogf-customizer-modal__close {
+	appearance: none;
+	border: none;
+	background: none;
+	color: #646970;
+	cursor: pointer;
+	font-size: 24px;
+	line-height: 1;
+	padding: 0 4px;
+}
+
+.ogf-customizer-modal__close:hover {
+	color: #1d2327;
+}
+
+.ogf-customizer-modal__body {
+	padding: 12px 20px 20px;
+}
+
+.ogf-customizer-modal__body p {
+	margin: 0 0 16px;
+	font-size: 13px;
+	line-height: 1.6;
+	color: #50575e;
+}
+
+.ogf-customizer-modal__benefits {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ogf-customizer-modal__benefits li {
+	position: relative;
+	padding-left: 20px;
+	margin-bottom: 6px;
+	font-size: 13px;
+	color: #50575e;
+	line-height: 1.5;
+}
+
+.ogf-customizer-modal__benefits li::before {
+	content: "\2713";
+	position: absolute;
+	left: 0;
+	color: #bd3737;
+	font-weight: 700;
+}
+
+.ogf-customizer-modal__footer {
+	padding: 0 20px 20px;
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}

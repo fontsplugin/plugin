@@ -148,17 +148,18 @@ class Components {
 			$icon = $icon_map[ $severity ];
 		}
 		?>
-		<div class="pln-rec pln-rec-<?php echo esc_attr( $severity ); ?>">
+		<div class="pln-rec pln-rec--<?php echo esc_attr( $severity ); ?>">
 			<div class="pln-rec__icon">
 				<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
 					<?php
 					$paths = array(
-						'check'   => '<polyline points="20 6 9 17 4 12"/>',
-						'package' => '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/>',
-						'zap'     => '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
-						'edit'    => '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/>',
-						'type'    => '<path d="M4 7V5h16v2M12 5v14M9 19h6"/>',
-						'clock'   => '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+						'check'    => '<polyline points="20 6 9 17 4 12"/>',
+						'package'  => '<path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 002 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0022 16z"/>',
+						'zap'      => '<path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>',
+						'edit'     => '<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z"/>',
+						'type'     => '<path d="M4 7V5h16v2M12 5v14M9 19h6"/>',
+						'clock'    => '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+						'settings' => '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 008 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H2a2 2 0 110-4h.09A1.65 1.65 0 004.6 8a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 3.68 1.65 1.65 0 0010 2.17V2a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0020.32 8a1.65 1.65 0 001.51 1H22a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/>',
 					);
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- SVG path data is hardcoded above.
 					echo isset( $paths[ $icon ] ) ? $paths[ $icon ] : $paths['check'];
@@ -177,7 +178,25 @@ class Components {
 				<div class="pln-rec__desc"><?php echo esc_html( $desc ); ?></div>
 			</div>
 			<?php if ( $action ) : ?>
-				<?php echo wp_kses_post( $action ); ?>
+				<?php
+				echo wp_kses(
+					$action,
+					array(
+						'a'      => array(
+							'href'  => true,
+							'class' => true,
+						),
+						'button' => array(
+							'type'             => true,
+							'class'            => true,
+							'data-pro-trigger' => true,
+							'data-feature'     => true,
+							'data-desc'        => true,
+							'data-goto-tab'    => true,
+						),
+					)
+				);
+				?>
 			<?php endif; ?>
 		</div>
 		<?php

@@ -1,4 +1,4 @@
-/* global ogf_font_variants, ogf_font_array, ajaxurl, fontsReset, location */
+/* global ogf_font_variants, ogf_font_array, ajaxurl, location */
 ( function( api ) {
 	api.controlConstructor[ 'ogf-typography' ] = api.Control.extend(
 		{
@@ -287,52 +287,6 @@
 		}
 	);
 
-	wp.customize.control( 'ogf_reset_fonts', function( control ) {
-		control.container.find( '.button' ).on( 'click', function( event ) {
-			event.preventDefault();
-
-			const data = {
-				wp_customize: 'on',
-				action: 'customizer_reset',
-				security: fontsReset.nonce,
-			};
-
-			const confirmReset = confirm( fontsReset.confirm );
-
-			if ( ! confirmReset ) {
-				return;
-			}
-
-			jQuery( this ).attr( 'disabled', 'disabled' );
-
-			jQuery.post( ajaxurl, data, function( result ) {
-				wp.customize.state( 'saved' ).set( true );
-				location.reload();
-			} );
-		} );
-	} );
-
-	wp.customize.control( 'ogf_clear_cache', function( control ) {
-		control.container.find( '.button' ).on( 'click', function( event ) {
-			event.preventDefault();
-
-			console.log('clicked clear cache');
-
-			const data = {
-				wp_customize: 'on',
-				action: 'customizer_clear_cache',
-				security: clearCache.nonce,
-			};
-
-			jQuery( this ).attr( 'disabled', 'disabled' );
-
-			jQuery.post( ajaxurl, data, function( result ) {
-				wp.customize.state( 'saved' ).set( true );
-				alert('Cache successfully cleared.');
-				location.reload();
-			} );
-		} );
-	} );
 }( wp.customize ) );
 
 /* === Checkbox Multiple Control === */
@@ -351,9 +305,141 @@ jQuery( document ).ready( function() {
 } );
 
 /* === Optimization Controls === */
-jQuery( document ).ready( function() {
-	jQuery( '#_customize-input-ogf_host_locally, #_customize-input-ogf_preloading, #_customize-input-ogf_removal, #_customize-input-ogf_rewrite' ).attr( 'disabled', 'true' );
-} );
+( function( api ) {
+	function openCustomizerProModal( title, desc ) {
+		var modal = document.getElementById( 'ogf-customizer-modal' );
+		if ( ! modal || typeof ogfCustomizerPro === 'undefined' ) {
+			return;
+		}
+
+		var titleEl = document.getElementById( 'ogf-customizer-modal-title' );
+		var descEl  = document.getElementById( 'ogf-customizer-modal-desc' );
+
+		if ( ogfCustomizerPro.needsLicense ) {
+			if ( titleEl ) {
+				titleEl.textContent = ogfCustomizerPro.inactiveLicenseTitle || 'Inactive License';
+			}
+			if ( descEl ) {
+				descEl.textContent = ogfCustomizerPro.inactiveLicenseDesc || '';
+			}
+		} else {
+			if ( titleEl ) {
+				titleEl.textContent = title || '';
+			}
+			if ( descEl ) {
+				descEl.textContent = desc || '';
+			}
+		}
+
+		var slug = ( title || 'pro' )
+			.toLowerCase()
+			.replace( /[^a-z0-9]+/g, '-' )
+			.replace( /^-|-$/g, '' );
+
+		var link = document.getElementById( 'ogf-customizer-modal-link' );
+		var benefits = modal.querySelector( '.ogf-customizer-modal__benefits' );
+
+		if ( link ) {
+			if ( ogfCustomizerPro.needsLicense && ogfCustomizerPro.licenseUrl ) {
+				link.href = ogfCustomizerPro.licenseUrl;
+				link.removeAttribute( 'target' );
+				link.removeAttribute( 'rel' );
+				link.textContent = ogfCustomizerPro.addLicense || 'Add License';
+				if ( benefits ) {
+					benefits.style.display = 'none';
+				}
+			} else if ( ogfCustomizerPro.upgradeUrl ) {
+				link.href = ogfCustomizerPro.upgradeUrl + '&utm_campaign=' + encodeURIComponent( slug );
+				link.setAttribute( 'target', '_blank' );
+				link.setAttribute( 'rel', 'noopener noreferrer' );
+				if ( benefits ) {
+					benefits.style.display = '';
+				}
+			}
+		}
+
+		modal.classList.add( 'visible' );
+		modal.setAttribute( 'aria-hidden', 'false' );
+	}
+
+	function closeCustomizerProModal() {
+		var modal = document.getElementById( 'ogf-customizer-modal' );
+		if ( ! modal ) {
+			return;
+		}
+
+		modal.classList.remove( 'visible' );
+		modal.setAttribute( 'aria-hidden', 'true' );
+	}
+
+	function lockCustomizerControl( control, feature ) {
+		var lockedValue = false;
+
+		control.container.addClass( 'ogf-pro-locked' );
+		control.setting.set( lockedValue );
+
+		control.container.find( 'input[type="checkbox"]' ).each( function() {
+			this.removeAttribute( 'data-customize-setting-link' );
+			this.disabled = true;
+		} );
+
+		control.setting.bind( function( newValue ) {
+			if ( newValue !== lockedValue ) {
+				control.setting.set( lockedValue );
+				openCustomizerProModal( feature.title, feature.desc );
+			}
+		} );
+
+		if ( control.container[0] ) {
+			control.container[0].addEventListener(
+				'click',
+				function( event ) {
+					event.preventDefault();
+					event.stopImmediatePropagation();
+					openCustomizerProModal( feature.title, feature.desc );
+				},
+				true
+			);
+		}
+	}
+
+	function initCustomizerProModal() {
+		if ( typeof ogfCustomizerPro === 'undefined' ) {
+			return;
+		}
+
+		var modal = document.getElementById( 'ogf-customizer-modal' );
+		if ( ! modal ) {
+			return;
+		}
+
+		modal.querySelectorAll( '.ogf-modal-close' ).forEach( function( button ) {
+			button.addEventListener( 'click', closeCustomizerProModal );
+		} );
+
+		modal.addEventListener( 'click', function( event ) {
+			if ( event.target === modal ) {
+				closeCustomizerProModal();
+			}
+		} );
+
+		document.addEventListener( 'keydown', function( event ) {
+			if ( event.key === 'Escape' ) {
+				closeCustomizerProModal();
+			}
+		} );
+
+		Object.keys( ogfCustomizerPro.features ).forEach( function( controlId ) {
+			api.control( controlId, function( control ) {
+				lockCustomizerControl( control, ogfCustomizerPro.features[ controlId ] );
+			} );
+		} );
+	}
+
+	window.ogfOpenCustomizerProModal = openCustomizerProModal;
+
+	api.bind( 'ready', initCustomizerProModal );
+}( wp.customize ) );
 
 /* === Multiple Fonts Control === */
 ( function( api ) {

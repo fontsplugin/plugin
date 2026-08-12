@@ -90,14 +90,6 @@ function ogf_panels_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_section(
-		'ogf_debugging',
-		array(
-			'title' => esc_html__( 'Debugging', 'olympus-google-fonts' ),
-			'panel' => 'ogf_google_fonts',
-		)
-	);
-
-	$wp_customize->add_section(
 		'ogf_advanced__custom',
 		array(
 			'title'       => esc_html__( 'Custom Elements', 'olympus-google-fonts' ),
